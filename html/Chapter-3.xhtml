@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="my" lang="my">
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>Structure and Interpretation of Computer Programs, 2e: Chapter 3</title>
+
+<meta name="description" content="Structure and Interpretation of Computer Programs, 2e: Chapter 3" />
+<meta name="keywords" content="Structure and Interpretation of Computer Programs, 2e: Chapter 3" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="Generator" content="texi2any" />
+<meta charset="utf-8" />
+<link href="index.xhtml#Top" rel="start" title="Top" />
+<link href="Term-Index.xhtml#Term-Index" rel="index" title="Term Index" />
+<link href="index.xhtml#SEC_Contents" rel="contents" title="Table of Contents" />
+<link href="index.xhtml#Top" rel="prev" title="Top" />
+<link href="3_002e1.xhtml#g_t3_002e1" rel="next" title="3.1" />
+<link href="2_002e5.xhtml#g_t2_002e5_002e3" rel="prev" title="2.5.3" />
+
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/prettify.css" rel="stylesheet" type="text/css" />
+
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/footnotes.js" type="text/javascript"></script>
+<script src="js/browsertest.js" type="text/javascript"></script>
+</head>
+
+<body>
+<section><span class="top jump" title="Jump to top"><a href="#pagetop" accesskey="t">⇡</a></span><a id="pagetop"></a><a id="Chapter-3"></a>
+<nav class="header">
+<p>
+Next: <a href="3_002e1.xhtml#g_t3_002e1" accesskey="n" rel="next">3.1</a>, Prev: <a href="2_002e5.xhtml#g_t2_002e5" accesskey="p" rel="prev">2.5</a>, Up: <a href="index.xhtml#Top" accesskey="u" rel="prev">Top</a>   [<a href="index.xhtml#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+<a id="Modularity_002c-Objects_002c-and-State"></a>
+<h2 class="chapter"><span class="chapnum">3</span><span class="chaptitle">Modularity, Objects နှင့် State</span></h2>
+
+<blockquote>
+<p>Mεταβάλλον ὰναπαύεται<br />
+(ပြောင်းလဲနေသော်လည်း တည်ငြိမ်နေဆဲဖြစ်သည်။)<br />
+—Heraclitus
+</p>
+<p>Plus ça change, plus c’est la même chose.<br />
+—Alphonse Karr
+</p></blockquote>
+
+<p>ယခင် အခန်းများတွင် ပရိုဂရမ်များကို တည်ဆောက်ထားသည့် အခြေခံ အစိတ်အပိုင်းများကို မိတ်ဆက်ခဲ့ပါသည်။ primitive procedures များနှင့် primitive data များကို ပေါင်းစပ်၍ compound entities များ မည်သို့ တည်ဆောက်ရမည်ကို ကျွန်ုပ်တို့ မြင်တွေ့ခဲ့ရပြီး၊ ကြီးမားသော စနစ်များ၏ ရှုပ်ထွေးမှုများကို ကိုင်တွယ်ရာတွင် abstraction သည် အလွန်အရေးကြီးကြောင်း သင်ယူခဲ့ကြပါသည်။ သို့သော် ဤကိရိယာများသည် ပရိုဂရမ်များ ဒီဇိုင်းထုတ်ရန်အတွက် လုံလောက်မှု မရှိသေးပါ။ ထိရောက်သော program synthesis အတွက် ပရိုဂရမ်တစ်ခု၏ အလုံးစုံ ဒီဇိုင်းကို ပုံဖော်ရာတွင် လမ်းညွှန်ပေးနိုင်မည့် စုစည်းမှုဆိုင်ရာ အခြေခံမူများလည်း လိုအပ်ပါသည်။ အထူးသဖြင့်၊ ကြီးမားသော စနစ်များကို <a id="index-modular"></a>
+<em>modular</em> ဖြစ်စေရန်၊ ဆိုလိုသည်မှာ ၎င်းတို့ကို သီးခြားစီ တည်ဆောက်နိုင်ပြီး ထိန်းသိမ်းနိုင်သော ဆက်စပ်မှုရှိသည့် အစိတ်အပိုင်းများအဖြစ် “သဘာဝကျကျ” ခွဲခြမ်းနိုင်ရန် ကူညီပေးမည့် နည်းဗျူဟာများ လိုအပ်ပါသည်။
+</p>
+<p>Physical systems များကို ပုံဖော်သည့် (modeling) ပရိုဂရမ်များ တည်ဆောက်ရာတွင် အထူးသင့်လျော်သော စွမ်းအားထက်မြက်သည့် ဒီဇိုင်းနည်းဗျူဟာတစ်ခုမှာ ကျွန်ုပ်တို့၏ ပရိုဂရမ် တည်ဆောက်ပုံကို ပုံဖော်မည့် စနစ်၏ တည်ဆောက်ပုံပေါ်တွင် အခြေခံခြင်း ဖြစ်ပါသည်။ စနစ်အတွင်းရှိ object တစ်ခုစီအတွက် သက်ဆိုင်ရာ computational object တစ်ခုကို ကျွန်ုပ်တို့ တည်ဆောက်ပါသည်။ စနစ်၏ လုပ်ဆောင်ချက် တစ်ခုစီအတွက် ကျွန်ုပ်တို့၏ computational model တွင် symbolic operation တစ်ခုကို သတ်မှတ်ပါသည်။ ဤနည်းဗျူဟာကို အသုံးပြုခြင်းဖြင့် ကျွန်ုပ်တို့ မျှော်လင့်သည်မှာ object အသစ်များ သို့မဟုတ် လုပ်ဆောင်ချက်အသစ်များကို လက်ခံနိုင်ရန် model ကို ချဲ့ထွင်ရာတွင် ပရိုဂရမ်၏ မဟာဗျူဟာမြောက် ပြောင်းလဲမှုများ မလိုအပ်ဘဲ ထို object များ သို့မဟုတ် လုပ်ဆောင်ချက်များနှင့် သက်ဆိုင်သည့် symbolic analogs အသစ်များကို ပေါင်းထည့်ရုံသာ လိုအပ်မည် ဖြစ်ပါသည်။ ကျွန်ုပ်တို့၏ system organization အောင်မြင်ပါက feature အသစ်တစ်ခု ထပ်ထည့်ရန် သို့မဟုတ် အဟောင်းတစ်ခုကို debug လုပ်ရန် စနစ်၏ သီးခြားအစိတ်အပိုင်းတစ်ခုတွင်သာ အလုပ်လုပ်ရန် လိုအပ်မည်ဖြစ်သည်။
+</p>
+<p>သို့ဖြစ်ရာ အတိုင်းအတာတစ်ခုအထိ ကြီးမားသော ပရိုဂရမ်တစ်ခုကို ကျွန်ုပ်တို့ စုစည်းပုံသည် ပုံဖော်မည့်စနစ်အပေါ် ကျွန်ုပ်တို့၏ နားလည်ခံယူမှုက ဆုံးဖြတ်ပေးခြင်း ဖြစ်ပါသည်။ ဤအခန်းတွင် စနစ်များ၏ တည်ဆောက်ပုံဆိုင်ရာ ကွဲပြားခြားနားသော “လောကအမြင်” (world views) နှစ်ခုမှ ဆင်းသက်လာသော ထင်ရှားသည့် စုစည်းမှုဆိုင်ရာ နည်းဗျူဟာ နှစ်ခုကို လေ့လာပါမည်။ ပထမ စုစည်းမှု နည်းဗျူဟာသည် <a id="index-objects"></a>
+<em>objects</em> များအပေါ် အာရုံစိုက်ပြီး၊ ကြီးမားသော စနစ်တစ်ခုကို အချိန်နှင့်အမျှ အပြုအမူများ ပြောင်းလဲနိုင်သော သီးခြား objects များ စုစည်းမှုအဖြစ် ရှုမြင်ပါသည်။ အခြား စုစည်းမှု နည်းဗျူဟာတစ်ခုမှာမူ လျှပ်စစ်အင်ဂျင်နီယာ တစ်ဦးက signal-processing system တစ်ခုကို ရှုမြင်သကဲ့သို့ စနစ်အတွင်း စီးဆင်းနေသော သတင်းအချက်အလက် <a id="index-streams"></a>
+<em>streams</em> များအပေါ် အာရုံစိုက်ပါသည်။
+</p>
+<p>Object-based ချဉ်းကပ်ပုံနှင့် stream-processing ချဉ်းကပ်ပုံ နှစ်ခုလုံးသည် ပရိုဂရမ်းမင်းတွင် အရေးကြီးသော ဘာသာစကားဆိုင်ရာ ပြဿနာများကို ဖြစ်ပေါ်စေပါသည်။ Objects များတွင် computational object တစ်ခုသည် မည်သို့ ပြောင်းလဲနိုင်ပြီး ၎င်း၏ identity ကို မည်သို့ ထိန်းသိမ်းထားနိုင်သနည်း ဆိုသည်ကို ကျွန်ုပ်တို့ ထည့်သွင်းစဉ်းစားရပါမည်။ ဒါက ကျွန်ုပ်တို့ကို ဟောင်းနွမ်းနေပြီဖြစ်တဲ့ substitution model of computation (<a href="1_002e1.xhtml#g_t1_002e1_002e5">1.1.5</a>) ကို စွန့်လွှတ်ပြီး၊ ပိုမို စက်ဆန်သော်လည်း သီအိုရီအရ ကိုင်တွယ်ရန် ပိုခက်ခဲသော <a id="index-environment-model"></a>
+<em>environment model</em> of computation ကို အသုံးပြုရန် တွန်းအားပေးပါလိမ့်မည်။ Objects များ၊ အပြောင်းအလဲများနှင့် identity တို့ကို ကိုင်တွယ်ရာတွင် ကြုံတွေ့ရသည့် အခက်အခဲများသည် ကျွန်ုပ်တို့၏ computational models များတွင် အချိန် (time) ကို ထည့်သွင်းစဉ်းစားရန် လိုအပ်ချက်၏ အခြေခံ အကျိုးဆက်များ ဖြစ်ပါသည်။ ဤအခက်အခဲများသည် ပရိုဂရမ်များကို တစ်ပြိုင်နက်တည်း လုပ်ဆောင်ခြင်း (concurrent execution) ကို ခွင့်ပြုလိုက်သည့်အခါ ပို၍ပင် ကြီးမားလာပါသည်။ Stream ချဉ်းကပ်ပုံကို ကျွန်ုပ်တို့၏ model ရှိ simulated time ကို evaluation လုပ်နေစဉ်အတွင်း ကွန်ပျူတာ၌ ဖြစ်ပေါ်သည့် အဖြစ်အပျက်များ၏ အစီအစဉ်မှ ခွဲထုတ်လိုက်သောအခါ အပြည့်အဝ အသုံးချနိုင်မည် ဖြစ်ပါသည်။ ကျွန်ုပ်တို့သည် ၎င်းကို <a id="index-delayed-evaluation"></a>
+<em>delayed evaluation</em> ဟုခေါ်သော နည်းစနစ်ကို အသုံးပြု၍ လုပ်ဆောင်ပါမည်။
+</p>
+
+<nav class="header">
+<p>
+Next: <a href="3_002e1.xhtml#g_t3_002e1" accesskey="n" rel="next">3.1</a>, Prev: <a href="2_002e5.xhtml#g_t2_002e5" accesskey="p" rel="prev">2.5</a>, Up: <a href="index.xhtml#Top" accesskey="u" rel="prev">Top</a>   [<a href="index.xhtml#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+
+
+</section><span class="bottom jump" title="Jump to bottom"><a href="#pagebottom" accesskey="b">⇣</a></span><a id="pagebottom"></a>
+</body>
+</html>
