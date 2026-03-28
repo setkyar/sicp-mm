@@ -1,0 +1,981 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="my" lang="my">
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>Structure and Interpretation of Computer Programs, 2e: 2.1</title>
+
+<meta name="description" content="Structure and Interpretation of Computer Programs, 2e: 2.1" />
+<meta name="keywords" content="Structure and Interpretation of Computer Programs, 2e: 2.1" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="Generator" content="texi2any" />
+<meta charset="utf-8" />
+<link href="index.xhtml#Top" rel="start" title="Top" />
+<link href="Term-Index.xhtml#Term-Index" rel="index" title="Term Index" />
+<link href="index.xhtml#SEC_Contents" rel="contents" title="Table of Contents" />
+<link href="Chapter-2.xhtml#Chapter-2" rel="prev" title="Chapter 2" />
+<link href="2_002e2.xhtml#g_t2_002e2" rel="next" title="2.2" />
+<link href="Chapter-2.xhtml#Chapter-2" rel="prev" title="Chapter 2" />
+
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/prettify.css" rel="stylesheet" type="text/css" />
+
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/footnotes.js" type="text/javascript"></script>
+<script src="js/browsertest.js" type="text/javascript"></script>
+</head>
+
+<body>
+<section><span class="top jump" title="Jump to top"><a href="#pagetop" accesskey="t">⇡</a></span><a id="pagetop"></a><a id="g_t2_002e1"></a>
+<nav class="header">
+<p>
+Next: <a href="2_002e2.xhtml#g_t2_002e2" accesskey="n" rel="next">2.2</a>, Prev: <a href="Chapter-2.xhtml#Chapter-2" accesskey="p" rel="prev">Chapter 2</a>, Up: <a href="Chapter-2.xhtml#Chapter-2" accesskey="u" rel="prev">Chapter 2</a>   [<a href="index.xhtml#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+<a id="Introduction-to-Data-Abstraction"></a>
+<h3 class="section"><span class="secnum">2.1</span><span class="sectitle">Data Abstraction မိတ်ဆက်</span></h3>
+
+<p><a href="1_002e1.xhtml#g_t1_002e1_002e8">1.1.8</a> တွင်၊ ပိုမိုရှုပ်ထွေးသော procedure တစ်ခုကို တည်ဆောက်ရာတွင် အစိတ်အပိုင်းတစ်ခုအဖြစ် အသုံးပြုသည့် procedure တစ်ခုကို သီးခြားလုပ်ဆောင်ချက်များ စုစည်းထားမှုအဖြစ်သာမက procedural abstraction တစ်ခုအဖြစ်လည်း ရှုမြင်နိုင်ကြောင်း ကျွန်ုပ်တို့ သတိပြုမိခဲ့သည်။ ဆိုလိုသည်မှာ procedure ကို မည်သို့အကောင်အထည်ဖော်ထားသည်ဟူသော အသေးစိတ်အချက်များကို ဖုံးကွယ်ထားနိုင်ပြီး၊ ၎င်း procedure ကို တူညီသော အထွေထွေလုပ်ဆောင်ချက်ရှိသည့် အခြား မည်သည့် procedure နှင့်မဆို အစားထိုးနိုင်သည်။ အခြားနည်းဖြင့် ဆိုရသော် procedure အား အသုံးပြုမည့် ပုံစံကို ပိုမိုအခြေခံကျသော procedure များဖြင့် အကောင်အထည်ဖော်မည့် အသေးစိတ်အချက်များမှ သီးခြားခွဲထုတ်ပေးသည့် abstraction တစ်ခုကို ကျွန်ုပ်တို့ ပြုလုပ်နိုင်သည်။ compound data အတွက် အလားတူအယူအဆကို <a id="index-data-abstraction-1"></a>
+<em>data abstraction</em> ဟု ခေါ်သည်။ Data abstraction သည် compound data object တစ်ခုအား အသုံးပြုပုံကို ၎င်းအား ပိုမိုအခြေခံကျသော data object များဖြင့် မည်သို့တည်ဆောက်သည်ဟူသော အသေးစိတ်အချက်များမှ သီးခြားခွဲထုတ်ရန် ကူညီပေးသည့် နည်းစနစ်တစ်ခုဖြစ်သည်။
+</p>
+<p>Data abstraction ၏ အခြေခံစိတ်ကူးမှာ compound data object များကို အသုံးပြုမည့် ပရိုဂရမ်များကို “abstract data” ပေါ်တွင် လုပ်ဆောင်နိုင်စေရန် ဖွဲ့စည်းတည်ဆောက်ရန်ဖြစ်သည်။ ဆိုလိုသည်မှာ ကျွန်ုပ်တို့၏ ပရိုဂရမ်များသည် လုပ်ဆောင်ရမည့် လုပ်ငန်းစဉ်အတွက် အမှန်တကယ် မလိုအပ်သော data ဆိုင်ရာ ယူဆချက်များကို မပြုလုပ်ဘဲ data ကို အသုံးပြုသင့်သည်။ တစ်ချိန်တည်းမှာပင်၊ data ကို အသုံးပြုသော ပရိုဂရမ်များနှင့် သီးခြားလွတ်လပ်သော “concrete” data representation တစ်ခုကို သတ်မှတ်သည်။ ကျွန်ုပ်တို့ စနစ်၏ ဤအပိုင်းနှစ်ခုကြားရှိ interface မှာ abstract data ကို concrete representation အဖြစ် အကောင်အထည်ဖော်ပေးသည့် <a id="index-selectors"></a>
+<em>selectors</em> နှင့် <a id="index-constructors"></a>
+<em>constructors</em> ဟုခေါ်သော procedure အစုအဝေးတစ်ခု ဖြစ်လိမ့်မည်။ ဤနည်းစနစ်ကို သရုပ်ဖော်ရန်အတွက် rational numbers များကို ကိုင်တွယ်အသုံးပြုရန် procedure အစုအဝေးတစ်ခုကို မည်သို့ဒီဇိုင်းထုတ်ရမည်ကို ကျွန်ုပ်တို့ စဉ်းစားပါမည်။
+</p>
+
+<a id="g_t2_002e1_002e1"></a>
+<a id="Example_003a-Arithmetic-Operations-for-Rational-Numbers"></a>
+<h4 class="subsection"><span class="secnum">2.1.1</span><span class="sectitle">ဥပမာ- ရာရှင်နယ်ကိန်းများအတွက် သင်္ချာလုပ်ဆောင်ချက်များ</span></h4>
+
+<p>ကျွန်ုပ်တို့သည် ရာရှင်နယ်ကိန်း (rational numbers) များဖြင့် သင်္ချာတွက်ချက်မှုများ ပြုလုပ်လိုသည်ဟု ဆိုပါစို့။ ၎င်းတို့ကို ပေါင်း၊ နှုတ်၊ မြှောက်၊ စား ပြုလုပ်နိုင်ရန်နှင့် ရာရှင်နယ်ကိန်းနှစ်ခု ညီ၊ မညီ စမ်းသပ်နိုင်ရန် ကျွန်ုပ်တို့ အလိုရှိသည်။
+</p>
+<p>အပိုင်းဝေ (numerator) နှင့် အပိုင်းခြေ (denominator) တို့မှ ရာရှင်နယ်ကိန်းတစ်ခုကို တည်ဆောက်ရန် နည်းလမ်းတစ်ခု ကျွန်ုပ်တို့ထံတွင် ရှိပြီးသားဖြစ်သည်ဟု အစပြု၍ ယူဆကြပါစို့။ ထို့ပြင် ရာရှင်နယ်ကိန်းတစ်ခု ပေးထားပါက၊ ၎င်း၏ အပိုင်းဝေနှင့် အပိုင်းခြေတို့ကို ထုတ်ယူရန် (သို့မဟုတ် ရွေးထုတ်ရန်) နည်းလမ်းတစ်ခု ရှိသည်ဟုလည်း ယူဆမည်။ ထပ်မံ၍ constructor နှင့် selector များကို procedure များအဖြစ် ရရှိနိုင်သည်ဟု ယူဆကြပါစို့-
+</p>
+<ul>
+<li> <code>(make-rat ⟨<var>n</var>⟩ ⟨<var>d</var>⟩)</code> သည် ကိန်းပြည့် <code>⟨<var>n</var>⟩</code> ကို အပိုင်းဝေအဖြစ်လည်းကောင်း၊ ကိန်းပြည့် <code>⟨<var>d</var>⟩</code> ကို အပိုင်းခြေအဖြစ်လည်းကောင်း အသုံးပြုထားသည့် ရာရှင်နယ်ကိန်းကို ပြန်ပေးသည်။
+
+</li><li> <code>(numer ⟨<var>x</var>⟩)</code> သည် ရာရှင်နယ်ကိန်း <code>⟨<var>x</var>⟩</code> ၏ အပိုင်းဝေကို ပြန်ပေးသည်။
+
+</li><li> <code>(denom ⟨<var>x</var>⟩)</code> သည် ရာရှင်နယ်ကိန်း <code>⟨<var>x</var>⟩</code> ၏ အပိုင်းခြေကို ပြန်ပေးသည်။
+
+</li></ul>
+
+<p>ဤနေရာတွင် ကျွန်ုပ်တို့သည် ပေါင်းစပ်ဖွဲ့စည်းခြင်းဆိုင်ရာ အစွမ်းထက်သော ဗျူဟာတစ်ခုဖြစ်သည့် <a id="index-wishful-thinking"></a>
+<em>wishful thinking</em> ကို အသုံးပြုနေခြင်းဖြစ်သည်။
+ရာရှင်နယ်ကိန်းတစ်ခုကို မည်သို့ ဖော်ပြမည်၊ သို့မဟုတ် <code>numer</code>၊ <code>denom</code> နှင့် <code>make-rat</code> procedure များကို မည်သို့ အကောင်အထည်ဖော်မည်ကို ကျွန်ုပ်တို့ မပြောရသေးပါ။ သို့သော်လည်း ကျွန်ုပ်တို့တွင် ဤ procedure သုံးခု ရှိခဲ့မည်ဆိုပါက၊ အောက်ပါ ဆက်သွယ်ချက်များကို အသုံးပြု၍ ပေါင်း၊ နှုတ်၊ မြှောက်၊ စား ပြုလုပ်နိုင်ပြီး ညီမျှမှုကို စမ်းသပ်နိုင်မည်ဖြစ်သည်-
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mtable columnalign="right center left" rowspacing="3pt" columnspacing="thickmathspace">
+    <mtr>
+      <mtd>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mfrac>
+            <msub>
+              <mi>n</mi>
+              <mn>1</mn>
+            </msub>
+            <msub>
+              <mi>d</mi>
+              <mn>1</mn>
+            </msub>
+          </mfrac>
+        </mrow>
+        <mo>+</mo>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mfrac>
+            <msub>
+              <mi>n</mi>
+              <mn>2</mn>
+            </msub>
+            <msub>
+              <mi>d</mi>
+              <mn>2</mn>
+            </msub>
+          </mfrac>
+        </mrow>
+      </mtd>
+      <mtd>
+        <mo>=</mo>
+      </mtd>
+      <mtd>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mfrac>
+            <mrow>
+              <msub>
+                <mi>n</mi>
+                <mn>1</mn>
+              </msub>
+              <msub>
+                <mi>d</mi>
+                <mn>2</mn>
+              </msub>
+              <mo>+</mo>
+              <msub>
+                <mi>n</mi>
+                <mn>2</mn>
+              </msub>
+              <msub>
+                <mi>d</mi>
+                <mn>1</mn>
+              </msub>
+            </mrow>
+            <mrow>
+              <msub>
+                <mi>d</mi>
+                <mn>1</mn>
+              </msub>
+              <msub>
+                <mi>d</mi>
+                <mn>2</mn>
+              </msub>
+            </mrow>
+          </mfrac>
+        </mrow>
+        <mo>,</mo>
+      </mtd>
+    </mtr>
+    <mtr>
+      <mtd>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mfrac>
+            <msub>
+              <mi>n</mi>
+              <mn>1</mn>
+            </msub>
+            <msub>
+              <mi>d</mi>
+              <mn>1</mn>
+            </msub>
+          </mfrac>
+        </mrow>
+        <mo>−<!-- − --></mo>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mfrac>
+            <msub>
+              <mi>n</mi>
+              <mn>2</mn>
+            </msub>
+            <msub>
+              <mi>d</mi>
+              <mn>2</mn>
+            </msub>
+          </mfrac>
+        </mrow>
+      </mtd>
+      <mtd>
+        <mo>=</mo>
+      </mtd>
+      <mtd>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mfrac>
+            <mrow>
+              <msub>
+                <mi>n</mi>
+                <mn>1</mn>
+              </msub>
+              <msub>
+                <mi>d</mi>
+                <mn>2</mn>
+              </msub>
+              <mo>−<!-- − --></mo>
+              <msub>
+                <mi>n</mi>
+                <mn>2</mn>
+              </msub>
+              <msub>
+                <mi>d</mi>
+                <mn>1</mn>
+              </msub>
+            </mrow>
+            <mrow>
+              <msub>
+                <mi>d</mi>
+                <mn>1</mn>
+              </msub>
+              <msub>
+                <mi>d</mi>
+                <mn>2</mn>
+              </msub>
+            </mrow>
+          </mfrac>
+        </mrow>
+        <mo>,</mo>
+      </mtd>
+    </mtr>
+    <mtr>
+      <mtd>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mfrac>
+            <msub>
+              <mi>n</mi>
+              <mn>1</mn>
+            </msub>
+            <msub>
+              <mi>d</mi>
+              <mn>1</mn>
+            </msub>
+          </mfrac>
+        </mrow>
+        <mo>×<!-- × --></mo>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mfrac>
+            <msub>
+              <mi>n</mi>
+              <mn>2</mn>
+            </msub>
+            <msub>
+              <mi>d</mi>
+              <mn>2</mn>
+            </msub>
+          </mfrac>
+        </mrow>
+      </mtd>
+      <mtd>
+        <mo>=</mo>
+      </mtd>
+      <mtd>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mfrac>
+            <mrow>
+              <msub>
+                <mi>n</mi>
+                <mn>1</mn>
+              </msub>
+              <msub>
+                <mi>n</mi>
+                <mn>2</mn>
+              </msub>
+            </mrow>
+            <mrow>
+              <msub>
+                <mi>d</mi>
+                <mn>1</mn>
+              </msub>
+              <msub>
+                <mi>d</mi>
+                <mn>2</mn>
+              </msub>
+            </mrow>
+          </mfrac>
+        </mrow>
+        <mo>,</mo>
+      </mtd>
+    </mtr>
+    <mtr>
+      <mtd>
+        <mfrac>
+          <mrow class="MJX-TeXAtom-ORD">
+            <msub>
+              <mi>n</mi>
+              <mn>1</mn>
+            </msub>
+            <mspace width="thinmathspace"/>
+            <mrow class="MJX-TeXAtom-ORD">
+              <mo>/</mo>
+            </mrow>
+            <mspace width="thinmathspace"/>
+            <msub>
+              <mi>d</mi>
+              <mn>1</mn>
+            </msub>
+          </mrow>
+          <mrow class="MJX-TeXAtom-ORD">
+            <msub>
+              <mi>n</mi>
+              <mn>2</mn>
+            </msub>
+            <mspace width="thinmathspace"/>
+            <mrow class="MJX-TeXAtom-ORD">
+              <mo>/</mo>
+            </mrow>
+            <mspace width="thinmathspace"/>
+            <msub>
+              <mi>d</mi>
+              <mn>2</mn>
+            </msub>
+          </mrow>
+        </mfrac>
+      </mtd>
+      <mtd>
+        <mo>=</mo>
+      </mtd>
+      <mtd>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mfrac>
+            <mrow>
+              <msub>
+                <mi>n</mi>
+                <mn>1</mn>
+              </msub>
+              <msub>
+                <mi>d</mi>
+                <mn>2</mn>
+              </msub>
+            </mrow>
+            <mrow>
+              <msub>
+                <mi>d</mi>
+                <mn>1</mn>
+              </msub>
+              <msub>
+                <mi>n</mi>
+                <mn>2</mn>
+              </msub>
+            </mrow>
+          </mfrac>
+        </mrow>
+        <mo>,</mo>
+      </mtd>
+    </mtr>
+    <mtr>
+      <mtd>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mfrac>
+            <msub>
+              <mi>n</mi>
+              <mn>1</mn>
+            </msub>
+            <msub>
+              <mi>d</mi>
+              <mn>1</mn>
+            </msub>
+          </mfrac>
+        </mrow>
+      </mtd>
+      <mtd>
+        <mo>=</mo>
+      </mtd>
+      <mtd>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mfrac>
+            <msub>
+              <mi>n</mi>
+              <mn>2</mn>
+            </msub>
+            <msub>
+              <mi>d</mi>
+              <mn>2</mn>
+            </msub>
+          </mfrac>
+        </mrow>
+        <mspace width="1em"/>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mtext> </mtext>
+          <mi mathvariant="normal">i</mi>
+          <mi mathvariant="normal">f</mi>
+          <mtext> </mtext>
+          <mi mathvariant="normal">a</mi>
+          <mi mathvariant="normal">n</mi>
+          <mi mathvariant="normal">d</mi>
+          <mtext> </mtext>
+          <mi mathvariant="normal">o</mi>
+          <mi mathvariant="normal">n</mi>
+          <mi mathvariant="normal">l</mi>
+          <mi mathvariant="normal">y</mi>
+          <mtext> </mtext>
+          <mi mathvariant="normal">i</mi>
+          <mi mathvariant="normal">f</mi>
+          <mspace width="1em"/>
+        </mrow>
+        <msub>
+          <mi>n</mi>
+          <mn>1</mn>
+        </msub>
+        <msub>
+          <mi>d</mi>
+          <mn>2</mn>
+        </msub>
+        <mo>=</mo>
+        <msub>
+          <mi>n</mi>
+          <mn>2</mn>
+        </msub>
+        <msub>
+          <mi>d</mi>
+          <mn>1</mn>
+        </msub>
+        <mo>.</mo>
+      </mtd>
+    </mtr>
+  </mtable>
+</math>
+ဤစည်းမျဉ်းများကို procedure များအဖြစ် ဖော်ပြနိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">add-rat x y</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">make-rat </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">numer x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">denom y</span><span class="clo">))</span><span class="pln">
+               </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">numer y</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">denom x</span><span class="clo">)))</span><span class="pln">
+            </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">denom x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">denom y</span><span class="clo">))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sub-rat x y</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">make-rat </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">numer x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">denom y</span><span class="clo">))</span><span class="pln">
+               </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">numer y</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">denom x</span><span class="clo">)))</span><span class="pln">
+            </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">denom x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">denom y</span><span class="clo">))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">mul-rat x y</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">make-rat </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">numer x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">numer y</span><span class="clo">))</span><span class="pln">
+            </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">denom x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">denom y</span><span class="clo">))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">div-rat x y</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">make-rat </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">numer x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">denom y</span><span class="clo">))</span><span class="pln">
+            </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">denom x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">numer y</span><span class="clo">))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">equal-rat? x y</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">numer x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">denom y</span><span class="clo">))</span><span class="pln">
+     </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">numer y</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">denom x</span><span class="clo">))))</span></pre></div>
+
+<p>ယခုအခါ ကျွန်ုပ်တို့တွင် selector နှင့် constructor procedure များဖြစ်သော <code>numer</code>၊ <code>denom</code> နှင့် <code>make-rat</code> တို့ကို အသုံးပြု၍ သတ်မှတ်ထားသော ရာရှင်နယ်ကိန်းဆိုင်ရာ လုပ်ဆောင်ချက်များ ရှိပြီဖြစ်သည်။ သို့သော် ၎င်းတို့ကို ကျွန်ုပ်တို့ မသတ်မှတ်ရသေးပါ။ ကျွန်ုပ်တို့ လိုအပ်သည်မှာ ရာရှင်နယ်ကိန်းတစ်ခု ဖြစ်လာစေရန် အပိုင်းဝေနှင့် အပိုင်းခြေတို့ကို တစ်ခုတည်းဖြစ်အောင် တွဲကပ်ပေးမည့် နည်းလမ်းတစ်ခု ဖြစ်သည်။
+</p>
+<a id="Pairs"></a>
+<h5 class="subsubheading">အတွဲများ (Pairs)</h5>
+
+<p>ကျွန်ုပ်တို့၏ data abstraction ၏ လက်တွေ့အဆင့် (concrete level) ကို အကောင်အထည်ဖော်နိုင်ရန်၊ ကျွန်ုပ်တို့၏ programming language သည် <a id="index-pair"></a>
+<em>pair</em> ဟုခေါ်သော ပေါင်းစပ်ဖွဲ့စည်းပုံတစ်ခုကို ထောက်ပံ့ပေးထားပြီး၊ ၎င်းကို primitive procedure ဖြစ်သော <code>cons</code> ဖြင့် တည်ဆောက်နိုင်သည်။ ဤ procedure သည် argument နှစ်ခုကို ယူပြီး၊ ထို argument နှစ်ခုကို အစိတ်အပိုင်းများအဖြစ် ပါဝင်သော ပေါင်းစပ် data object တစ်ခုကို ပြန်ပေးသည်။ pair တစ်ခု ပေးထားပါက၊ primitive procedure များဖြစ်သော <code>car</code> နှင့် <code>cdr</code> ကို အသုံးပြု၍ အစိတ်အပိုင်းများကို ထုတ်ယူနိုင်သည်။<a class="footnote_link" id="DOCF68" href="#FOOT68"><sup>68</sup></a> ထို့ကြောင့် <code>cons</code>၊ <code>car</code> နှင့် <code>cdr</code> တို့ကို အောက်ပါအတိုင်း အသုံးပြုနိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> x </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> </span><span class="lit">2</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> x</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">1</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> x</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">2</span></i>
+</pre></div>
+
+<p>pair တစ်ခုသည် primitive data object တစ်ခုကဲ့သို့ပင် အမည်ပေးနိုင်ပြီး ကိုင်တွယ်အသုံးပြုနိုင်သော data object တစ်ခုဖြစ်သည်ကို သတိပြုပါ။ ထို့ပြင် <code>cons</code> ကို အသုံးပြု၍ အစိတ်အပိုင်းများကိုယ်တိုင်က pair များဖြစ်နေသော အတွဲများကို တည်ဆောက်နိုင်ပြီး၊ ထိုနည်းအတိုင်း ဆက်လက် လုပ်ဆောင်သွားနိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> x </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> </span><span class="lit">2</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> y </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="lit">4</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> z </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> x y</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> z</span><span class="clo">))</span><span class="pln">
+</span><i><span class="lit">1</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> z</span><span class="clo">))</span><span class="pln">
+</span><i><span class="lit">3</span></i>
+</pre></div>
+
+<p><a href="2_002e2.xhtml#g_t2_002e2">2.2</a> တွင် pair များကို ပေါင်းစပ်နိုင်သည့် ဤစွမ်းရည်ကြောင့် pair များကို ရှုပ်ထွေးသော data structure အမျိုးမျိုး ဖန်တီးရန်အတွက် အထွေထွေသုံး အခြေခံအစိတ်အပိုင်းများအဖြစ် အသုံးပြုနိုင်ပုံကို တွေ့ရမည်ဖြစ်သည်။ <code>cons</code>၊ <code>car</code> နှင့် <code>cdr</code> procedure များဖြင့် အကောင်အထည်ဖော်ထားသော single compound-data primitive ဖြစ်သည့် <a id="index-pair-1"></a>
+<em>pair</em> သည် ကျွန်ုပ်တို့ လိုအပ်သော တစ်ခုတည်းသော တွဲကပ်ပစ္စည်း (glue) ဖြစ်သည်။ pair များမှ တည်ဆောက်ထားသော data object များကို
+<a id="index-list_002dstructured"></a>
+<em>list-structured</em> data ဟု ခေါ်သည်။
+</p>
+<a id="Representing-rational-numbers"></a>
+<h5 class="subsubheading">ရာရှင်နယ်ကိန်းများကို ကိုယ်စားပြုဖော်ပြခြင်း</h5>
+
+<p>pair များသည် ရာရှင်နယ်ကိန်းစနစ်ကို ပြီးပြည့်စုံစေရန် သဘာဝကျသော နည်းလမ်းတစ်ခုကို ပေးစွမ်းသည်။ ရာရှင်နယ်ကိန်းတစ်ခုကို အပိုင်းဝေနှင့် အပိုင်းခြေဖြစ်သော ကိန်းပြည့်နှစ်ခုပါဝင်သည့် pair တစ်ခုအဖြစ် ဖော်ပြရုံသာ ဖြစ်သည်။ ထိုအခါ <code>make-rat</code>၊ <code>numer</code> နှင့် <code>denom</code> တို့ကို အောက်ပါအတိုင်း အလွယ်တကူ အကောင်အထည်ဖော်နိုင်သည်-<a class="footnote_link" id="DOCF69" href="#FOOT69"><sup>69</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-rat n d</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> n d</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">numer x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> x</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">denom x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> x</span><span class="clo">))</span></pre></div>
+
+<p>ထို့ပြင် ကျွန်ုပ်တို့၏ တွက်ချက်မှု ရလဒ်များကို ပြသရန်အတွက်၊ အပိုင်းဝေ၊ slash (စောင်းစောင်းမျဉ်း) နှင့် အပိုင်းခြေတို့ကို ရိုက်နှိပ်ခြင်းဖြင့် ရာရှင်နယ်ကိန်းများကို print ထုတ်နိုင်သည်-<a class="footnote_link" id="DOCF70" href="#FOOT70"><sup>70</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">print-rat x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">newline</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">display </span><span class="opn">(</span><span class="pln">numer x</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">display </span><span class="str">"/"</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">display </span><span class="opn">(</span><span class="pln">denom x</span><span class="clo">)))</span></pre></div>
+
+<p>ယခု ကျွန်ုပ်တို့၏ ရာရှင်နယ်ကိန်းဆိုင်ရာ procedure များကို စမ်းသပ်ကြည့်နိုင်ပြီ-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> one-half </span><span class="opn">(</span><span class="pln">make-rat </span><span class="lit">1</span><span class="pln"> </span><span class="lit">2</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">print-rat one-half</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">1/2</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> one-third </span><span class="opn">(</span><span class="pln">make-rat </span><span class="lit">1</span><span class="pln"> </span><span class="lit">3</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">print-rat
+ </span><span class="opn">(</span><span class="pln">add-rat one-half one-third</span><span class="clo">))</span><span class="pln">
+</span><i><span class="lit">5/6</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">print-rat
+ </span><span class="opn">(</span><span class="pln">mul-rat one-half one-third</span><span class="clo">))</span><span class="pln">
+</span><i><span class="lit">1/6</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">print-rat
+ </span><span class="opn">(</span><span class="pln">add-rat one-third one-third</span><span class="clo">))</span><span class="pln">
+</span><i><span class="lit">6/9</span></i>
+</pre></div>
+
+<p>နောက်ဆုံး ဥပမာတွင် ပြထားသည့်အတိုင်း၊ ကျွန်ုပ်တို့၏ ရာရှင်နယ်ကိန်း အကောင်အထည်ဖော်မှုသည် ရာရှင်နယ်ကိန်းများကို အငယ်ဆုံးပုံစံ (lowest terms) သို့ မလျှော့ချပေးပါ။ ဤအချက်ကို <code>make-rat</code> ကို ပြောင်းလဲခြင်းဖြင့် ပြုပြင်နိုင်သည်။ အကယ်၍ ကျွန်ုပ်တို့တွင် <a href="1_002e2.xhtml#g_t1_002e2_002e5">1.2.5</a> ရှိ ကိန်းပြည့်နှစ်ခု၏ အကြီးဆုံးဘုံဆခွဲကိန်းကို ထုတ်ပေးသော <code>gcd</code> procedure ကဲ့သို့သော procedure တစ်ခု ရှိပါက၊ pair မတည်ဆောက်မီ အပိုင်းဝေနှင့် အပိုင်းခြေကို အငယ်ဆုံးပုံစံသို့ လျှော့ချရန် <code>gcd</code> ကို အသုံးပြုနိုင်သည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-rat n d</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">g </span><span class="opn">(</span><span class="pln">gcd n d</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> n g</span><span class="clo">)</span><span class="pln"> 
+          </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> d g</span><span class="clo">))))</span></pre></div>
+
+<p>ယခုအခါ ကျွန်ုပ်တို့ လိုလားသည့်အတိုင်း
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">print-rat 
+ </span><span class="opn">(</span><span class="pln">add-rat one-third one-third</span><span class="clo">))</span><span class="pln">
+</span><i><span class="lit">2/3</span></i></pre></div>
+
+<p>ရရှိပြီဖြစ်သည်။ ဤပြုပြင်ပြောင်းလဲမှုကို အမှန်တကယ် လုပ်ဆောင်ချက်များကို အကောင်အထည်ဖော်သည့် procedure များ (ဥပမာ <code>add-rat</code> နှင့် <code>mul-rat</code>) ကို မပြောင်းလဲဘဲ၊ constructor <code>make-rat</code> ကို ပြောင်းလဲခြင်းဖြင့်သာ လုပ်ဆောင်နိုင်ခဲ့ခြင်း ဖြစ်သည်။
+</p>
+<blockquote>
+<p><strong><a id="Exercise-2_002e1"></a>လေ့ကျင့်ခန်း ၂.၁-</strong> အပေါင်းကိန်းနှင့် အနှုတ်ကိန်း argument နှစ်မျိုးလုံးကို ကိုင်တွယ်နိုင်သော ပိုမိုကောင်းမွန်သည့် <code>make-rat</code> version တစ်ခုကို သတ်မှတ်ပါ။ <code>make-rat</code> သည် လက္ခဏာ (sign) ကို ပုံမှန်ညှိပေး (normalize လုပ်ပေး) ရမည်ဖြစ်ရာ ရာရှင်နယ်ကိန်းသည် အပေါင်းကိန်းဖြစ်ပါက အပိုင်းဝေနှင့် အပိုင်းခြေ နှစ်ခုလုံး အပေါင်းဖြစ်စေရန်နှင့်၊ ရာရှင်နယ်ကိန်းသည် အနှုတ်ကိန်းဖြစ်ပါက အပိုင်းဝေသာ အနှုတ်ဖြစ်စေရန် လုပ်ဆောင်ရမည်။
+</p></blockquote>
+
+<a id="g_t2_002e1_002e2"></a>
+<a id="Abstraction-Barriers"></a>
+<h4 class="subsection"><span class="secnum">2.1.2</span><span class="sectitle">အနှစ်ထုတ်ခြင်း အတားအဆီးများ (Abstraction Barriers)</span></h4>
+
+<p>စုပေါင်းဒေတာ (compound data) နှင့် ဒေတာ အနှစ်ထုတ်ခြင်း (data abstraction) ဆိုင်ရာ ဥပမာများကို ဆက်လက်မလေ့လာမီ၊ ရာရှင်နယ်ကိန်း (rational-number) ဥပမာမှ ပေါ်ထွက်လာသော အချက်အချို့ကို သုံးသပ်ကြည့်ကြပါစို့။ ကျွန်ုပ်တို့သည် ရာရှင်နယ်ကိန်း လုပ်ဆောင်ချက်များကို <code>make-rat</code> ဟူသော တည်ဆောက်သူ (constructor) နှင့် <code>numer</code>၊ <code>denom</code> ဟူသော ရွေးချယ်သူများ (selectors) ဖြင့် အဓိပ္ပာယ်ဖွင့်ဆိုခဲ့သည်။ ယေဘုယျအားဖြင့် ဒေတာ အနှစ်ထုတ်ခြင်း၏ အခြေခံ အယူအဆမှာ ဒေတာ အရာဝတ္ထု (data object) အမျိုးအစား တစ်ခုစီအတွက် အခြေခံ လုပ်ဆောင်ချက် အစုအဝေးတစ်ခုကို သတ်မှတ်ရန်ဖြစ်ပြီး၊ ထိုအမျိုးအစားရှိသော ဒေတာ အရာဝတ္ထုများကို ကိုင်တွယ်ခြယ်လှယ်မှု အားလုံးကို ထိုလုပ်ဆောင်ချက်များဖြင့်သာ ဖော်ပြရန်နှင့် ဒေတာကို ကိုင်တွယ်ရာတွင် ထိုလုပ်ဆောင်ချက်များကိုသာ အသုံးပြုရန် ဖြစ်သည်။
+</p>
+<p>ရာရှင်နယ်ကိန်း စနစ်၏ တည်ဆောက်ပုံကို <a href="#Figure-2_002e1">ပုံ ၂.၁</a> တွင် ပြထားသည့်အတိုင်း မြင်ယောင်ကြည့်နိုင်သည်။ အလျားလိုက်မျဉ်းများသည် စနစ်၏ မတူညီသော "အဆင့်များ" (levels) ကို သီးခြားခွဲထုတ်ထားသည့် <a id="index-abstraction-barriers-1"></a>
+<em>အနှစ်ထုတ်ခြင်း အတားအဆီးများ (abstraction barriers)</em> 
+ကို ကိုယ်စားပြုသည်။ အဆင့်တစ်ခုစီတွင်၊ ထိုအတားအဆီးသည် ဒေတာ အနှစ်ထုတ်ခြင်းကို အသုံးပြုသည့် (အပေါ်ဘက်ရှိ) ပရိုဂရမ်များကို ဒေတာ အနှစ်ထုတ်ခြင်းကို အကောင်အထည်ဖော်သည့် (အောက်ဘက်ရှိ) ပရိုဂရမ်များမှ ခွဲခြားပေးထားသည်။ ရာရှင်နယ်ကိန်းများကို အသုံးပြုသည့် ပရိုဂရမ်များသည် ရာရှင်နယ်ကိန်း ပက်ကေ့ချ် (rational-number package) မှ "အများပြည်သူသုံးရန်" ပံ့ပိုးပေးထားသော လုပ်ထုံးလုပ်နည်းများဖြစ်သည့် <code>add-rat</code>,
+<code>sub-rat</code>, <code>mul-rat</code>, <code>div-rat</code>, နှင့် <code>equal-rat?</code> တို့ဖြင့်သာ ကိုင်တွယ်အသုံးပြုကြသည်။ ၎င်းတို့ကို တစ်ဖန် <code>make-rat</code>, <code>numer</code>, နှင့် <code>denom</code> ဟူသော တည်ဆောက်သူနှင့် ရွေးချယ်သူများဖြင့်သာ အကောင်အထည်ဖော်ထားပြီး၊ ထိုတည်ဆောက်သူနှင့် ရွေးချယ်သူများကိုယ်တိုင်ကို pair များဖြင့် အကောင်အထည်ဖော်ထားသည်။ pair များကို <code>cons</code>, <code>car</code>, နှင့် <code>cdr</code> တို့ဖြင့် ကိုင်တွယ်နိုင်သရွေ့ pair များကို မည်သို့ အကောင်အထည်ဖော်ထားသည်ဟူသော အသေးစိတ်အချက်အလက်များသည် ကျန်ရှိသော ရာရှင်နယ်ကိန်း ပက်ကေ့ချ်အတွက် အရေးမကြီးပါ။ လက်တွေ့တွင်၊ အဆင့်တစ်ခုစီရှိ လုပ်ထုံးလုပ်နည်းများသည် အနှစ်ထုတ်ခြင်း အတားအဆီးများကို သတ်မှတ်ပေးပြီး မတူညီသော အဆင့်များကို ချိတ်ဆက်ပေးသည့် အပြန်အလှန် ချိတ်ဆက်မှုများ (interfaces) ပင် ဖြစ်ကြသည်။
+</p>
+<figure class="float">
+<a id="Figure-2_002e1"></a>
+<object style="width: 48.87ex; height: 38.08ex;" data="fig/chap2/Fig2.1d.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>ပုံ ၂.၁:</strong> ရာရှင်နယ်ကိန်း ပက်ကေ့ချ်ရှိ ဒေတာ အနှစ်ထုတ်ခြင်း အတားအဆီးများ။</p>
+</figcaption>
+</figure>
+
+<p>ဤရိုးရှင်းသော အယူအဆတွင် အားသာချက်များစွာ ရှိသည်။ အားသာချက်တစ်ခုမှာ ပရိုဂရမ်များကို ထိန်းသိမ်းရန်နှင့် ပြုပြင်မွမ်းမံရန် ပိုမိုလွယ်ကူစေခြင်းဖြစ်သည်။ မည်သည့် ရှုပ်ထွေးသော ဒေတာ တည်ဆောက်ပုံကိုမဆို ပရိုဂရမ်မင်းဘာသာစကားမှ ပံ့ပိုးပေးထားသော အခြေခံ ဒေတာ တည်ဆောက်ပုံများ (primitive data structures) ဖြင့် နည်းမျိုးစုံဖြင့် ကိုယ်စားပြုဖော်ပြနိုင်သည်။ ဒေတာကို ကိုယ်စားပြုဖော်ပြပုံ ရွေးချယ်မှုသည် ၎င်းအပေါ်တွင် အလုပ်လုပ်သည့် ပရိုဂရမ်များအပေါ် သက်ရောက်မှုရှိသည်မှာ ထင်ရှားပါသည်။ ထို့ကြောင့် နောက်ပိုင်းတွင် ဖော်ပြပုံစနစ်ကို ပြောင်းလဲခဲ့လျှင် ထိုပရိုဂရမ်အားလုံးကို လိုက်လျောညီထွေဖြစ်အောင် ပြုပြင်ရပေမည်။ ဖော်ပြပုံစနစ်အပေါ် မှီခိုနေရမှုကို ပရိုဂရမ် မော်ဂျူး (module) အနည်းငယ်အတွင်း၌သာ ကန့်သတ်ထားရန် စနစ်တကျ ဒီဇိုင်းမဆွဲထားပါက၊ ကြီးမားသော ပရိုဂရမ်များအတွက် ဤအလုပ်သည် အချိန်ကုန်ပြီး ကုန်ကျစရိတ် များပြားနိုင်သည်။
+</p>
+<p>ဥပမာအားဖြင့်၊ ရာရှင်နယ်ကိန်းများကို အရှင်းဆုံးပုံစံ (lowest terms) သို့ လျှော့ချသည့် ပြဿနာကို ဖြေရှင်းရန် အခြားနည်းလမ်းတစ်ခုမှာ ရာရှင်နယ်ကိန်းကို တည်ဆောက်ချိန်တွင် မဟုတ်ဘဲ ၎င်း၏ အစိတ်အပိုင်းများကို ရယူအသုံးပြုသည့် အချိန်တိုင်းတွင် လျှော့ချခြင်း ဖြစ်သည်။ ဤနည်းလမ်းသည် မတူညီသော တည်ဆောက်သူနှင့် ရွေးချယ်သူ လုပ်ထုံးလုပ်နည်းများကို ဖြစ်ပေါ်စေသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-rat n d</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> n d</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">numer x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">g </span><span class="opn">(</span><span class="pln">gcd </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> x</span><span class="clo">))))</span><span class="pln">
+    </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> x</span><span class="clo">)</span><span class="pln"> g</span><span class="clo">)))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">denom x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">g </span><span class="opn">(</span><span class="pln">gcd </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> x</span><span class="clo">))))</span><span class="pln">
+    </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> x</span><span class="clo">)</span><span class="pln"> g</span><span class="clo">)))</span></pre></div>
+
+<p>ဤအကောင်အထည်ဖော်မှုနှင့် ယခင်အကောင်အထည်ဖော်မှုတို့၏ ကွာခြားချက်မှာ <code>gcd</code> ကို မမည်သည့်အချိန်တွင် တွက်ချက်သနည်း ဆိုသည့်အချက်ပေါ်တွင် မူတည်သည်။ ရာရှင်နယ်ကိန်းများကို အသုံးပြုရာတွင် ကိန်းတစ်ခုတည်း၏ ပိုင်းဝေနှင့် ပိုင်းခြေများကို အကြိမ်ကြိမ် ရယူသုံးစွဲရမည်ဆိုပါက၊ ရာရှင်နယ်ကိန်းကို တည်ဆောက်သည့်အချိန်တွင် <code>gcd</code> ကို တွက်ချက်ထားခြင်းက ပိုမိုကောင်းမွန်သည်။ သို့မဟုတ်ပါက ရယူသုံးစွဲသည့်အချိန်မှသာ <code>gcd</code> ကို တွက်ချက်ခြင်းက ပိုကောင်းပေမည်။ မည်သို့ပင်ဖြစ်စေ၊ ဖော်ပြပုံစနစ်တစ်ခုမှ အခြားတစ်ခုသို့ ပြောင်းလဲသည့်အခါ <code>add-rat</code>, <code>sub-rat</code> စသည့် လုပ်ထုံးလုပ်နည်းများကို လုံးဝ ပြုပြင်ရန် မလိုအပ်ပါ။
+</p>
+<p>ဖော်ပြပုံစနစ်အပေါ် မှီခိုမှုကို အပြန်အလှန် ချိတ်ဆက်မှုဆိုင်ရာ လုပ်ထုံးလုပ်နည်း အနည်းငယ်အတွင်း၌သာ ကန့်သတ်ထားခြင်းသည် ပရိုဂရမ်များကို ဒီဇိုင်းဆွဲရာတွင်ရော၊ ပြုပြင်မွမ်းမံရာတွင်ရော အထောက်အကူပြုသည်။ အဘယ်ကြောင့်ဆိုသော် ၎င်းသည် အခြား အကောင်အထည်ဖော်မှုများကို ထည့်သွင်းစဉ်းစားနိုင်ရန် ပျော့ပြောင်းမှုကို ပေးသောကြောင့် ဖြစ်သည်။ ကျွန်ုပ်တို့၏ ရိုးရှင်းသော ဥပမာကို ဆက်လက်ပြောရလျှင်၊ ကျွန်ုပ်တို့သည် ရာရှင်နယ်ကိန်း ပက်ကေ့ချ်တစ်ခုကို ဒီဇိုင်းဆွဲနေပြီး <code>gcd</code> ကို တည်ဆောက်ချိန်တွင် တွက်မည်လား သို့မဟုတ် ရွေးချယ်ချိန်တွင် တွက်မည်လားဆိုသည်ကို အစပိုင်းတွင် မဆုံးဖြတ်နိုင်သေးဟု ဆိုပါစို့။ ဒေတာ အနှစ်ထုတ်ခြင်း နည်းစနစ်သည် စနစ်၏ ကျန်ရှိသော အစိတ်အပိုင်းများကို ဆက်လက်လုပ်ဆောင်နိုင်စွမ်း မဆုံးရှုံးစေဘဲ ထိုဆုံးဖြတ်ချက်ကို ရွှေ့ဆိုင်းထားနိုင်ရန် လမ်းစတစ်ခု ပေးထားသည်။
+</p>
+<blockquote>
+<p><strong><a id="Exercise-2_002e2"></a>လေ့ကျင့်ခန်း ၂.၂:</strong> ပြင်ညီ (plane) တစ်ခုပေါ်ရှိ မျဉ်းပိုင်း (line segment) များကို ကိုယ်စားပြုဖော်ပြသည့် ပြဿနာကို သုံးသပ်ကြည့်ပါ။ မျဉ်းပိုင်းတစ်ခုစီကို အမှတ်နှစ်ခု (စမှတ်နှင့် ဆုံးမှတ်) ပါဝင်သော pair တစ်ခုအဖြစ် ဖော်ပြသည်။ မျဉ်းပိုင်းများကို အမှတ်များဖြင့် ဖော်ပြပုံကို သတ်မှတ်ပေးသည့် <code>make-segment</code> ဟူသော တည်ဆောက်သူနှင့် <code>start-segment</code>၊ <code>end-segment</code> ဟူသော ရွေးချယ်သူများကို အဓိပ္ပာယ်ဖွင့်ဆိုပါ။ ထို့အပြင်၊ အမှတ်တစ်ခုကို ကိန်းဂဏန်းနှစ်ခု ( <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> ကိုဩဒိနိတ် နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>y</mi>
+</math> ကိုဩဒိနိတ်) ပါဝင်သော pair တစ်ခုအဖြစ် ဖော်ပြနိုင်သည်။ ထိုသို့ဖော်ပြရန်အတွက် <code>make-point</code> ဟူသော တည်ဆောက်သူနှင့် <code>x-point</code>၊ <code>y-point</code> ဟူသော ရွေးချယ်သူများကို သတ်မှတ်ပါ။ နောက်ဆုံးတွင်၊ သင်၏ ရွေးချယ်သူများနှင့် တည်ဆောက်သူများကို အသုံးပြု၍ မျဉ်းပိုင်းတစ်ခုကို အခြေခံကိန်း (argument) အဖြစ် လက်ခံပြီး ၎င်း၏ အလယ်မှတ် (midpoint - အစွန်းမှတ်များ၏ ကိုဩဒိနိတ်များ ပျမ်းမျှတန်ဖိုးရှိသော အမှတ်) ကို ပြန်ပေးသည့် <code>midpoint-segment</code> ဟူသော လုပ်ထုံးလုပ်နည်းကို အဓိပ္ပာယ်ဖွင့်ဆိုပါ။ သင်၏ လုပ်ထုံးလုပ်နည်းများကို စမ်းသပ်ရန်အတွက် အမှတ်များကို ပုံနှိပ်ထုတ်ရန် နည်းလမ်းတစ်ခု လိုအပ်ပါလိမ့်မည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">print-point p</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">newline</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">display </span><span class="str">"("</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">display </span><span class="opn">(</span><span class="pln">x-point p</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">display </span><span class="str">","</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">display </span><span class="opn">(</span><span class="pln">y-point p</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">display </span><span class="str">")"</span><span class="clo">))</span></pre></div>
+</blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e3"></a>လေ့ကျင့်ခန်း ၂.၃:</strong> ပြင်ညီတစ်ခုရှိ စတုဂံ (rectangle) များအတွက် ဖော်ပြပုံစနစ်တစ်ခုကို အကောင်အထည်ဖော်ပါ။ (အကြံပြုချက်- <a href="#Exercise-2_002e2">လေ့ကျင့်ခန်း ၂.၂</a> ကို အသုံးပြုလိုနိုင်ပါသည်။) သင်၏ တည်ဆောက်သူများနှင့် ရွေးချယ်သူများကို အသုံးပြု၍ ပေးထားသော စတုဂံတစ်ခု၏ ပတ်လည်အနား (perimeter) နှင့် ဧရိယာ (area) ကို တွက်ချက်သည့် လုပ်ထုံးလုပ်နည်းများကို ဖန်တီးပါ။ ယခု စတုဂံများအတွက် မတူညီသော ဖော်ပြပုံစနစ်တစ်ခုကို အကောင်အထည်ဖော်ကြည့်ပါ။ ဖော်ပြပုံစနစ် နှစ်မျိုးစလုံးတွင် တူညီသော ပတ်လည်အနားနှင့် ဧရိယာ လုပ်ထုံးလုပ်နည်းများ အလုပ်လုပ်နိုင်စေရန်အတွက် သင့်လျော်သော အနှစ်ထုတ်ခြင်း အတားအဆီးများ (abstraction barriers) ဖြင့် သင့်စနစ်ကို ဒီဇိုင်းဆွဲနိုင်ပါသလား။
+</p></blockquote>
+
+<a id="g_t2_002e1_002e3"></a>
+<a id="What-Is-Meant-by-Data_003f"></a>
+<h4 class="subsection"><span class="secnum">2.1.3</span><span class="sectitle">ဒေတာ (Data) ဆိုသည်မှာ အဘယ်နည်း?</span></h4>
+
+<p>ကျွန်ုပ်တို့သည် အပိုင်းကိန်း (rational-number) အကောင်အထည်ဖော်မှုကို <a href="#g_t2_002e1_002e1">2.1.1</a> တွင် စတင်ခဲ့ပြီး၊ <code>add-rat</code>၊ <code>sub-rat</code> အစရှိသော အပိုင်းကိန်း လုပ်ဆောင်ချက်များကို သတ်မှတ်မထားသော procedure သုံးခုဖြစ်သည့် <code>make-rat</code>၊ <code>numer</code> နှင့် <code>denom</code> တို့ဖြင့် အကောင်အထည်ဖော်ခဲ့သည်။ ထိုအချိန်တွင်၊ ဤလုပ်ဆောင်ချက်များကို နောက်ဆုံးဖော်ပြခဲ့သည့် procedure သုံးခုမှ ၎င်းတို့၏ အပြုအမူကို သတ်မှတ်ပေးထားသည့် data object များ — numerator များ၊ denominator များ၊ နှင့် rational number များ — အဖြစ် အဓိပ္ပာယ်ဖွင့်ဆိုထားသည်ဟု ကျွန်ုပ်တို့ ယူဆနိုင်သည်။
+</p>
+<p>သို့သော် <a id="index-data-1"></a>
+<em>data</em> ဆိုသည်မှာ အတိအကျအားဖြင့် အဘယ်နည်း? "ပေးထားသော selector များနှင့် constructor များဖြင့် အကောင်အထည်ဖော်ထားသမျှ" ဟု ပြောရုံနှင့် မလုံလောက်ပါ။ ရှင်းလင်းစွာပင်၊ ကြုံရာ procedure သုံးခုအစုတိုင်းသည် rational-number အကောင်အထည်ဖော်မှုအတွက် သင့်လျော်သော အခြေခံအဖြစ် မဆောင်ရွက်နိုင်ပါ။ အကယ်၍ ကျွန်ုပ်တို့သည် integer <code>n</code> နှင့် <code>d</code> အစုံမှ rational number <code>x</code> ကို တည်ဆောက်ပါက၊ <code>x</code> ၏ <code>numer</code> နှင့် <code>denom</code> ကို ထုတ်ယူပြီး ၎င်းတို့ကို စားခြင်းသည် <code>n</code> ကို <code>d</code> နှင့် စားခြင်းနှင့် တူညီသော ရလဒ်ကို ရရှိရန် အာမခံချက်ရှိရန် လိုအပ်သည်။ တစ်နည်းအားဖြင့်ဆိုသော်၊ <code>make-rat</code>၊ <code>numer</code> နှင့် <code>denom</code> တို့သည် အောက်ပါအခြေအနေကို ကျေနပ်ရမည်- မည်သည့် integer <code>n</code> နှင့် သုညမဟုတ်သော integer <code>d</code> အတွက်မဆို၊ အကယ်၍ <code>x</code> သည် <code>(make-rat n d)</code> ဖြစ်ပါက၊
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mfrac>
+      <mtext>(numer x)</mtext>
+      <mtext>(denom x)</mtext>
+    </mfrac>
+  </mrow>
+  <mo>=</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mrow class="MJX-TeXAtom-ORD">
+      <mfrac>
+        <mtext>n</mtext>
+        <mtext>d</mtext>
+      </mfrac>
+    </mrow>
+    <mo>.</mo>
+  </mrow>
+</math>
+အမှန်စင်စစ်၊ ဤသည်မှာ rational-number ကို ကိုယ်စားပြုရန် (representation) အတွက် သင့်လျော်သော အခြေခံတစ်ခုဖြစ်စေရန် <code>make-rat</code>၊ <code>numer</code> နှင့် <code>denom</code> တို့ ဖြည့်ဆည်းရမည့် တစ်ခုတည်းသော အခြေအနေဖြစ်သည်။ ယေဘုယျအားဖြင့်၊ ဒေတာကို selector များနှင့် constructor များ အစုအဝေးတစ်ခုအပြင်၊ မှန်ကန်သော ကိုယ်စားပြုမှု (representation) ဖြစ်ရန်အတွက် ဤ procedure များ ဖြည့်ဆည်းရမည့် သတ်မှတ်ထားသော အခြေအနေများဖြင့် အဓိပ္ပာယ်ဖွင့်ဆိုထားသည်ဟု ကျွန်ုပ်တို့ ယူဆနိုင်သည်။<a class="footnote_link" id="DOCF71" href="#FOOT71"><sup>71</sup></a>
+</p>
+<p>ဤအမြင်သည် rational number ကဲ့သို့သော "high-level" data object များသာမက၊ lower-level object များကိုပါ အဓိပ္ပာယ်ဖွင့်ဆိုရန် အသုံးဝင်သည်။ ကျွန်ုပ်တို့၏ rational number များကို အဓိပ္ပာယ်ဖွင့်ဆိုရန် အသုံးပြုခဲ့သော pair (အစုံ) ဆိုသည့် အယူအဆကို စဉ်းစားကြည့်ပါ။ pair ဆိုသည်မှာ အဘယ်နည်းဆိုသည်ကို ကျွန်ုပ်တို့ အမှန်တကယ် မပြောခဲ့ဘဲ၊ language မှ pair များကို လုပ်ဆောင်ရန်အတွက် <code>cons</code>၊ <code>car</code> နှင့် <code>cdr</code> ဟူသော procedure များကို ပံ့ပိုးပေးထားကြောင်းသာ ပြောခဲ့သည်။ သို့သော် ဤလုပ်ဆောင်ချက် သုံးခုနှင့် ပတ်သက်၍ ကျွန်ုပ်တို့ သိရန်လိုအပ်သော တစ်ခုတည်းသော အချက်မှာ အကယ်၍ ကျွန်ုပ်တို့သည် <code>cons</code> ကို အသုံးပြု၍ object နှစ်ခုကို ပေါင်းစည်းပါက၊ <code>car</code> နှင့် <code>cdr</code> ကို အသုံးပြု၍ ထို object များကို ပြန်လည်ရယူနိုင်သည်ဟူသော အချက်ဖြစ်သည်။ ဆိုလိုသည်မှာ၊ မည်သည့် object <code>x</code> နှင့် <code>y</code> အတွက်မဆို၊ အကယ်၍ <code>z</code> သည် <code>(cons x y)</code> ဖြစ်ပါက <code>(car z)</code> သည် <code>x</code> ဖြစ်ပြီး <code>(cdr z)</code> သည် <code>y</code> ဖြစ်သည်ဟူသော အခြေအနေကို ဤလုပ်ဆောင်ချက်များက ကျေနပ်စေသည်။ အမှန်စင်စစ်၊ ဤ procedure သုံးခုကို ကျွန်ုပ်တို့၏ language တွင် primitive များအဖြစ် ထည့်သွင်းထားကြောင်း ကျွန်ုပ်တို့ ဖော်ပြခဲ့သည်။ သို့သော်၊ အထက်ပါအခြေအနေကို ကျေနပ်စေသော မည်သည့် procedure သုံးခုအစုကိုမဆို pair များကို အကောင်အထည်ဖော်ရန် အခြေခံအဖြစ် အသုံးပြုနိုင်သည်။ မည်သည့် data structure ကိုမျှ အသုံးမပြုဘဲ procedure များကိုသာ အသုံးပြု၍ <code>cons</code>၊ <code>car</code> နှင့် <code>cdr</code> တို့ကို အကောင်အထည်ဖော်နိုင်သည်ဟူသော အချက်က ဤအချက်ကို ထင်ရှားစွာ သရုပ်ဖော်နေပါသည်။ အဓိပ္ပာယ်ဖွင့်ဆိုချက်များမှာ အောက်ပါအတိုင်းဖြစ်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> x y</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">dispatch m</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pun">=</span><span class="pln"> m </span><span class="lit">0</span><span class="clo">)</span><span class="pln"> x</span><span class="clo">)</span><span class="pln">
+          </span><span class="opn">((</span><span class="pun">=</span><span class="pln"> m </span><span class="lit">1</span><span class="clo">)</span><span class="pln"> y</span><span class="clo">)</span><span class="pln">
+          </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> 
+           </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Argument not 0 or 1:
+                   CONS"</span><span class="pln"> m</span><span class="clo">))))</span><span class="pln">
+  dispatch</span><span class="clo">)</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> z</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">z </span><span class="lit">0</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> z</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">z </span><span class="lit">1</span><span class="clo">))</span></pre></div>
+
+<p>ဤကဲ့သို့ procedure များကို အသုံးပြုခြင်းသည် ဒေတာသည် မည်သို့ဖြစ်သင့်သည်ဟူသော ကျွန်ုပ်တို့၏ ပင်ကိုယ်အသိစိတ် (intuitive notion) နှင့် လုံးဝမတူညီပါ။ သို့သော်လည်း၊ ဤသည်မှာ pair များကို ကိုယ်စားပြုရန် မှန်ကန်သောနည်းလမ်းဖြစ်ကြောင်း ပြသရန်အတွက် ဤ procedure များသည် အထက်တွင်ဖော်ပြထားသော အခြေအနေကို ကျေနပ်မှုရှိမရှိ စစ်ဆေးရန်သာ လိုအပ်သည်။
+</p>
+<p>သတိပြုရန် သိမ်မွေ့သော အချက်မှာ <code>(cons x y)</code> မှ ပြန်ပေးသော တန်ဖိုး (value) သည် procedure တစ်ခု ဖြစ်နေခြင်းပင်ဖြစ်သည် — ဆိုလိုသည်မှာ အတွင်း၌ အဓိပ္ပာယ်ဖွင့်ဆိုထားသော <code>dispatch</code> အမည်ရှိ procedure ဖြစ်ပြီး၊ ၎င်းသည် argument တစ်ခုကို လက်ခံကာ ထို argument သည် 0 သို့မဟုတ် 1 ဖြစ်မှုအပေါ် မူတည်၍ <code>x</code> သို့မဟုတ် <code>y</code> ကို ပြန်ပေးသည်။ ထို့အတူပင်၊ <code>(car z)</code> ကို <code>z</code> အား 0 နှင့် အသုံးပြုရန် (apply) အဓိပ္ပာယ်ဖွင့်ဆိုထားသည်။ ထို့ကြောင့်၊ အကယ်၍ <code>z</code> သည် <code>(cons x y)</code> မှ ဖွဲ့စည်းထားသော procedure ဖြစ်ပါက၊ <code>z</code> ကို 0 နှင့် အသုံးပြုခြင်းသည် <code>x</code> ကို ရရှိစေမည်ဖြစ်သည်။ ထို့ကြောင့် <code>(car (cons x y))</code> သည် လိုလားချက်အတိုင်း <code>x</code> ကို ရရှိစေကြောင်း ကျွန်ုပ်တို့ ပြသခဲ့ပြီးဖြစ်သည်။ ထို့အတူပင်၊ <code>(cdr (cons x y))</code> သည် <code>(cons x y)</code> မှ ပြန်ပေးသော procedure ကို 1 နှင့် အသုံးပြုပြီး <code>y</code> ကို ပြန်ပေးသည်။ ထို့ကြောင့်၊ ဤကဲ့သို့ procedure ဖြင့် pair များကို အကောင်အထည်ဖော်ခြင်းသည် မှန်ကန်သော အကောင်အထည်ဖော်မှုတစ်ခုဖြစ်ပြီး၊ ကျွန်ုပ်တို့သည် <code>cons</code>၊ <code>car</code> နှင့် <code>cdr</code> တို့ကိုသာ အသုံးပြု၍ pair များကို အသုံးပြုမည်ဆိုပါက ဤအကောင်အထည်ဖော်မှုကို "အစစ်အမှန်" data structure များ အသုံးပြုထားသည့် အကောင်အထည်ဖော်မှုနှင့် ခွဲခြားနိုင်မည်မဟုတ်ပေ။
+</p>
+<p>pair များကို procedure ဖြင့် ကိုယ်စားပြုပြရခြင်း၏ ရည်ရွယ်ချက်မှာ ကျွန်ုပ်တို့၏ language က ဤသို့ အလုပ်လုပ်နေသောကြောင့် မဟုတ်ဘဲ (Scheme နှင့် ယေဘုယျအားဖြင့် Lisp system များသည် ပိုမိုမြန်ဆန်စေရန်အတွက် pair များကို တိုက်ရိုက် အကောင်အထည်ဖော်ကြသည်)၊ ဤသို့ အလုပ်လုပ်နိုင်ကြောင်း ပြသရန်ဖြစ်သည်။ Procedure ဖြင့် ကိုယ်စားပြုခြင်းသည် နားလည်ရန် ခက်ခဲနိုင်သော်လည်း၊ pair များ ဖြည့်ဆည်းရန်လိုအပ်သည့် တစ်ခုတည်းသော အခြေအနေများကို ဖြည့်ဆည်းပေးနိုင်သောကြောင့် pair များကို ကိုယ်စားပြုရန်အတွက် လုံးဝလုံလောက်သော နည်းလမ်းတစ်ခုဖြစ်သည်။ ဤဥပမာသည် procedure များကို object များအဖြစ် ကိုင်တွယ်နိုင်စွမ်းရှိခြင်းက compound data များကို ကိုယ်စားပြုနိုင်စွမ်းကို အလိုအလျောက် ပံ့ပိုးပေးကြောင်းကိုလည်း သက်သေပြနေသည်။ ဤအရာသည် ယခုအချိန်တွင် ထူးဆန်းနေပုံရနိုင်သော်လည်း၊ ဒေတာကို procedure ဖြင့် ကိုယ်စားပြုခြင်းများသည် ကျွန်ုပ်တို့၏ programming ပညာရပ်တွင် အဓိကကျသော အခန်းကဏ္ဍမှ ပါဝင်လာမည်ဖြစ်သည်။ ဤ programming ပုံစံကို <a id="index-message-passing"></a>
+<em>message passing</em> ဟု ခေါ်လေ့ရှိပြီး၊ ကျွန်ုပ်တို့သည် modeling နှင့် simulation ဆိုင်ရာ ကိစ္စရပ်များကို ကိုင်တွယ်မည့် <a href="Chapter-3.xhtml#Chapter-3">Chapter 3</a> တွင် ၎င်းကို အခြေခံကိရိယာတစ်ခုအဖြစ် အသုံးပြုမည်ဖြစ်သည်။
+</p>
+<blockquote>
+<p><strong><a id="Exercise-2_002e4"></a>Exercise 2.4:</strong> ဤသည်မှာ pair များကို procedure ဖြင့် ကိုယ်စားပြုသည့် အခြားနည်းလမ်းတစ်ခုဖြစ်သည်။ ဤကိုယ်စားပြုမှုအတွက်၊ မည်သည့် object <code>x</code> နှင့် <code>y</code> အတွက်မဆို <code>(car (cons x y))</code> သည် <code>x</code> ကို ရရှိစေကြောင်း စစ်ဆေးပါ။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> x y</span><span class="clo">)</span><span class="pln"> 
+  </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">m</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">m x y</span><span class="clo">)))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> z</span><span class="clo">)</span><span class="pln"> 
+  </span><span class="opn">(</span><span class="pln">z </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">p q</span><span class="clo">)</span><span class="pln"> p</span><span class="clo">)))</span></pre></div>
+
+<p>၎င်းနှင့် သက်ဆိုင်သော <code>cdr</code> ၏ အဓိပ္ပာယ်ဖွင့်ဆိုချက်မှာ အဘယ်နည်း? (အရိပ်အမြွက်- ဤအရာ အလုပ်လုပ်ကြောင်း စစ်ဆေးရန် <a href="1_002e1.xhtml#g_t1_002e1_002e5">1.1.5</a> ရှိ substitution model ကို အသုံးပြုပါ။)
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e5"></a>Exercise 2.5:</strong> အကယ်၍ ကျွန်ုပ်တို့သည် အနုတ်မဟုတ်သော integer <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>b</mi>
+</math> အစုံကို မြှောက်လဒ် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <msup>
+      <mn>2</mn>
+      <mi>a</mi>
+    </msup>
+    <msup>
+      <mn>3</mn>
+      <mi>b</mi>
+    </msup>
+  </mrow>
+</math> ဖြစ်သော integer အဖြစ် ကိုယ်စားပြုပါက၊ ကိန်းဂဏန်းများနှင့် သင်္ချာလုပ်ဆောင်ချက်များကိုသာ အသုံးပြု၍ pair များကို ကိုယ်စားပြုနိုင်ကြောင်း ပြသပါ။ ၎င်းနှင့် သက်ဆိုင်သော procedure များဖြစ်သည့် <code>cons</code>၊ <code>car</code> နှင့် <code>cdr</code> တို့၏ အဓိပ္ပာယ်ဖွင့်ဆိုချက်များကို ပေးပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e6"></a>Exercise 2.6:</strong> pair များကို procedure အဖြစ် ကိုယ်စားပြုခြင်းက လုံလောက်အောင် စိတ်ရှုပ်စရာ မကောင်းသေးပါက၊ procedure များကို ကိုင်တွယ်နိုင်သော language တစ်ခုတွင် 0 နှင့် 1 ပေါင်းခြင်း လုပ်ဆောင်ချက်ကို အောက်ပါအတိုင်း အကောင်အထည်ဖော်ခြင်းဖြင့် (အနည်းဆုံးတော့ အနုတ်မဟုတ်သော integer များနှင့် ပတ်သက်လျှင်) ကိန်းဂဏန်းများမပါဘဲ လုပ်ဆောင်နိုင်သည်ကို စဉ်းစားကြည့်ပါ-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> zero </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">f</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">x</span><span class="clo">)</span><span class="pln"> x</span><span class="clo">)))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">add-1 n</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">f</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">f </span><span class="opn">((</span><span class="pln">n f</span><span class="clo">)</span><span class="pln"> x</span><span class="clo">)))))</span></pre></div>
+
+<p>ဤကိုယ်စားပြုမှုကို λ-calculus ကို တီထွင်ခဲ့သူ ယုတ္တိဗေဒပညာရှင် Alonzo Church ကို အစွဲပြု၍ <a id="index-Church-numerals"></a>
+<em>Church numerals</em> ဟု ခေါ်ဆိုကြသည်။
+</p>
+<p><code>one</code> နှင့် <code>two</code> တို့ကို (<code>zero</code> နှင့် <code>add-1</code> တို့ကို အသုံးမပြုဘဲ) တိုက်ရိုက် အဓိပ္ပာယ်ဖွင့်ဆိုပါ။ (အရိပ်အမြွက်- <code>(add-1 zero)</code> ကို တွက်ချက်ရန် substitution ကို အသုံးပြုပါ။) ပေါင်းခြင်း procedure <code>+</code> ကို (<code>add-1</code> ကို အကြိမ်ကြိမ် အသုံးပြုခြင်းမျိုး မဟုတ်ဘဲ) တိုက်ရိုက် အဓိပ္ပာယ်ဖွင့်ဆိုချက် ပေးပါ။
+</p></blockquote>
+
+<a id="g_t2_002e1_002e4"></a>
+<a id="Extended-Exercise_003a-Interval-Arithmetic"></a>
+<h4 class="subsection"><span class="secnum">2.1.4</span><span class="sectitle">Extended Exercise: Interval Arithmetic</span></h4>
+
+<p>Alyssa P. Hacker သည် အင်ဂျင်နီယာဆိုင်ရာ ပြဿနာများကို ဖြေရှင်းရာတွင် လူများကို ကူညီပေးမည့် စနစ်တစ်ခုကို ဒီဇိုင်းထုတ်နေသည်။ သူမ၏ စနစ်တွင် ထည့်သွင်းလိုသော အင်္ဂါရပ်တစ်ခုမှာ မတိကျသော ပမာဏများ (ဥပမာ- ရုပ်ပိုင်းဆိုင်ရာ ကိရိယာများ၏ တိုင်းတာရရှိသော ကိန်းဂဏန်းများ) ကို သိရှိပြီးသား တိကျမှု (precision) ဖြင့် ကိုင်တွယ်နိုင်စွမ်း ရှိစေရန် ဖြစ်သည်။ သို့မှသာ ထိုကဲ့သို့သော ခန့်မှန်းခြေ ပမာဏများဖြင့် တွက်ချက်မှုများ ပြုလုပ်သောအခါ ရလဒ်များသည်လည်း သိရှိပြီးသား တိကျမှုရှိသော ကိန်းဂဏန်းများ ဖြစ်လာမည်ဖြစ်သည်။
+</p>
+<p>လျှပ်စစ်အင်ဂျင်နီယာများသည် လျှပ်စစ်ဆိုင်ရာ ပမာဏများကို တွက်ချက်ရန် Alyssa ၏ စနစ်ကို အသုံးပြုကြလိမ့်မည်။ တစ်ခါတစ်ရံတွင် ၎င်းတို့အတွက် resistor နှစ်ခု <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>R</mi>
+    <mn>1</mn>
+  </msub>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>R</mi>
+    <mn>2</mn>
+  </msub>
+</math>
+တို့၏ ပြိုင်ဆက် ခုခံမှု (parallel equivalent resistance) <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>R</mi>
+    <mi>p</mi>
+  </msub>
+</math> တန်ဖိုးကို အောက်ပါပုံသေနည်း အသုံးပြု၍ တွက်ချက်ရန် လိုအပ်တတ်သည်-
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <msub>
+    <mi>R</mi>
+    <mi>p</mi>
+  </msub>
+  <mspace width="thinmathspace"/>
+  <mo>=</mo>
+  <mspace width="thinmathspace"/>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mrow class="MJX-TeXAtom-ORD">
+      <mfrac>
+        <mn>1</mn>
+        <mrow>
+          <mn>1</mn>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mo>/</mo>
+          </mrow>
+          <msub>
+            <mi>R</mi>
+            <mn>1</mn>
+          </msub>
+          <mo>+</mo>
+          <mn>1</mn>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mo>/</mo>
+          </mrow>
+          <msub>
+            <mi>R</mi>
+            <mn>2</mn>
+          </msub>
+        </mrow>
+      </mfrac>
+    </mrow>
+    <mo>.</mo>
+  </mrow>
+</math>
+ခုခံမှု (Resistance) တန်ဖိုးများကို များသောအားဖြင့် resistor ထုတ်လုပ်သူမှ အာမခံထားသော tolerance အတိုင်းအတာအထိသာ သိရှိနိုင်သည်။ ဥပမာအားဖြင့်၊ သင်သည် “6.8 ohms with 10% tolerance” ဟု အညွှန်းတပ်ထားသော resistor တစ်ခုကို ဝယ်ယူပါက၊ ထို resistor တွင် 6.8 <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mo>−<!-- − --></mo>
+</math> 0.68 = 6.12 နှင့် 6.8 + 0.68 = 7.48 ohms ကြားတွင်သာ ခုခံမှုရှိကြောင်း သင်သေချာပေါက် သိနိုင်သည်။ ထို့ကြောင့်၊ သင့်တွင် 6.8-ohm 10% resistor တစ်ခုနှင့် 4.7-ohm 5% resistor တစ်ခု ပြိုင်ဆက် ချိတ်ဆက်ထားပါက၊ စုစုပေါင်း ခုခံမှုသည် ခန့်မှန်းခြေ 2.58 ohms (resistor နှစ်ခုလုံး အနိမ့်ဆုံး အတိုင်းအတာတွင် ရှိနေပါက) မှ 2.97 ohms (resistor နှစ်ခုလုံး အမြင့်ဆုံး အတိုင်းအတာတွင် ရှိနေပါက) အထိ ရှိနိုင်သည်။
+</p>
+<p>Alyssa ၏ အိုင်ဒီယာမှာ “interval arithmetic” ကို “intervals” (မတိကျသော ပမာဏတစ်ခု ဖြစ်နိုင်ခြေရှိသည့် တန်ဖိုးအကွာအဝေးကို ကိုယ်စားပြုသော အရာဝတ္ထုများ) များကို ပေါင်းစပ်ရန်အတွက် သင်္ချာဆိုင်ရာ လုပ်ဆောင်ချက်များ အစုအဝေးတစ်ခုအဖြစ် အကောင်အထည်ဖော်ရန် ဖြစ်သည်။ interval နှစ်ခုကို ပေါင်းခြင်း၊ နှုတ်ခြင်း၊ မြှောက်ခြင်း သို့မဟုတ် စားခြင်းတို့၏ ရလဒ်သည်လည်း ရလဒ်၏ အတိုင်းအတာကို ကိုယ်စားပြုသော interval တစ်ခုပင် ဖြစ်သည်။
+</p>
+<p>Alyssa သည် endpoint နှစ်ခု (lower bound နှင့် upper bound) ရှိသော “interval” ဟုခေါ်သော abstract object တစ်ခု ရှိသည်ဟု ယူဆထားသည်။ interval တစ်ခု၏ endpoint များကို ပေးထားပါက၊ ၎င်းကို <code>make-interval</code> ဟူသော data constructor ကို အသုံးပြု၍ တည်ဆောက်နိုင်သည်ဟုလည်း သူမက ယူဆသည်။ Alyssa သည် interval နှစ်ခုကို ပေါင်းရန် procedure တစ်ခုကို ဦးစွာ ရေးသားခဲ့သည်။ ပေါင်းလဒ်၏ အနည်းဆုံးတန်ဖိုးမှာ lower bound နှစ်ခု၏ ပေါင်းလဒ်ဖြစ်ပြီး၊ အများဆုံးတန်ဖိုးမှာ upper bound နှစ်ခု၏ ပေါင်းလဒ်ဖြစ်သည်ဟု သူမက စဉ်းစားခဲ့သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">add-interval x y</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">make-interval </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">lower-bound x</span><span class="clo">)</span><span class="pln"> 
+                    </span><span class="opn">(</span><span class="pln">lower-bound y</span><span class="clo">))</span><span class="pln">
+                 </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">upper-bound x</span><span class="clo">)</span><span class="pln"> 
+                    </span><span class="opn">(</span><span class="pln">upper-bound y</span><span class="clo">))))</span></pre></div>
+
+<p>Alyssa သည် အနားသတ် (bounds) များ၏ မြှောက်လဒ်များထဲမှ အနည်းဆုံးနှင့် အများဆုံးတန်ဖိုးများကို ရှာဖွေပြီး ၎င်းတို့ကို ရလဒ် interval ၏ အနားသတ်များအဖြစ် အသုံးပြုခြင်းဖြင့် interval နှစ်ခု၏ မြှောက်လဒ်ကိုလည်း တွက်ချက်ခဲ့သည်။ (<code>Min</code> နှင့် <code>max</code> တို့သည် ပေးထားသော ကိန်းဂဏန်းများထဲမှ အနည်းဆုံး သို့မဟုတ် အများဆုံးကို ရှာပေးသည့် primitive များ ဖြစ်ကြသည်။)
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">mul-interval x y</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">p1 </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">lower-bound x</span><span class="clo">)</span><span class="pln"> 
+               </span><span class="opn">(</span><span class="pln">lower-bound y</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">p2 </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">lower-bound x</span><span class="clo">)</span><span class="pln"> 
+               </span><span class="opn">(</span><span class="pln">upper-bound y</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">p3 </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">upper-bound x</span><span class="clo">)</span><span class="pln"> 
+               </span><span class="opn">(</span><span class="pln">lower-bound y</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">p4 </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">upper-bound x</span><span class="clo">)</span><span class="pln"> 
+               </span><span class="opn">(</span><span class="pln">upper-bound y</span><span class="clo">))))</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">make-interval </span><span class="opn">(</span><span class="pln">min p1 p2 p3 p4</span><span class="clo">)</span><span class="pln">
+                   </span><span class="opn">(</span><span class="pln">max p1 p2 p3 p4</span><span class="clo">))))</span></pre></div>
+
+<p>interval နှစ်ခုကို စားရန်အတွက်၊ Alyssa သည် ပထမ interval ကို ဒုတိယ interval ၏ ပြောင်းပြန်ကိန်း (reciprocal) ဖြင့် မြှောက်သည်။ ပြောင်းပြန်လှန်ထားသော interval ၏ အနားသတ် (bounds) များသည် ဒုတိယ interval ၏ upper bound ၏ ပြောင်းပြန်နှင့် lower bound ၏ ပြောင်းပြန်တို့ ထိုအစီအစဉ်အတိုင်း ဖြစ်နေသည်ကို သတိပြုပါ။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">div-interval x y</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">mul-interval x 
+                </span><span class="opn">(</span><span class="pln">make-interval 
+                 </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> </span><span class="lit">1.0</span><span class="pln"> </span><span class="opn">(</span><span class="pln">upper-bound y</span><span class="clo">))</span><span class="pln"> 
+                 </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> </span><span class="lit">1.0</span><span class="pln"> </span><span class="opn">(</span><span class="pln">lower-bound y</span><span class="clo">)))))</span></pre></div>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e7"></a>လေ့ကျင့်ခန်း ၂.၇-</strong> Alyssa ၏ ပရိုဂရမ်သည် မပြည့်စုံသေးပါ။ အကြောင်းမှာ သူမသည် interval abstraction ၏ အကောင်အထည်ဖော်မှုကို သတ်မှတ်ခြင်း မရှိသေးသောကြောင့် ဖြစ်သည်။ interval constructor ၏ အဓိပ္ပာယ်သတ်မှတ်ချက်မှာ အောက်ပါအတိုင်း ဖြစ်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-interval a b</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> a b</span><span class="clo">))</span></pre></div>
+
+<p>အကောင်အထည်ဖော်မှုကို အပြီးသတ်ရန် <code>upper-bound</code> နှင့် <code>lower-bound</code> selector များကို သတ်မှတ်ပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e8"></a>လေ့ကျင့်ခန်း ၂.၈-</strong> Alyssa ၏ စဉ်းစားပုံနှင့် ဆင်တူသော နည်းလမ်းကို အသုံးပြု၍ interval နှစ်ခု၏ ခြားနားချက်ကို မည်သို့တွက်ချက်နိုင်ကြောင်း ရှင်းပြပါ။ <code>sub-interval</code> ဟုခေါ်သော သက်ဆိုင်ရာ နှုတ်ခြင်း procedure တစ်ခုကို သတ်မှတ်ပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e9"></a>လေ့ကျင့်ခန်း ၂.၉-</strong> interval တစ်ခု၏ <a id="index-width"></a>
+<em>width</em> (အကျယ်) သည် ၎င်း၏ upper bound နှင့် lower bound တို့၏ ခြားနားချက်၏ ထက်ဝက် ဖြစ်သည်။ width သည် interval မှ သတ်မှတ်ပေးထားသော ကိန်းဂဏန်း၏ မရေရာမှု (uncertainty) ကို တိုင်းတာခြင်း ဖြစ်သည်။ အချို့သော သင်္ချာဆိုင်ရာ လုပ်ဆောင်ချက်များအတွက်၊ interval နှစ်ခုကို ပေါင်းစပ်ခြင်းမှ ရရှိလာသော ရလဒ်၏ width သည် အသုံးပြုခဲ့သော interval များ၏ width များပေါ်တွင်သာ မူတည်ပြီး၊ အချို့အတွက်မူ မူတည်ခြင်း မရှိပေ။ interval နှစ်ခု၏ ပေါင်းလဒ် (သို့မဟုတ် ခြားနားချက်) ၏ width သည် ပေါင်းလိုက်သော (သို့မဟုတ် နှုတ်လိုက်သော) interval များ၏ width များပေါ်တွင်သာ မူတည်ကြောင်း ပြသပါ။ မြှောက်ခြင်း သို့မဟုတ် စားခြင်းတို့အတွက် ဤအချက်သည် မမှန်ကန်ကြောင်း ပြရန် ဥပမာများ ပေးပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e10"></a>လေ့ကျင့်ခန်း ၂.၁၀-</strong> ကျွမ်းကျင် စနစ်ပရိုဂရမ်မာ တစ်ဦးဖြစ်သူ Ben Bitdiddle က Alyssa ၏ အလုပ်ကို ကြည့်ရှုပြီးနောက် သုည ပါဝင်နေသော interval တစ်ခုနှင့် စားခြင်းသည် မည်သို့သော အဓိပ္ပာယ်ဖြစ်သည်ကို ရှင်းလင်းမှုမရှိကြောင်း မှတ်ချက်ပေးခဲ့သည်။ ဤအခြေအနေကို စစ်ဆေးရန်และ အကယ်၍ ဖြစ်ပွားပါက error ပြရန် Alyssa ၏ ကုဒ်ကို ပြင်ဆင်ပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e11"></a>လေ့ကျင့်ခန်း ၂.၁၁-</strong> ထို့အပြင် Ben က “interval များ၏ endpoint များ၏ လက္ခဏာများကို စမ်းသပ်ခြင်းဖြင့် <code>mul-interval</code> ကို အခြေအနေ ကိုးခုအဖြစ် ခွဲခြားနိုင်ပြီး၊ တစ်ခုတည်းသော အခြေအနေတွင်သာ မြှောက်ခြင်း နှစ်ကြိမ်ထက်ပို၍ လိုအပ်သည်” ဟု လျှို့ဝှက်စွာ မှတ်ချက်ပေးခဲ့သည်။ Ben ၏ အကြံပြုချက်ကို အသုံးပြု၍ ဤ procedure ကို ပြန်လည်ရေးသားပါ။
+</p>
+<p>သူမ၏ ပရိုဂရမ်ကို debug လုပ်ပြီးနောက်၊ Alyssa သည် ၎င်းကို အလားအလာရှိသော အသုံးပြုသူတစ်ဦးအား ပြသခဲ့ရာ၊ ထိုသူက သူမ၏ ပရိုဂရမ်သည် မှားယွင်းသော ပြဿနာကို ဖြေရှင်းနေခြင်း ဖြစ်သည်ဟု ကန့်ကွက်ခဲ့သည်။ သူသည် ကိန်းဂဏန်းများကို center value (ဗဟိုတန်ဖိုး) နှင့် ပေါင်းစပ်ထားသော tolerance ဖြင့် ကိုယ်စားပြုလိုခြင်း ဖြစ်သည်။ ဥပမာအားဖြင့်၊ [3.35, 3.65] အစား 3.5 <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mo>±<!-- ± --></mo>
+</math> 0.15 ကဲ့သို့သော interval များနှင့် အလုပ်လုပ်လိုခြင်း ဖြစ်သည်။ Alyssa သည် သူမ၏ စားပွဲသို့ ပြန်သွားပြီး အခြား constructor နှင့် selector များကို ပံ့ပိုးပေးခြင်းဖြင့် ဤပြဿနာကို ဖြေရှင်းခဲ့သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-center-width c w</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">make-interval </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> c w</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> c w</span><span class="clo">)))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">center i</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">lower-bound i</span><span class="clo">)</span><span class="pln"> 
+        </span><span class="opn">(</span><span class="pln">upper-bound i</span><span class="clo">))</span><span class="pln"> 
+     </span><span class="lit">2</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">width i</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="opn">(</span><span class="pln">upper-bound i</span><span class="clo">)</span><span class="pln"> 
+        </span><span class="opn">(</span><span class="pln">lower-bound i</span><span class="clo">))</span><span class="pln"> 
+     </span><span class="lit">2</span><span class="clo">))</span></pre></div>
+
+<p>ကံမကောင်းစွာဖြင့်၊ Alyssa ၏ အသုံးပြုသူ အများစုမှာ အင်ဂျင်နီယာများ ဖြစ်ကြသည်။ အစစ်အမှန် အင်ဂျင်နီယာဆိုင်ရာ အခြေအနေများတွင် များသောအားဖြင့် interval ၏ width နှင့် midpoint (အလယ်မှတ်) တို့၏ အချိုးအစားအတိုင်း တိုင်းတာထားသော သေးငယ်သည့် မရေရာမှု (uncertainty) များသာ ပါဝင်တတ်သည်။ အင်ဂျင်နီယာများသည် အစောပိုင်းတွင် ဖော်ပြခဲ့သော resistor သတ်မှတ်ချက်များကဲ့သို့ပင် ကိရိယာများ၏ parameter များပေါ်တွင် percentage tolerance များကို များသောအားဖြင့် သတ်မှတ်လေ့ရှိကြသည်။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e12"></a>လေ့ကျင့်ခန်း ၂.၁၂-</strong> center နှင့် percentage tolerance ကို လက်ခံပြီး လိုချင်သော interval ကို ထုတ်ပေးသည့် <code>make-center-percent</code> constructor ကို သတ်မှတ်ပါ။ ပေးထားသော interval တစ်ခုအတွက် percentage tolerance ကို ထုတ်ပေးသည့် <code>percent</code> selector ကိုလည်း သတ်မှတ်ရပါမည်။ <code>center</code> selector မှာ အထက်တွင် ဖော်ပြထားသည်နှင့် အတူတူပင် ဖြစ်သည်။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e13"></a>လေ့ကျင့်ခန်း ၂.၁၃-</strong> percentage tolerance များ သေးငယ်သည်ဟု ယူဆချက်အရ၊ interval နှစ်ခု၏ မြှောက်လဒ်၏ ခန့်မှန်းခြေ percentage tolerance အတွက် ရိုးရှင်းသော ပုံသေနည်းတစ်ခု ရှိကြောင်း ပြသပါ။ ကိန်းဂဏန်းအားလုံးသည် positive (အပေါင်းကိန်း) ဖြစ်သည်ဟု ယူဆခြင်းဖြင့် ပြဿနာကို ရိုးရှင်းအောင် ပြုလုပ်နိုင်သည်။
+</p>
+<p>တော်တော်လေး ကြိုးစားအားထုတ်ပြီးနောက်၊ Alyssa P. Hacker သည် သူမ၏ စနစ်ကို အပြီးသတ် ပေးအပ်ခဲ့သည်။ နှစ်အတော်ကြာပြီးနောက်၊ သူမ ထိုအကြောင်းကို အားလုံးမေ့သွားချိန်တွင် စိတ်ဆိုးဒေါသထွက်နေသော အသုံးပြုသူတစ်ဦးဖြစ်သူ Lem E. Tweakit ထံမှ ဖုန်းခေါ်ဆိုမှုတစ်ခုကို လက်ခံရရှိခဲ့သည်။ Lem သည် ပြိုင်ဆက် resistor များအတွက် ပုံသေနည်းကို သင်္ချာနည်းအရ တူညီသော နည်းလမ်းနှစ်မျိုးဖြင့် ရေးသားနိုင်ကြောင်း သတိပြုမိပုံရသည်-
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mfrac>
+      <mrow>
+        <msub>
+          <mi>R</mi>
+          <mn>1</mn>
+        </msub>
+        <msub>
+          <mi>R</mi>
+          <mn>2</mn>
+        </msub>
+      </mrow>
+      <mrow>
+        <msub>
+          <mi>R</mi>
+          <mn>1</mn>
+        </msub>
+        <mo>+</mo>
+        <msub>
+          <mi>R</mi>
+          <mn>2</mn>
+        </msub>
+      </mrow>
+    </mfrac>
+  </mrow>
+</math>
+နှင့်
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mrow class="MJX-TeXAtom-ORD">
+      <mfrac>
+        <mn>1</mn>
+        <mrow>
+          <mn>1</mn>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mo>/</mo>
+          </mrow>
+          <msub>
+            <mi>R</mi>
+            <mn>1</mn>
+          </msub>
+          <mo>+</mo>
+          <mn>1</mn>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mo>/</mo>
+          </mrow>
+          <msub>
+            <mi>R</mi>
+            <mn>2</mn>
+          </msub>
+        </mrow>
+      </mfrac>
+    </mrow>
+    <mo>.</mo>
+  </mrow>
+</math>
+သူသည် အောက်ပါ ပရိုဂရမ်နှစ်ခုကို ရေးသားခဲ့ပြီး တစ်ခုစီသည် ပြိုင်ဆက်-resistor ပုံသေနည်းကို မတူညီသော နည်းလမ်းများဖြင့် တွက်ချက်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">par1 r1 r2</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">div-interval 
+   </span><span class="opn">(</span><span class="pln">mul-interval r1 r2</span><span class="clo">)</span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">add-interval r1 r2</span><span class="clo">)))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">par2 r1 r2</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">one </span><span class="opn">(</span><span class="pln">make-interval </span><span class="lit">1</span><span class="pln"> </span><span class="lit">1</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">div-interval 
+     one
+     </span><span class="opn">(</span><span class="pln">add-interval 
+      </span><span class="opn">(</span><span class="pln">div-interval one r1</span><span class="clo">)</span><span class="pln"> 
+      </span><span class="opn">(</span><span class="pln">div-interval one r2</span><span class="clo">)))))</span></pre></div>
+
+<p>Alyssa ၏ ပရိုဂရမ်သည် တွက်ချက်မှု နည်းလမ်းနှစ်မျိုးအတွက် ကွဲပြားသော အဖြေများကို ပေးနေသည်ဟု Lem က ကန့်ကွက်ခဲ့သည်။ ဤသည်မှာ ပြင်းထန်သော ကန့်ကွက်မှုတစ်ခု ဖြစ်သည်။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e14"></a>လေ့ကျင့်ခန်း ၂.၁၄-</strong> Lem မှန်ကန်ကြောင်း သက်သေပြပါ။ သင်္ချာဆိုင်ရာ ဖော်ပြချက် အမျိုးမျိုးတွင် စနစ်၏ လုပ်ဆောင်ပုံကို စူးစမ်းလေ့လာပါ။ interval <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>A</mi>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>B</mi>
+</math> အချို့ကို တည်ဆောက်ပြီး <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>A</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mo>/</mo>
+    </mrow>
+    <mi>A</mi>
+  </mrow>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>A</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mo>/</mo>
+    </mrow>
+    <mi>B</mi>
+  </mrow>
+</math> ဖော်ပြချက်များကို တွက်ချက်ရာတွင် အသုံးပြုပါ။ width သည် center value ၏ သေးငယ်သော ရာခိုင်နှုန်းရှိသည့် interval များကို အသုံးပြုခြင်းဖြင့် အကောင်းဆုံး သိမြင်နိုင်လိမ့်မည်။ တွက်ချက်မှု ရလဒ်များကို center-percent ပုံစံဖြင့် စစ်ဆေးကြည့်ပါ (<a href="#Exercise-2_002e12">လေ့ကျင့်ခန်း ၂.၁၂</a> ကို ကြည့်ပါ)။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e15"></a>လေ့ကျင့်ခန်း ၂.၁၅-</strong> အခြားအသုံးပြုသူတစ်ဦးဖြစ်သူ Eva Lu Ator ကလည်း သင်္ချာနည်းအရ တူညီသော်လည်း ကွဲပြားသော ဖော်ပြချက်များကြောင့် ထွက်ပေါ်လာသော မတူညီသည့် interval များကို သတိပြုမိခဲ့သည်။ သူမက Alyssa ၏ စနစ်ကို အသုံးပြု၍ interval များဖြင့် တွက်ချက်ရန် ပုံသေနည်းတစ်ခုတွင် မရေရာသော ကိန်းဂဏန်းကို ကိုယ်စားပြုသည့် variable များကို ထပ်ခါတလဲလဲ အသုံးမပြုဘဲ ရေးသားနိုင်ပါက ပိုမိုတိကျသော (tighter) error bound များကို ရရှိလိမ့်မည်ဟု ဆိုသည်။ ထို့ကြောင့် သူမက <code>par2</code> သည် <code>par1</code> ထက် ပြိုင်ဆက် ခုခံမှုများအတွက် “ပိုကောင်းသော” ပရိုဂရမ်ဖြစ်သည်ဟု ပြောကြားခဲ့သည်။ သူမ မှန်ပါသလား။ အဘယ်ကြောင့်နည်း။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e16"></a>လေ့ကျင့်ခန်း ၂.၁၆-</strong> ယေဘုယျအားဖြင့်၊ တူညီသော သင်္ချာဆိုင်ရာ ဖော်ပြချက်များသည် အဘယ်ကြောင့် ကွဲပြားသော အဖြေများဆီသို့ ဦးတည်သွားနိုင်သည်ကို ရှင်းပြပါ။ ဤအားနည်းချက် မရှိသော interval-arithmetic package တစ်ခုကို သင် ဖန်တီးနိုင်ပါသလား၊ သို့မဟုတ်ပါက ဤအလုပ်သည် မဖြစ်နိုင်သော အရာလား။ (သတိပေးချက်- ဤပုစ္ဆာသည် အလွန်ခက်ခဲပါသည်။)
+</p></blockquote>
+
+
+<div class="footnote">
+<h4 class="footnotes-heading">အောက်ခြေမှတ်စုများ</h4>
+
+<div id="FOOT68"><p><a class="footnote_backlink" href="#DOCF68"><sup>68</sup></a>
+<code>cons</code> ဆိုသည်မှာ “construct” (တည်ဆောက်ခြင်း) ကို ဆိုလိုခြင်းဖြစ်သည်။ <code>car</code> နှင့် <code>cdr</code> အမည်များသည် IBM 704 ပေါ်ရှိ မူလ Lisp implementation မှ ဆင်းက်လာခြင်းဖြစ်သည်။ ထိုစက်တွင် မန်မိုရီနေရာတစ်ခု၏ “address” နှင့် “decrement” အပိုင်းများကို ရည်ညွှန်းနိုင်သည့် လိပ်စာစနစ် (addressing scheme) ပါရှိသည်။ <code>Car</code> ဆိုသည်မှာ “Contents of Address part of Register” ကို ဆိုလိုပြီး <code>cdr</code> (“could-er” ဟု အသံထွက်သည်) မှာ “Contents of Decrement part of Register” ကို ဆိုလိုခြင်းဖြစ်သည်။</p>
+</div>
+<div id="FOOT69"><p><a class="footnote_backlink" href="#DOCF69"><sup>69</sup></a>
+ရွေးချယ်မှုပြုလုပ်သည့်စနစ် (selectors) နှင့် တည်ဆောက်မှုစနစ် (constructor) တို့ကို သတ်မှတ်နိုင်သည့် နောက်ထပ်နည်းလမ်းတစ်ခုမှာ -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> make-rat </span><span class="kwd">cons</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> numer </span><span class="kwd">car</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> denom </span><span class="kwd">cdr</span><span class="clo">)</span></pre></div>
+
+<p>ပထမဆုံးသော အဓိပ္ပာယ်သတ်မှတ်ချက်သည် <code>make-rat</code> အမည်ကို pair များတည်ဆောက်ပေးသည့် အခြေခံလုပ်ထုံးလုပ်နည်း (primitive procedure) ဖြစ်သော <code>cons</code> expression ၏ တန်ဖိုးနှင့် ချိတ်ဆက်ပေးသည်။ ထို့ကြောင့် <code>make-rat</code> နှင့် <code>cons</code> တို့သည် အခြေခံတည်ဆောက်မှုစနစ် (primitive constructor) တစ်ခုတည်းအတွက် အမည်များသာ ဖြစ်ကြသည်။
+</p>
+<p>ရွေးချယ်မှုပြုလုပ်သည့်စနစ်များနှင့် တည်ဆောက်မှုစနစ်များကို ဤသို့သတ်မှတ်ခြင်းသည် ပိုမိုထိရောက်မှုရှိသည်- <code>make-rat</code> က <code>cons</code> ကို <em>ခေါ်ယူခြင်း</em> (calling) အစား၊ <code>make-rat</code> <em>ကိုယ်တိုင်က</em> <code>cons</code> ဖြစ်သွားသည့်အတွက် <code>make-rat</code> ကို ခေါ်ယူသည့်အခါ လုပ်ထုံးလုပ်နည်း (procedure) နှစ်ခုအစား တစ်ခုတည်းကိုသာ ခေါ်ယူရတော့မည်ဖြစ်သည်။ အခြားတစ်ဖက်တွင်မူ၊ ဤသို့ပြုလုပ်ခြင်းသည် လုပ်ထုံးလုပ်နည်းခေါ်ယူမှုများကို ခြေရာခံသော (trace) သို့မဟုတ် breakpoint များသတ်မှတ်သော debugging အထောက်အကူပြုပစ္စည်းများကို အခက်တွေ့စေနိုင်သည်- သင်သည် <code>make-rat</code> ခေါ်ယူခြင်းကိုသာ စောင့်ကြည့်လိုသော်လည်း၊ <code>cons</code> ကို ခေါ်ယူတိုင်း လိုက်လံစောင့်ကြည့်နေလိုမည် မဟုတ်သည်မှာ သေချာပါသည်။
+</p>
+<p>ကျွန်ုပ်တို့သည် ဤစာအုပ်တွင် ဤကဲ့သို့သော သတ်မှတ်မှုပုံစံကို မသုံးရန် ရွေးချယ်ထားပါသည်။</p>
+</div>
+<div id="FOOT70"><p><a class="footnote_backlink" href="#DOCF70"><sup>70</sup></a>
+<code>Display</code> သည် ဒေတာများကို ရိုက်နှိပ်ဖော်ပြရန်အတွက် Scheme ၏ အခြေခံလုပ်ဆောင်ချက် (primitive) ဖြစ်သည်။ Scheme ၏ အခြေခံလုပ်ဆောင်ချက်ဖြစ်သော <code>newline</code> သည် ရိုက်နှိပ်ဖော်ပြရန်အတွက် စာကြောင်းအသစ်တစ်ခု စတင်ပေးသည်။ ဤလုပ်ထုံးလုပ်နည်းများထဲမှ တစ်ခုမှ အသုံးဝင်သော တန်ဖိုးကို ပြန်မပေးပါ၊ ထို့ကြောင့် အောက်ပါ <code>print-rat</code> ကို အသုံးပြုမှုများတွင် <code>print-rat</code> က ရိုက်နှိပ်ဖော်ပြသည်များကိုသာ ကျွန်ုပ်တို့ ပြသမည်ဖြစ်ပြီး၊ <code>print-rat</code> မှ ပြန်ပေးသည့်တန်ဖိုးအဖြစ် interpreter မှ ရိုက်နှိပ်သည်များကို ပြသမည်မဟုတ်ပါ။</p>
+</div>
+<div id="FOOT71"><p><a class="footnote_backlink" href="#DOCF71"><sup>71</sup></a>
+အံ့ဩစရာကောင်းသည်မှာ၊ ဤစိတ်ကူးကို တိကျသေချာစွာ ဖော်ထုတ်ရန်မှာ အလွန်ခက်ခဲပါသည်။ ထိုသို့သော ဖော်ထုတ်ချက်ကို ပေးနိုင်သည့် ချဉ်းကပ်ပုံ နှစ်မျိုးရှိသည်။ C. A. R. <a href="References.xhtml#Hoare-_00281972_0029">Hoare (1972)</a> မှ စတင်လမ်းဖောက်ခဲ့သည့် နည်းလမ်းတစ်ခုကို <a id="index-abstract-models"></a>
+<em>abstract models</em> နည်းလမ်းဟု လူသိများသည်။ 
+၎င်းသည် အထက်ပါ rational-number ဥပမာတွင် ဖော်ပြထားသည့် “လုပ်ထုံးလုပ်နည်းများ နှင့် အခြေအနေများ” (procedures plus conditions) သတ်မှတ်ချက်ကို ပုံစံချပေးသည်။ rational-number ဖော်ပြမှုအပေါ်ရှိ အခြေအနေကို ကိန်းပြည့်များ (integers) ဆိုင်ရာ အချက်အလက်များ (ညီမျှခြင်းနှင့် စားခြင်း) ဖြင့် ဖော်ပြခဲ့သည်ကို သတိပြုပါ။ ယေဘုယျအားဖြင့်၊ abstract models များသည် အသစ်သော ဒေတာအရာဝတ္ထု (data objects) အမျိုးအစားများကို ယခင်က သတ်မှတ်ပြီးသား ဒေတာအရာဝတ္ထု အမျိုးအစားများဖြင့် သတ်မှတ်ကြသည်။ ထို့ကြောင့် ဒေတာအရာဝတ္ထုများဆိုင်ရာ အဆိုပြုချက်များကို (assertions) ယခင်က သတ်မှတ်ထားသော ဒေတာအရာဝတ္ထုများဆိုင်ရာ အဆိုပြုချက်များသို့ လျှော့ချခြင်းဖြင့် စစ်ဆေးနိုင်သည်။ MIT မှ Zilles၊ IBM မှ Goguen, Thatcher, Wagner, နှင့် Wright ( <a href="References.xhtml#Thatcher-et-al_002e-1978">Thatcher et al. 1978</a> ကိုကြည့်ပါ) နှင့် Toronto မှ Guttag (<a href="References.xhtml#Guttag-1977">Guttag 1977</a> ကိုကြည့်ပါ) တို့မှ တင်ပြခဲ့သည့် အခြားသော ချဉ်းကပ်မှုတစ်ခုကို
+<a id="index-algebraic-specification"></a>
+<em>algebraic specification</em> ဟု ခေါ်ဆိုသည်။ ၎င်းသည် “လုပ်ထုံးလုပ်နည်းများ” ကို abstract algebraic system တစ်ခု၏ အစိတ်အပိုင်းများအဖြစ် မှတ်ယူပြီး၊ ၎င်းတို့၏ လုပ်ဆောင်ချက်များကို ကျွန်ုပ်တို့၏ “အခြေအနေများ” နှင့် ကိုက်ညီသော axioms (အမှန်တရားများ) ဖြင့် သတ်မှတ်သည်။ ထို့နောက် ဒေတာအရာဝတ္ထုများဆိုင်ရာ အဆိုပြုချက်များကို စစ်ဆေးရန် abstract algebra နည်းစနစ်များကို အသုံးပြုသည်။ ဤနည်းလမ်းနှစ်ခုလုံးကို <a href="References.xhtml#Liskov-and-Zilles-_00281975_0029">Liskov and Zilles (1975)</a> ၏ စာတမ်းတွင် လေ့လာတင်ပြထားပါသည်။</p>
+</div>
+</div>
+<nav class="header">
+<p>
+Next: <a href="2_002e2.xhtml#g_t2_002e2" accesskey="n" rel="next">2.2</a>, Prev: <a href="Chapter-2.xhtml#Chapter-2" accesskey="p" rel="prev">Chapter 2</a>, Up: <a href="#g_t2_002e1" accesskey="u" rel="prev">2.1</a>   [<a href="index.xhtml#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+
+
+</section><span class="bottom jump" title="Jump to bottom"><a href="#pagebottom" accesskey="b">⇣</a></span><a id="pagebottom"></a>
+</body>
+</html>
