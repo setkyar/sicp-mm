@@ -1,0 +1,1683 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="my" lang="my">
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>Structure and Interpretation of Computer Programs, 2e: 1.3</title>
+
+<meta name="description" content="Structure and Interpretation of Computer Programs, 2e: 1.3" />
+<meta name="keywords" content="Structure and Interpretation of Computer Programs, 2e: 1.3" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="Generator" content="texi2any" />
+<meta charset="utf-8" />
+<link href="index.xhtml#Top" rel="start" title="Top" />
+<link href="Term-Index.xhtml#Term-Index" rel="index" title="Term Index" />
+<link href="index.xhtml#SEC_Contents" rel="contents" title="Table of Contents" />
+<link href="Chapter-1.xhtml#Chapter-1" rel="prev" title="Chapter 1" />
+<link href="Chapter-2.xhtml#Chapter-2" rel="next" title="Chapter 2" />
+<link href="1_002e2.xhtml#g_t1_002e2_002e6" rel="prev" title="1.2.6" />
+
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/prettify.css" rel="stylesheet" type="text/css" />
+
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/footnotes.js" type="text/javascript"></script>
+<script src="js/browsertest.js" type="text/javascript"></script>
+</head>
+
+<body>
+<section><span class="top jump" title="Jump to top"><a href="#pagetop" accesskey="t">⇡</a></span><a id="pagetop"></a><a id="g_t1_002e3"></a>
+<nav class="header">
+<p>
+Next: <a href="Chapter-2.xhtml#Chapter-2" accesskey="n" rel="next">Chapter 2</a>, Prev: <a href="1_002e2.xhtml#g_t1_002e2" accesskey="p" rel="prev">1.2</a>, Up: <a href="Chapter-1.xhtml#Chapter-1" accesskey="u" rel="prev">Chapter 1</a>   [<a href="index.xhtml#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+<a id="Formulating-Abstractions-with-Higher_002dOrder-Procedures"></a>
+<h3 class="section"><span class="secnum">1.3</span><span class="sectitle">Higher-Order Procedures များဖြင့် Abstractions များ ဖော်ထုတ်ခြင်း</span></h3>
+
+<p>လုပ်ဆောင်ချက် (procedures) များသည် ကိန်းဂဏန်းအမျိုးမျိုးအပေါ်တွင် မူတည်ခြင်းမရှိဘဲ၊ ကိန်းဂဏန်းများအပေါ် ပေါင်းစပ်လုပ်ဆောင်မှုများကို ဖော်ပြသည့် abstraction များဖြစ်ကြောင်း ကျွန်ုပ်တို့ တွေ့ရှိခဲ့ပြီးဖြစ်သည်။ ဥပမာအားဖြင့်၊ ကျွန်ုပ်တို့သည်
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">cube x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x x x</span><span class="clo">))</span></pre></div>
+
+<p>ဟု သတ်မှတ်လိုက်သောအခါ၊ သတ်မှတ်ထားသော ကိန်းဂဏန်းတစ်ခု၏ cube အကြောင်းကို ပြောနေခြင်းမဟုတ်ဘဲ၊ မည်သည့်ကိန်းဂဏန်းမဆို၏ cube ကို ရယူနိုင်သည့် နည်းလမ်းတစ်ခုအကြောင်းကို ပြောနေခြင်းဖြစ်သည်။ အမှန်စင်စစ် ဤ procedure ကို မသတ်မှတ်ဘဲ အောက်ပါအတိုင်း ဖော်ပြချက်များကို အမြဲရေးသားခြင်းဖြင့်လည်း အလုပ်ဖြစ်နိုင်ပါသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="lit">3</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x x x</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="pun">*</span><span class="pln"> y y y</span><span class="clo">)</span></pre></div>
+
+<p>ထိုသို့ရေးပါက <code>cube</code> ကို တိုက်ရိုက်ဖော်ပြရန် လိုအပ်တော့မည်မဟုတ်ပါ။ သို့သော် ဤသို့ပြုလုပ်ခြင်းသည် ကျွန်ုပ်တို့ကို ကြီးမားသော အားနည်းချက်တစ်ခုဖြစ်စေပါသည်။ အဆင့်မြင့်သော လုပ်ဆောင်ချက်များ (higher-level operations) အနေဖြင့် စဉ်းစားမည့်အစား၊ programming language တွင် ပါရှိပြီးသား primitive operation များ (ဤနေရာတွင် မြှောက်ခြင်း) အဆင့်မှာတင် အမြဲတမ်း အလုပ်လုပ်နေရစေပါသည်။ ကျွန်ုပ်တို့၏ ပရိုဂရမ်များသည် cube များကို တွက်ချက်နိုင်ပါလိမ့်မည်၊ သို့သော် ကျွန်ုပ်တို့၏ language တွင် cubing ဆိုသည့် အယူအဆ (concept) ကို ဖော်ပြနိုင်စွမ်း ရှိမည်မဟုတ်ပါ။ စွမ်းအားထက်မြက်သော programming language တစ်ခုထံမှ ကျွန်ုပ်တို့ တောင်းဆိုသင့်သည့် အချက်တစ်ခုမှာ အများသုံးပုံစံ (common patterns) များကို နာမည်များပေးခြင်းဖြင့် abstractions များ တည်ဆောက်နိုင်စွမ်းရှိရန်နှင့် ထို abstractions များအတိုင်း တိုက်ရိုက်အလုပ်လုပ်နိုင်ရန်ဖြစ်သည်။ Procedures များသည် ဤစွမ်းရည်ကို ပေးစွမ်းပါသည်။ ထို့ကြောင့် primitive အကျဆုံး language များမှလွဲ၍ ကျန်ရှိသော programming language အားလုံးတွင် procedures များကို သတ်မှတ်ရန် ယန္တရားများ ပါဝင်ကြခြင်း ဖြစ်ပါသည်။
+</p>
+<p>သို့သော် ကိန်းဂဏန်းများကိုသာ parameter အဖြစ် လက်ခံနိုင်သော procedures များဖြင့်သာ ကန့်သတ်ထားမည်ဆိုပါက၊ ကိန်းဂဏန်းဆိုင်ရာ လုပ်ဆောင်ချက်များတွင်ပင် abstractions များ ဖန်တီးနိုင်စွမ်းမှာ များစွာ အကန့်အသတ်ရှိနေပါလိမ့်မည်။ တစ်ခါတစ်ရံတွင် တူညီသော programming pattern တစ်ခုတည်းကို မတူညီသော procedures များစွာနှင့် အသုံးပြုလေ့ရှိပါသည်။ ထိုကဲ့သို့သော pattern များကို concept တစ်ခုအနေဖြင့် ဖော်ပြနိုင်ရန်အတွက်၊ procedures များကို argument အဖြစ် လက်ခံနိုင်သော သို့မဟုတ် procedures များကို value အဖြစ် ပြန်ပေးနိုင်သော procedures များကို တည်ဆောက်ရန် လိုအပ်ပါလိမ့်မည်။ Procedures များကို ကိုင်တွယ်အသုံးပြုသော procedures များကို
+<a id="index-higher_002dorder-procedures"></a>
+<em>higher-order procedures</em> ဟု ခေါ်ဆိုပါသည်။ ဤအပိုင်းတွင် higher-order procedures များသည် စွမ်းအားထက်မြက်သော abstraction mechanisms များအဖြစ် မည်သို့ဆောင်ရွက်ပေးနိုင်ကြောင်းနှင့် ကျွန်ုပ်တို့ language ၏ ဖော်ပြနိုင်စွမ်း (expressive power) ကို မည်မျှအထိ များပြားလာစေနိုင်ကြောင်း ဖော်ပြပေးသွားမည် ဖြစ်ပါသည်။
+</p>
+
+<a id="g_t1_002e3_002e1"></a>
+<a id="Procedures-as-Arguments"></a>
+<h4 class="subsection"><span class="secnum">1.3.1</span><span class="sectitle">Procedures များအား Arguments များအဖြစ် အသုံးပြုခြင်း</span></h4>
+
+<p>အောက်ပါ procedure သုံးခုကို လေ့လာကြည့်ပါ။ ပထမတစ်ခုမှာ <code>a</code> မှ <code>b</code> အထိ ကိန်းပြည့်များ၏ ပေါင်းလဒ်ကို တွက်ချက်ပေးသည်:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sum-integers a b</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;</span><span class="pln"> a b</span><span class="clo">)</span><span class="pln"> 
+      </span><span class="lit">0</span><span class="pln"> 
+      </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> a </span><span class="opn">(</span><span class="pln">sum-integers </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> a </span><span class="lit">1</span><span class="clo">)</span><span class="pln"> b</span><span class="clo">))))</span></pre></div>
+
+<p>ဒုတိယတစ်ခုမှာ ပေးထားသော range အတွင်းရှိ ကိန်းပြည့်များ၏ cube (သုံးထပ်ကိန်း) များ၏ ပေါင်းလဒ်ကို တွက်ချက်ပေးသည်:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sum-cubes a b</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;</span><span class="pln"> a b</span><span class="clo">)</span><span class="pln"> 
+      </span><span class="lit">0</span><span class="pln"> 
+      </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">cube a</span><span class="clo">)</span><span class="pln"> 
+         </span><span class="opn">(</span><span class="pln">sum-cubes </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> a </span><span class="lit">1</span><span class="clo">)</span><span class="pln"> b</span><span class="clo">))))</span></pre></div>
+
+<p>တတိယတစ်ခုမှာ အောက်ပါ series ရှိ term များ၏ ပေါင်းလဒ်ကို တွက်ချက်ပေးသည်
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mfrac>
+    <mn>1</mn>
+    <mrow>
+      <mn>1</mn>
+      <mo>⋅<!-- ⋅ --></mo>
+      <mn>3</mn>
+    </mrow>
+  </mfrac>
+  <mo>+</mo>
+  <mfrac>
+    <mn>1</mn>
+    <mrow>
+      <mn>5</mn>
+      <mo>⋅<!-- ⋅ --></mo>
+      <mn>7</mn>
+    </mrow>
+  </mfrac>
+  <mo>+</mo>
+  <mfrac>
+    <mn>1</mn>
+    <mrow>
+      <mn>9</mn>
+      <mo>⋅<!-- ⋅ --></mo>
+      <mn>11</mn>
+    </mrow>
+  </mfrac>
+  <mo>+</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo>…<!-- … --></mo>
+    <mo>,</mo>
+  </mrow>
+</math>
+
+၎င်းသည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>π<!-- π --></mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mo>/</mo>
+    </mrow>
+    <mn>8</mn>
+  </mrow>
+</math> သို့ (အလွန်နှေးကွေးစွာ) ချဉ်းကပ်သွားသည်:<a class="footnote_link" id="DOCF49" href="#FOOT49"><sup>49</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">pi-sum a b</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;</span><span class="pln"> a b</span><span class="clo">)</span><span class="pln">
+      </span><span class="lit">0</span><span class="pln">
+      </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> </span><span class="lit">1.0</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> a </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> a </span><span class="lit">2</span><span class="clo">)))</span><span class="pln"> 
+         </span><span class="opn">(</span><span class="pln">pi-sum </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> a </span><span class="lit">4</span><span class="clo">)</span><span class="pln"> b</span><span class="clo">))))</span></pre></div>
+
+<p>ဤ procedure သုံးခုသည် တူညီသော အခြေခံ pattern တစ်ခုကို မျှဝေအသုံးပြုထားကြောင်း ထင်ရှားပါသည်။ ၎င်းတို့သည် များသောအားဖြင့် တူညီကြပြီး၊ procedure အမည်၊ ပေါင်းထည့်ရမည့် term ကို တွက်ချက်ရန် အသုံးပြုသော <code>a</code> ၏ function နှင့် <code>a</code> ၏ နောက်တန်ဖိုးကို ပေးမည့် function တို့တွင်သာ ကွဲပြားကြသည်။ ကျွန်ုပ်တို့သည် template တစ်ခုတည်းရှိ နေရာလွတ်များကို ဖြည့်စွက်ခြင်းဖြင့် ဤ procedure တစ်ခုချင်းစီကို ဖန်တီးနိုင်သည်:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">⟨</span><var><span class="pln">name</span></var><span class="pln">⟩ a b</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;</span><span class="pln"> a b</span><span class="clo">)</span><span class="pln">
+      </span><span class="lit">0</span><span class="pln">
+      </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">⟨</span><var><span class="pln">term</span></var><span class="pln">⟩ a</span><span class="clo">)</span><span class="pln"> 
+         </span><span class="opn">(</span><span class="pln">⟨</span><var><span class="pln">name</span></var><span class="pln">⟩ </span><span class="opn">(</span><span class="pln">⟨</span><var><span class="pln">next</span></var><span class="pln">⟩ a</span><span class="clo">)</span><span class="pln"> b</span><span class="clo">))))</span></pre></div>
+
+<p>ဤကဲ့သို့ တူညီသော pattern ရှိနေခြင်းသည် အသုံးဝင်သော abstraction တစ်ခုကို ထုတ်ဖော်ရန်ရှိနေကြောင်း ခိုင်လုံသော အထောက်အထားဖြစ်ပါသည်။ အမှန်စင်စစ်၊ သင်္ချာပညာရှင်များသည် လွန်ခဲ့သော အချိန်များစွာကတည်းက series တစ်ခု၏ ပေါင်းလဒ် (summation of a series) ဆိုင်ရာ abstraction ကို ဖော်ထုတ်ခဲ့ကြပြီး ဤအယူအဆကို ဖော်ပြရန်အတွက် ဥပမာအားဖြင့်
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mrow class="MJX-TeXAtom-ORD">
+    <munderover>
+      <mo>∑<!-- ∑ --></mo>
+      <mrow class="MJX-TeXAtom-ORD">
+        <mi>n</mi>
+        <mo>=</mo>
+        <mi>a</mi>
+      </mrow>
+      <mi>b</mi>
+    </munderover>
+    <mi>f</mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+  <mspace width="thinmathspace"/>
+  <mo>=</mo>
+  <mspace width="thinmathspace"/>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>f</mi>
+    <mo stretchy="false">(</mo>
+    <mi>a</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+  <mo>+</mo>
+  <mo>⋯<!-- ⋯ --></mo>
+  <mo>+</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>f</mi>
+    <mo stretchy="false">(</mo>
+    <mi>b</mi>
+    <mo stretchy="false">)</mo>
+    <mo>,</mo>
+  </mrow>
+</math>
+
+ကဲ့သို့သော “sigma notation” ကို တီထွင်ခဲ့ကြသည်။ Sigma notation ၏ အစွမ်းမှာ သင်္ချာပညာရှင်များအား သီးခြားပေါင်းလဒ်များအပြင် ပေါင်းလဒ်ဆိုသည့် အယူအဆကိုယ်တိုင်ကို ကိုင်တွယ်ဖြေရှင်းနိုင်စေခြင်းဖြစ်သည်—ဥပမာအားဖြင့်၊ ပေါင်းလဒ်တွက်နေသည့် သီးခြား series နှင့် မသက်ဆိုင်ဘဲ ပေါင်းလဒ်များ၏ ယေဘုယျရလဒ်များကို ဖော်ထုတ်ရန်ဖြစ်သည်။
+</p>
+<p>အလားတူပင်၊ program designer များအနေဖြင့် ကျွန်ုပ်တို့၏ language ကို သီးခြားပေါင်းလဒ်များကို တွက်ချက်ပေးရုံသာမက ပေါင်းလဒ်ဆိုသည့် အယူအဆကိုပါ ဖော်ပြနိုင်သော procedure တစ်ခုကို ရေးသားနိုင်လောက်အောင် အစွမ်းထက်စေလိုပါသည်။ ကျွန်ုပ်တို့၏ procedural language တွင် အထက်ပါ template ကို ယူ၍ “နေရာလွတ်များ” (slots) ကို formal parameter များအဖြစ် ပြောင်းလဲခြင်းဖြင့် အလွယ်တကူ လုပ်ဆောင်နိုင်သည်:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sum term a next b</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;</span><span class="pln"> a b</span><span class="clo">)</span><span class="pln">
+      </span><span class="lit">0</span><span class="pln">
+      </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">term a</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">sum term </span><span class="opn">(</span><span class="pln">next a</span><span class="clo">)</span><span class="pln"> next b</span><span class="clo">))))</span></pre></div>
+
+<p><code>sum</code> သည် ၎င်း၏ argument များအဖြစ် အောက်ခြေနှင့် အထက်ခြေနယ်နိမိတ်များဖြစ်သော <code>a</code> နှင့် <code>b</code> အပြင် <code>term</code> နှင့် <code>next</code> အမည်ရှိ procedure များကိုပါ လက်ခံထားသည်ကို သတိပြုပါ။ ကျွန်ုပ်တို့သည် <code>sum</code> ကို အခြား procedure များကဲ့သို့ပင် အသုံးပြုနိုင်သည်။ ဥပမာအားဖြင့်၊ ၎င်းကို (argument ကို 1 တိုးပေးသော <code>inc</code> procedure နှင့် တွဲဖက်၍) <code>sum-cubes</code> ကို သတ်မှတ်ရန် အသုံးပြုနိုင်သည်:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">inc n</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> n </span><span class="lit">1</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sum-cubes a b</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">sum cube a inc b</span><span class="clo">))</span></pre></div>
+
+<p>၎င်းကို အသုံးပြု၍ ၁ မှ ၁၀ အထိ ကိန်းပြည့်များ၏ cube ပေါင်းလဒ်ကို တွက်ချက်နိုင်သည်:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">sum-cubes </span><span class="lit">1</span><span class="pln"> </span><span class="lit">10</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">3025</span></i>
+</pre></div>
+
+<p>Term ကို တွက်ချက်ရန် identity procedure ၏ အကူအညီဖြင့် <code>sum-integers</code> ကို <code>sum</code> အားဖြင့် အောက်ပါအတိုင်း သတ်မှတ်နိုင်သည်:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">identity x</span><span class="clo">)</span><span class="pln"> x</span><span class="clo">)</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sum-integers a b</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">sum identity a inc b</span><span class="clo">))</span></pre></div>
+
+<p>ထို့နောက် ၁ မှ ၁၀ အထိ ကိန်းပြည့်များကို ပေါင်းနိုင်သည်:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">sum-integers </span><span class="lit">1</span><span class="pln"> </span><span class="lit">10</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">55</span></i>
+</pre></div>
+
+<p><code>pi-sum</code> ကိုလည်း အလားတူပင် သတ်မှတ်နိုင်သည်:<a class="footnote_link" id="DOCF50" href="#FOOT50"><sup>50</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">pi-sum a b</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">pi-term x</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> </span><span class="lit">1.0</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> x </span><span class="lit">2</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">pi-next x</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> x </span><span class="lit">4</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">sum pi-term a pi-next b</span><span class="clo">))</span></pre></div>
+
+<p>ဤ procedure များကို အသုံးပြု၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>π<!-- π --></mi>
+</math> ၏ ခန့်မှန်းခြေတန်ဖိုးကို တွက်ချက်နိုင်သည်:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="lit">8</span><span class="pln"> </span><span class="opn">(</span><span class="pln">pi-sum </span><span class="lit">1</span><span class="pln"> </span><span class="lit">1000</span><span class="clo">))</span><span class="pln">
+</span><i><span class="lit">3.139592655589783</span></i>
+</pre></div>
+
+<p><code>sum</code> ကို ရရှိပြီးနောက်၊ နောက်ထပ် အယူအဆများကို ဖော်ထုတ်ရာတွင် ၎င်းကို အခြေခံအုတ်မြစ် (building block) တစ်ခုအဖြစ် အသုံးပြုနိုင်သည်။ ဥပမာအားဖြင့်၊ နယ်နိမိတ် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>b</mi>
+</math> ကြားရှိ function <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>f</mi>
+</math> ၏ definite integral ကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>d</mi>
+    <mi>x</mi>
+  </mrow>
+</math> ၏ တန်ဖိုးအနည်းငယ်များအတွက် အောက်ပါ formula ကို အသုံးပြု၍ ကိန်းဂဏန်းအရ ခန့်မှန်းတွက်ချက်နိုင်သည်။ ၎င်းကို procedure တစ်ခုအနေဖြင့် တိုက်ရိုက်ဖော်ပြနိုင်သည်:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">integral f a b dx</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">add-dx x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> x dx</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sum f </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> a </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> dx </span><span class="lit">2.0</span><span class="clo">))</span><span class="pln"> add-dx b</span><span class="clo">)</span><span class="pln"> 
+     dx</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">integral cube </span><span class="lit">0</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> </span><span class="lit">0.01</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">.24998750000000042</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">integral cube </span><span class="lit">0</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> </span><span class="lit">0.001</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">.249999875000001</span></i>
+</pre></div>
+
+<p>(0 နှင့် 1 ကြား <code>cube</code> ၏ integral တန်ဖိုးအတိအကျမှာ 1/4 ဖြစ်ပါသည်။)
+</p>
+<blockquote>
+<p><strong><a id="Exercise-1_002e29"></a>လေ့ကျင့်ခန်း ၁.၂၉:</strong> Simpson’s Rule သည် အထက်တွင် ဖော်ပြထားသော နည်းလမ်းထက် ပိုမိုတိကျသော numerical integration နည်းလမ်းတစ်ခုဖြစ်သည်။ Simpson’s Rule ကို အသုံးပြု၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>b</mi>
+</math> ကြားရှိ function <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>f</mi>
+</math> ၏ integral ကို အောက်ပါအတိုင်း ခန့်မှန်းတွက်ချက်သည်
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mfrac>
+    <mi>h</mi>
+    <mn>3</mn>
+  </mfrac>
+  <mo stretchy="false">(</mo>
+  <msub>
+    <mi>y</mi>
+    <mn>0</mn>
+  </msub>
+  <mo>+</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>4</mn>
+    <msub>
+      <mi>y</mi>
+      <mn>1</mn>
+    </msub>
+  </mrow>
+  <mo>+</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>2</mn>
+    <msub>
+      <mi>y</mi>
+      <mn>2</mn>
+    </msub>
+  </mrow>
+  <mo>+</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>4</mn>
+    <msub>
+      <mi>y</mi>
+      <mn>3</mn>
+    </msub>
+  </mrow>
+  <mo>+</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>2</mn>
+    <msub>
+      <mi>y</mi>
+      <mn>4</mn>
+    </msub>
+  </mrow>
+  <mo>+</mo>
+  <mo>⋯<!-- ⋯ --></mo>
+  <mo>+</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>2</mn>
+    <msub>
+      <mi>y</mi>
+      <mrow class="MJX-TeXAtom-ORD">
+        <mi>n</mi>
+        <mo>−<!-- − --></mo>
+        <mn>2</mn>
+      </mrow>
+    </msub>
+  </mrow>
+  <mo>+</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>4</mn>
+    <msub>
+      <mi>y</mi>
+      <mrow class="MJX-TeXAtom-ORD">
+        <mi>n</mi>
+        <mo>−<!-- − --></mo>
+        <mn>1</mn>
+      </mrow>
+    </msub>
+    <mo>+</mo>
+    <msub>
+      <mi>y</mi>
+      <mi>n</mi>
+    </msub>
+    <mo stretchy="false">)</mo>
+    <mo>,</mo>
+  </mrow>
+</math>
+
+ဤတွင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>h</mi>
+    <mo>=</mo>
+    <mo stretchy="false">(</mo>
+    <mi>b</mi>
+    <mo>−<!-- − --></mo>
+    <mi>a</mi>
+    <mo stretchy="false">)</mo>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mo>/</mo>
+    </mrow>
+    <mi>n</mi>
+  </mrow>
+</math> ဖြစ်ပြီး <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> မှာ စုံကိန်းတစ်ခုဖြစ်ကာ
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>y</mi>
+    <mi>k</mi>
+  </msub>
+  <mo>=</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>f</mi>
+    <mo stretchy="false">(</mo>
+    <mi>a</mi>
+    <mo>+</mo>
+    <mi>k</mi>
+    <mi>h</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ဖြစ်သည်။ (<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> တန်ဖိုး တိုးလာခြင်းသည် ခန့်မှန်းချက်၏ တိကျမှုကို တိုးစေပါသည်။) <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>f</mi>
+</math>, <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math>, <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>b</mi>
+</math>, နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> တို့ကို argument များအဖြစ် လက်ခံပြီး Simpson’s Rule ကို အသုံးပြု၍ တွက်ချက်ထားသော integral တန်ဖိုးကို return ပြန်ပေးသည့် procedure တစ်ခုကို ရေးသားပါ။ သင်၏ procedure ကို အသုံးပြု၍ 0 နှင့် 1 ကြားရှိ <code>cube</code> ကို (<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <mo>=</mo>
+    <mn>100</mn>
+  </mrow>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <mo>=</mo>
+    <mn>1000</mn>
+  </mrow>
+</math> ဖြင့်) integrate လုပ်ပြီး ရလဒ်များကို အထက်တွင် ဖော်ပြထားသော <code>integral</code> procedure ၏ ရလဒ်များနှင့် နှိုင်းယှဉ်ပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-1_002e30"></a>လေ့ကျင့်ခန်း ၁.၃၀:</strong> အထက်ပါ <code>sum</code> procedure သည် linear recursion တစ်ခုကို ဖြစ်ပေါ်စေသည်။ ၎င်း procedure ကို ပေါင်းလဒ်အား iterative နည်းဖြင့် လုပ်ဆောင်ရန် ပြန်လည်ရေးသားနိုင်သည်။ အောက်ပါ definition ရှိ လိုအပ်နေသော expression များကို ဖြည့်စွက်ခြင်းဖြင့် ၎င်းကို မည်သို့လုပ်ဆောင်ရမည်ကို ဖော်ပြပါ:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sum term a next b</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">iter a result</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> ⟨</span><span class="pun">??</span><span class="pln">⟩
+        ⟨</span><span class="pun">??</span><span class="pln">⟩
+        </span><span class="opn">(</span><span class="pln">iter ⟨</span><span class="pun">??</span><span class="pln">⟩ ⟨</span><span class="pun">??</span><span class="pln">⟩</span><span class="clo">)))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">iter ⟨</span><span class="pun">??</span><span class="pln">⟩ ⟨</span><span class="pun">??</span><span class="pln">⟩</span><span class="clo">))</span></pre></div>
+</blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-1_002e31"></a>လေ့ကျင့်ခန်း ၁.၃၁:</strong> 
+</p>
+<ol>
+<li> <code>sum</code> procedure သည် higher-order procedure များအဖြစ် ဖမ်းယူနိုင်သော အလားတူ abstraction အမြောက်အမြားထဲမှ အရှင်းလင်းဆုံးတစ်ခုသာ ဖြစ်ပါသည်။<a class="footnote_link" id="DOCF51" href="#FOOT51"><sup>51</sup></a> ပေးထားသော range တစ်ခုအတွင်းရှိ function တစ်ခု၏ တန်ဖိုးများ၏ မြှောက်လဒ်ကို return ပြန်ပေးသော <code>product</code> အမည်ရှိ အလားတူ procedure တစ်ခုကို ရေးသားပါ။ <code>factorial</code> ကို <code>product</code> အားဖြင့် မည်သို့သတ်မှတ်ရမည်ကို ဖော်ပြပါ။ ထို့ပြင် <code>product</code> ကို အသုံးပြု၍ အောက်ပါ formula ဖြင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>π<!-- π --></mi>
+</math> ၏ ခန့်မှန်းခြေတန်ဖိုးများကို တွက်ချက်ပါ<a class="footnote_link" id="DOCF52" href="#FOOT52"><sup>52</sup></a>
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mfrac>
+    <mi>π<!-- π --></mi>
+    <mn>4</mn>
+  </mfrac>
+  <mspace width="thinmathspace"/>
+  <mo>=</mo>
+  <mspace width="thinmathspace"/>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mfrac>
+      <mrow>
+        <mn>2</mn>
+        <mo>⋅<!-- ⋅ --></mo>
+        <mn>4</mn>
+        <mo>⋅<!-- ⋅ --></mo>
+        <mn>4</mn>
+        <mo>⋅<!-- ⋅ --></mo>
+        <mn>6</mn>
+        <mo>⋅<!-- ⋅ --></mo>
+        <mn>6</mn>
+        <mo>⋅<!-- ⋅ --></mo>
+        <mn>8</mn>
+        <mo>⋅<!-- ⋅ --></mo>
+        <mo>⋯<!-- ⋯ --></mo>
+      </mrow>
+      <mrow>
+        <mn>3</mn>
+        <mo>⋅<!-- ⋅ --></mo>
+        <mn>3</mn>
+        <mo>⋅<!-- ⋅ --></mo>
+        <mn>5</mn>
+        <mo>⋅<!-- ⋅ --></mo>
+        <mn>5</mn>
+        <mo>⋅<!-- ⋅ --></mo>
+        <mn>7</mn>
+        <mo>⋅<!-- ⋅ --></mo>
+        <mn>7</mn>
+        <mo>⋅<!-- ⋅ --></mo>
+        <mo>⋯<!-- ⋯ --></mo>
+      </mrow>
+    </mfrac>
+    <mo>.</mo>
+  </mrow>
+</math>
+
+</li><li> သင်၏ <code>product</code> procedure သည် recursive process တစ်ခုကို ဖြစ်ပေါ်စေပါက iterative process တစ်ခု ဖြစ်ပေါ်စေမည့် procedure ကို ရေးသားပါ။ ၎င်းသည် iterative process တစ်ခု ဖြစ်ပေါ်စေပါက recursive process တစ်ခု ဖြစ်ပေါ်စေမည့် procedure ကို ရေးသားပါ။
+
+</li></ol>
+</blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-1_002e32"></a>လေ့ကျင့်ခန်း ၁.၃၂:</strong> 
+</p>
+<ol>
+<li> <code>sum</code> နှင့် <code>product</code> (<a href="#Exercise-1_002e31">လေ့ကျင့်ခန်း ၁.၃၁</a>) တို့သည် ယေဘုယျကျသော accumulation function တစ်ခုကို အသုံးပြု၍ term အစုအဝေးတစ်ခုကို ပေါင်းစပ်ပေးသည့် <code>accumulate</code> ဟုခေါ်သော ပိုမိုယေဘုယျကျသည့် အယူအဆတစ်ခု၏ အထူးကိစ္စရပ်များ ဖြစ်ကြောင်း ဖော်ပြပါ:
+
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">accumulate 
+ combiner null-value term a next b</span><span class="clo">)</span></pre></div>
+
+<p><code>Accumulate</code> သည် <code>sum</code> နှင့် <code>product</code> ကဲ့သို့ပင် term နှင့် range သတ်မှတ်ချက်များကို argument အဖြစ် လက်ခံသည့်အပြင်၊ လက်ရှိ term ကို ယခင် term များ၏ accumulation နှင့် မည်သို့ပေါင်းစပ်မည်ကို သတ်မှတ်ပေးသော (argument နှစ်ခုပါသည့်) <code>combiner</code> procedure နှင့် term များ ကုန်ဆုံးသွားချိန်တွင် အသုံးပြုမည့် အခြေခံတန်ဖိုးကို သတ်မှတ်ပေးသော <code>null-value</code> တို့ကိုလည်း လက်ခံပါသည်။ <code>accumulate</code> ကို ရေးသားပြီး <code>sum</code> နှင့် <code>product</code> နှစ်ခုစလုံးကို <code>accumulate</code> သို့ ရိုးရှင်းသော ခေါ်ယူမှုများအဖြစ် မည်သို့သတ်မှတ်နိုင်ကြောင်း ဖော်ပြပါ။
+</p>
+</li><li> သင်၏ <code>accumulate</code> procedure သည် recursive process တစ်ခုကို ဖြစ်ပေါ်စေပါက iterative process တစ်ခု ဖြစ်ပေါ်စေမည့် procedure ကို ရေးသားပါ။ ၎င်းသည် iterative process တစ်ခု ဖြစ်ပေါ်စေပါက recursive process တစ်ခု ဖြစ်ပေါ်စေမည့် procedure ကို ရေးသားပါ။
+
+</li></ol>
+</blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-1_002e33"></a>လေ့ကျင့်ခန်း ၁.၃၃:</strong> ပေါင်းစပ်မည့် term များအပေါ်တွင် <a id="index-filter"></a>
+<em>filter</em> ဆိုသည့် အယူအဆကို ထည့်သွင်းခြင်းဖြင့် <code>accumulate</code> (<a href="#Exercise-1_002e32">လေ့ကျင့်ခန်း ၁.၃၂</a>) ၏ ပိုမိုယေဘုယျကျသော version တစ်ခုကို ရရှိနိုင်သည်။ ဆိုလိုသည်မှာ range အတွင်းရှိ သတ်မှတ်ထားသော အခြေအနေနှင့် ကိုက်ညီသော တန်ဖိုးများမှ ရရှိလာသည့် term များကိုသာ ပေါင်းစပ်ခြင်းဖြစ်သည်။ ရလဒ်အဖြစ် ထွက်ပေါ်လာသော <code>filtered-accumulate</code> abstraction သည် accumulate ကဲ့သို့ပင် argument များကို လက်ခံပြီး filter ကို သတ်မှတ်ပေးသည့် argument တစ်ခုပါသော ထပ်ဆောင်း predicate တစ်ခုကိုလည်း လက်ခံပါသည်။ <code>filtered-accumulate</code> ကို procedure တစ်ခုအဖြစ် ရေးသားပါ။ အောက်ပါတို့ကို <code>filtered-accumulate</code> အသုံးပြု၍ မည်သို့ဖော်ပြရမည်ကို ဖော်ပြပါ:
+</p>
+<ol>
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> မှ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>b</mi>
+</math> အကြားရှိ သုဒ္ဓကိန်း (prime number) များ၏ နှစ်ထပ်ကိန်းပေါင်းလဒ် (သင့်တွင် <code>prime?</code> predicate ရေးသားပြီးသားရှိသည်ဟု ယူဆပါ)
+
+</li><li> <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ထက်ငယ်ပြီး <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> နှင့် relatively prime ဖြစ်သော (ဆိုလိုသည်မှာ အပေါင်းကိန်းပြည့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>i</mi>
+    <mo>&lt;</mo>
+    <mi>n</mi>
+  </mrow>
+</math> များတွင်
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mtext>GCD</mtext>
+    <mo stretchy="false">(</mo>
+    <mi>i</mi>
+    <mo>,</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+    <mo>=</mo>
+    <mn>1</mn>
+  </mrow>
+</math> ဖြစ်သော) အပေါင်းကိန်းပြည့်အားလုံး၏ မြှောက်လဒ်။
+
+</li></ol>
+</blockquote>
+
+<a id="g_t1_002e3_002e2"></a>
+<a id="Constructing-Procedures-Using-Lambda"></a>
+<h4 class="subsection"><span class="secnum">1.3.2</span><span class="sectitle"><code>Lambda</code> ကို အသုံးပြု၍ လုပ်ထုံးလုပ်နည်းများ တည်ဆောက်ခြင်း</span></h4>
+
+<p><a href="#g_t1_002e3_002e1">1.3.1</a> တွင် <code>sum</code> ကို အသုံးပြုခဲ့စဉ်ကဲ့သို့ <code>pi-term</code> နှင့် <code>pi-next</code> ကဲ့သို့သော ရိုးရှင်းသည့် လုပ်ထုံးလုပ်နည်းများကို higher-order procedure ၏ arguments များအဖြစ် အသုံးပြုရန်အတွက် သီးသန့် အဓိပ္ပာယ်ဖွင့်ဆို (define) နေရခြင်းမှာ အလွန်ပင် အဆင်မပြေလှပါ။ <code>pi-next</code> နှင့် <code>pi-term</code> တို့ကို အဓိပ္ပာယ်ဖွင့်ဆိုနေမည့်အစား "၎င်း၏ input ကို ၄ တိုး၍ ပြန်ပေးသော လုပ်ထုံးလုပ်နည်း" နှင့် "၎င်း၏ input ကို input အပေါင်း ၂ နှင့် မြှောက်ပြီး ရလာသောရလဒ်၏ reciprocal (ပြောင်းပြန်ကိန်း) ကို ပြန်ပေးသော လုပ်ထုံးလုပ်နည်း" ဟု တိုက်ရိုက် သတ်မှတ်နိုင်သည့် နည်းလမ်းရှိပါက ပို၍ အဆင်ပြေပါလိမ့်မည်။ လုပ်ထုံးလုပ်နည်းများကို ဖန်တီးပေးသည့် <code>lambda</code> ဆိုသော special form ကို မိတ်ဆက်ခြင်းဖြင့် ၎င်းကို လုပ်ဆောင်နိုင်ပါသည်။ <code>lambda</code> ကို အသုံးပြု၍ ကျွန်ုပ်တို့ လိုချင်သောအရာကို အောက်ပါအတိုင်း ဖော်ပြနိုင်ပါသည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> x </span><span class="lit">4</span><span class="clo">))</span></pre></div>
+
+<p>နှင့်
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> </span><span class="lit">1.0</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> x </span><span class="lit">2</span><span class="clo">))))</span></pre></div>
+
+<p>ထိုအခါ ကျွန်ုပ်တို့၏ <code>pi-sum</code> လုပ်ထုံးလုပ်နည်းကို အခြား auxiliary procedure များ အဓိပ္ပာယ်ဖွင့်ဆိုရန် မလိုဘဲ အောက်ပါအတိုင်း ရေးသားနိုင်ပါသည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">pi-sum a b</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">sum </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> </span><span class="lit">1.0</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> x </span><span class="lit">2</span><span class="clo">))))</span><span class="pln">
+       a
+       </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> x </span><span class="lit">4</span><span class="clo">))</span><span class="pln">
+       b</span><span class="clo">))</span></pre></div>
+
+<p><code>lambda</code> ကိုပင် ထပ်မံအသုံးပြု၍ <code>integral</code> လုပ်ထုံးလုပ်နည်းကို auxiliary procedure ဖြစ်သော <code>add-dx</code> ကို အဓိပ္ပာယ်ဖွင့်ဆိုရန် မလိုဘဲ ရေးသားနိုင်ပါသည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">integral f a b dx</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sum f </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> a </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> dx </span><span class="lit">2.0</span><span class="clo">))</span><span class="pln">
+            </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> x dx</span><span class="clo">))</span><span class="pln">
+            b</span><span class="clo">)</span><span class="pln">
+     dx</span><span class="clo">))</span></pre></div>
+
+<p>ယေဘုယျအားဖြင့် <code>lambda</code> ကို <code>define</code> ကဲ့သို့ပင် လုပ်ထုံးလုပ်နည်းများ ဖန်တီးရန် အသုံးပြုသော်လည်း လုပ်ထုံးလုပ်နည်းအတွက် အမည် သတ်မှတ်ပေးရန် မလိုသည်မှာ ကွာခြားချက်ဖြစ်ပါသည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">⟨</span><var><span class="pln">formal-parameters</span></var><span class="pln">⟩</span><span class="clo">)</span><span class="pln"> ⟨</span><var><span class="pln">body</span></var><span class="pln">⟩</span><span class="clo">)</span></pre></div>
+
+<p>ထွက်ပေါ်လာသော လုပ်ထုံးလုပ်နည်းသည် <code>define</code> ကို အသုံးပြု၍ ဖန်တီးထားသော လုပ်ထုံးလုပ်နည်းကဲ့သို့ပင် ဖြစ်ပါသည်။ ထူးခြားချက်တစ်ခုမှာ environment အတွင်း မည်သည့်အမည်နှင့်မျှ ချိတ်ဆက်ထားခြင်း မရှိခြင်းသာ ဖြစ်ပါသည်။ အမှန်စင်စစ် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">plus4 x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> x </span><span class="lit">4</span><span class="clo">))</span></pre></div>
+
+<p>သည် အောက်ပါအတိုင်းနှင့် ညီမျှပါသည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> plus4 </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> x </span><span class="lit">4</span><span class="clo">)))</span></pre></div>
+
+<p>ကျွန်ုပ်တို့သည် <code>lambda</code> expression တစ်ခုကို အောက်ပါအတိုင်း ဖတ်ရှုနိုင်ပါသည် -
+</p>
+<div class="example">
+<pre class="example">(lambda                     (x)     (+   x     4))
+    |                        |       |   |     |
+argument x အတွက် x နှင့် 4 ကို ပေါင်းပေးသော လုပ်ထုံးလုပ်နည်း
+</pre></div>
+
+<p>လုပ်ထုံးလုပ်နည်းတစ်ခုကို တန်ဖိုးအဖြစ် ရရှိသော အခြား expression များကဲ့သို့ပင် <code>lambda</code> expression ကို အောက်ပါကဲ့သို့ combination တစ်ခုတွင် operator အဖြစ် အသုံးပြုနိုင်ပါသည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">((</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">x y z</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> x y </span><span class="opn">(</span><span class="pln">square z</span><span class="clo">)))</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> </span><span class="lit">2</span><span class="pln"> </span><span class="lit">3</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">12</span></i>
+</pre></div>
+
+<p>သို့မဟုတ် ပို၍ ယေဘုယျကျကျ ပြောရလျှင် လုပ်ထုံးလုပ်နည်း အမည်တစ်ခုကို ပုံမှန်အသုံးပြုသည့် မည်သည့်နေရာမျိုးတွင်မဆို အသုံးပြုနိုင်ပါသည်။<a class="footnote_link" id="DOCF53" href="#FOOT53"><sup>53</sup></a>
+</p>
+<a id="Using-let-to-create-local-variables"></a>
+<h5 class="subsubheading"><code>let</code> ကို အသုံးပြု၍ local variables များ ဖန်တီးခြင်း</h5>
+
+<p><code>lambda</code> ၏ နောက်ထပ် အသုံးဝင်ပုံတစ်ခုမှာ local variables များ ဖန်တီးခြင်း ဖြစ်ပါသည်။ ကျွန်ုပ်တို့၏ လုပ်ထုံးလုပ်နည်းများထဲတွင် formal parameters အဖြစ် ချိတ်ဆက် (bound) ထားခြင်း မရှိသော အခြား local variables များကို လိုအပ်လေ့ရှိပါသည်။ ဥပမာအားဖြင့် ကျွန်ုပ်တို့သည် အောက်ပါ function ကို တွက်ချက်လိုသည်ဆိုပါစို့ -
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>f</mi>
+    <mo stretchy="false">(</mo>
+    <mi>x</mi>
+    <mo>,</mo>
+    <mi>y</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+  <mspace width="thinmathspace"/>
+  <mo>=</mo>
+  <mspace width="thinmathspace"/>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>x</mi>
+    <mo stretchy="false">(</mo>
+    <mn>1</mn>
+    <mo>+</mo>
+    <mi>x</mi>
+    <mi>y</mi>
+    <msup>
+      <mo stretchy="false">)</mo>
+      <mn>2</mn>
+    </msup>
+  </mrow>
+  <mo>+</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>y</mi>
+    <mo stretchy="false">(</mo>
+    <mn>1</mn>
+    <mo>−<!-- − --></mo>
+    <mi>y</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+  <mo>+</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <mn>1</mn>
+    <mo>+</mo>
+    <mi>x</mi>
+    <mi>y</mi>
+    <mo stretchy="false">)</mo>
+    <mo stretchy="false">(</mo>
+    <mn>1</mn>
+    <mo>−<!-- − --></mo>
+    <mi>y</mi>
+    <mo stretchy="false">)</mo>
+    <mo>,</mo>
+  </mrow>
+</math>
+
+၎င်းကို အောက်ပါအတိုင်းလည်း ဖော်ပြနိုင်ပါသည် -
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mtable columnalign="right center left" rowspacing="3pt" columnspacing="thickmathspace">
+    <mtr>
+      <mtd>
+        <mi>a</mi>
+      </mtd>
+      <mtd>
+        <mo>=</mo>
+      </mtd>
+      <mtd>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mn>1</mn>
+          <mo>+</mo>
+          <mi>x</mi>
+          <mi>y</mi>
+          <mo>,</mo>
+        </mrow>
+      </mtd>
+    </mtr>
+    <mtr>
+      <mtd>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mpadded height="0" depth="0">
+            <mphantom>
+              <mo stretchy="false">(</mo>
+              <mi>x</mi>
+              <mo>,</mo>
+              <mi>y</mi>
+              <mo stretchy="false">)</mo>
+            </mphantom>
+          </mpadded>
+        </mrow>
+        <mi>b</mi>
+      </mtd>
+      <mtd>
+        <mo>=</mo>
+      </mtd>
+      <mtd>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mn>1</mn>
+          <mo>−<!-- − --></mo>
+          <mi>y</mi>
+          <mo>,</mo>
+        </mrow>
+      </mtd>
+    </mtr>
+    <mtr>
+      <mtd>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mi>f</mi>
+          <mo stretchy="false">(</mo>
+          <mi>x</mi>
+          <mo>,</mo>
+          <mi>y</mi>
+          <mo stretchy="false">)</mo>
+        </mrow>
+      </mtd>
+      <mtd>
+        <mo>=</mo>
+      </mtd>
+      <mtd>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mi>x</mi>
+          <msup>
+            <mi>a</mi>
+            <mn>2</mn>
+          </msup>
+        </mrow>
+        <mo>+</mo>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mi>y</mi>
+          <mi>b</mi>
+        </mrow>
+        <mo>+</mo>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mi>a</mi>
+          <mi>b</mi>
+          <mo>.</mo>
+        </mrow>
+      </mtd>
+    </mtr>
+  </mtable>
+</math>
+
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>f</mi>
+</math> ကို တွက်ချက်ရန် လုပ်ထုံးလုပ်နည်းကို ရေးသားရာတွင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>y</mi>
+</math> သာမက <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>b</mi>
+</math> ကဲ့သို့သော အလယ်အလတ် တန်ဖိုးများကိုလည်း local variables များအဖြစ် ထည့်သွင်းလိုပါလိမ့်မည်။ ၎င်းကို လုပ်ဆောင်နိုင်သည့် နည်းလမ်းတစ်ခုမှာ local variables များကို bind လုပ်ရန်အတွက် auxiliary procedure တစ်ခုကို အသုံးပြုခြင်း ဖြစ်ပါသည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">f x y</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">f-helper a b</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x </span><span class="opn">(</span><span class="pln">square a</span><span class="clo">))</span><span class="pln">
+       </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> y b</span><span class="clo">)</span><span class="pln">
+       </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> a b</span><span class="clo">)))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">f-helper </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x y</span><span class="clo">))</span><span class="pln"> 
+            </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> y</span><span class="clo">)))</span></pre></div>
+
+<p>မှန်ပါသည်၊ ကျွန်ုပ်တို့သည် local variables များကို bind လုပ်ရန်အတွက် anonymous procedure တစ်ခုကို သတ်မှတ်ရန် <code>lambda</code> expression ကို အသုံးပြုနိုင်ပါသည်။ ထိုအခါ <code>f</code> ၏ body သည် ထိုလုပ်ထုံးလုပ်နည်းကို ခေါ်ယူမှု (call) တစ်ခုတည်း ဖြစ်လာပါသည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">f x y</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">((</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">a b</span><span class="clo">)</span><span class="pln">
+     </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x </span><span class="opn">(</span><span class="pln">square a</span><span class="clo">))</span><span class="pln"> 
+        </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> y b</span><span class="clo">)</span><span class="pln"> 
+        </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> a b</span><span class="clo">)))</span><span class="pln">
+   </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x y</span><span class="clo">))</span><span class="pln">
+   </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> y</span><span class="clo">)))</span></pre></div>
+
+<p>ဤတည်ဆောက်ပုံသည် အလွန်အသုံးဝင်သောကြောင့် ပို၍ အဆင်ပြေစွာ အသုံးပြုနိုင်ရန် <code>let</code> ဟုခေါ်သော special form တစ်ခု ရှိပါသည်။ <code>let</code> ကို အသုံးပြု၍ <code>f</code> လုပ်ထုံးလုပ်နည်းကို အောက်ပါအတိုင်း ရေးသားနိုင်ပါသည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">f x y</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">a </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x y</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">b </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> y</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x </span><span class="opn">(</span><span class="pln">square a</span><span class="clo">))</span><span class="pln">
+       </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> y b</span><span class="clo">)</span><span class="pln">
+       </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> a b</span><span class="clo">))))</span></pre></div>
+
+<p><code>let</code> expression တစ်ခု၏ ယေဘုယျပုံစံမှာ -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">⟨</span><var><span class="pln">var</span><span class="pun">₁</span></var><span class="pln">⟩ ⟨</span><var><span class="pln">exp</span><span class="pun">₁</span></var><span class="pln">⟩</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">⟨</span><var><span class="pln">var</span><span class="pun">₂</span></var><span class="pln">⟩ ⟨</span><var><span class="pln">exp</span><span class="pun">₂</span></var><span class="pln">⟩</span><span class="clo">)</span><span class="pln">
+      </span><span class="roman"><span class="pun">…</span></span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">⟨</span><var><span class="pln">var</span><span class="pun">ₙ</span></var><span class="pln">⟩ ⟨</span><var><span class="pln">exp</span><span class="pun">ₙ</span></var><span class="pln">⟩</span><span class="clo">))</span><span class="pln">
+  ⟨</span><var><span class="pln">body</span></var><span class="pln">⟩</span><span class="clo">)</span></pre></div>
+
+<p>ဖြစ်ပြီး ၎င်းကို အောက်ပါအတိုင်း စဉ်းစားနိုင်ပါသည် -
+</p>
+<div class="example">
+<pre class="example">⟨<var>var₁</var>⟩ <span class="roman">၏ တန်ဖိုးမှာ</span> ⟨<var>exp₁</var>⟩ <span class="roman">ဖြစ်ပြီး</span>
+    ⟨<var>var₂</var>⟩ <span class="roman">၏ တန်ဖိုးမှာ</span> ⟨<var>exp₂</var>⟩ <span class="roman">ဖြစ်ကာ</span>
+    <span class="roman">…</span>
+    ⟨<var>varₙ</var>⟩ <span class="roman">၏ တန်ဖိုးမှာ</span> ⟨<var>expₙ</var>⟩ <span class="roman">ဖြစ်သော</span>
+  ⟨<var>body</var>⟩ <span class="roman">ထဲတွင်</span>
+</pre></div>
+
+<p><code>let</code> expression ၏ ပထမအပိုင်းသည် name-expression တွဲဖက်ထားသော list ဖြစ်ပါသည်။ <code>let</code> ကို evaluate လုပ်သောအခါ အမည်တစ်ခုချင်းစီကို သက်ဆိုင်ရာ expression ၏ တန်ဖိုးနှင့် ချိတ်ဆက်ပေးပါသည်။ <code>let</code> ၏ body ကို ဤအမည်များကို local variables များအဖြစ် bind လုပ်၍ evaluate လုပ်ပါသည်။ ဤသို့ဖြစ်ရခြင်းမှာ <code>let</code> expression ကို အောက်ပါအရာအတွက် အစားထိုး syntax (alternate syntax) တစ်ခုအဖြစ် ဘာသာပြန်ယူခြင်းကြောင့် ဖြစ်ပါသည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">((</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">⟨</span><var><span class="pln">var</span><span class="pun">₁</span></var><span class="pln">⟩ </span><span class="roman"><span class="pun">…</span></span><span class="pln"> ⟨</span><var><span class="pln">var</span><span class="pun">ₙ</span></var><span class="pln">⟩</span><span class="clo">)</span><span class="pln">
+   ⟨</span><var><span class="pln">body</span></var><span class="pln">⟩</span><span class="clo">)</span><span class="pln">
+ ⟨</span><var><span class="pln">exp</span><span class="pun">₁</span></var><span class="pln">⟩
+ </span><span class="roman"><span class="pun">…</span></span><span class="pln">
+ ⟨</span><var><span class="pln">exp</span><span class="pun">ₙ</span></var><span class="pln">⟩</span><span class="clo">)</span></pre></div>
+
+<p>local variables များအတွက် interpreter တွင် နည်းလမ်းသစ်များ ထပ်မံထည့်သွင်းပေးရန် မလိုပါ။ <code>let</code> expression ဆိုသည်မှာ အခြေခံရှိ <code>lambda</code> application အတွက် syntactic sugar တစ်ခုမျှသာ ဖြစ်ပါသည်။
+</p>
+<p>ဤညီမျှမှုအရ <code>let</code> expression ဖြင့် သတ်မှတ်ထားသော variable တစ်ခု၏ scope သည် ထို <code>let</code> ၏ body ပင် ဖြစ်ကြောင်း တွေ့နိုင်ပါသည်။ ၎င်းသည် အောက်ပါအချက်များကို ဆိုလိုပါသည် -
+</p>
+<ul>
+<li> <code>Let</code> သည် variable များကို ၎င်းတို့ကို အသုံးပြုမည့်နေရာနှင့် အနီးစပ်ဆုံးတွင် local အဖြစ် bind လုပ်ခွင့်ပေးပါသည်။ ဥပမာအားဖြင့် <code>x</code> ၏ တန်ဖိုးမှာ 5 ဖြစ်ပါက အောက်ပါ expression ၏ တန်ဖိုးသည်
+
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">x </span><span class="lit">3</span><span class="clo">))</span><span class="pln">
+     </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> x </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x </span><span class="lit">10</span><span class="clo">)))</span><span class="pln">
+   x</span><span class="clo">)</span></pre></div>
+
+<p>38 ဖြစ်ပါလိမ့်မည်။ ဤနေရာတွင် <code>let</code> ၏ body အတွင်းရှိ <code>x</code> မှာ 3 ဖြစ်သောကြောင့် <code>let</code> expression ၏ တန်ဖိုးမှာ 33 ဖြစ်ပါသည်။ အခြားတစ်ဖက်တွင်မူ အပြင်ဘက်ဆုံးရှိ <code>+</code> ၏ ဒုတိယ argument ဖြစ်သော <code>x</code> သည် 5 ပင် ဖြစ်နေဆဲ ဖြစ်ပါသည်။
+</p>
+</li><li> variables များ၏ တန်ဖိုးများကို <code>let</code> ၏ အပြင်ဘက်တွင် တွက်ချက်ပါသည်။ local variables များအတွက် တန်ဖိုးပေးမည့် expression များသည် ၎င်း local variables များနှင့် အမည်တူသည့် အခြား variables များအပေါ် မူတည်နေသောအခါ ဤအချက်မှာ အရေးကြီးပါသည်။ ဥပမာအားဖြင့် <code>x</code> ၏ တန်ဖိုးမှာ 2 ဖြစ်ပါက အောက်ပါ expression သည်
+
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">x </span><span class="lit">3</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">y </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> x </span><span class="lit">2</span><span class="clo">)))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x y</span><span class="clo">))</span></pre></div>
+
+<p>တန်ဖိုး 12 ရရှိမည် ဖြစ်ပါသည်။ အကြောင်းမှာ <code>let</code> ၏ body အတွင်း၌ <code>x</code> သည် 3 ဖြစ်မည်ဖြစ်ပြီး <code>y</code> သည် 4 (အပြင်ဘက်မှ <code>x</code> အပေါင်း 2) ဖြစ်မည် ဖြစ်သောကြောင့် ဖြစ်ပါသည်။
+</p>
+</li></ul>
+
+<p>တစ်ခါတစ်ရံတွင် <code>let</code> နှင့် ရရှိသော ရလဒ်မျိုး ရရှိရန် internal definitions များကို အသုံးပြုနိုင်ပါသည်။ ဥပမာအားဖြင့် အထက်မှ လုပ်ထုံးလုပ်နည်း <code>f</code> ကို အောက်ပါအတိုင်း အဓိပ္ပာယ်ဖွင့်ဆိုနိုင်ပါသည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">f x y</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> a 
+    </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x y</span><span class="clo">)))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> b </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> y</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x </span><span class="opn">(</span><span class="pln">square a</span><span class="clo">))</span><span class="pln">
+     </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> y b</span><span class="clo">)</span><span class="pln">
+     </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> a b</span><span class="clo">)))</span></pre></div>
+
+<p>သို့သော် ကျွန်ုပ်တို့သည် ဤကဲ့သို့သော အခြေအနေမျိုးတွင် <code>let</code> ကိုသာ ပို၍ အသုံးပြုလိုပြီး internal <code>define</code> ကိုမူ internal procedures များအတွက်သာ အသုံးပြုလိုပါသည်။<a class="footnote_link" id="DOCF54" href="#FOOT54"><sup>54</sup></a>
+</p>
+<blockquote>
+<p><strong><a id="Exercise-1_002e34"></a>လေ့ကျင့်ခန်း ၁.၃၄:</strong> ကျွန်ုပ်တို့သည် လုပ်ထုံးလုပ်နည်းကို အောက်ပါအတိုင်း အဓိပ္ပာယ်ဖွင့်ဆိုထားသည် ဆိုပါစို့ -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">f g</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">g </span><span class="lit">2</span><span class="clo">))</span></pre></div>
+
+<p>ထိုအခါ ကျွန်ုပ်တို့တွင် အောက်ပါတို့ ရှိပါသည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">f square</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">4</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">f </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">z</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> z </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> z </span><span class="lit">1</span><span class="clo">))))</span><span class="pln">
+</span><i><span class="lit">6</span></i>
+</pre></div>
+
+<p>အကယ်၍ ကျွန်ုပ်တို့သည် interpreter အား combination <code>(f f)</code> ကို evaluate လုပ်ခိုင်းပါက ဘာဖြစ်မည်နည်း။ ရှင်းပြပါ။
+</p></blockquote>
+
+<a id="g_t1_002e3_002e3"></a>
+<a id="Procedures-as-General-Methods"></a>
+<h4 class="subsection"><span class="secnum">1.3.3</span><span class="sectitle">လုပ်ထုံးလုပ်နည်းများအား ယေဘုယျနည်းလမ်းများအဖြစ် အသုံးပြုခြင်း</span></h4>
+
+<p>ကျွန်ုပ်တို့သည် ကိန်းဂဏန်းဆိုင်ရာ လုပ်ဆောင်ချက်ပုံစံများအား သက်ဆိုင်ရာ ကိန်းဂဏန်းများအပေါ်တွင် မမှီခိုတော့ဘဲ သီးခြားဖြစ်စေရန်အတွက် ပေါင်းစပ်လုပ်ထုံးလုပ်နည်းများ (compound procedures) အကြောင်းကို <a href="1_002e1.xhtml#g_t1_002e1_002e4">1.1.4</a> တွင် မိတ်ဆက်ပေးခဲ့ပါသည်။ <a href="#g_t1_002e3_002e1">1.3.1</a> ရှိ
+<code>integral</code> လုပ်ထုံးလုပ်နည်းကဲ့သို့သော အဆင့်မြင့်လုပ်ထုံးလုပ်နည်းများ (higher-order procedures) နှင့်အတူ၊ ကျွန်ုပ်တို့သည် ပိုမိုစွမ်းအားကောင်းသော abstraction အမျိုးအစားတစ်ခုကို စတင်မြင်တွေ့လာရသည်- ၎င်းမှာ သက်ဆိုင်ရာ functions များအပေါ်တွင် မမှီခိုဘဲ ယေဘုယျတွက်ချက်မှုနည်းလမ်းများကို ဖော်ပြရန် အသုံးပြုသော လုပ်ထုံးလုပ်နည်းများ ဖြစ်ပါသည်။ ဤကဏ္ဍတွင် ကျွန်ုပ်တို့သည် ပိုမိုအသေးစိတ်ကျသော ဥပမာနှစ်ခုဖြစ်သည့်—functions များ၏ zeros နှင့် fixed points များကို ရှာဖွေသည့် ယေဘုယျနည်းလမ်းများအကြောင်းကို ဆွေးနွေးမည်ဖြစ်ပြီး၊ ဤနည်းလမ်းများကို လုပ်ထုံးလုပ်နည်းများအဖြစ် တိုက်ရိုက်မည်သို့ ဖော်ပြနိုင်သည်ကို ပြသပါမည်။
+</p>
+<a id="Finding-roots-of-equations-by-the-half_002dinterval-method"></a>
+<h5 class="subsubheading">half-interval method ဖြင့် ညီမျှခြင်းများ၏ roots များကို ရှာဖွေခြင်း</h5>
+
+<p>The <a id="index-half_002dinterval-method"></a>
+<em>half-interval method</em> သည် continuous function တစ်ခုဖြစ်သော <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>f</mi>
+</math> အတွက် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>f</mi>
+    <mo stretchy="false">(</mo>
+    <mi>x</mi>
+    <mo stretchy="false">)</mo>
+    <mo>=</mo>
+    <mn>0</mn>
+  </mrow>
+</math> ဟူသော ညီမျှခြင်း၏ roots များကို ရှာဖွေရန် ရိုးရှင်းသော်လည်း စွမ်းအားကောင်းသော နည်းလမ်းတစ်ခု ဖြစ်ပါသည်။ ၎င်း၏ အခြေခံသဘောတရားမှာ၊ အကယ်၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>f</mi>
+    <mo stretchy="false">(</mo>
+    <mi>a</mi>
+    <mo stretchy="false">)</mo>
+    <mo>&lt;</mo>
+    <mn>0</mn>
+    <mo>&lt;</mo>
+    <mi>f</mi>
+    <mo stretchy="false">(</mo>
+    <mi>b</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ဖြစ်သော points <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>b</mi>
+</math> တို့ကို ပေးထားပါက၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>f</mi>
+</math> တွင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>b</mi>
+</math> ကြား၌ အနည်းဆုံး zero တစ်ခု ရှိရပါမည်။ zero တစ်ခုကို ရှာဖွေရန်၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> အား <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>b</mi>
+</math> တို့၏ ပျမ်းမျှတန်ဖိုးအဖြစ် သတ်မှတ်ပြီး
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>f</mi>
+    <mo stretchy="false">(</mo>
+    <mi>x</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ကို တွက်ချက်ပါ။ အကယ်၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+<h4 class="subsection"><span class="secnum">1.3.4</span><span class="sectitle">တန်ဖိုးများအဖြစ် ပြန်ပေးသော ပရိုစီဂျာများ</span></h4>
+
+<p>အထက်ပါ ဥပမာများက ပရိုစီဂျာများကို အာဂူမန့်များအဖြစ် ပေးပို့နိုင်ခြင်းသည် ကျွန်ုပ်တို့၏ ပရိုဂရမ်မင်းဘာသာစကား၏ ဖော်ပြနိုင်စွမ်းကို မည်သို့ သိသာထင်ရှားစွာ မြှင့်တင်ပေးသည်ကို ပြသခဲ့သည်။ ပြန်ပေးသော တန်ဖိုးကိုယ်တိုင်က ပရိုစီဂျာများ ဖြစ်နေသည့် ပရိုစီဂျာများကို ဖန်တီးခြင်းဖြင့် ကျွန်ုပ်တို့သည် ပို၍ပင် အစွမ်းထက်သော ဖော်ပြနိုင်စွမ်းကို ရရှိနိုင်သည်။
+</p>
+<p><a href="#g_t1_002e3_002e3">1.3.3</a> ၏ အဆုံးတွင် ဖော်ပြခဲ့သော ကိန်းသေအမှတ် (fixed-point) ဥပမာကို ပြန်လည်ကြည့်ရှုခြင်းဖြင့် ဤစိတ်ကူးကို ရှင်းလင်းစွာ မြင်နိုင်သည်။ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msqrt>
+    <mi>x</mi>
+  </msqrt>
+</math> သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>y</mi>
+    <mo stretchy="false">↦<!-- ↦ --></mo>
+    <mi>x</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mo>/</mo>
+    </mrow>
+    <mi>y</mi>
+  </mrow>
+</math> ဖန်ရှင်၏ ကိန်းသေအမှတ်တစ်ခု ဖြစ်သည်ဟူသော လေ့လာတွေ့ရှိချက်မှ စတင်၍ နှစ်ထပ်ကိန်းရင်း (square-root) ရှာသော ပရိုစီဂျာ၏ ဗားရှင်းအသစ်ကို ကိန်းသေအမှတ် ရှာဖွေခြင်းတစ်ခုအဖြစ် ကျွန်ုပ်တို့ ပုံဖော်ခဲ့သည်။ ထို့နောက် ခန့်မှန်းခြေတန်ဖိုးများကို ချဉ်းကပ်စေရန် average damping ကို အသုံးပြုခဲ့သည်။ Average damping သည် သူ့ဘာသာသူ အသုံးဝင်သော ယေဘုယျ နည်းစနစ်တစ်ခု ဖြစ်သည်။ ဆိုလိုသည်မှာ ဖန်ရှင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>f</mi>
+</math> တစ်ခု ပေးထားပါက၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> ရှိ ၎င်း၏ တန်ဖိုးသည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>f</mi>
+    <mo stretchy="false">(</mo>
+    <mi>x</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> တို့၏ ပျမ်းမျှတန်ဖိုးနှင့် ညီမျှသော ဖန်ရှင်ကို ကျွန်ုပ်တို့ စဉ်းစားကြသည်။
+</p>
+<p>Average damping ၏ စိတ်ကူးကို အောက်ပါ ပရိုစီဂျာဖြင့် ဖော်ပြနိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">average-damp f</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">x</span><span class="clo">)</span><span class="pln"> 
+    </span><span class="opn">(</span><span class="pln">average x </span><span class="opn">(</span><span class="pln">f x</span><span class="clo">))))</span></pre></div>
+
+<p><code>Average-damp</code> သည် ပရိုစီဂျာ <code>f</code> ကို အာဂူမန့်အဖြစ် ယူပြီး ကိန်းဂဏန်း <code>x</code> တွင် အသုံးချသောအခါ <code>x</code> နှင့် <code>(f x)</code> တို့၏ ပျမ်းမျှကို ထုတ်ပေးသည့် (<code>lambda</code> ဖြင့် ဖန်တီးထားသော) ပရိုစီဂျာတစ်ခုကို တန်ဖိုးအဖြစ် ပြန်ပေးသည်။ ဥပမာအားဖြင့်၊ <code>average-damp</code> ကို <code>square</code> ပရိုစီဂျာတွင် အသုံးချပါက ကိန်းဂဏန်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> ရှိ ၎င်း၏ တန်ဖိုးသည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mi>x</mi>
+    <mn>2</mn>
+  </msup>
+</math> တို့၏ ပျမ်းမျှဖြစ်သည့် ပရိုစီဂျာတစ်ခုကို ရရှိသည်။ ထိုရရှိလာသော ပရိုစီဂျာကို 10 တွင် အသုံးချပါက 10 နှင့် 100 ၏ ပျမ်းမျှဖြစ်သော 55 ကို ရရှိသည်:<a class="footnote_link" id="DOCF59" href="#FOOT59"><sup>59</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">((</span><span class="pln">average-damp square</span><span class="clo">)</span><span class="pln"> </span><span class="lit">10</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">55</span></i>
+</pre></div>
+
+<p><code>average-damp</code> ကို အသုံးပြု၍ နှစ်ထပ်ကိန်းရင်းရှာသော ပရိုစီဂျာကို အောက်ပါအတိုင်း ပြန်လည် ပုံဖော်နိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sqrt x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">fixed-point 
+   </span><span class="opn">(</span><span class="pln">average-damp 
+    </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">y</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> x y</span><span class="clo">)))</span><span class="pln">
+   </span><span class="lit">1.0</span><span class="clo">))</span></pre></div>
+
+<p>ဤပုံဖော်မှုတွင် အသုံးပြုထားသော အချက်သုံးချက်ကို မည်သို့ ရှင်းလင်းစွာ ဖော်ပြထားသည်ကို သတိပြုပါ- ကိန်းသေအမှတ် ရှာဖွေခြင်း (fixed-point search)၊ average damping နှင့် ဖန်ရှင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>y</mi>
+    <mo stretchy="false">↦<!-- ↦ --></mo>
+    <mi>x</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mo>/</mo>
+    </mrow>
+    <mi>y</mi>
+  </mrow>
+</math> တို့ဖြစ်သည်။ နှစ်ထပ်ကိန်းရင်းရှာသော ဤပုံစံသစ်ကို <a href="1_002e1.xhtml#g_t1_002e1_002e7">1.1.7</a> တွင် ပေးထားသော မူလဗားရှင်းနှင့် နှိုင်းယှဉ်ကြည့်ရန် သင့်လျော်သည်။ ဤပရိုစီဂျာများသည် လုပ်ငန်းစဉ် အတူတူကိုပင် ဖော်ပြနေခြင်းဖြစ်ကြောင်း သတိရပါ၊ ၎င်းလုပ်ငန်းစဉ်ကို ဤကဲ့သို့ အကြမ်းဖျင်းပုံဖော်မှုများ (abstractions) ဖြင့် ဖော်ပြသောအခါ စိတ်ကူးမှာ မည်မျှ ပိုမိုရှင်းလင်းသွားသည်ကို သတိပြုပါ။ ယေဘုယျအားဖြင့်၊ လုပ်ငန်းစဉ်တစ်ခုကို ပရိုစီဂျာအဖြစ် ပုံဖော်ရန် နည်းလမ်းများစွာ ရှိပါသည်။ အတွေ့အကြုံရှိ ပရိုဂရမ်မာများသည် ပိုမိုရှင်းလင်းထင်ရှားသော ပုံစံများကို မည်သို့ရွေးချယ်ရမည်ကို သိကြပြီး၊ လုပ်ငန်းစဉ်၏ အသုံးဝင်သော အစိတ်အပိုင်းများကို အခြားနေရာများတွင် ပြန်လည်အသုံးပြုနိုင်သည့် သီးခြားအစိတ်အပိုင်းများအဖြစ် မည်သို့ ထုတ်ဖော်ရမည်ကို သိကြသည်။ ပြန်လည်အသုံးပြုခြင်း၏ ရိုးရှင်းသော ဥပမာတစ်ခုအနေဖြင့်၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> ၏ သုံးထပ်ကိန်းရင်းသည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>y</mi>
+    <mo stretchy="false">↦<!-- ↦ --></mo>
+    <mi>x</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mo>/</mo>
+    </mrow>
+    <msup>
+      <mi>y</mi>
+      <mn>2</mn>
+    </msup>
+  </mrow>
+</math> ဖန်ရှင်၏ ကိန်းသေအမှတ်တစ်ခု ဖြစ်ကြောင်း သတိပြုပါ၊ ထို့ကြောင့် ကျွန်ုပ်တို့၏ နှစ်ထပ်ကိန်းရင်းရှာသော ပရိုစီဂျာကို သုံးထပ်ကိန်းရင်း ထုတ်ယူသော ပရိုစီဂျာအဖြစ် ချက်ချင်း ပြောင်းလဲအသုံးပြုနိုင်သည်:<a class="footnote_link" id="DOCF60" href="#FOOT60"><sup>60</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">cube-root x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">fixed-point 
+   </span><span class="opn">(</span><span class="pln">average-damp 
+    </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">y</span><span class="clo">)</span><span class="pln"> 
+      </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> x </span><span class="opn">(</span><span class="pln">square y</span><span class="clo">))))</span><span class="pln">
+   </span><span class="lit">1.0</span><span class="clo">))</span></pre></div>
+
+<a id="Newton_0027s-method"></a>
+<h5 class="subsubheading">Newton ၏ နည်းလမ်း</h5>
+
+<p><a href="1_002e1.xhtml#g_t1_002e1_002e7">1.1.7</a> တွင် နှစ်ထပ်ကိန်းရင်းရှာသော ပရိုစီဂျာကို ပထမဆုံး မိတ်ဆက်ခဲ့စဉ်က၊ ၎င်းသည် <a id="index-Newton_0027s-method"></a>
+<em>Newton ၏ နည်းလမ်း</em> ၏ ထူးခြားသော ဖြစ်ရပ်တစ်ခု ဖြစ်ကြောင်း ဖော်ပြခဲ့သည်။
+အကယ်၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>x</mi>
+    <mo stretchy="false">↦<!-- ↦ --></mo>
+    <mi>g</mi>
+    <mo stretchy="false">(</mo>
+    <mi>x</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> သည် differentiable ဖြစ်သော ဖန်ရှင်တစ်ခု ဖြစ်ပါက၊ ညီမျှခြင်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>g</mi>
+    <mo stretchy="false">(</mo>
+    <mi>x</mi>
+    <mo stretchy="false">)</mo>
+    <mo>=</mo>
+    <mn>0</mn>
+  </mrow>
+</math> ၏ အဖြေတစ်ခုသည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>x</mi>
+    <mo stretchy="false">↦<!-- ↦ --></mo>
+    <mi>f</mi>
+    <mo stretchy="false">(</mo>
+    <mi>x</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ဖန်ရှင်၏ ကိန်းသေအမှတ်တစ်ခု ဖြစ်သည်၊ ဤနေရာတွင်
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>f</mi>
+    <mo stretchy="false">(</mo>
+    <mi>x</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+  <mspace width="thinmathspace"/>
+  <mo>=</mo>
+  <mspace width="thinmathspace"/>
+  <mi>x</mi>
+  <mo>−<!-- − --></mo>
+  <mfrac>
+    <mrow>
+      <mi>g</mi>
+      <mo stretchy="false">(</mo>
+      <mi>x</mi>
+      <mo stretchy="false">)</mo>
+    </mrow>
+    <mrow>
+      <mi>D</mi>
+      <mi>g</mi>
+      <mo stretchy="false">(</mo>
+      <mi>x</mi>
+      <mo stretchy="false">)</mo>
+    </mrow>
+  </mfrac>
+</math>
+
+ဖြစ်ပြီး <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>D</mi>
+    <mi>g</mi>
+    <mo stretchy="false">(</mo>
+    <mi>x</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> တွင် တွက်ချက်ထားသော <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>g</mi>
+</math> ၏ derivative ဖြစ်သည်။ Newton ၏ နည်းလမ်းသည် ညီမျှခြင်း၏ အဖြေကို ခန့်မှန်းရန်အတွက် ဖန်ရှင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>f</mi>
+  </mrow>
+</math> ၏ ကိန်းသေအမှတ်တစ်ခုကို ရှာဖွေခြင်းအားဖြင့် အထက်တွင် ကျွန်ုပ်တို့ မြင်တွေ့ခဲ့ရသော fixed-point method ကို အသုံးပြုခြင်း ဖြစ်သည်။<a class="footnote_link" id="DOCF61" href="#FOOT61"><sup>61</sup></a>
+</p>
+<p>ဖန်ရှင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>g</mi>
+</math> အများအပြားအတွက်နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> အတွက် လုံလောက်သော ကောင်းမွန်သည့် အစပျိုး ခန့်မှန်းချက်များအတွက် Newton ၏ နည်းလမ်းသည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>g</mi>
+    <mo stretchy="false">(</mo>
+    <mi>x</mi>
+    <mo stretchy="false">)</mo>
+    <mo>=</mo>
+    <mn>0</mn>
+  </mrow>
+</math> ၏ အဖြေဆီသို့ အလွန်လျင်မြန်စွာ ချဉ်းကပ်သွားပါသည်။<a class="footnote_link" id="DOCF62" href="#FOOT62"><sup>62</sup></a>
+</p>
+<p>Newton ၏ နည်းလမ်းကို ပရိုစီဂျာတစ်ခုအဖြစ် အကောင်အထည်ဖော်ရန်အတွက် ကျွန်ုပ်တို့သည် ဦးစွာ derivative ၏ စိတ်ကူးကို ဖော်ပြရပါမည်။ "derivative" သည် average damping ကဲ့သို့ပင် ဖန်ရှင်တစ်ခုကို အခြားဖန်ရှင်တစ်ခုအဖြစ် ပြောင်းလဲပေးသည့် အရာတစ်ခု ဖြစ်ကြောင်း သတိပြုပါ။ ဥပမာအားဖြင့်၊ ဖန်ရှင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>x</mi>
+    <mo stretchy="false">↦<!-- ↦ --></mo>
+    <msup>
+      <mi>x</mi>
+      <mn>3</mn>
+    </msup>
+  </mrow>
+</math> ၏ derivative သည် ဖန်ရှင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>x</mi>
+    <mo stretchy="false">↦<!-- ↦ --></mo>
+    <mn>3</mn>
+    <msup>
+      <mi>x</mi>
+      <mn>2</mn>
+    </msup>
+  </mrow>
+</math> ဖြစ်သည်။ ယေဘုယျအားဖြင့်၊ အကယ်၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>g</mi>
+</math> သည် ဖန်ရှင်တစ်ခု ဖြစ်ပြီး <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>d</mi>
+    <mi>x</mi>
+  </mrow>
+</math> သည် သေးငယ်သော ကိန်းဂဏန်းတစ်ခု ဖြစ်ပါက၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>g</mi>
+</math> ၏ derivative <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>D</mi>
+    <mi>g</mi>
+  </mrow>
+</math> သည် မည်သည့်ကိန်းဂဏန်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> တွင်မဆို (သေးငယ်သော <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>d</mi>
+    <mi>x</mi>
+  </mrow>
+</math> ၏ အကန့်အသတ်အတွင်း) ၎င်း၏ တန်ဖိုးကို အောက်ပါအတိုင်း ပေးထားသော ဖန်ရှင် ဖြစ်သည်-
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mi>D</mi>
+  <mi>g</mi>
+  <mo stretchy="false">(</mo>
+  <mi>x</mi>
+  <mo stretchy="false">)</mo>
+  <mspace width="thinmathspace"/>
+  <mo>=</mo>
+  <mspace width="thinmathspace"/>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mfrac>
+      <mrow>
+        <mi>g</mi>
+        <mo stretchy="false">(</mo>
+        <mi>x</mi>
+        <mo>+</mo>
+        <mi>d</mi>
+        <mi>x</mi>
+        <mo stretchy="false">)</mo>
+        <mo>−<!-- − --></mo>
+        <mi>g</mi>
+        <mo stretchy="false">(</mo>
+        <mi>x</mi>
+        <mo stretchy="false">)</mo>
+      </mrow>
+      <mrow>
+        <mi>d</mi>
+        <mi>x</mi>
+      </mrow>
+    </mfrac>
+    <mo>.</mo>
+  </mrow>
+</math>
+
+ထို့ကြောင့်၊ derivative ၏ စိတ်ကူးကို (<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>d</mi>
+    <mi>x</mi>
+  </mrow>
+</math> ကို 0.00001 ဟု ယူဆ၍) အောက်ပါ ပရိုစီဂျာအဖြစ် ဖော်ပြနိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">deriv g</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">x</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="opn">(</span><span class="pln">g </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> x dx</span><span class="clo">))</span><span class="pln"> </span><span class="opn">(</span><span class="pln">g x</span><span class="clo">))</span><span class="pln">
+       dx</span><span class="clo">)))</span></pre></div>
+
+<p>သတ်မှတ်ချက်နှင့်အတူ-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> dx </span><span class="lit">0.00001</span><span class="clo">)</span></pre></div>
+
+<p><code>average-damp</code> ကဲ့သို့ပင်၊ <code>deriv</code> သည် ပရိုစီဂျာတစ်ခုကို အာဂူမန့်အဖြစ် ယူပြီး ပရိုစီဂျာတစ်ခုကို တန်ဖိုးအဖြစ် ပြန်ပေးသော ပရိုစီဂျာတစ်ခု ဖြစ်သည်။ ဥပမာအားဖြင့်၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>x</mi>
+    <mo stretchy="false">↦<!-- ↦ --></mo>
+    <msup>
+      <mi>x</mi>
+      <mn>3</mn>
+    </msup>
+  </mrow>
+</math> ၏ derivative ကို 5 တွင် ခန့်မှန်းရန် (ယင်း၏ တိကျသောတန်ဖိုးမှာ 75 ဖြစ်သည်) အောက်ပါတို့ကို တွက်ချက်နိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">cube x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x x x</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">((</span><span class="pln">deriv cube</span><span class="clo">)</span><span class="pln"> </span><span class="lit">5</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">75.00014999664018</span></i>
+</pre></div>
+
+<p><code>deriv</code> ၏ အကူအညီဖြင့်၊ Newton ၏ နည်းလမ်းကို fixed-point လုပ်ငန်းစဉ်တစ်ခုအဖြစ် ဖော်ပြနိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">newton-transform g</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">x</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> x </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> </span><span class="opn">(</span><span class="pln">g x</span><span class="clo">)</span><span class="pln"> 
+            </span><span class="opn">((</span><span class="pln">deriv g</span><span class="clo">)</span><span class="pln"> x</span><span class="clo">)))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">newtons-method g guess</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">fixed-point </span><span class="opn">(</span><span class="pln">newton-transform g</span><span class="clo">)</span><span class="pln"> 
+               guess</span><span class="clo">))</span></pre></div>
+
+<p><code>newton-transform</code> ပရိုစီဂျာသည် ဤအပိုင်း၏ အစတွင် ဖော်ပြခဲ့သော ဖော်မြူလာကို ဖော်ပြပြီး <code>newtons-method</code> ကို ၎င်း၏အပေါ်တွင် အခြေခံ၍ အလွယ်တကူ သတ်မှတ်နိုင်သည်။ ၎င်းသည် ကျွန်ုပ်တို့ ညှိနှိုင်းလိုသော ဖန်ရှင်ကို တွက်ချက်ပေးသည့် ပရိုစီဂျာနှင့် အစပျိုး ခန့်မှန်းချက်တစ်ခုတို့ကို အာဂူမန့်များအဖြစ် ယူသည်။ ဥပမာအားဖြင့်၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> ၏ နှစ်ထပ်ကိန်းရင်းကို ရှာရန်၊ အစပျိုး ခန့်မှန်းချက် 1 မှ စတင်၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>y</mi>
+    <mo stretchy="false">↦<!-- ↦ --></mo>
+    <msup>
+      <mi>y</mi>
+      <mn>2</mn>
+    </msup>
+    <mo>−<!-- − --></mo>
+    <mi>x</mi>
+  </mrow>
+</math> ဖန်ရှင်၏ zero (သုညတန်ဖိုး) ကို ရှာဖွေရန် Newton ၏ နည်းလမ်းကို အသုံးပြုနိုင်ပါသည်။<a class="footnote_link" id="DOCF63" href="#FOOT63"><sup>63</sup></a>
+</p>
+<p>ဤသည်မှာ နှစ်ထပ်ကိန်းရင်းရှာသော ပရိုစီဂျာ၏ နောက်ထပ် ပုံစံတစ်ခု ဖြစ်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sqrt x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">newtons-method 
+   </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">y</span><span class="clo">)</span><span class="pln"> 
+     </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square y</span><span class="clo">)</span><span class="pln"> x</span><span class="clo">))</span><span class="pln"> 
+   </span><span class="lit">1.0</span><span class="clo">))</span></pre></div>
+
+<a id="Abstractions-and-first_002dclass-procedures"></a>
+<h5 class="subsubheading">Abstractions နှင့် first-class ပရိုစီဂျာများ</h5>
+
+<p>နှစ်ထပ်ကိန်းရင်း တွက်ချက်မှုကို ပိုမိုယေဘုယျကျသော နည်းလမ်းတစ်ခု၏ သာဓကတစ်ခုအဖြစ် ဖော်ပြရန် နည်းလမ်းနှစ်ခုကို ကျွန်ုပ်တို့ မြင်တွေ့ခဲ့ရပြီးဖြစ်သည် - တစ်ကြိမ်မှာ ကိန်းသေအမှတ် ရှာဖွေခြင်း အနေဖြင့်ဖြစ်ပြီး နောက်တစ်ကြိမ်မှာ Newton ၏ နည်းလမ်းကို အသုံးပြု၍ ဖြစ်သည်။ Newton ၏ နည်းလမ်းကိုယ်တိုင်က ကိန်းသေအမှတ် လုပ်ငန်းစဉ်တစ်ခုအဖြစ် ဖော်ပြထားသောကြောင့်၊ အမှန်စင်စစ်တွင် ကျွန်ုပ်တို့သည် နှစ်ထပ်ကိန်းရင်းများကို ကိန်းသေအမှတ်များအဖြစ် တွက်ချက်ရန် နည်းလမ်းနှစ်ခုကို မြင်တွေ့ခဲ့ရခြင်း ဖြစ်သည်။ နည်းလမ်းတစ်ခုစီသည် ဖန်ရှင်တစ်ခုမှ စတင်ပြီး ထိုဖန်ရှင်ကို အသွင်ပြောင်းလဲမှု (transformation) တစ်ခုခု လုပ်ဆောင်ထားသော အရာ၏ ကိန်းသေအမှတ်ကို ရှာဖွေသည်။ ဤယေဘုယျ စိတ်ကူးကို ပရိုစီဂျာတစ်ခုအဖြစ် အောက်ပါအတိုင်း ဖော်ပြနိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">fixed-point-of-transform 
+         g transform guess</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">fixed-point </span><span class="opn">(</span><span class="pln">transform g</span><span class="clo">)</span><span class="pln"> guess</span><span class="clo">))</span></pre></div>
+
+<p>ဤအလွန်ယေဘုယျကျသော ပရိုစီဂျာသည် ဖန်ရှင်အချို့ကို တွက်ချက်ပေးသော ပရိုစီဂျာ <code>g</code>၊ <code>g</code> ကို အသွင်ပြောင်းပေးသော ပရိုစီဂျာနှင့် အစပျိုး ခန့်မှန်းချက်တစ်ခုတို့ကို အာဂူမန့်များအဖြစ် ယူသည်။ ပြန်ပေးသော ရလဒ်သည် အသွင်ပြောင်းထားသော ဖန်ရှင်၏ ကိန်းသေအမှတ် ဖြစ်သည်။
+</p>
+<p>ဤအကြမ်းဖျင်းပုံဖော်မှုကို အသုံးပြု၍၊ ဤအပိုင်းမှ ပထမဆုံး နှစ်ထပ်ကိန်းရင်း တွက်ချက်မှုကို (<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>y</mi>
+    <mo stretchy="false">↦<!-- ↦ --></mo>
+    <mi>x</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mo>/</mo>
+    </mrow>
+    <mi>y</mi>
+  </mrow>
+</math> ၏ average-damped ဗားရှင်း၏ ကိန်းသေအမှတ်ကို ရှာဖွေခြင်း) ဤယေဘုယျနည်းလမ်း၏ သာဓကတစ်ခုအဖြစ် ပြန်လည် ပုံဖော်နိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sqrt x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">fixed-point-of-transform 
+   </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">y</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> x y</span><span class="clo">))</span><span class="pln">
+   average-damp
+   </span><span class="lit">1.0</span><span class="clo">))</span></pre></div>
+
+<p>အလားတူပင်၊ ဤအပိုင်းမှ ဒုတိယမြောက် နှစ်ထပ်ကိန်းရင်း တွက်ချက်မှုကို (<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>y</mi>
+    <mo stretchy="false">↦<!-- ↦ --></mo>
+    <msup>
+      <mi>y</mi>
+      <mn>2</mn>
+    </msup>
+    <mo>−<!-- − --></mo>
+    <mi>x</mi>
+  </mrow>
+</math> ၏ Newton transform ၏ ကိန်းသေအမှတ်ကို ရှာဖွေသည့် Newton ၏ နည်းလမ်း သာဓကတစ်ခု) ကို အောက်ပါအတိုင်း ဖော်ပြနိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sqrt x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">fixed-point-of-transform 
+   </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">y</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square y</span><span class="clo">)</span><span class="pln"> x</span><span class="clo">))</span><span class="pln">
+   newton-transform
+   </span><span class="lit">1.0</span><span class="clo">))</span></pre></div>
+
+<p>ပေါင်းစပ်ပရိုစီဂျာများ (compound procedures) သည် အလွန်အရေးကြီးသော အကြမ်းဖျင်းပုံဖော်မှု ယန္တရားတစ်ခုဖြစ်ကြောင်း လေ့လာတွေ့ရှိချက်ဖြင့် အပိုင်း <a href="#g_t1_002e3">1.3</a> ကို စတင်ခဲ့သည်၊ အကြောင်းမှာ ၎င်းတို့သည် ယေဘုယျ တွက်ချက်မှု နည်းလမ်းများကို ကျွန်ုပ်တို့၏ ပရိုဂရမ်မင်းဘာသာစကားတွင် အတိအလင်း ဖော်ပြနိုင်သော အစိတ်အပိုင်းများအဖြစ် အသုံးပြုခွင့်ပေးသောကြောင့် ဖြစ်သည်။ ယခုအခါ အဆင့်မြင့်ပရိုစီဂျာများ (higher-order procedures) သည် နောက်ထပ် အကြမ်းဖျင်းပုံဖော်မှုများကို ဖန်တီးရန် ဤယေဘုယျ နည်းလမ်းများကို မည်သို့ စီမံခန့်ခွဲခွင့်ပေးသည်ကို ကျွန်ုပ်တို့ မြင်တွေ့ခဲ့ရပြီ ဖြစ်သည်။
+</p>
+<p>ပရိုဂရမ်မာများအနေဖြင့်၊ ကျွန်ုပ်တို့သည် ကျွန်ုပ်တို့၏ ပရိုဂရမ်များရှိ အခြေခံ အကြမ်းဖျင်းပုံဖော်မှုများကို ဖော်ထုတ်ရန်နှင့် ပိုမိုအစွမ်းထက်သော အကြမ်းဖျင်းပုံဖော်မှုများကို ဖန်တီးရန် ၎င်းတို့အပေါ်တွင် အခြေခံ၍ တည်ဆောက်ရန်နှင့် ယေဘုယျပြုရန် အခွင့်အလမ်းများကို အမြဲနိုးကြားနေသင့်သည်။ ဤသည်မှာ ပရိုဂရမ်များကို အမြဲတမ်း အကြမ်းဖျင်းနိုင်သမျှ အရှိဆုံးပုံစံဖြင့် ရေးသားရမည်ဟု ဆိုလိုခြင်း မဟုတ်ပါ။ အတွေ့အကြုံရှိ ပရိုဂရမ်မာများသည် ၎င်းတို့၏ လုပ်ဆောင်ချက်နှင့် ကိုက်ညီသော သင့်လျော်သည့် အကြမ်းဖျင်းပုံဖော်မှု အဆင့်ကို မည်သို့ ရွေးချယ်ရမည်ကို သိကြသည်။ သို့သော် ဤအကြမ်းဖျင်းပုံဖော်မှုများ၏ ပုံစံဖြင့် စဉ်းစားနိုင်ရန် အရေးကြီးသည်၊ သို့မှသာ ၎င်းတို့ကို အခြေအနေသစ်များတွင် အသုံးချရန် အသင့်ရှိနေမည် ဖြစ်သည်။ အဆင့်မြင့်ပရိုစီဂျာများ၏ အရေးပါမှုမှာ ဤအကြမ်းဖျင်းပုံဖော်မှုများကို ကျွန်ုပ်တို့၏ ပရိုဂရမ်မင်းဘာသာစကားတွင် အခြားသော တွက်ချက်မှုဆိုင်ရာ အစိတ်အပိုင်းများကဲ့သို့ပင် ကိုင်တွယ်နိုင်သော အစိတ်အပိုင်းများအဖြစ် အတိအလင်း ကိုယ်စားပြုနိုင်စေခြင်းပင် ဖြစ်သည်။
+</p>
+<p>ယေဘုယျအားဖြင့်၊ ပရိုဂရမ်မင်းဘာသာစကားများသည် တွက်ချက်မှုဆိုင်ရာ အစိတ်အပိုင်းများကို စီမံခန့်ခွဲနိုင်သည့် နည်းလမ်းများအပေါ် ကန့်သတ်ချက်များ ချမှတ်ထားတတ်သည်။ ကန့်သတ်ချက် အနည်းဆုံးရှိသော အစိတ်အပိုင်းများကို <a id="index-first_002dclass"></a>
+<em>first-class</em> အဆင့်ရှိသည်ဟု ဆိုကြသည်။ First-class အစိတ်အပိုင်းများ၏ "အခွင့်အရေးနှင့် အခွင့်ထူးများ" အချို့မှာ အောက်ပါအတိုင်း ဖြစ်သည်:<a class="footnote_link" id="DOCF64" href="#FOOT64"><sup>64</sup></a>
+</p>
+<ul>
+<li> ၎င်းတို့ကို ဗေရီယေးဘယ်လ်များ (variables) ဖြင့် အမည်ပေးနိုင်သည်။
+
+</li><li> ၎င်းတို့ကို ပရိုစီဂျာများသို့ အာဂူမန့်များအဖြစ် ပေးပို့နိုင်သည်။
+
+</li><li> ၎င်းတို့ကို ပရိုစီဂျာများ၏ ရလဒ်များအဖြစ် ပြန်ပေးနိုင်သည်။
+
+</li><li> ၎င်းတို့ကို ဒေတာတည်ဆောက်ပုံများ (data structures) ထဲတွင် ထည့်သွင်းနိုင်သည်။<a class="footnote_link" id="DOCF65" href="#FOOT65"><sup>65</sup></a>
+
+</li></ul>
+
+<p>Lisp သည် အခြားသော အသုံးများသည့် ပရိုဂရမ်မင်းဘာသာစကားများနှင့် မတူဘဲ၊ ပရိုစီဂျာများကို အပြည့်အဝ first-class အဆင့် ပေးထားသည်။ ဤသည်မှာ ထိရောက်သော အကောင်အထည်ဖော်မှုအတွက် စိန်ခေါ်မှုများ ဖြစ်စေသော်လည်း၊ ရရှိလာသော ဖော်ပြနိုင်စွမ်းမှာ အလွန်ကြီးမားပါသည်။<a class="footnote_link" id="DOCF66" href="#FOOT66"><sup>66</sup></a>
+</p>
+<blockquote>
+<p><strong><a id="Exercise-1_002e40"></a>လေ့ကျင့်ခန်း 1.40:</strong> အောက်ပါပုံစံမျိုးရှိသော ဖော်ပြချက်များတွင် <code>newtons-method</code> ပရိုစီဂျာနှင့်အတူ တွဲဖက်အသုံးပြုနိုင်သည့် <code>cubic</code> ပရိုစီဂျာတစ်ခုကို သတ်မှတ်ပါ
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">newtons-method </span><span class="opn">(</span><span class="pln">cubic a b c</span><span class="clo">)</span><span class="pln"> </span><span class="lit">1</span><span class="clo">)</span></pre></div>
+
+<p>၎င်းသည် သုံးထပ်ကိန်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <msup>
+      <mi>x</mi>
+      <mn>3</mn>
+    </msup>
+    <mo>+</mo>
+    <mi>a</mi>
+    <msup>
+      <mi>x</mi>
+      <mn>2</mn>
+    </msup>
+    <mo>+</mo>
+    <mi>b</mi>
+    <mi>x</mi>
+    <mo>+</mo>
+    <mi>c</mi>
+  </mrow>
+</math> ၏ သုညတန်ဖိုးများကို ခန့်မှန်းရန် ဖြစ်သည်။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-1_002e41"></a>လေ့ကျင့်ခန်း 1.41:</strong> အာဂူမန့်တစ်ခုယူသော ပရိုစီဂျာတစ်ခုကို အာဂူမန့်အဖြစ် လက်ခံပြီး မူလပရိုစီဂျာကို နှစ်ကြိမ် အသုံးချပေးသည့် ပရိုစီဂျာတစ်ခုကို ပြန်ပေးသော <code>double</code> အမည်ရှိ ပရိုစီဂျာတစ်ခုကို သတ်မှတ်ပါ။ ဥပမာအားဖြင့်၊ အကယ်၍ <code>inc</code> သည် ၎င်း၏ အာဂူမန့်ကို 1 ပေါင်းပေးသော ပရိုစီဂျာတစ်ခု ဖြစ်ပါက၊ <code>(double inc)</code> သည် 2 ပေါင်းပေးသော ပရိုစီဂျာတစ်ခု ဖြစ်သင့်သည်။ အောက်ပါ ဖော်ပြချက်မှ မည်သည့်တန်ဖိုးကို ပြန်ပေးမည်နည်း။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(((</span><span class="pln">double </span><span class="opn">(</span><span class="pln">double double</span><span class="clo">))</span><span class="pln"> inc</span><span class="clo">)</span><span class="pln"> </span><span class="lit">5</span><span class="clo">)</span></pre></div>
+</blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-1_002e42"></a>လေ့ကျင့်ခန်း 1.42:</strong> <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>f</mi>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>g</mi>
+</math> တို့ကို အာဂူမန့်တစ်ခုစီပါသော ဖန်ရှင်နှစ်ခုဟု ဆိုပါစို့။ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>g</mi>
+</math> ပြီးနောက် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>f</mi>
+</math> ၏ <a id="index-composition"></a>
+<em>ပေါင်းစပ်ခြင်း (composition)</em> ကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>x</mi>
+    <mo stretchy="false">↦<!-- ↦ --></mo>
+    <mi>f</mi>
+    <mo stretchy="false">(</mo>
+    <mi>g</mi>
+    <mo stretchy="false">(</mo>
+    <mi>x</mi>
+    <mo stretchy="false">)</mo>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ဖန်ရှင်ဟု သတ်မှတ်သည်။ ပေါင်းစပ်ခြင်းကို အကောင်အထည်ဖော်သည့် <code>compose</code> ပရိုစီဂျာတစ်ခုကို သတ်မှတ်ပါ။ ဥပမာအားဖြင့်၊ အကယ်၍ <code>inc</code> သည် ၎င်း၏ အာဂူမန့်ကို 1 ပေါင်းပေးသော ပရိုစီဂျာတစ်ခု ဖြစ်ပါက၊
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">((</span><span class="pln">compose square inc</span><span class="clo">)</span><span class="pln"> </span><span class="lit">6</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">49</span></i>
+</pre></div>
+</blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-1_002e43"></a>လေ့ကျင့်ခန်း 1.43:</strong> အကယ်၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>f</mi>
+</math> သည် ကိန်းဂဏန်းဆိုင်ရာ ဖန်ရှင်တစ်ခုဖြစ်ပြီး <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> သည် အပေါင်းကိန်းတစ်ခု ဖြစ်ပါက၊ ကျွန်ုပ်တို့သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>f</mi>
+</math> ကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mi>n</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mtext>ကြိမ်မြောက်</mtext>
+    </mrow>
+  </msup>
+</math> ထပ်ခါတလဲလဲ အသုံးချခြင်းကို ဖန်တီးနိုင်ပြီး ၎င်းကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> ရှိ ၎င်း၏ တန်ဖိုးသည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>f</mi>
+    <mo stretchy="false">(</mo>
+    <mi>f</mi>
+    <mo stretchy="false">(</mo>
+    <mo>…<!-- … --></mo>
+    <mo stretchy="false">(</mo>
+    <mi>f</mi>
+    <mo stretchy="false">(</mo>
+    <mi>x</mi>
+    <mo stretchy="false">)</mo>
+    <mo stretchy="false">)</mo>
+    <mo>…<!-- … --></mo>
+    <mo stretchy="false">)</mo>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ဖြစ်သော ဖန်ရှင်အဖြစ် သတ်မှတ်သည်။ ဥပမာအားဖြင့်၊ အကယ်၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>f</mi>
+</math> သည် ဖန်ရှင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>x</mi>
+    <mo stretchy="false">↦<!-- ↦ --></mo>
+    <mi>x</mi>
+    <mo>+</mo>
+    <mn>1</mn>
+  </mrow>
+</math> ဖြစ်ပါက၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>f</mi>
+</math> ကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mi>n</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mtext>ကြိမ်မြောက်</mtext>
+    </mrow>
+  </msup>
+</math> ထပ်ခါတလဲလဲ အသုံးချခြင်းသည် ဖန်ရှင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>x</mi>
+    <mo stretchy="false">↦<!-- ↦ --></mo>
+    <mi>x</mi>
+    <mo>+</mo>
+    <mi>n</mi>
+  </mrow>
+</math> ဖြစ်သည်။ အကယ်၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>f</mi>
+</math> သည် ကိန်းဂဏန်းတစ်ခုကို နှစ်ထပ်ကိန်းတင်သော လုပ်ဆောင်ချက် ဖြစ်ပါက၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>f</mi>
+</math> ကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mi>n</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mtext>ကြိမ်မြောက်</mtext>
+    </mrow>
+  </msup>
+</math> ထပ်ခါတလဲလဲ အသုံးချခြင်းသည် ၎င်း၏ အာဂူမန့်ကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <msup>
+      <mn>2</mn>
+      <mi>n</mi>
+    </msup>
+    <mtext>-ကြိမ်မြောက်</mtext>
+  </mrow>
+</math> ထပ်ကိန်းတင်ပေးသည့် ဖန်ရှင်ဖြစ်သည်။ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>f</mi>
+</math> ကို တွက်ချက်ပေးသည့် ပရိုစီဂျာနှင့် အပေါင်းကိန်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> တို့ကို input အဖြစ်ယူပြီး <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>f</mi>
+</math> ကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mi>n</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mtext>ကြိမ်မြောက်</mtext>
+    </mrow>
+  </msup>
+</math> ထပ်ခါတလဲလဲ အသုံးချမှုကို တွက်ချက်ပေးသည့် ပရိုစီဂျာကို ပြန်ပေးသော ပရိုစီဂျာတစ်ခုကို ရေးသားပါ။ သင်၏ ပရိုစီဂျာကို အောက်ပါအတိုင်း အသုံးပြုနိုင်ရမည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">((</span><span class="pln">repeated square </span><span class="lit">2</span><span class="clo">)</span><span class="pln"> </span><span class="lit">5</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">625</span></i>
+</pre></div>
+
+<p>အကြံပြုချက်- <a href="#Exercise-1_002e42">လေ့ကျင့်ခန်း 1.42</a> မှ <code>compose</code> ကို အသုံးပြုခြင်းသည် ပိုမိုအဆင်ပြေသည်ကို သင်တွေ့ရှိနိုင်ပါသည်။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-1_002e44"></a>လေ့ကျင့်ခန်း 1.44:</strong> ဖန်ရှင်တစ်ခုကို <a id="index-smoothing"></a>
+<em>ချောမွေ့စေခြင်း (smoothing)</em> ၏ စိတ်ကူးသည် ဆစ်ဂနယ်လုပ်ဆောင်ခြင်း (signal processing) တွင် အရေးကြီးသော သဘောတရားတစ်ခု ဖြစ်သည်။ အကယ်၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>f</mi>
+</math> သည် ဖန်ရှင်တစ်ခု ဖြစ်ပြီး <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>d</mi>
+    <mi>x</mi>
+  </mrow>
+</math> သည် သေးငယ်သော ကိန်းဂဏန်းတစ်ခု ဖြစ်ပါက၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>f</mi>
+</math> ၏ ချောမွေ့စေသော ဗားရှင်းသည် အမှတ် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+<h4 class="footnotes-heading">အောက်ခြေမှတ်စုများ</h4>
+
+<div id="FOOT49"><p><a class="footnote_backlink" href="#DOCF49"><sup>49</sup></a>
+ဤကိန်းစဉ်တန်းကို များသောအားဖြင့် ညီမျှသောပုံစံဖြစ်သည့် 
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mfrac>
+      <mi>π<!-- π --></mi>
+      <mn>4</mn>
+    </mfrac>
+  </mrow>
+  <mo>=</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>1</mn>
+    <mo>−<!-- − --></mo>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mfrac>
+        <mn>1</mn>
+        <mn>3</mn>
+      </mfrac>
+    </mrow>
+    <mo>+</mo>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mfrac>
+        <mn>1</mn>
+        <mn>5</mn>
+      </mfrac>
+    </mrow>
+  </mrow>
+  <mo>−<!-- − --></mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mrow class="MJX-TeXAtom-ORD">
+      <mfrac>
+        <mn>1</mn>
+        <mn>7</mn>
+      </mfrac>
+    </mrow>
+    <mo>+</mo>
+    <mo>…<!-- … --></mo>
+  </mrow>
+</math>
+အဖြစ် ရေးသားလေ့ရှိပြီး Leibniz ၏ ရှာဖွေတွေ့ရှိချက်ဖြစ်သည်။ ဤအရာကို အခြေခံ၍ ဆန်းပြားသော ကိန်းဂဏန်းဆိုင်ရာ လှည့်ကွက် (numerical tricks) အချို့အတွက် အသုံးပြုပုံကို <a href="3_002e5.xhtml#g_t3_002e5_002e3">3.5.3</a> တွင် တွေ့ရပါမည်။</p>
+</div>
+<div id="FOOT50"><p><a class="footnote_backlink" href="#DOCF50"><sup>50</sup></a>
+ကျွန်ုပ်တို့သည် block structure (<a href="1_002e1.xhtml#g_t1_002e1_002e8">1.1.8</a>) ကို အသုံးပြု၍ <code>pi-next</code> နှင့် <code>pi-term</code> တို့၏ အဓိပ္ပာယ်သတ်မှတ်ချက်များကို <code>pi-sum</code> အတွင်း၌ ထည့်သွင်း (embed) ထားသည်ကို သတိပြုပါ။ အကြောင်းမှာ ဤ procedure များသည် အခြားကိစ္စရပ်များအတွက် အသုံးဝင်ရန် မဖြစ်နိုင်သောကြောင့်ဖြစ်သည်။ ယင်းတို့ကို လုံးဝဖယ်ရှားပစ်ပုံကို <a href="#g_t1_002e3_002e2">1.3.2</a> တွင် တွေ့ရပါမည်။</p>
+</div>
+<div id="FOOT51"><p><a class="footnote_backlink" href="#DOCF51"><sup>51</sup></a>
+Exercise 1.31 မှ Exercise 1.33 အထိ၏ ရည်ရွယ်ချက်မှာ မတူညီဟု ထင်ရသော လုပ်ဆောင်ချက်များစွာကို ပေါင်းစည်းရန် သင့်လျော်သော abstraction တစ်ခုကို အသုံးပြုခြင်းဖြင့် ရရှိလာသော ဖော်ပြနိုင်စွမ်းအား (expressive power) ကို သရုပ်ပြရန်ဖြစ်သည်။ သို့သော်လည်း accumulation နှင့် filtering တို့သည် ပြေပြစ်ကောင်းမွန်သော အိုင်ဒီယာများ ဖြစ်သော်လည်း၊ ဤအဆင့်တွင် ၎င်းတို့ကို အသုံးပြုရန် ကျွန်ုပ်တို့၌ အကန့်အသတ်ရှိနေပါသေးသည်။ အကြောင်းမှာ ဤ abstraction များအတွက် သင့်လျော်သော ပေါင်းစပ်မှုနည်းလမ်းများကို ပေးစွမ်းနိုင်မည့် data structure များ ကျွန်ုပ်တို့ထံတွင် မရှိသေးသောကြောင့်ဖြစ်သည်။ ကျွန်ုပ်တို့သည် ပို၍စွမ်းအားထက်သော abstraction များကို တည်ဆောက်ရန် filters နှင့် accumulators များကို ပေါင်းစပ်သည့် interface များအဖြစ် <a id="index-sequences"></a> <em>sequences</em> များကို အသုံးပြုပုံအား ပြသသည့်အခါ <a href="2_002e2.xhtml#g_t2_002e2_002e3">2.2.3</a> တွင် ဤအိုင်ဒီယာများသို့ ပြန်လာပါမည်။ ထိုအခါတွင် ဤနည်းလမ်းများသည် ပရိုဂရမ်များ ရေးဆွဲရာ၌ မည်မျှအထိ စွမ်းအားထက်မြက်ပြီး ပြေပြစ်ကောင်းမွန်သော ချဉ်းကပ်မှုဖြစ်ကြောင်းကို တွေ့မြင်ရမည်ဖြစ်သည်။</p>
+</div>
+<div id="FOOT52"><p><a class="footnote_backlink" href="#DOCF52"><sup>52</sup></a>
+ဤဖော်မြူလာကို ၁၇ ရာစု အင်္ဂလိပ်သင်္ချာပညာရှင် John Wallis က ရှာဖွေတွေ့ရှိခဲ့ခြင်းဖြစ်သည်။</p>
+</div>
+<div id="FOOT53"><p><a class="footnote_backlink" href="#DOCF53"><sup>53</sup></a>
+Lisp ကို လေ့လာနေသူများအတွက် <code>lambda</code> ထက် ပို၍ထင်ရှားသော အမည် (ဥပမာ <code>make-procedure</code> ကဲ့သို့သော အမည်) ကို အသုံးပြုခဲ့လျှင် ပို၍ရှင်းလင်းပြီး ကြောက်စရာမကောင်းဘဲ ရှိပေလိမ့်မည်။ သို့သော် ဤဓလေ့ထုံးစံမှာ ခိုင်မာစွာ အမြစ်တွယ်နေပြီဖြစ်သည်။ ဤအမှတ်အသားကို သင်္ချာဆိုင်ရာ ယုတ္တိဗေဒပညာရှင် (mathematical logician) Alonzo <a href="References.xhtml#Church-_00281941_0029">Church (1941)</a> မိတ်ဆက်ခဲ့သည့် သင်္ချာဆိုင်ရာ ပုံစံတကျစနစ်တစ်ခုဖြစ်သော λ-calculus မှ ယူထားခြင်းဖြစ်သည်။ Church သည် function နှင့် function application ဆိုင်ရာ သဘောတရားများကို လေ့လာရန် ခိုင်မာတိကျသော အခြေခံအုတ်မြစ်တစ်ခု ပေးနိုင်ရန် λ-calculus ကို ဖော်ထုတ်ခဲ့ခြင်းဖြစ်သည်။ λ-calculus သည် programming languages များ၏ semantics ဆိုင်ရာ သင်္ချာနည်းကျ စူးစမ်းလေ့လာမှုများအတွက် အခြေခံကိရိယာတစ်ခု ဖြစ်လာခဲ့သည်။</p>
+</div>
+<div id="FOOT54"><p><a class="footnote_backlink" href="#DOCF54"><sup>54</sup></a>
+ပရိုဂရမ်တစ်ခုသည် ကျွန်ုပ်တို့ ရည်ရွယ်သည့်အတိုင်း အဓိပ္ပာယ်ရကြောင်း သေချာစေရန် internal definitions များကို ကောင်းမွန်စွာ နားလည်သဘောပေါက်ရန်မှာ ဤအခန်းတွင် တင်ပြခဲ့သည်ထက် ပို၍အသေးစိတ်သော evaluation process မော်ဒယ်တစ်ခု လိုအပ်ပါသည်။ သို့သော် procedure များ၏ internal definitions များတွင် ထိုသို့သော နူးညံ့သိမ်မွေ့သည့် ပြဿနာများ မပေါ်ပေါက်ပါ။ ကျွန်ုပ်တို့သည် evaluation အကြောင်းကို ပိုမိုလေ့လာပြီးနောက် <a href="4_002e1.xhtml#g_t4_002e1_002e6">4.1.6</a> တွင် ဤကိစ္စရပ်သို့ ပြန်လာပါမည်။</p>
+</div>
+<div id="FOOT55"><p><a class="footnote_backlink" href="#DOCF55"><sup>55</sup></a>
+တွက်ချက်မှုတစ်ခုတွင် လက်ခံနိုင်သော အမှားအယွင်း အတိုင်းအတာ (tolerance) ကို ဖော်ပြရန် ကိုယ်စားပြု "သေးငယ်သော" ကိန်းဂဏန်းအဖြစ် 0.001 ကို အသုံးပြုထားပါသည်။ အမှန်တကယ် တွက်ချက်မှုတစ်ခုအတွက် သင့်လျော်သော tolerance မှာ ဖြေရှင်းရမည့် ပုစ္ဆာ၊ ကွန်ပျူတာ၏ ကန့်သတ်ချက်များနှင့် algorithm တို့အပေါ်တွင် မူတည်သည်။ ဒါက မကြာခဏဆိုသလို အရမ်းနူးညံ့သိမ်မွေ့တဲ့ စဉ်းစားတွေးခေါ်မှုဖြစ်ပြီး၊ numerical analyst ဒါမှမဟုတ် တခြားမှော်ဆရာတစ်ဦးဦးရဲ့ အကူအညီ လိုအပ်ပါလိမ့်မယ်။</p>
+</div>
+<div id="FOOT56"><p><a class="footnote_backlink" href="#DOCF56"><sup>56</sup></a>
+ယင်းကို error messages အဖြစ် ရိုက်နှိပ်ဖော်ပြပေးမည့် အချက်အလက်အချို့ကို arguments များအဖြစ် လက်ခံသော <code>error</code> ကို အသုံးပြု၍ လုပ်ဆောင်နိုင်သည်။</p>
+</div>
+<div id="FOOT57"><p><a class="footnote_backlink" href="#DOCF57"><sup>57</sup></a>
+ပျင်းစရာကောင်းတဲ့ ဟောပြောပွဲတစ်ခုမှာ ဒါကို စမ်းကြည့်ပါ - သင့်ဂဏန်းတွက်စက်ကို radians mode ပြောင်းလိုက်ပြီး fixed point ရတဲ့အထိ <code>cos</code> ခလုတ်ကို ထပ်ခါတလဲလဲ နှိပ်ကြည့်ပါ။</p>
+</div>
+<div id="FOOT58"><p><a class="footnote_backlink" href="#DOCF58"><sup>58</sup></a>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mo stretchy="false">↦<!-- ↦ --></mo>
+</math> (“maps to” ဟု အသံထွက်သည်) မှာ <code>lambda</code> ကို သင်္ချာပညာရှင်များ ရေးသားသည့် နည်းလမ်းဖြစ်သည်။ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>y</mi>
+    <mo stretchy="false">↦<!-- ↦ --></mo>
+    <mi>x</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mo>/</mo>
+    </mrow>
+    <mi>y</mi>
+  </mrow>
+</math> ဆိုသည်မှာ <code>(lambda (y) (/ x y))</code> ကို ဆိုလိုခြင်းဖြစ်ပြီး၊ ယင်းမှာ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>y</mi>
+</math> ရှိ တန်ဖိုးသည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>x</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mo>/</mo>
+    </mrow>
+    <mi>y</mi>
+  </mrow>
+</math> ဖြစ်သော function ပင်ဖြစ်သည်။</p>
+</div>
+<div id="FOOT59"><p><a class="footnote_backlink" href="#DOCF59"><sup>59</sup></a>
+ဤအရာသည် ၎င်း၏ operator ကိုယ်တိုင်က combination တစ်ခုဖြစ်နေသည့် combination တစ်ခုဖြစ်သည်ကို သတိပြုပါ။ <a href="1_002e1.xhtml#Exercise-1_002e4">Exercise 1.4</a> တွင် ထိုကဲ့သို့သော combination များ ဖွဲ့စည်းနိုင်စွမ်းကို သရုပ်ပြခဲ့ပြီး ဖြစ်သော်လည်း၊ ၎င်းမှာ သာမန် ဥပမာလေးတစ်ခုသာ ဖြစ်သည်။ ဤနေရာတွင် higher-order procedure မှ ပြန်ပေးလိုက်သော တန်ဖိုးအဖြစ် ရရှိလာသည့် procedure တစ်ခုကို အသုံးပြုသည့်အခါ ထိုကဲ့သို့သော combination များ၏ အမှန်တကယ် လိုအပ်ချက်ကို စတင်တွေ့မြင်ရမည်ဖြစ်သည်။</p>
+</div>
+<div id="FOOT60"><p><a class="footnote_backlink" href="#DOCF60"><sup>60</sup></a>
+ထပ်မံ၍ ယေဘုယျပြုခြင်း (generalization) အတွက် <a href="#Exercise-1_002e45">Exercise 1.45</a> ကို ကြည့်ပါ။</p>
+</div>
+<div id="FOOT61"><p><a class="footnote_backlink" href="#DOCF61"><sup>61</sup></a>
+အခြေခံ calculus စာအုပ်များတွင် Newton’s method ကို အနီးစပ်ဆုံး တန်ဖိုးများ၏ sequence <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>x</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mi>n</mi>
+      <mo>+</mo>
+      <mn>1</mn>
+    </mrow>
+  </msub>
+  <mo>=</mo>
+  <msub>
+    <mi>x</mi>
+    <mi>n</mi>
+  </msub>
+  <mo>−<!-- − --></mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>g</mi>
+    <mo stretchy="false">(</mo>
+    <msub>
+      <mi>x</mi>
+      <mi>n</mi>
+    </msub>
+    <mo stretchy="false">)</mo>
+    <mspace width="thinmathspace"/>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mo>/</mo>
+    </mrow>
+    <mi>D</mi>
+    <mi>g</mi>
+    <mo stretchy="false">(</mo>
+    <msub>
+      <mi>x</mi>
+      <mi>n</mi>
+    </msub>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ဖြင့် များသောအားဖြင့် ဖော်ပြလေ့ရှိသည်။ Processes များအကြောင်း ပြောဆိုရန် ဘာသာစကားရှိခြင်းနှင့် fixed points အိုင်ဒီယာကို အသုံးပြုခြင်းသည် ဤနည်းလမ်းကို ဖော်ပြရာတွင် ပိုမိုရိုးရှင်းစေသည်။</p>
+</div>
+<div id="FOOT62"><p><a class="footnote_backlink" href="#DOCF62"><sup>62</sup></a>
+Newton’s method သည် အဖြေတစ်ခုဆီသို့ အမြဲတမ်း ဦးတည်သွားခြင်း (converge ဖြစ်ခြင်း) မရှိသော်လည်း၊ အဆင်ပြေသော အခြေအနေများတွင် iteration တစ်ခုစီသည် အဖြေ၏ အနီးစပ်ဆုံး တိကျမှု (accuracy) ကို ဂဏန်းနေရာ အရေအတွက်အားဖြင့် နှစ်ဆ တိုးလာစေကြောင်း ပြသနိုင်သည်။ ထိုသို့သော အခြေအနေများတွင် Newton’s method သည် half-interval method ထက် ပို၍မြန်ဆန်စွာ converge ဖြစ်လိမ့်မည်။</p>
+</div>
+<div id="FOOT63"><p><a class="footnote_backlink" href="#DOCF63"><sup>63</sup></a>
+Square roots ရှာဖွေရာတွင် Newton’s method သည် မည်သည့် အစပျိုးမှတ်မှမဆို မှန်ကန်သော အဖြေသို့ လျင်မြန်စွာ ဦးတည်သွား (converge ဖြစ်) သည်။</p>
+</div>
+<div id="FOOT64"><p><a class="footnote_backlink" href="#DOCF64"><sup>64</sup></a>
+Programming-language elements များ၏ first-class status ဆိုင်ရာ သဘောတရားမှာ ဗြိတိသျှ ကွန်ပျူတာသိပ္ပံပညာရှင် Christopher Strachey (1916-1975) ၏ အယူအဆဖြစ်သည်။</p>
+</div>
+<div id="FOOT65"><p><a class="footnote_backlink" href="#DOCF65"><sup>65</sup></a>
+<a href="Chapter-2.xhtml#Chapter-2">Chapter 2<!-- /@w --></a> တွင် data structures များအကြောင်း မိတ်ဆက်ပြီးနောက် ယင်း၏ ဥပမာများကို တွေ့ရပါမည်။</p>
+</div>
+<div id="FOOT66"><p><a class="footnote_backlink" href="#DOCF66"><sup>66</sup></a>
+First-class procedures များ၏ အဓိက implementation cost မှာ procedure များကို တန်ဖိုးများအဖြစ် ပြန်ပေး (return) ရန် ခွင့်ပြုခြင်းကြောင့် procedure အလုပ်မလုပ်နေချိန်တွင်ပင် ၎င်း၏ free variables များအတွက် storage သိမ်းဆည်းထားရန် လိုအပ်ခြင်းဖြစ်သည်။ <a href="4_002e1.xhtml#g_t4_002e1">4.1</a> တွင် ကျွန်ုပ်တို့ လေ့လာမည့် Scheme implementation ၌ ဤ variables များကို procedure ၏ environment တွင် သိမ်းဆည်းထားသည်။</p>
+</div>
+</div>
+<nav class="header">
+<p>
+Next: <a href="Chapter-2.xhtml#Chapter-2" accesskey="n" rel="next">Chapter 2</a>, Prev: <a href="1_002e2.xhtml#g_t1_002e2" accesskey="p" rel="prev">1.2</a>, Up: <a href="#g_t1_002e3" accesskey="u" rel="prev">1.3</a>   [<a href="index.xhtml#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+
+
+</section><span class="bottom jump" title="Jump to bottom"><a href="#pagebottom" accesskey="b">⇣</a></span><a id="pagebottom"></a>
+</body>
+</html>
