@@ -183,6 +183,7 @@ pre, pre code, pre var {
 p, table.menu, div.lisp {
   margin-top: 1em;
   margin-bottom: 1em;
+  line-height: normal;
 }
 
 /* Allow hyphenation */
