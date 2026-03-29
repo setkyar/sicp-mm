@@ -1,0 +1,1103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="my" lang="my">
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>Structure and Interpretation of Computer Programs, 2e: 4.3</title>
+
+<meta name="description" content="Structure and Interpretation of Computer Programs, 2e: 4.3" />
+<meta name="keywords" content="Structure and Interpretation of Computer Programs, 2e: 4.3" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="Generator" content="texi2any" />
+<meta charset="utf-8" />
+<link href="index.xhtml#Top" rel="start" title="Top" />
+<link href="Term-Index.xhtml#Term-Index" rel="index" title="Term Index" />
+<link href="index.xhtml#SEC_Contents" rel="contents" title="Table of Contents" />
+<link href="Chapter-4.xhtml#Chapter-4" rel="prev" title="Chapter 4" />
+<link href="4_002e4.xhtml#g_t4_002e4" rel="next" title="4.4" />
+<link href="4_002e2.xhtml#g_t4_002e2_002e3" rel="prev" title="4.2.3" />
+
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/prettify.css" rel="stylesheet" type="text/css" />
+
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/footnotes.js" type="text/javascript"></script>
+<script src="js/browsertest.js" type="text/javascript"></script>
+</head>
+
+<body>
+<section><span class="top jump" title="Jump to top"><a href="#pagetop" accesskey="t">⇡</a></span><a id="pagetop"></a><a id="g_t4_002e3"></a>
+<nav class="header">
+<p>
+Next: <a href="4_002e4.xhtml#g_t4_002e4" accesskey="n" rel="next">4.4</a>, Prev: <a href="4_002e2.xhtml#g_t4_002e2" accesskey="p" rel="prev">4.2</a>, Up: <a href="Chapter-4.xhtml#Chapter-4" accesskey="u" rel="prev">Chapter 4</a>   [<a href="index.xhtml#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+<a id="Variations-on-a-Scheme-_002d_002d_002d-Nondeterministic-Computing"></a>
+<h3 class="section"><span class="secnum">4.3</span><span class="sectitle">Scheme ၏ မူကွဲများ — Nondeterministic Computing</span></h3>
+
+<p>ဤအပိုင်းတွင်၊ အလိုအလျောက် ရှာဖွေနိုင်သည့် (automatic search) စွမ်းရည်ကို evaluator ထဲတွင် ထည့်သွင်းတည်ဆောက်ခြင်းဖြင့် <a id="index-nondeterministic-computing-1"></a>
+<em>nondeterministic computing</em> ဟုခေါ်သော programming paradigm တစ်ခုကို support လုပ်နိုင်ရန် Scheme evaluator ကို ကျွန်ုပ်တို့ တိုးချဲ့ပါမည်။ ၎င်းသည် အပိုင်း <a href="4_002e2.xhtml#g_t4_002e2">4.2</a> ရှိ lazy evaluation ကို မိတ်ဆက်ပေးခဲ့ခြင်းထက် ပို၍ နက်ရှိုင်းသော ဘာသာစကားဆိုင်ရာ ပြောင်းလဲမှုတစ်ခု ဖြစ်သည်။
+</p>
+<p>Nondeterministic computing သည် stream processing ကဲ့သို့ပင် “generate and test” applications များအတွက် အသုံးဝင်သည်။ အပေါင်းကိန်း (positive integers) list နှစ်ခုမှ စတင်ပြီး၊ ပထမ list မှ တစ်ခုနှင့် ဒုတိယ list မှ တစ်ခုစီယူ၍ ၎င်းတို့၏ ပေါင်းလဒ်သည် prime ကိန်းဖြစ်သော integer စုံတွဲတစ်တွဲကို ရှာဖွေသည့် အလုပ်ကို စဉ်းစားကြည့်ပါ။ ဤအရာကို finite sequence operations များဖြင့် <a href="2_002e2.xhtml#g_t2_002e2_002e3">2.2.3</a> တွင် လည်းကောင်း၊ infinite streams များဖြင့် <a href="3_002e5.xhtml#g_t3_002e5_002e3">3.5.3</a> တွင် လည်းကောင်း မည်သို့ကိုင်တွယ်ရမည်ကို ကျွန်ုပ်တို့ တွေ့ခဲ့ပြီးဖြစ်သည်။ ကျွန်ုပ်တို့၏ ချဉ်းကပ်ပုံမှာ ဖြစ်နိုင်ခြေရှိသော စုံတွဲအားလုံး၏ sequence ကို ထုတ်လုပ်ပြီးနောက် ပေါင်းလဒ် prime ဖြစ်သော စုံတွဲများကို ရွေးချယ်ရန် filter လုပ်ခြင်း ဖြစ်သည်။ အခန်း <a href="Chapter-2.xhtml#Chapter-2">Chapter 2</a> တွင်ကဲ့သို့ စုံတွဲ sequence တစ်ခုလုံးကို အရင်ထုတ်လုပ်သည်ဖြစ်စေ၊ သို့မဟုတ် အခန်း <a href="Chapter-3.xhtml#Chapter-3">Chapter 3</a> တွင်ကဲ့သို့ ထုတ်လုပ်ခြင်းနှင့် filter လုပ်ခြင်းကို တစ်လှည့်စီ (interleave) လုပ်သည်ဖြစ်စေ၊ တွက်ချက်မှု မည်သို့ဖွဲ့စည်းထားသည်ဟူသော အဓိကပုံရိပ်အတွက်မူ အရေးမကြီးလှပေ။
+</p>
+<p>Nondeterministic ချဉ်းကပ်ပုံသည် ကွဲပြားသော ပုံရိပ်တစ်ခုကို ဖော်ဆောင်ပေးသည်။ ပထမ list မှ ကိန်းတစ်ခုနှင့် ဒုတိယ list မှ ကိန်းတစ်ခုကို (တစ်နည်းနည်းဖြင့်) ရိုးရိုးရှင်းရှင်း ရွေးချယ်ပြီး ၎င်းတို့၏ ပေါင်းလဒ်သည် prime ဖြစ်ရမည်ဟု (ယန္တရားတစ်ခုခုကို သုံး၍) သတ်မှတ်လိုက်သည်ဟု စိတ်ကူးကြည့်ပါ။ ၎င်းကို အောက်ပါ procedure ဖြင့် ဖော်ပြနိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">prime-sum-pair list1 list2</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">a </span><span class="opn">(</span><span class="pln">an-element-of list1</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">b </span><span class="opn">(</span><span class="pln">an-element-of list2</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">require </span><span class="opn">(</span><span class="pln">prime? </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> a b</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">list a b</span><span class="clo">)))</span></pre></div>
+
+<p>ဤ procedure သည် ပြဿနာကို ဖြေရှင်းနည်းကို သတ်မှတ်ပေးခြင်းထက် ပြဿနာကို ပြန်လည်ဖော်ပြရုံသာ ဖြစ်သည်ဟု ထင်ရပေမည်။ သို့သော်ငြားလည်း၊ ၎င်းသည် ခိုင်လုံသော nondeterministic program တစ်ခု ဖြစ်သည်။<a class="footnote_link" id="DOCF246" href="#FOOT246"><sup>246</sup></a>
+</p>
+<p>ဤနေရာတွင် အဓိက စိတ်ကူးမှာ nondeterministic language ရှိ expression များသည် ဖြစ်နိုင်ခြေရှိသော တန်ဖိုးတစ်ခုထက်မက ရှိနိုင်ခြင်း ဖြစ်သည်။ ဥပမာအားဖြင့်၊ <code>an-element-of</code> သည် ပေးထားသော list ၏ မည်သည့် element ကိုမဆို ပြန်ပေးနိုင်သည်။ ကျွန်ုပ်တို့၏ nondeterministic program evaluator သည် ဖြစ်နိုင်ခြေရှိသော တန်ဖိုးတစ်ခုကို အလိုအလျောက် ရွေးချယ်ပြီး ထိုရွေးချယ်မှုကို မှတ်သားထားခြင်းဖြင့် အလုပ်လုပ်ပါမည်။ အကယ်၍ နောက်ဆက်တွဲ လိုအပ်ချက်နှင့် မကိုက်ညီပါက၊ evaluator သည် အခြားရွေးချယ်မှုတစ်ခုကို ထပ်မံကြိုးစားမည်ဖြစ်ပြီး၊ တွက်ချက်မှု အောင်မြင်သည်အထိ သို့မဟုတ် ရွေးချယ်စရာများ ကုန်ဆုံးသွားသည်အထိ ရွေးချယ်မှုအသစ်များကို ဆက်လက်ကြိုးစားနေမည် ဖြစ်သည်။ Lazy evaluator က တန်ဖိုးများကို မည်သို့ delay လုပ်ပြီး force လုပ်သည်ဟူသော အသေးစိတ်အချက်အလက်များမှ ပရိုဂရမ်မာကို လွတ်မြောက်စေခဲ့သလိုပင်၊ nondeterministic program evaluator သည် ရွေးချယ်မှုများကို မည်သို့ပြုလုပ်သည်ဟူသော အသေးစိတ်အချက်အလက်များမှ ပရိုဂရမ်မာကို လွတ်မြောက်စေမည်ဖြစ်သည်။
+</p>
+<p>Nondeterministic evaluation နှင့် stream processing တို့မှ ဖော်ဆောင်ပေးသော မတူညီသည့် အချိန်ကာလ ပုံရိပ်များကို နှိုင်းယှဉ်ကြည့်ခြင်းက အကျိုးရှိစေသည်။ Stream processing သည် ဖြစ်နိုင်ခြေရှိသော အဖြေများ၏ stream ကို စုစည်းသည့် အချိန်နှင့် အမှန်တကယ် stream element များ ထုတ်လုပ်သည့် အချိန်ကို သီးခြားစီဖြစ်စေရန် (decouple) lazy evaluation ကို အသုံးပြုသည်။ Evaluator သည် ဖြစ်နိုင်ခြေရှိသော အဖြေအားလုံးသည် ကျွန်ုပ်တို့ရှေ့တွင် အချိန်နှင့်မသက်ဆိုင်သော sequence တစ်ခုအဖြစ် ရှိနေသည်ဟူသော အသွင်အပြင်ကို ဖန်တီးပေးသည်။ Nondeterministic evaluation တွင်မူ၊ expression တစ်ခုသည် ရွေးချယ်မှုများအပေါ် မူတည်၍ ဖြစ်နိုင်ခြေရှိသော ကမ္ဘာ (worlds) အစုအဝေးကို စူးစမ်းရှာဖွေခြင်းကို ကိုယ်စားပြုသည်။ အချို့သော ဖြစ်နိုင်ခြေရှိသော ကမ္ဘာများသည် လမ်းစပျောက်သွားနိုင်ပြီး၊ အချို့မှာမူ အသုံးဝင်သော တန်ဖိုးများ ရှိကြသည်။ Nondeterministic program evaluator သည် အချိန်ကာလများ ခက်ဖြာသွားသည်ဟူသော အသွင်အပြင်ကိုလည်းကောင်း၊ ကျွန်ုပ်တို့၏ ပရိုဂရမ်များတွင် ဖြစ်နိုင်ခြေရှိသော execution ရာဇဝင် အမျိုးမျိုးရှိသည်ဟူသော အသွင်အပြင်ကိုလည်းကောင်း အထောက်အကူပြုသည်။ လမ်းစပျောက်သည့် နေရာသို့ ရောက်သောအခါ၊ ယခင်က ရွေးချယ်ခဲ့သော နေရာသို့ ပြန်သွားပြီး အခြားသော လမ်းခွဲတစ်ခုအတိုင်း ဆက်လက် လုပ်ဆောင်နိုင်သည်။
+</p>
+<p>အောက်တွင် ဖော်ပြထားသော nondeterministic program evaluator ကို <code>amb</code> evaluator ဟု ခေါ်သည်၊ အကြောင်းမှာ ၎င်းကို <code>amb</code> ဟုခေါ်သော special form အသစ်တစ်ခုပေါ်တွင် အခြေခံထားသောကြောင့် ဖြစ်သည်။ အထက်ပါ <code>prime-sum-pair</code> ၏ definition ကို (<code>prime?</code>၊ <code>an-element-of</code> နှင့် <code>require</code> တို့၏ definition များနှင့်အတူ) <code>amb</code> evaluator driver loop တွင် အောက်ပါအတိုင်း ရိုက်ထည့်၍ run နိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><i><span class="com">;;; Amb-Eval input:</span></i><span class="pln">
+</span><span class="opn">(</span><span class="pln">prime-sum-pair </span><span class="lit">'</span><span class="opn">(</span><span class="lit">1</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="lit">5</span><span class="pln"> </span><span class="lit">8</span><span class="clo">)</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="lit">20</span><span class="pln"> </span><span class="lit">35</span><span class="pln"> </span><span class="lit">110</span><span class="clo">))</span><span class="pln">
+
+</span><i><span class="com">;;; Starting a new problem</span></i><span class="pln">
+</span><i><span class="com">;;; Amb-Eval value:</span></i><span class="pln">
+</span><i><span class="opn">(</span><span class="lit">3</span><span class="pln"> </span><span class="lit">20</span><span class="clo">)</span></i>
+</pre></div>
+
+<p>ပြန်ပေးလိုက်သော တန်ဖိုးကို evaluator မှ list တစ်ခုချင်းစီမှ element များကို အောင်မြင်သော ရွေးချယ်မှုတစ်ခု ရသည်အထိ အကြိမ်ကြိမ် ရွေးချယ်ပြီးနောက် ရရှိလာခြင်း ဖြစ်သည်။
+</p>
+<p>အပိုင်း <a href="#g_t4_002e3_002e1">4.3.1</a> တွင် <code>amb</code> ကို မိတ်ဆက်ပေးမည်ဖြစ်ပြီး evaluator ၏ အလိုအလျောက် ရှာဖွေနိုင်သည့် ယန္တရားမှတစ်ဆင့် nondeterminism ကို မည်သို့ အထောက်အကူပြုသည်ကို ရှင်းပြပါမည်။ <a href="#g_t4_002e3_002e2">4.3.2</a> တွင် nondeterministic program များ၏ ဥပမာများကို တင်ပြထားပြီး၊ <a href="#g_t4_002e3_002e3">4.3.3</a> တွင် ပုံမှန် Scheme evaluator ကို ပြုပြင်ခြင်းဖြင့် <code>amb</code> evaluator ကို မည်သို့ implement လုပ်ရမည်ဟူသော အသေးစိတ်အချက်အလက်များကို ပေးထားပါသည်။
+</p>
+
+<a id="g_t4_002e3_002e1"></a>
+<a id="Amb-and-Search"></a>
+</section>
+<h4 class="subsection"><span class="secnum">4.3.1</span><span class="sectitle">Amb နှင့် ရှာဖွေခြင်း (Search)</span></h4>
+
+<p>Scheme တွင် nondeterminism ကို အထောက်အပံ့ပေးရန်အတွက် <code>amb</code> ဟုခေါ်သော special form အသစ်တစ်ခုကို ကျွန်ုပ်တို့ မိတ်ဆက်ပေးပါမည်။<a class="footnote_link" id="DOCF247" href="#FOOT247"><sup>247</sup></a>
+ဖော်ပြချက် (expression)
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">amb ⟨</span><var><span class="pln">e</span><span class="pun">₁</span></var><span class="pln">⟩ ⟨</span><var><span class="pln">e</span><span class="pun">₂</span></var><span class="pln">⟩ </span><span class="roman"><span class="pun">…</span></span><span class="pln"> ⟨</span><var><span class="pln">e</span><span class="pun">ₙ</span></var><span class="pln">⟩</span><span class="clo">)</span></pre></div>
+
+<p>သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ခုသော ဖော်ပြချက်များ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">⟨</mo>
+    <mspace width="0.03em"/>
+    <msub>
+      <mi>e</mi>
+      <mi>i</mi>
+    </msub>
+    <mo stretchy="false">⟩</mo>
+  </mrow>
+</math>
+ထဲမှ တစ်ခု၏ တန်ဖိုးကို "မရေမရာ" (ambiguously) ပြန်ပေးသည်။ ဥပမာအားဖြင့်၊ ဖော်ပြချက်
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">list </span><span class="opn">(</span><span class="pln">amb </span><span class="lit">1</span><span class="pln"> </span><span class="lit">2</span><span class="pln"> </span><span class="lit">3</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">amb </span><span class="lit">'a</span><span class="pln"> </span><span class="lit">'b</span><span class="clo">))</span></pre></div>
+
+<p>တွင် ဖြစ်နိုင်ခြေရှိသော တန်ဖိုး ခြောက်ခု ရှိနိုင်သည်-
+</p>
+<div class="example">
+<pre class="example"><code>(1 a)</code> <code>(1 b)</code> <code>(2 a)</code> <code>(2 b)</code> <code>(3 a)</code> <code>(3 b)</code>
+</pre></div>
+
+<p>ရွေးချယ်စရာ တစ်ခုတည်းသာပါသော <code>Amb</code> သည် သာမန် (တစ်ခုတည်းသော) တန်ဖိုးကို ထုတ်ပေးသည်။
+</p>
+<p>ရွေးချယ်စရာ လုံးဝမပါသော <code>Amb</code> — ဖော်ပြချက် <code>(amb)</code> — သည် လက်ခံနိုင်သော တန်ဖိုးမရှိသည့် ဖော်ပြချက်တစ်ခု ဖြစ်သည်။ လုပ်ဆောင်ချက်အရ ကျွန်ုပ်တို့သည် <code>(amb)</code> ကို တွက်ချက်သည့်အခါတွင် တွက်ချက်မှု "မအောင်မြင်ခြင်း" (fail) ကို ဖြစ်ပေါ်စေသော ဖော်ပြချက်တစ်ခုအဖြစ် မှတ်ယူနိုင်သည်။ တွက်ချက်မှုသည် ရပ်တန့်သွားပြီး မည်သည့်တန်ဖိုးမျှ ထုတ်ပေးမည်မဟုတ်ပါ။ ဤအကြံဉာဏ်ကို အသုံးပြု၍ သတ်မှတ်ထားသော predicate ဖော်ပြချက် <code>p</code> သည် မှန်ကန်ရမည်ဟူသော လိုအပ်ချက်ကို အောက်ပါအတိုင်း ဖော်ပြနိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">require p</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">not p</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">amb</span><span class="clo">)))</span></pre></div>
+
+<p><code>amb</code> နှင့် <code>require</code> တို့ကို အသုံးပြု၍ အထက်တွင် အသုံးပြုခဲ့သော <code>an-element-of</code> procedure ကို အောက်ပါအတိုင်း အကောင်အထည်ဖော်နိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">an-element-of items</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">require </span><span class="opn">(</span><span class="pln">not </span><span class="opn">(</span><span class="pln">null? items</span><span class="clo">)))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">amb </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> items</span><span class="clo">)</span><span class="pln"> 
+       </span><span class="opn">(</span><span class="pln">an-element-of </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> items</span><span class="clo">))))</span></pre></div>
+
+<p>အကယ်၍ list သည် ဗလာဖြစ်နေပါက <code>An-element-of</code> သည် မအောင်မြင်ပါ။ သို့မဟုတ်ပါက ၎င်းသည် list ၏ ပထမဆုံး element ကို ဖြစ်စေ၊ သို့မဟုတ် list ၏ ကျန်ရှိသော အစိတ်အပိုင်းမှ ရွေးချယ်ထားသော element တစ်ခုကို ဖြစ်စေ မရေမရာ ပြန်ပေးမည် ဖြစ်သည်။
+</p>
+<p>ရွေးချယ်စရာများ၏ အကန့်အသတ်မဲ့ အတိုင်းအတာများကိုလည်း ဖော်ပြနိုင်သည်။ အောက်ပါ procedure သည် ပေးထားသော <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ထက် ကြီးသော သို့မဟုတ် ညီသော မည်သည့် ကိန်းပြည့် (integer) ကိုမဆို ပြန်ပေးနိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">an-integer-starting-from n</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">amb n </span><span class="opn">(</span><span class="pln">an-integer-starting-from </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> n </span><span class="lit">1</span><span class="clo">))))</span></pre></div>
+
+<p>၎င်းသည် <a href="3_002e5.xhtml#g_t3_002e5_002e2">3.5.2</a> တွင် ဖော်ပြထားသော stream procedure <code>integers-starting-from</code> နှင့် ဆင်တူသော်လည်း အရေးကြီးသော ကွာခြားချက်တစ်ခု ရှိသည်- stream procedure သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ဖြင့် စတင်သော ကိန်းပြည့်အားလုံး၏ အစီအစဉ်ကို ကိုယ်စားပြုသည့် object တစ်ခုကို ပြန်ပေးသော်လည်း <code>amb</code> procedure သည် ကိန်းပြည့် တစ်ခုတည်းကိုသာ ပြန်ပေးသည်။<a class="footnote_link" id="DOCF248" href="#FOOT248"><sup>248</sup></a>
+</p>
+<p>စိတ္တဇအားဖြင့်၊ <code>amb</code> ဖော်ပြချက်တစ်ခုကို တွက်ချက်ခြင်းသည် အချိန်ကို အခက်အလက်များ (branches) အဖြစ် ခွဲထုတ်လိုက်သည်ဟု စိတ်ကူးကြည့်နိုင်သည်။ ထိုအခက်အလက်တစ်ခုစီတွင် ဖော်ပြချက်၏ ဖြစ်နိုင်ခြေရှိသော တန်ဖိုးတစ်ခုစီဖြင့် တွက်ချက်မှု ဆက်လက်လုပ်ဆောင်သည်။ <code>amb</code> သည်
+<a id="index-nondeterministic-choice-point"></a>
+<em>nondeterministic choice point</em> တစ်ခုကို ကိုယ်စားပြုသည်ဟု ကျွန်ုပ်တို့ ဆိုကြသည်။ အကယ်၍ ကျွန်ုပ်တို့တွင် လိုအပ်သလို ခွဲဝေအသုံးပြုနိုင်သော (dynamically allocated) ပရိုဆက်ဆာ အရေအတွက် လုံလောက်စွာရှိသည့် စက်တစ်ခု ရှိခဲ့ပါက၊ ရှာဖွေခြင်း (search) ကို တိုက်ရိုက် အကောင်အထည်ဖော်နိုင်သည်။ လုပ်ဆောင်ချက်သည် <code>amb</code> ဖော်ပြချက်တစ်ခုနှင့် မတွေ့မချင်း sequential machine တစ်ခုကဲ့သို့ ဆက်လက်လုပ်ဆောင်သွားမည်ဖြစ်သည်။ ထိုအမှတ်တွင် ရွေးချယ်မှုမှ ညွှန်ပြသော ပြိုင်တူလုပ်ဆောင်ချက်များ (parallel executions) အားလုံးကို ဆက်လက်လုပ်ဆောင်ရန်အတွက် ပရိုဆက်ဆာများကို ပိုမိုခွဲဝေပေးပြီး အစပျိုးပေးမည်ဖြစ်သည်။ ပရိုဆက်ဆာတစ်ခုစီသည် ၎င်းသည် တစ်ခုတည်းသော ရွေးချယ်မှုဖြစ်သကဲ့သို့ အစီအစဉ်အတိုင်း လုပ်ဆောင်သွားမည်ဖြစ်ပြီး၊ မအောင်မြင်မှု (failure) တစ်ခုနှင့် တွေ့၍ ရပ်တန့်သွားခြင်း၊ သို့မဟုတ် ထပ်မံခွဲထွက်ခြင်း၊ သို့မဟုတ် ပြီးဆုံးသွားခြင်းတို့အထိ လုပ်ဆောင်မည်ဖြစ်သည်။<a class="footnote_link" id="DOCF249" href="#FOOT249"><sup>249</sup></a>
+</p>
+<p>တစ်ဖက်တွင်မူ၊ လုပ်ငန်းစဉ်တစ်ခုတည်း (သို့မဟုတ် လုပ်ငန်းစဉ်အနည်းငယ်) သာ လုပ်ဆောင်နိုင်သော စက်တစ်ခုရှိလျှင် အခြားရွေးချယ်စရာများကို အစီအစဉ်လိုက် စဉ်းစားရမည်ဖြစ်သည်။ choice point တစ်ခုနှင့် တွေ့တိုင်း လိုက်နာရမည့် အခက်အလက်တစ်ခုကို ကျပန်း (random) ရွေးချယ်ရန် evaluator တစ်ခုကို ပြင်ဆင်ခြင်းကို စိတ်ကူးကြည့်နိုင်သည်။ သို့သော် ကျပန်းရွေးချယ်မှုသည် မအောင်မြင်သော တန်ဖိုးများဆီသို့ လွယ်ကူစွာ ဦးတည်သွားနိုင်သည်။ ကျွန်ုပ်တို့သည် evaluator ကို ထပ်ခါတလဲလဲ လုပ်ဆောင်စေပြီး ကျပန်းရွေးချယ်မှုများ ပြုလုပ်ကာ မအောင်မြင်သော တန်ဖိုးတစ်ခုကို ရှာတွေ့ရန် မျှော်လင့်နိုင်သော်လည်း ဖြစ်နိုင်ခြေရှိသော execution paths အားလုံးကို စနစ်တကျ ရှာဖွေခြင်း (systematically search) က ပိုကောင်းပါသည်။ ဤကဏ္ဍတွင် ကျွန်ုပ်တို့ တည်ဆောက်မည့် <code>amb</code>
+<a id="index-systematically-search"></a>
+evaluator သည် စနစ်တကျ ရှာဖွေခြင်းကို အောက်ပါအတိုင်း အကောင်အထည်ဖော်သည်- evaluator သည် <code>amb</code> အသုံးပြုမှုကို တွေ့သောအခါတွင် အစပိုင်း၌ ပထမဆုံး အခြားရွေးချယ်စရာကို ရွေးချယ်သည်။ ဤရွေးချယ်မှုသည် နောက်ထပ် ရွေးချယ်မှုတစ်ခုဆီသို့ ဦးတည်သွားနိုင်သည်။ evaluator သည် choice point တစ်ခုစီတွင် အမြဲတမ်း ပထမဆုံး အခြားရွေးချယ်စရာကို အရင်ရွေးချယ်မည် ဖြစ်သည်။ အကယ်၍ ရွေးချယ်မှုတစ်ခုသည် မအောင်မြင်မှု (failure) ဖြစ်စေပါက evaluator သည် အလိုအလျောက်<a class="footnote_link" id="DOCF250" href="#FOOT250"><sup>250</sup></a> 
+<a id="index-backtracks"></a>
+ပြန်သွားပြီး (<em>backtracks</em>) နောက်ဆုံးတွေ့ခဲ့သော choice point သို့ ပြန်သွားပြီး နောက်ထပ် အခြားရွေးချယ်စရာတစ်ခုကို စမ်းသပ်သည်။ အကယ်၍ choice point တစ်ခုတွင် အခြားရွေးချယ်စရာများ ကုန်သွားပါက evaluator သည် ယခင် choice point သို့ ပြန်သွားပြီး ထိုနေရာမှ ပြန်လည်စတင်မည် ဖြစ်သည်။ ဤလုပ်ငန်းစဉ်သည် <a id="index-depth_002dfirst-search"></a>
+<em>depth-first search</em> သို့မဟုတ် <a id="index-chronological-backtracking"></a>
+<em>chronological backtracking</em> ဟု လူသိများသော ရှာဖွေရေး မဟာဗျူဟာသို့ ဦးတည်စေသည်။<a class="footnote_link" id="DOCF251" href="#FOOT251"><sup>251</sup></a>
+</p>
+<a id="Driver-loop"></a>
+<h5 class="subsubheading">Driver loop</h5>
+
+<p><code>amb</code> evaluator အတွက် driver loop တွင် ထူးခြားသော ဂုဏ်သတ္တိအချို့ ရှိသည်။ ၎င်းသည် ဖော်ပြချက်တစ်ခုကို ဖတ်ရှုပြီး အထက်တွင် ဖော်ပြခဲ့သော <code>prime-sum-pair</code> ဥပမာကဲ့သို့ ပထမဆုံး မအောင်မြင်သော လုပ်ဆောင်ချက်၏ တန်ဖိုးကို ရိုက်နှိပ်ပေးသည်။ အကယ်၍ ကျွန်ုပ်တို့သည် နောက်ထပ် အောင်မြင်သော လုပ်ဆောင်ချက်၏ တန်ဖိုးကို မြင်လိုပါက interpreter ကို backtrack လုပ်ခိုင်းပြီး ဒုတိယမြောက် မအောင်မြင်သော လုပ်ဆောင်ချက်ကို ထုတ်ပေးရန် ကြိုးစားခိုင်းနိုင်သည်။ ၎င်းကို <code>try-again</code> ဆိုသော သင်္ကေတကို ရိုက်နှိပ်ခြင်းဖြင့် အချက်ပြသည်။ အကယ်၍ <code>try-again</code> မှအပ အခြား မည်သည့် ဖော်ပြချက်ကိုမဆို ပေးပါက interpreter သည် ယခင်ပြဿနာရှိ ရှာဖွေမထားသော အခြားရွေးချယ်စရာများကို စွန့်လွှတ်ပြီး ပြဿနာအသစ်တစ်ခုကို စတင်ပါလိမ့်မည်။ ဤတွင် နမူနာ အပြန်အလှန်လုပ်ဆောင်မှုတစ်ခု ရှိသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><i><span class="com">;;; Amb-Eval input:</span></i><span class="pln">
+</span><span class="opn">(</span><span class="pln">prime-sum-pair </span><span class="lit">'</span><span class="opn">(</span><span class="lit">1</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="lit">5</span><span class="pln"> </span><span class="lit">8</span><span class="clo">)</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="lit">20</span><span class="pln"> </span><span class="lit">35</span><span class="pln"> </span><span class="lit">110</span><span class="clo">))</span><span class="pln">
+
+</span><i><span class="com">;;; Starting a new problem</span></i><span class="pln">
+</span><i><span class="com">;;; Amb-Eval value:</span></i><span class="pln">
+</span><i><span class="opn">(</span><span class="lit">3</span><span class="pln"> </span><span class="lit">20</span><span class="clo">)</span></i><span class="pln">
+
+</span><i><span class="com">;;; Amb-Eval input:</span></i><span class="pln">
+try-again
+
+</span><i><span class="com">;;; Amb-Eval value:</span></i><span class="pln">
+</span><i><span class="opn">(</span><span class="lit">3</span><span class="pln"> </span><span class="lit">110</span><span class="clo">)</span></i><span class="pln">
+
+</span><i><span class="com">;;; Amb-Eval input:</span></i><span class="pln">
+try-again
+
+</span><i><span class="com">;;; Amb-Eval value:</span></i><span class="pln">
+</span><i><span class="opn">(</span><span class="lit">8</span><span class="pln"> </span><span class="lit">35</span><span class="clo">)</span></i><span class="pln">
+
+</span><i><span class="com">;;; Amb-Eval input:</span></i><span class="pln">
+try-again
+
+</span><i><span class="com">;;; There are no more values of</span></i><span class="pln">
+</span><i><span class="opn">(</span><span class="pln">prime-sum-pair 
+ </span><span class="opn">(</span><span class="kwd">quote</span><span class="pln"> </span><span class="opn">(</span><span class="lit">1</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="lit">5</span><span class="pln"> </span><span class="lit">8</span><span class="clo">))</span><span class="pln"> 
+ </span><span class="opn">(</span><span class="kwd">quote</span><span class="pln"> </span><span class="opn">(</span><span class="lit">20</span><span class="pln"> </span><span class="lit">35</span><span class="pln"> </span><span class="lit">110</span><span class="clo">)))</span></i><span class="pln">
+
+</span><i><span class="com">;;; Amb-Eval input:</span></i><span class="pln">
+</span><span class="opn">(</span><span class="pln">prime-sum-pair </span><span class="lit">'</span><span class="opn">(</span><span class="lit">19</span><span class="pln"> </span><span class="lit">27</span><span class="pln"> </span><span class="lit">30</span><span class="clo">)</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="lit">11</span><span class="pln"> </span><span class="lit">36</span><span class="pln"> </span><span class="lit">58</span><span class="clo">))</span><span class="pln">
+
+</span><i><span class="com">;;; Starting a new problem</span></i><span class="pln">
+</span><i><span class="com">;;; Amb-Eval value:</span></i><span class="pln">
+</span><i><span class="opn">(</span><span class="lit">30</span><span class="pln"> </span><span class="lit">11</span><span class="clo">)</span></i>
+</pre></div>
+
+<blockquote>
+<p><strong><a id="Exercise-4_002e35"></a>လေ့ကျင့်ခန်း ၄.၃၅:</strong> ပေးထားသော အကန့်အသတ် နှစ်ခုကြားရှိ ကိန်းပြည့်တစ်ခုကို ပြန်ပေးသော <code>an-integer-between</code> procedure တစ်ခုကို ရေးသားပါ။ ၎င်းကို Pythagorean triples များကို ရှာဖွေပေးသည့် procedure တစ်ခုအား အောက်ပါအတိုင်း အကောင်အထည်ဖော်ရန် အသုံးပြုနိုင်သည်၊ ဆိုလိုသည်မှာ ပေးထားသော အကန့်အသတ်များကြားရှိ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>i</mi>
+    <mo>≤<!-- ≤ --></mo>
+    <mi>j</mi>
+  </mrow>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <msup>
+      <mi>i</mi>
+      <mn>2</mn>
+    </msup>
+    <mo>+</mo>
+    <msup>
+      <mi>j</mi>
+      <mn>2</mn>
+    </msup>
+    <mo>=</mo>
+    <msup>
+      <mi>k</mi>
+      <mn>2</mn>
+    </msup>
+  </mrow>
+</math> ဖြစ်သော ကိန်းပြည့် သုံးခုတွဲ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <mi>i</mi>
+    <mo>,</mo>
+    <mi>j</mi>
+    <mo>,</mo>
+    <mi>k</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> များ ဖြစ်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">a-pythagorean-triple-between low high</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">i </span><span class="opn">(</span><span class="pln">an-integer-between low high</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">j </span><span class="opn">(</span><span class="pln">an-integer-between i high</span><span class="clo">)))</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">k </span><span class="opn">(</span><span class="pln">an-integer-between j high</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">require </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> i i</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> j j</span><span class="clo">))</span><span class="pln"> 
+                    </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> k k</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">list i j k</span><span class="clo">)))))</span></pre></div>
+</blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-4_002e36"></a>လေ့ကျင့်ခန်း ၄.၃၆:</strong> <a href="3_002e5.xhtml#Exercise-3_002e69">Exercise 3.69</a> တွင် ရှာဖွေရမည့် ကိန်းပြည့်များ၏ အရွယ်အစားအတွက် အထက်ကန့်သတ်ချက်မရှိဘဲ Pythagorean triples အားလုံး၏ stream ကို မည်သို့ ထုတ်လုပ်ရမည်ကို ဆွေးနွေးခဲ့သည်။ <a href="#Exercise-4_002e35">Exercise 4.35</a> ရှိ procedure တွင် <code>an-integer-between</code> ကို <code>an-integer-starting-from</code> နှင့် အစားထိုးရုံမျှဖြင့် မထူးခြားသော Pythagorean triples များကို ထုတ်လုပ်ရန်အတွက် အဘယ်ကြောင့် မလုံလောက်ရသည်ကို ရှင်းပြပါ။ ၎င်းကို အမှန်တကယ် လုပ်ဆောင်နိုင်မည့် procedure တစ်ခုကို ရေးသားပါ။ (ဆိုလိုသည်မှာ <code>try-again</code> ကို ထပ်ခါတလဲလဲ ရိုက်နှိပ်ခြင်းဖြင့် မူအရ Pythagorean triples အားလုံးကို နောက်ဆုံးတွင် ထုတ်ပေးနိုင်မည့် procedure တစ်ခုကို ရေးသားပါ။)
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-4_002e37"></a>လေ့ကျင့်ခန်း ၄.၃၇:</strong> Pythagorean triples များကို ထုတ်လုပ်ရန်အတွက် အောက်ပါနည်းလမ်းသည် <a href="#Exercise-4_002e35">Exercise 4.35</a> ရှိ နည်းလမ်းထက် ပိုမိုထိရောက်သည်ဟု Ben Bitdiddle က ဆိုပါသည်။ သူပြောသည်မှာ မှန်ပါသလား။ (အရိပ်အမြွက်- ရှာဖွေရမည့် ဖြစ်နိုင်ခြေ အရေအတွက်ကို ထည့်သွင်းစဉ်းစားပါ။)
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">a-pythagorean-triple-between low high</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">i </span><span class="opn">(</span><span class="pln">an-integer-between low high</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">hsq </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> high high</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">j </span><span class="opn">(</span><span class="pln">an-integer-between i high</span><span class="clo">)))</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">ksq </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> i i</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> j j</span><span class="clo">))))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">require </span><span class="opn">(</span><span class="pun">&gt;=</span><span class="pln"> hsq ksq</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">k </span><span class="opn">(</span><span class="pln">sqrt ksq</span><span class="clo">)))</span><span class="pln">
+          </span><span class="opn">(</span><span class="pln">require </span><span class="opn">(</span><span class="pln">integer? k</span><span class="clo">))</span><span class="pln">
+          </span><span class="opn">(</span><span class="pln">list i j k</span><span class="clo">))))))</span></pre></div>
+</blockquote>
+
+<a id="g_t4_002e3_002e2"></a>
+<a id="Examples-of-Nondeterministic-Programs"></a>
+<h4 class="subsection"><span class="secnum">4.3.2</span><span class="sectitle">Nondeterministic ပရိုဂရမ်များ၏ ဥပမာများ</span></h4>
+
+<p>အပိုင်း <a href="#g_t4_002e3_002e3">4.3.3</a> တွင် <code>amb</code> evaluator ၏ အကောင်အထည်ဖော်ပုံကို ဖော်ပြထားသည်။
+သို့သော် ဦးစွာပထမ၊ ၎င်းကို မည်သို့အသုံးပြုနိုင်ပုံ ဥပမာအချို့ကို တင်ပြပါမည်။ Nondeterministic programming ၏ အားသာချက်မှာ ရှာဖွေမှု (search) လုပ်ဆောင်ပုံ အသေးစိတ်အချက်အလက်များကို ဖုံးကွယ်ထားနိုင်ပြီး၊ ထို့ကြောင့် ကျွန်ုပ်တို့၏ ပရိုဂရမ်များကို ပိုမိုမြင့်မားသော abstraction အဆင့်တွင် ဖော်ပြနိုင်ခြင်းပင် ဖြစ်သည်။
+</p>
+<a id="Logic-Puzzles"></a>
+<h5 class="subsubheading">Logic Puzzles (ယုတ္တိဗေဒဆိုင်ရာ ပဟေဠိများ)</h5>
+
+<p>အောက်ပါပဟေဠိသည် (<a href="References.xhtml#Dinesman-1968">Dinesman 1968</a> မှ ကောက်နုတ်ထားသည်) ရိုးရှင်းသော logic puzzle အမျိုးအစားများထဲမှ တစ်ခုဖြစ်သည်-
+</p>
+<blockquote>
+<p>Baker, Cooper, Fletcher, Miller, နှင့် Smith တို့သည် ငါးထပ်သာရှိသော တိုက်ခန်းတစ်တိုက်၏ မတူညီသော အထပ်များတွင် နေထိုင်ကြသည်။ Baker သည် အပေါ်ဆုံးထပ်တွင် မနေပါ။ Cooper သည် အောက်ဆုံးထပ်တွင် မနေပါ။ Fletcher သည် အပေါ်ဆုံးထပ်ရော အောက်ဆုံးထပ်တွင်ပါ မနေပါ။ Miller သည် Cooper ထက် ပိုမြင့်သော အထပ်တွင် နေသည်။ Smith သည် Fletcher နေသော အထပ်နှင့် ကပ်လျက်အထပ်တွင် မနေပါ။ Fletcher သည် Cooper နေသော အထပ်နှင့် ကပ်လျက်အထပ်တွင် မနေပါ။ မည်သူသည် မည်သည့်အထပ်တွင် နေထိုင်ကြသနည်း။
+</p></blockquote>
+
+<p>ဖြစ်နိုင်ခြေရှိသမျှ အားလုံးကို တစ်ခုချင်းစီ ထုတ်ဖော်ကြည့်ပြီး ပေးထားသော ကန့်သတ်ချက်များကို အသုံးချခြင်းဖြင့် မည်သူသည် မည်သည့်အထပ်တွင် နေသည်ကို တိုက်ရိုက်နည်းလမ်းဖြင့် ဆုံးဖြတ်နိုင်သည်-<a class="footnote_link" id="DOCF252" href="#FOOT252"><sup>252</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">multiple-dwelling</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">baker </span><span class="opn">(</span><span class="pln">amb </span><span class="lit">1</span><span class="pln"> </span><span class="lit">2</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="lit">4</span><span class="pln"> </span><span class="lit">5</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">cooper </span><span class="opn">(</span><span class="pln">amb </span><span class="lit">1</span><span class="pln"> </span><span class="lit">2</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="lit">4</span><span class="pln"> </span><span class="lit">5</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">fletcher </span><span class="opn">(</span><span class="pln">amb </span><span class="lit">1</span><span class="pln"> </span><span class="lit">2</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="lit">4</span><span class="pln"> </span><span class="lit">5</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">miller </span><span class="opn">(</span><span class="pln">amb </span><span class="lit">1</span><span class="pln"> </span><span class="lit">2</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="lit">4</span><span class="pln"> </span><span class="lit">5</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">smith </span><span class="opn">(</span><span class="pln">amb </span><span class="lit">1</span><span class="pln"> </span><span class="lit">2</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="lit">4</span><span class="pln"> </span><span class="lit">5</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">require
+     </span><span class="opn">(</span><span class="pln">distinct? </span><span class="opn">(</span><span class="pln">list baker cooper fletcher 
+                      miller smith</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">require </span><span class="opn">(</span><span class="pln">not </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> baker </span><span class="lit">5</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">require </span><span class="opn">(</span><span class="pln">not </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> cooper </span><span class="lit">1</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">require </span><span class="opn">(</span><span class="pln">not </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> fletcher </span><span class="lit">5</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">require </span><span class="opn">(</span><span class="pln">not </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> fletcher </span><span class="lit">1</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">require </span><span class="opn">(</span><span class="pun">&gt;</span><span class="pln"> miller cooper</span><span class="clo">))</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">require
+     </span><span class="opn">(</span><span class="pln">not </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> </span><span class="opn">(</span><span class="pln">abs </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> smith fletcher</span><span class="clo">))</span><span class="pln"> </span><span class="lit">1</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">require 
+     </span><span class="opn">(</span><span class="pln">not </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> </span><span class="opn">(</span><span class="pln">abs </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> fletcher cooper</span><span class="clo">))</span><span class="pln"> </span><span class="lit">1</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">list </span><span class="opn">(</span><span class="pln">list </span><span class="lit">'baker</span><span class="pln"> baker</span><span class="clo">)</span><span class="pln">
+          </span><span class="opn">(</span><span class="pln">list </span><span class="lit">'cooper</span><span class="pln"> cooper</span><span class="clo">)</span><span class="pln">
+          </span><span class="opn">(</span><span class="pln">list </span><span class="lit">'fletcher</span><span class="pln"> fletcher</span><span class="clo">)</span><span class="pln">
+          </span><span class="opn">(</span><span class="pln">list </span><span class="lit">'miller</span><span class="pln"> miller</span><span class="clo">)</span><span class="pln">
+          </span><span class="opn">(</span><span class="pln">list </span><span class="lit">'smith</span><span class="pln"> smith</span><span class="clo">))))</span></pre></div>
+
+<p><code>(multiple-dwelling)</code> expression ကို evaluate လုပ်ခြင်းဖြင့် အောက်ပါရလဒ်ကို ရရှိသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">((</span><span class="pln">baker </span><span class="lit">3</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">cooper </span><span class="lit">2</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">fletcher </span><span class="lit">4</span><span class="clo">)</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">miller </span><span class="lit">5</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">smith </span><span class="lit">1</span><span class="clo">))</span></pre></div>
+
+<p>ဤရိုးရှင်းသော လုပ်ထုံးလုပ်နည်း (procedure) သည် အလုပ်လုပ်သော်လည်း အလွန်နှေးကွေးပါသည်။ <a href="#Exercise-4_002e39">လေ့ကျင့်ခန်း 4.39</a> နှင့် <a href="#Exercise-4_002e40">လေ့ကျင့်ခန်း 4.40</a> တို့တွင် ဖြစ်နိုင်ခြေရှိသော တိုးတက်ကောင်းမွန်အောင် ပြုပြင်နည်းအချို့ကို ဆွေးနွေးထားသည်။
+</p>
+<blockquote>
+<p><strong><a id="Exercise-4_002e38"></a>လေ့ကျင့်ခန်း 4.38:</strong> Smith နှင့် Fletcher တို့သည် ကပ်လျက်အထပ်များတွင် မနေရဟူသော ကန့်သတ်ချက်ကို ချန်လှပ်၍ multiple-dwelling procedure ကို ပြုပြင်ပါ။ ဤသို့ ပြုပြင်ထားသော ပဟေဠိအတွက် အဖြေပေါင်း မည်မျှရှိသနည်း။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-4_002e39"></a>လေ့ကျင့်ခန်း 4.39:</strong> multiple-dwelling procedure တွင် ကန့်သတ်ချက်များ၏ အစဉ်လိုက်စီထားမှုသည် အဖြေအပေါ် သက်ရောက်မှု ရှိပါသလား။ အဖြေရှာရန် ကြာမြင့်ချိန်အပေါ် သက်ရောက်မှု ရှိပါသလား။ အကယ်၍ သက်ရောက်မှုရှိသည်ဟု သင်ထင်ပါက၊ ကန့်သတ်ချက်များကို အစဉ်လိုက် ပြန်လည်စီခြင်းဖြင့် ပိုမိုမြန်ဆန်သော ပရိုဂရမ်တစ်ခုကို တင်ပြပါ။ အကယ်၍ သက်ရောက်မှုမရှိဟု သင်ထင်ပါက၊ သင်၏ အကြောင်းပြချက်ကို တင်ပြပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-4_002e40"></a>လေ့ကျင့်ခန်း 4.40:</strong> multiple dwelling ပုစ္ဆာတွင်၊ အထပ်များ သတ်မှတ်ချက် မတူညီရဟူသော ကန့်သတ်ချက် မတိုင်မီနှင့် နောက်ပိုင်းတွင် လူများကို အထပ်များသို့ သတ်မှတ်ပေးနိုင်သော အစုအဝေး (sets of assignments) မည်မျှရှိသနည်း။ လူများကို အထပ်များသို့ သတ်မှတ်ပေးနိုင်သော ဖြစ်နိုင်ခြေအားလုံးကို ထုတ်ပေးပြီးမှ backtracking ကို အသုံးပြု၍ ဖယ်ရှားခြင်းသည် အလွန်ပင် ထိရောက်မှု မရှိပါ။ ဥပမာအားဖြင့်၊ ကန့်သတ်ချက် အများစုသည် လူ-အထပ် variable တစ်ခု သို့မဟုတ် နှစ်ခုအပေါ်တွင်သာ မူတည်ပြီး၊ ထို့ကြောင့် လူအားလုံးအတွက် အထပ်များ မရွေးချယ်မီတွင်ပင် ၎င်းတို့ကို အသုံးပြုနိုင်သည်။ ယခင်ကန့်သတ်ချက်များအရ ပယ်ဖျက်ပြီးသား ဖြစ်နိုင်ခြေများကို မဟုတ်ဘဲ၊ ကျန်ရှိသော ဖြစ်နိုင်ခြေများကိုသာ ထုတ်ပေးခြင်းဖြင့် ဤပုစ္ဆာကို ဖြေရှင်းပေးမည့် ပိုမိုထိရောက်သော nondeterministic procedure တစ်ခုကို ရေးသားပြီး သရုပ်ပြပါ။ (Hint: ဤသည်မှာ <code>let</code> expression များစွာ ဆင့်ကဲအသုံးပြုရန် လိုအပ်ပါလိမ့်မည်။)
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-4_002e41"></a>လေ့ကျင့်ခန်း 4.41:</strong> multiple dwelling ပဟေဠိကို ဖြေရှင်းရန် သာမန် Scheme ပရိုဂရမ်တစ်ခု ရေးသားပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-4_002e42"></a>လေ့ကျင့်ခန်း 4.42:</strong> အောက်ပါ "Liars" ပဟေဠိကို ဖြေရှင်းပါ (<a href="References.xhtml#Phillips-1934">Phillips 1934</a> မှ):
+</p>
+<p>ကျောင်းသူငါးဦး စာမေးပွဲဖြေဆိုကြသည်။ သူတို့၏ မိဘများသည် ရလဒ်အပေါ်တွင် အလွန်အမင်း စိတ်ဝင်စားမှု ပြသကြသည်ဟု သူတို့က ထင်မြင်ကြသည်။ ထို့ကြောင့် အိမ်သို့ စာမေးပွဲအကြောင်း စာရေးရာတွင်၊ မိန်းကလေး တစ်ဦးစီသည် မှန်ကန်သော အဆိုတစ်ခုနှင့် မှားယွင်းသော အဆိုတစ်ခုကို ပြုလုပ်ရန် သဘောတူခဲ့ကြသည်။ သူတို့၏ ပေးစာများမှ သက်ဆိုင်ရာ အစိတ်အပိုင်းများမှာ အောက်ပါအတိုင်း ဖြစ်သည်-
+</p>
+<ul>
+<li> Betty: “Kitty က စာမေးပွဲမှာ ဒုတိယရတယ်။ ကျွန်မက တတိယပဲ ရပါတယ်။”
+
+</li><li> Ethel: “ကျွန်မ ထိပ်ဆုံးက အောင်တယ်ဆိုတာ ကြားရင် ရှင်တို့ ဝမ်းသာမှာပါ။ Joan က ဒုတိယ ရပါတယ်။”
+
+</li><li> Joan: “ကျွန်မက တတိယရပြီး၊ သနားစရာ Ethel ကတော့ နောက်ဆုံးပဲ။”
+
+</li><li> Kitty: “ကျွန်မ ဒုတိယ ရတယ်။ Mary က စတုတ္ထပဲ ရပါတယ်။”
+
+</li><li> Mary: “ကျွန်မ စတုတ္ထ ရပါတယ်။ ပထမနေရာကိုတော့ Betty က ယူသွားပါတယ်။”
+
+</li></ul>
+
+<p>အမှန်တကယ်တွင် မိန်းကလေး ငါးဦး၏ ရလဒ် အစဉ်လိုက်မှာ မည်သို့ ဖြစ်သနည်း။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-4_002e43"></a>လေ့ကျင့်ခန်း 4.43:</strong> <code>amb</code> evaluator ကို အသုံးပြု၍ အောက်ပါ ပဟေဠိကို ဖြေရှင်းပါ-<a class="footnote_link" id="DOCF253" href="#FOOT253"><sup>253</sup></a>
+</p>
+<blockquote>
+<p>Mary Ann Moore ၏ ဖခင်တွင် ရွက်လှေတစ်စင်း ရှိပြီး သူ၏ သူငယ်ချင်း လေးဦးဖြစ်သော Colonel Downing, Mr. Hall, Sir Barnacle Hood, နှင့် Dr. Parker တို့တွင်လည်း အသီးသီး ရှိကြသည်။ ထိုငါးဦးစလုံးတွင် သမီးတစ်ဦးစီ ရှိကြပြီး၊ သူတို့၏ ရွက်လှေများကို အခြားသူတစ်ဦး၏ သမီးအမည်များ ပေးထားကြသည်။ Sir Barnacle ၏ ရွက်လှေမှာ Gabrielle ဖြစ်ပြီး၊ Mr. Moore တွင် Lorna ရှိသည်၊ Mr. Hall တွင် Rosalind ရှိသည်။ Colonel Downing ပိုင်ဆိုင်သော Melissa ကို Sir Barnacle ၏ သမီးအမည် ပေးထားခြင်း ဖြစ်သည်။ Gabrielle ၏ ဖခင်သည် Dr. Parker ၏ သမီးအမည်ပေးထားသော ရွက်လှေကို ပိုင်ဆိုင်သည်။ Lorna ၏ ဖခင်မှာ မည်သူနည်း။
+</p></blockquote>
+
+<p>ပရိုဂရမ်ကို ထိရောက်စွာ အလုပ်လုပ်နိုင်ရန် ရေးသားကြည့်ပါ (<a href="#Exercise-4_002e40">လေ့ကျင့်ခန်း 4.40</a> ကို ကြည့်ပါ)။ ထို့အပြင် Mary Ann ၏ မျိုးရိုးအမည်မှာ Moore ဖြစ်သည်ဟု မပြောထားပါက အဖြေပေါင်း မည်မျှရှိနိုင်သည်ကိုလည်း ဆုံးဖြတ်ပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-4_002e44"></a>လေ့ကျင့်ခန်း 4.44:</strong> <a href="2_002e2.xhtml#Exercise-2_002e42">လေ့ကျင့်ခန်း 2.42</a> တွင် စစ်တုရင်ခုံပေါ်၌ queen တစ်ခုနှင့်တစ်ခု မတိုက်ခိုက်နိုင်စေရန် ချထားရသော “eight-queens puzzle” အကြောင်းကို ဖော်ပြထားသည်။ ဤပဟေဠိကို ဖြေရှင်းရန် nondeterministic ပရိုဂရမ်တစ်ခု ရေးသားပါ။
+</p></blockquote>
+
+<a id="Parsing-natural-language"></a>
+<h5 class="subsubheading">Parsing natural language (သဘာဝဘာသာစကားကို ခွဲခြမ်းစိတ်ဖြာခြင်း)</h5>
+
+<p>သဘာဝဘာသာစကားကို input အဖြစ် လက်ခံရန် ဒီဇိုင်းထုတ်ထားသော ပရိုဂရမ်များသည် များသောအားဖြင့် input ကို <a id="index-parse"></a>
+<em>parse</em> လုပ်ရန် (ဆိုလိုသည်မှာ input ကို သဒ္ဒါဆိုင်ရာ ဖွဲ့စည်းပုံ တစ်ခုခုနှင့် တိုက်ဆိုင်ကြည့်ရန်) ကြိုးပမ်းခြင်းဖြင့် စတင်လေ့ရှိသည်။ ဥပမာအားဖြင့်၊ "The cat eats" ကဲ့သို့သော article တစ်ခု၊ နောက်တွင် noun တစ်ခု၊ ၎င်းနောက်တွင် verb တစ်ခု ပါဝင်သော ရိုးရှင်းသော ဝါကျများကို အသိအမှတ်ပြုရန် ကြိုးစားနိုင်သည်။ ထိုကဲ့သို့သော ခွဲခြမ်းစိတ်ဖြာမှုကို လုပ်ဆောင်နိုင်ရန်အတွက်၊ ကျွန်ုပ်တို့သည် စကားလုံး တစ်လုံးချင်းစီ၏ ဝါစင်္ဂ (parts of speech) များကို ခွဲခြားနိုင်ရပါမည်။ စကားလုံး အမျိုးမျိုးကို အမျိုးအစားခွဲထားသော list အချို့ဖြင့် စတင်နိုင်သည်-<a class="footnote_link" id="DOCF254" href="#FOOT254"><sup>254</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> nouns 
+  </span><span class="lit">'</span><span class="opn">(</span><span class="pln">noun student professor cat class</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> verbs 
+  </span><span class="lit">'</span><span class="opn">(</span><span class="pln">verb studies lectures eats sleeps</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> articles </span><span class="lit">'</span><span class="opn">(</span><span class="pln">article the a</span><span class="clo">))</span></pre></div>
+
+<p>ကျွန်ုပ်တို့တွင် <a id="index-grammar"></a>
+<em>grammar</em> (သဒ္ဒါ) တစ်ခုလည်း လိုအပ်သည်၊ ဆိုလိုသည်မှာ သဒ္ဒါဆိုင်ရာ အစိတ်အပိုင်းများကို ပိုမိုရိုးရှင်းသော အစိတ်အပိုင်းများမှ မည်သို့ပေါင်းစပ်ရမည်ကို ဖော်ပြထားသော စည်းမျဉ်းအစုအဝေး ဖြစ်သည်။ အလွန်ရိုးရှင်းသော သဒ္ဒါတစ်ခုသည် ဝါကျတစ်ခုတွင် အစိတ်အပိုင်းနှစ်ခု အမြဲပါဝင်ရမည်ဟု သတ်မှတ်နိုင်သည်—noun phrase တစ်ခုနှင့် ၎င်းနောက်တွင် verb တစ်ခု—ဖြစ်ပြီး noun phrase တစ်ခုတွင် article တစ်ခုနှင့် ၎င်းနောက်တွင် noun တစ်ခု ပါဝင်သည်။ ဤသဒ္ဒါအရ "The cat eats" ဆိုသော ဝါကျကို အောက်ပါအတိုင်း parse လုပ်နိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">sentence
+ </span><span class="opn">(</span><span class="pln">noun-phrase </span><span class="opn">(</span><span class="pln">article the</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">noun cat</span><span class="clo">))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">verb eats</span><span class="clo">))</span></pre></div>
+
+<p>သဒ္ဒါဆိုင်ရာ စည်းမျဉ်းတစ်ခုစီအတွက် သီးခြား procedure များရှိသော ရိုးရှင်းသော ပရိုဂရမ်တစ်ခုဖြင့် ထိုသို့သော parse တစ်ခုကို ထုတ်ပေးနိုင်သည်။ ဝါကျတစ်ခုကို parse လုပ်ရန်အတွက်၊ ၎င်း၏ ဖွဲ့စည်းပုံ အစိတ်အပိုင်းနှစ်ခုကို ခွဲခြားပြီး ထိုအစိတ်အပိုင်း နှစ်ခုပါသော list တစ်ခုကို <code>sentence</code> ဟူသော သင်္ကေတဖြင့် tag လုပ်၍ ပြန်ပေးပါသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">parse-sentence</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">list </span><span class="lit">'sentence</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">parse-noun-phrase</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">parse-word verbs</span><span class="clo">)))</span></pre></div>
+
+<p>အလားတူပင်၊ noun phrase တစ်ခုကို article တစ်ခုနှင့် ၎င်းနောက်တွင် noun တစ်ခုကို ရှာဖွေခြင်းဖြင့် parse လုပ်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">parse-noun-phrase</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">list </span><span class="lit">'noun-phrase</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">parse-word articles</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">parse-word nouns</span><span class="clo">)))</span></pre></div>
+
+<p>အနိမ့်ဆုံးအဆင့်တွင်၊ parsing ဆိုသည်မှာ နောက်ထပ် parse မလုပ်ရသေးသော စကားလုံးသည် လိုအပ်သော ဝါစင်္ဂအတွက် သတ်မှတ်ထားသော စကားလုံး list ထဲတွင် ပါဝင်ခြင်း ရှိမရှိကို ထပ်ခါတလဲလဲ စစ်ဆေးခြင်းပင် ဖြစ်သည်။ ဤအရာကို အကောင်အထည်ဖော်ရန်အတွက်၊ ကျွန်ုပ်တို့သည် parse မလုပ်ရသေးသော input များဖြစ်သည့် global variable <code>*unparsed*</code> ကို ထိန်းသိမ်းထားသည်။ စကားလုံးတစ်လုံးကို စစ်ဆေးသည့်အခါတိုင်း၊ <code>*unparsed*</code> သည် အလွတ်မဖြစ်ရဘဲ ၎င်းသည် သတ်မှတ်ထားသော list ထဲမှ စကားလုံးတစ်လုံးဖြင့် စတင်ရမည်ဟု ကန့်သတ်ထားသည်။ အကယ်၍ ဟုတ်ပါက၊ ကျွန်ုပ်တို့သည် ထိုစကားလုံးကို <code>*unparsed*</code> ထဲမှ ဖယ်ရှားပြီး ၎င်းစကားလုံးနှင့်အတူ ၎င်း၏ ဝါစင်္ဂ (list ၏ ရှေ့ဆုံးတွင် တွေ့ရသည်) ကိုပါ တွဲ၍ ပြန်ပေးပါသည်-<a class="footnote_link" id="DOCF255" href="#FOOT255"><sup>255</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">parse-word word-list</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">require </span><span class="opn">(</span><span class="pln">not </span><span class="opn">(</span><span class="pln">null? </span><span class="pun">*</span><span class="pln">unparsed</span><span class="pun">*</span><span class="clo">)))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">require </span><span class="opn">(</span><span class="pln">memq </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> </span><span class="pun">*</span><span class="pln">unparsed</span><span class="pun">*</span><span class="clo">)</span><span class="pln"> 
+                 </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> word-list</span><span class="clo">)))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">found-word </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> </span><span class="pun">*</span><span class="pln">unparsed</span><span class="pun">*</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> </span><span class="pun">*</span><span class="pln">unparsed</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> </span><span class="pun">*</span><span class="pln">unparsed</span><span class="pun">*</span><span class="clo">))</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">list </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> word-list</span><span class="clo">)</span><span class="pln"> found-word</span><span class="clo">)))</span></pre></div>
+
+<p>Parsing စတင်ရန်အတွက်၊ ကျွန်ုပ်တို့ လုပ်ဆောင်ရန် လိုအပ်သည်မှာ <code>*unparsed*</code> ကို input တစ်ခုလုံးအဖြစ် သတ်မှတ်ပေးရန်၊ ဝါကျတစ်ခုကို parse လုပ်ရန် ကြိုးစားရန်နှင့် ဘာမျှကျန်မနေကြောင်း စစ်ဆေးရန်သာ ဖြစ်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="pun">*</span><span class="pln">unparsed</span><span class="pun">*</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">parse input</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> </span><span class="pun">*</span><span class="pln">unparsed</span><span class="pun">*</span><span class="pln"> input</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">sent </span><span class="opn">(</span><span class="pln">parse-sentence</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">require </span><span class="opn">(</span><span class="pln">null? </span><span class="pun">*</span><span class="pln">unparsed</span><span class="pun">*</span><span class="clo">))</span><span class="pln">
+    sent</span><span class="clo">))</span></pre></div>
+
+<p>ယခုအခါ ကျွန်ုပ်တို့၏ parser ကို စမ်းသပ်ကြည့်နိုင်ပြီး ကျွန်ုပ်တို့၏ စမ်းသပ်ဝါကျအတွက် အလုပ်လုပ်ကြောင်း အတည်ပြုနိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><i><span class="com">;;; Amb-Eval input:</span></i><span class="pln">
+</span><span class="opn">(</span><span class="pln">parse </span><span class="lit">'</span><span class="opn">(</span><span class="pln">the cat eats</span><span class="clo">))</span><span class="pln">
+
+</span><i><span class="com">;;; Starting a new problem</span></i><span class="pln">
+</span><i><span class="com">;;; Amb-Eval value:</span></i><span class="pln">
+</span><i><span class="opn">(</span><span class="pln">sentence 
+ </span><span class="opn">(</span><span class="pln">noun-phrase </span><span class="opn">(</span><span class="pln">article the</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">noun cat</span><span class="clo">))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">verb eats</span><span class="clo">))</span></i>
+</pre></div>
+
+<p><code>amb</code> evaluator သည် ဤနေရာတွင် အလွန်အသုံးဝင်သည်၊ အကြောင်းမှာ <code>require</code> ၏ အကူအညီဖြင့် parsing ကန့်သတ်ချက်များကို ဖော်ပြရန် အဆင်ပြေသောကြောင့် ဖြစ်သည်။ အလိုအလျောက် ရှာဖွေမှု (Automatic search) နှင့် backtracking တို့သည် အစိတ်အပိုင်းများကို မည်သို့ခွဲခြားရမည်နည်းဟူသော ရွေးချယ်စရာများစွာရှိသည့် ပိုမိုရှုပ်ထွေးသော သဒ္ဒါများကို စဉ်းစားသောအခါတွင် အမှန်တကယ်ပင် အကျိုးကျေးဇူး ရှိလာပါသည်။
+</p>
+<p>ကျွန်ုပ်တို့၏ သဒ္ဒါထဲသို့ ဝိဘတ် (prepositions) list တစ်ခုကို ပေါင်းထည့်ကြည့်ရအောင်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> prepositions 
+  </span><span class="lit">'</span><span class="opn">(</span><span class="pln">prep for to in by with</span><span class="clo">))</span></pre></div>
+
+<p>ပြီးလျှင် prepositional phrase တစ်ခုကို (ဥပမာ "for the cat") ဝိဘတ်တစ်ခုနှင့် ၎င်းနောက်တွင် noun phrase တစ်ခု ပါဝင်သည်ဟု သတ်မှတ်ပါမည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">parse-prepositional-phrase</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">list </span><span class="lit">'prep-phrase</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">parse-word prepositions</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">parse-noun-phrase</span><span class="clo">)))</span></pre></div>
+
+<p>ယခုအခါ ဝါကျတစ်ခုကို noun phrase တစ်ခုနှင့် ၎င်းနောက်တွင် verb phrase တစ်ခု ပါဝင်သည်ဟု သတ်မှတ်နိုင်သည်၊ ဤနေရာတွင် verb phrase တစ်ခုသည် verb တစ်ခု သို့မဟုတ် prepositional phrase တစ်ခုဖြင့် တိုးချဲ့ထားသော verb phrase တစ်ခုခု ဖြစ်နိုင်သည်-<a class="footnote_link" id="DOCF256" href="#FOOT256"><sup>256</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">parse-sentence</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">list </span><span class="lit">'sentence</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">parse-noun-phrase</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">parse-verb-phrase</span><span class="clo">)))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">parse-verb-phrase</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">maybe-extend verb-phrase</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">amb 
+     verb-phrase
+     </span><span class="opn">(</span><span class="pln">maybe-extend 
+      </span><span class="opn">(</span><span class="pln">list </span><span class="lit">'verb-phrase</span><span class="pln">
+            verb-phrase
+            </span><span class="opn">(</span><span class="pln">parse-prepositional-phrase</span><span class="clo">)))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">maybe-extend </span><span class="opn">(</span><span class="pln">parse-word verbs</span><span class="clo">)))</span></pre></div>
+
+<p>ထိုနည်းတူစွာပင်၊ "a cat in the class" ကဲ့သို့သော အရာများကို ခွင့်ပြုရန် noun phrase ၏ အဓိပ္ပာယ်သတ်မှတ်ချက်ကိုလည်း အသေးစိတ် ထပ်မံလုပ်ဆောင်နိုင်ပါသည်။ ယခင်က noun phrase ဟု ခေါ်ဆိုခဲ့သည်ကို ယခုအခါ simple noun phrase ဟု ခေါ်ဆိုမည်ဖြစ်ပြီး၊ noun phrase တစ်ခုသည် ယခုအခါ simple noun phrase တစ်ခု သို့မဟုတ် prepositional phrase တစ်ခုဖြင့် တိုးချဲ့ထားသော noun phrase တစ်ခု ဖြစ်လာပါမည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">parse-simple-noun-phrase</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">list </span><span class="lit">'simple-noun-phrase</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">parse-word articles</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">parse-word nouns</span><span class="clo">)))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">parse-noun-phrase</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">maybe-extend noun-phrase</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">amb 
+     noun-phrase
+     </span><span class="opn">(</span><span class="pln">maybe-extend 
+      </span><span class="opn">(</span><span class="pln">list </span><span class="lit">'noun-phrase</span><span class="pln">
+            noun-phrase
+            </span><span class="opn">(</span><span class="pln">parse-prepositional-phrase</span><span class="clo">)))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">maybe-extend </span><span class="opn">(</span><span class="pln">parse-simple-noun-phrase</span><span class="clo">)))</span></pre></div>
+
+<p>ကျွန်ုပ်တို့၏ သဒ္ဒါသစ်သည် ပိုမိုရှုပ်ထွေးသော ဝါကျများကို parse လုပ်နိုင်စေပါသည်။ ဥပမာအားဖြင့်
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">parse </span><span class="lit">'</span><span class="opn">(</span><span class="pln">the student with the cat 
+         sleeps in the class</span><span class="clo">))</span></pre></div>
+
+<p>သည် အောက်ပါအတိုင်း ထုတ်ပေးသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">sentence
+ </span><span class="opn">(</span><span class="pln">noun-phrase
+  </span><span class="opn">(</span><span class="pln">simple-noun-phrase </span><span class="opn">(</span><span class="pln">article the</span><span class="clo">)</span><span class="pln"> 
+                      </span><span class="opn">(</span><span class="pln">noun student</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">prep-phrase </span><span class="opn">(</span><span class="pln">prep with</span><span class="clo">)</span><span class="pln">
+               </span><span class="opn">(</span><span class="pln">simple-noun-phrase
+                </span><span class="opn">(</span><span class="pln">article the</span><span class="clo">)</span><span class="pln">
+                </span><span class="opn">(</span><span class="pln">noun cat</span><span class="clo">))))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">verb-phrase
+  </span><span class="opn">(</span><span class="pln">verb sleeps</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">prep-phrase </span><span class="opn">(</span><span class="pln">prep in</span><span class="clo">)</span><span class="pln">
+               </span><span class="opn">(</span><span class="pln">simple-noun-phrase
+                </span><span class="opn">(</span><span class="pln">article the</span><span class="clo">)</span><span class="pln">
+                </span><span class="opn">(</span><span class="pln">noun class</span><span class="clo">)))))</span></pre></div>
+
+<p>ပေးထားသော input တစ်ခုအတွက် မှန်ကန်သော parse တစ်ခုထက်မက ရှိနိုင်သည်ကို သတိပြုပါ။ "The professor lectures to the student with the cat" ဟူသော ဝါကျတွင်၊ ပါမောက္ခသည် ကြောင်နှင့်အတူ စာသင်နေခြင်းလည်း ဖြစ်နိုင်သည်၊ သို့မဟုတ် ကျောင်းသားတွင် ကြောင်ပါနေခြင်းလည်း ဖြစ်နိုင်သည်။ ကျွန်ုပ်တို့၏ nondeterministic ပရိုဂရမ်သည် ဖြစ်နိုင်ခြေနှစ်ခုလုံးကို ရှာဖွေပေးသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">parse </span><span class="lit">'</span><span class="opn">(</span><span class="pln">the professor lectures to 
+         the student with the cat</span><span class="clo">))</span></pre></div>
+
+<p>သည် အောက်ပါအတိုင်း ထုတ်ပေးသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">sentence
+ </span><span class="opn">(</span><span class="pln">simple-noun-phrase </span><span class="opn">(</span><span class="pln">article the</span><span class="clo">)</span><span class="pln"> 
+                     </span><span class="opn">(</span><span class="pln">noun professor</span><span class="clo">))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">verb-phrase
+  </span><span class="opn">(</span><span class="pln">verb-phrase
+   </span><span class="opn">(</span><span class="pln">verb lectures</span><span class="clo">)</span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">prep-phrase </span><span class="opn">(</span><span class="pln">prep to</span><span class="clo">)</span><span class="pln">
+                </span><span class="opn">(</span><span class="pln">simple-noun-phrase
+                 </span><span class="opn">(</span><span class="pln">article the</span><span class="clo">)</span><span class="pln"> 
+                 </span><span class="opn">(</span><span class="pln">noun student</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">prep-phrase </span><span class="opn">(</span><span class="pln">prep with</span><span class="clo">)</span><span class="pln">
+               </span><span class="opn">(</span><span class="pln">simple-noun-phrase
+                </span><span class="opn">(</span><span class="pln">article the</span><span class="clo">)</span><span class="pln"> 
+                </span><span class="opn">(</span><span class="pln">noun cat</span><span class="clo">)))))</span></pre></div>
+
+<p>Evaluator ကို နောက်တစ်ကြိမ် ကြိုးစားခိုင်းပါက အောက်ပါရလဒ်ကို ရရှိသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">sentence
+ </span><span class="opn">(</span><span class="pln">simple-noun-phrase </span><span class="opn">(</span><span class="pln">article the</span><span class="clo">)</span><span class="pln"> 
+                     </span><span class="opn">(</span><span class="pln">noun professor</span><span class="clo">))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">verb-phrase </span><span class="opn">(</span><span class="pln">verb lectures</span><span class="clo">)</span><span class="pln">
+              </span><span class="opn">(</span><span class="pln">prep-phrase 
+               </span><span class="opn">(</span><span class="pln">prep to</span><span class="clo">)</span><span class="pln">
+               </span><span class="opn">(</span><span class="pln">noun-phrase
+                </span><span class="opn">(</span><span class="pln">simple-noun-phrase
+                 </span><span class="opn">(</span><span class="pln">article the</span><span class="clo">)</span><span class="pln"> 
+                 </span><span class="opn">(</span><span class="pln">noun student</span><span class="clo">))</span><span class="pln">
+                </span><span class="opn">(</span><span class="pln">prep-phrase 
+                 </span><span class="opn">(</span><span class="pln">prep with</span><span class="clo">)</span><span class="pln">
+                 </span><span class="opn">(</span><span class="pln">simple-noun-phrase
+                  </span><span class="opn">(</span><span class="pln">article the</span><span class="clo">)</span><span class="pln"> 
+                  </span><span class="opn">(</span><span class="pln">noun cat</span><span class="clo">)))))))</span></pre></div>
+
+<blockquote>
+<p><strong><a id="Exercise-4_002e45"></a>လေ့ကျင့်ခန်း 4.45:</strong> အထက်တွင် ပေးထားသော သဒ္ဒါဖြင့် "The professor lectures to the student in the class with the cat" ဟူသော ဝါကျကို မတူညီသော နည်းလမ်းငါးမျိုးဖြင့် parse လုပ်နိုင်သည်။ parse ငါးခုလုံးကို တင်ပြပြီး ၎င်းတို့ကြားရှိ အဓိပ္ပာယ် ကွာခြားပုံများကို ရှင်းပြပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-4_002e46"></a>လေ့ကျင့်ခန်း 4.46:</strong> <a href="4_002e1.xhtml#g_t4_002e1">4.1</a> နှင့် <a href="4_002e2.xhtml#g_t4_002e2">4.2</a> ပါ evaluator များသည် operand များကို မည်သည့်အစဉ်လိုက် evaluate လုပ်ရမည်ကို မသတ်မှတ်ထားပါ။ <code>amb</code> evaluator သည် ၎င်းတို့ကို ဘယ်မှညာသို့ evaluate လုပ်သည်ကို ကျွန်ုပ်တို့ တွေ့ရပါမည်။ အကယ်၍ operand များကို အခြားအစဉ်လိုက်တစ်ခုခုဖြင့် evaluate လုပ်ပါက ကျွန်ုပ်တို့၏ parsing ပရိုဂရမ်သည် အဘယ်ကြောင့် အလုပ်မလုပ်နိုင်ရသနည်းဆိုသည်ကို ရှင်းပြပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-4_002e47"></a>လေ့ကျင့်ခန်း 4.47:</strong> Louis Reasoner က verb phrase တစ်ခုသည် verb တစ်ခု သို့မဟုတ် prepositional phrase တစ်ခု၏ နောက်တွင် ပါသော verb phrase တစ်ခုဖြစ်သောကြောင့်၊ <code>parse-verb-phrase</code> procedure ကို အောက်ပါအတိုင်း ပိုမိုရိုးရှင်းစွာ သတ်မှတ်နိုင်သည်ဟု အကြံပြုထားသည် (noun phrase များအတွက်လည်း အလားတူပင်)-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">parse-verb-phrase</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">amb </span><span class="opn">(</span><span class="pln">parse-word verbs</span><span class="clo">)</span><span class="pln">
+       </span><span class="opn">(</span><span class="list"> 
+        </span><span class="lit">'verb-phrase</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">parse-verb-phrase</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">parse-prepositional-phrase</span><span class="clo">))))</span></pre></div>
+
+<p>ဤအရာသည် အလုပ်လုပ်ပါသလား။ <code>amb</code> ထဲမှ expression များ၏ အစဉ်လိုက်ကို ပြောင်းလဲလိုက်ပါက ပရိုဂရမ်၏ လုပ်ဆောင်ချက်သည် ပြောင်းလဲသွားပါသလား။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-4_002e48"></a>လေ့ကျင့်ခန်း 4.48:</strong> ပိုမိုရှုပ်ထွေးသော ဝါကျများကို ကိုင်တွယ်နိုင်ရန် အထက်တွင် ပေးထားသော သဒ္ဒါကို တိုးချဲ့ပါ။ ဥပမာအားဖြင့်၊ adjective နှင့် adverb များ ထည့်သွင်းနိုင်ရန် noun phrase နှင့် verb phrase များကို တိုးချဲ့နိုင်သည်၊ သို့မဟုတ် compound sentence များကို ကိုင်တွယ်နိုင်သည်။<a class="footnote_link" id="DOCF257" href="#FOOT257"><sup>257</sup></a>
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-4_002e49"></a>လေ့ကျင့်ခန်း 4.49:</strong> Alyssa P. Hacker သည် ဝါကျများကို parse လုပ်ခြင်းထက် စိတ်ဝင်စားစရာကောင်းသော ဝါကျများကို ထုတ်ပေးခြင်း (generating) ကို ပိုမိုစိတ်ဝင်စားသည်။ <code>parse-word</code> procedure ကို "input sentence" ကို လျစ်လျူရှုပြီး အမြဲတမ်း အောင်မြင်ကာ သင့်တော်သော စကားလုံးတစ်လုံးကို ထုတ်ပေးရန် ပြောင်းလဲလိုက်ရုံဖြင့်၊ parsing အတွက် တည်ဆောက်ထားသော ပရိုဂရမ်များကို ဝါကျထုတ်ပေးရန်အတွက် အသုံးပြုနိုင်သည်ဟု သူမက ယူဆသည်။ Alyssa ၏ စိတ်ကူးကို အကောင်အထည်ဖော်ပြီး၊ ပထမဆုံး ထွက်ပေါ်လာသော ဝါကျ ခြောက်ခုခန့်ကို ပြသပါ။<a class="footnote_link" id="DOCF258" href="#FOOT258"><sup>258</sup></a>
+</p></blockquote>
+
+<a id="g_t4_002e3_002e3"></a>
+<a id="Implementing-the-Amb-Evaluator"></a>
+<h4 class="subsection"><span class="secnum">4.3.3</span><span class="sectitle"><code>Amb</code> Evaluator ကို အကောင်အထည်ဖော်ခြင်း</span></h4>
+
+<p>ရိုးရိုး Scheme ဖော်ပြချက် (expression) တစ်ခုကို အကဲဖြတ်ခြင်း (evaluation) သည် တန်ဖိုးတစ်ခု ပြန်ပေးနိုင်သည်၊ သို့မဟုတ် မည်သည့်အခါမျှ မပြီးဆုံးနိုင်ပါ၊ သို့မဟုတ် အမှားတစ်ခုကို အကြောင်းကြားနိုင်ပါသည်။ nondeterministic Scheme တွင်မူ ဖော်ပြချက်တစ်ခုကို အကဲဖြတ်ခြင်းသည် လမ်းဆုံး (dead end) တစ်ခုကို တွေ့ရှိခြင်းမျိုးလည်း ဖြစ်နိုင်ပြီး၊ ထိုသို့ဖြစ်ပါက အကဲဖြတ်ခြင်းသည် ယခင်ရွေးချယ်မှုအမှတ် (choice point) သို့ နောက်ကြောင်းပြန်လှည့် (backtrack) ရမည် ဖြစ်သည်။ nondeterministic Scheme ကို အဓိပ္ပာယ်ပြန်ဆိုခြင်း (interpretation) သည် ဤအပိုအခြေအနေကြောင့် ပိုမိုရှုပ်ထွေးသွားပါသည်။
+</p>
+<p>ကျွန်ုပ်တို့သည် <a href="4_002e1.xhtml#g_t4_002e1_002e7">4.1.7</a> ရှိ analyzing evaluator ကို ပြင်ဆင်ခြင်းဖြင့် nondeterministic Scheme အတွက် <code>amb</code> evaluator ကို တည်ဆောက်ပါမည်။<a class="footnote_link" id="DOCF259" href="#FOOT259"><sup>259</sup></a> analyzing evaluator မှာကဲ့သို့ပင်၊ ဖော်ပြချက်တစ်ခုကို အကဲဖြတ်ခြင်းကို ထိုဖော်ပြချက်ကို ခွဲခြမ်းစိတ်ဖြာခြင်း (analysis) မှ ထွက်ပေါ်လာသော execution procedure တစ်ခုကို ခေါ်ဆိုခြင်းဖြင့် ဆောင်ရွက်ပါသည်။ ရိုးရိုး Scheme နှင့် nondeterministic Scheme တို့၏ အဓိပ္ပာယ်ပြန်ဆိုပုံ ကွာခြားချက်မှာ execution procedures များတွင်သာ လုံးလုံးလျားလျား ရှိပါလိမ့်မည်။
+</p>
+<a id="Execution-procedures-and-continuations"></a>
+<h5 class="subsubheading">Execution procedures နှင့် continuations များ</h5>
+
+<p>ရိုးရိုး evaluator အတွက် execution procedures များသည် argument တစ်ခု (execution environment) ကိုသာ လက်ခံကြောင်း သတိရပါ။ ၎င်းနှင့်ဆန့်ကျင်ဘက်အနေဖြင့်၊ <code>amb</code> evaluator ရှိ execution procedures များသည် argument သုံးခုကို လက်ခံသည်- ၎င်းတို့မှာ environment နှင့် <a id="index-continuation-procedures"></a>
+<em>continuation procedures</em> ဟု ခေါ်ဆိုသော လုပ်ထုံးလုပ်နည်း နှစ်ခုတို့ ဖြစ်ကြသည်။ ဖော်ပြချက်တစ်ခုကို အကဲဖြတ်ခြင်းသည် ဤ continuations နှစ်ခုအနက် တစ်ခုကို ခေါ်ဆိုခြင်းဖြင့် ပြီးဆုံးပါလိမ့်မည်- အကယ်၍ အကဲဖြတ်မှုမှ တန်ဖိုးတစ်ခု ရရှိခဲ့လျှင် <a id="index-success-continuation"></a>
+<em>success continuation</em> ကို ထိုတန်ဖိုးနှင့်အတူ ခေါ်ဆိုပါသည်၊ အကယ်၍ အကဲဖြတ်မှုသည် လမ်းဆုံးတစ်ခုကို တွေ့ရှိခဲ့လျှင်မူ <a id="index-failure-continuation"></a>
+<em>failure continuation</em> ကို ခေါ်ဆိုပါသည်။ သင့်တော်သော continuations များကို တည်ဆောက်ခြင်းနှင့် ခေါ်ဆိုခြင်းသည် nondeterministic evaluator က backtracking ကို အကောင်အထည်ဖော်သည့် ယန္တရားပင် ဖြစ်သည်။
+</p>
+<p>တန်ဖိုးတစ်ခုကို လက်ခံရယူပြီး တွက်ချက်မှုကို ဆက်လက်လုပ်ဆောင်ရန်မှာ success continuation ၏ တာဝန်ဖြစ်သည်။ ထိုတန်ဖိုးနှင့်အတူ success continuation ထံသို့ နောက်ထပ် failure continuation တစ်ခုကိုလည်း ထည့်ပေးလိုက်ပါသည်၊ ၎င်းမှာ အဆိုပါတန်ဖိုးကို အသုံးပြုခြင်းသည် လမ်းဆုံးသို့ ရောက်သွားပါက နောက်ပိုင်းတွင် ခေါ်ဆိုရန် ဖြစ်သည်။
+</p>
+<p>nondeterministic လုပ်ငန်းစဉ်၏ အခြားလမ်းကြောင်းတစ်ခုကို စမ်းသပ်ကြည့်ရန်မှာ failure continuation ၏ တာဝန်ဖြစ်သည်။ nondeterministic ဘာသာစကား၏ အနှစ်သာရမှာ ဖော်ပြချက်များသည် ရွေးချယ်စရာများထဲမှ တစ်ခုခုကို ကိုယ်စားပြုနိုင်ခြင်းတွင် ရှိသည်။ မည်သည့်ရွေးချယ်မှုက လက်ခံနိုင်လောက်သော ရလဒ်များကို ပေးမည်ကို ကြိုတင်မသိနိုင်သော်လည်း၊ ထိုကဲ့သို့သော ဖော်ပြချက်ကို အကဲဖြတ်ရာတွင် သတ်မှတ်ထားသော ရွေးချယ်စရာများထဲမှ တစ်ခုဖြင့် ရှေ့ဆက်ရပါမည်။ ဒါကို ကိုင်တွယ်ရန်အတွက် evaluator က ရွေးချယ်စရာများထဲမှ တစ်ခုကို ရွေးချယ်ပြီး အဆိုပါတန်ဖိုးကို success continuation ထံ ပေးပို့လိုက်ပါသည်။ ဤတန်ဖိုးနှင့်အတူ၊ အခြားရွေးချယ်စရာတစ်ခုကို နောက်မှရွေးချယ်ရန်အတွက် ခေါ်ဆိုနိုင်သော failure continuation တစ်ခုကိုလည်း evaluator က တည်ဆောက်ပြီး အတူတကွ ပေးပို့လိုက်ပါသည်။
+</p>
+<p>အသုံးပြုသူ၏ ပရိုဂရမ်က လက်ရှိလုပ်ဆောင်နေသော လမ်းကြောင်းကို တိတိလင်းလင်း ငြင်းပယ်လိုက်သောအခါ (ဥပမာ- <code>require</code> ကို ခေါ်ဆိုခြင်းသည် အမြဲတမ်းရှုံးနိမ့်သော ဖော်ပြချက်ဖြစ်သည့် <code>(amb)</code> ကို လုပ်ဆောင်ခြင်းသို့ ရောက်ရှိသွားနိုင်သည် — <a href="#g_t4_002e3_002e1">4.3.1</a> ကိုကြည့်ပါ) အကဲဖြတ်နေစဉ်အတွင်း ကျရှုံးမှု (failure) တစ်ခု ဖြစ်ပေါ်လာပါသည် (ဆိုလိုသည်မှာ failure continuation ကို ခေါ်ဆိုခြင်းဖြစ်သည်)။ ထိုအချိန်တွင် ရှိနေသော failure continuation သည် လတ်တလောအကျဆုံး ရွေးချယ်မှုအမှတ် (choice point) ကို အခြားရွေးချယ်စရာတစ်ခုကို ရွေးချယ်စေပါလိမ့်မည်။ အကယ်၍ ထိုရွေးချယ်မှုအမှတ်တွင် စဉ်းစားရန် ရွေးချယ်စရာများ မကျန်တော့ပါက၊ ယခင်ရွေးချယ်မှုအမှတ်တစ်ခုတွင် ကျရှုံးမှုတစ်ခုကို ဖြစ်ပေါ်စေပါသည်၊ ဤနည်းအတိုင်း ဆက်သွားပါသည်။ ဖော်ပြချက်၏ နောက်ထပ်တန်ဖိုးတစ်ခုကို ရှာဖွေရန် <code>try-again</code> တောင်းဆိုမှုကို တုံ့ပြန်သည့်အနေဖြင့် driver loop ကလည်း failure continuations များကို ခေါ်ဆိုပါသည်။
+</p>
+<p>ထို့အပြင်၊ ရွေးချယ်မှုတစ်ခုမှ ဖြစ်ပေါ်လာသော လုပ်ငန်းစဉ်လမ်းကြောင်းပေါ်တွင် ဘေးထွက်ဆိုးကျိုး လုပ်ဆောင်ချက်တစ်ခု (ဥပမာ- ကိန်းရှင်တစ်ခုသို့ တန်ဖိုးသတ်မှတ်ခြင်း) ဖြစ်ပေါ်ခဲ့လျှင်၊ လုပ်ငန်းစဉ်သည် လမ်းဆုံးသို့ ရောက်သောအခါ ရွေးချယ်မှုအသစ်တစ်ခု မပြုလုပ်မီ ထိုဘေးထွက်ဆိုးကျိုးကို ပြန်လည်ပြင်ဆင်ရန် (undo) လိုအပ်နိုင်ပါသည်။ ဘေးထွက်ဆိုးကျိုးကို ပြန်ပြင်ပြီး ကျရှုံးမှုကို ဆက်လက်လက်ဆင့်ကမ်းပေးသော failure continuation တစ်ခုကို ဘေးထွက်ဆိုးကျိုးလုပ်ဆောင်ချက်က ထုတ်ပေးခြင်းဖြင့် ဤအရာကို ပြီးမြောက်စေပါသည်။
+</p>
+<p>အကျဉ်းချုပ်အားဖြင့် failure continuations များကို အောက်ပါတို့မှ တည်ဆောက်ပါသည် -
+</p>
+<ul>
+<li> <code>amb</code> expressions — <code>amb</code> expression မှ ပြုလုပ်ထားသော လက်ရှိရွေးချယ်မှုသည် လမ်းဆုံးသို့ ရောက်သွားပါက အခြားရွေးချယ်စရာများ ပြုလုပ်နိုင်ရန် ယန္တရားတစ်ခု ပေးရန်။
+
+</li><li> the top-level driver — ရွေးချယ်စရာများ ကုန်ဆုံးသွားသောအခါ ကျရှုံးမှုကို အစီရင်ခံရန် ယန္တရားတစ်ခု ပေးရန်။
+
+</li><li> assignments — backtracking လုပ်နေစဉ်အတွင်း ကျရှုံးမှုများကို ကြားဖြတ်ဖမ်းယူရန်နှင့် assignments များကို ပြန်လည်ပြင်ဆင်ရန်။
+
+</li></ul>
+
+<p>လမ်းဆုံးတစ်ခုနှင့် ကြုံတွေ့ရသောအခါမှသာ ကျရှုံးမှုများကို စတင်ပါသည်။ ၎င်းမှာ အောက်ပါအတိုင်း ဖြစ်ပေါ်ပါသည် -
+</p>
+<ul>
+<li> အသုံးပြုသူ ပရိုဂရမ်က <code>(amb)</code> ကို လုပ်ဆောင်လျှင်။
+
+</li><li> အသုံးပြုသူက top-level driver တွင် <code>try-again</code> ဟု ရိုက်ထည့်လျှင်။
+
+</li></ul>
+
+<p>ကျရှုံးမှုတစ်ခုကို လုပ်ဆောင်နေစဉ်အတွင်း၌လည်း failure continuations များကို ခေါ်ဆိုပါသည် -
+</p>
+<ul>
+<li> assignment တစ်ခုမှ ဖန်တီးထားသော failure continuation သည် ဘေးထွက်ဆိုးကျိုးကို ပြန်ပြင်ပြီးသွားသောအခါ၊ ဤ assignment သို့ ဦးတည်ခဲ့သော ရွေးချယ်မှုအမှတ် သို့မဟုတ် top level သို့ ကျရှုံးမှုကို ပြန်လည်လက်ဆင့်ကမ်းပေးရန်အတွက် ၎င်းကြားဖြတ်ဖမ်းယူထားသော failure continuation ကို ခေါ်ဆိုပါသည်။
+
+</li><li> <code>amb</code> အတွက် failure continuation သည် ရွေးချယ်စရာများ ကုန်သွားသောအခါ၊ ယခင်ရွေးချယ်မှုအမှတ် သို့မဟုတ် top level သို့ ကျရှုံးမှုကို ပြန်လည်လက်ဆင့်ကမ်းပေးရန်အတွက် <code>amb</code> ထံသို့ မူလက ပေးထားသော failure continuation ကို ခေါ်ဆိုပါသည်။
+
+</li></ul>
+
+<a id="Structure-of-the-evaluator"></a>
+<h5 class="subsubheading">Evaluator ၏ တည်ဆောက်ပုံ</h5>
+
+<p><code>amb</code> evaluator အတွက် syntax နှင့် data-representation procedures များ၊ နှင့် အခြေခံ <code>analyze</code> procedure တို့သည် <code>amb</code> special form ကို အသိအမှတ်ပြုရန် နောက်ထပ် syntax procedures များ လိုအပ်သည်မှလွဲ၍ <a href="4_002e1.xhtml#g_t4_002e1_002e7">4.1.7</a> ရှိ evaluator နှင့် ထပ်တူပင် ဖြစ်ပါသည်- <a class="footnote_link" id="DOCF260" href="#FOOT260"><sup>260</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">amb? exp</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">tagged-list? exp </span><span class="lit">'amb</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">amb-choices exp</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> exp</span><span class="clo">))</span></pre></div>
+
+<p>ကျွန်ုပ်တို့သည် ဤ special form ကို အသိအမှတ်ပြုပြီး သင့်လျော်သော execution procedure တစ်ခုကို ထုတ်ပေးမည့် clause တစ်ခုကို <code>analyze</code> ရှိ dispatch တွင် ထည့်သွင်းရပါမည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">((</span><span class="pln">amb? exp</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">analyze-amb exp</span><span class="clo">))</span></pre></div>
+
+<p>top-level procedure <code>ambeval</code> (<a href="4_002e1.xhtml#g_t4_002e1_002e7">4.1.7</a> တွင် ပေးထားသော <code>eval</code> ဗားရှင်းနှင့် ဆင်တူသည်) သည် ပေးထားသော ဖော်ပြချက်ကို ခွဲခြမ်းစိတ်ဖြာပြီး၊ ထွက်ပေါ်လာသော execution procedure ကို ပေးထားသော environment နှင့် continuations နှစ်ခုနှင့်အတူ အသုံးချပါသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">ambeval exp env succeed fail</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">((</span><span class="pln">analyze exp</span><span class="clo">)</span><span class="pln"> env succeed fail</span><span class="clo">))</span></pre></div>
+
+<p>success continuation သည် argument နှစ်ခုပါသော procedure တစ်ခုဖြစ်သည်- ၎င်းတို့မှာ ယခုလေးတင်ရရှိခဲ့သော တန်ဖိုးနှင့် ထိုတန်ဖိုးသည် နောက်ပိုင်းတွင် ကျရှုံးမှုသို့ ဦးတည်ပါက အသုံးပြုရန် နောက်ထပ် failure continuation တစ်ခုတို့ ဖြစ်သည်။ failure continuation သည် argument မပါသော procedure တစ်ခု ဖြစ်သည်။ ထို့ကြောင့် execution procedure ၏ ယေဘုယျပုံစံမှာ -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">env succeed fail</span><span class="clo">)</span><span class="pln">
+  </span><span class="roman"><span class="com">;; </span><code><span class="com">succeed</span></code><span class="com"> is </span><code><span class="com">(lambda (value fail) </span><span class="roman"><span class="com">…</span></span><span class="com">)</span></code></span><span class="pln">
+  </span><span class="roman"><span class="com">;; </span><code><span class="com">fail</span></code><span class="com"> is </span><code><span class="com">(lambda () </span><span class="roman"><span class="com">…</span></span><span class="com">)</span></code></span><span class="pln">
+  </span><span class="roman"><span class="pun">…</span></span><span class="clo">)</span></pre></div>
+
+<p>ဥပမာအားဖြင့်
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">ambeval ⟨</span><var><span class="pln">exp</span></var><span class="pln">⟩
+         the-global-environment
+         </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">value fail</span><span class="clo">)</span><span class="pln"> value</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln"> </span><span class="lit">'failed</span><span class="clo">))</span></pre></div>
+
+<p>ကို လုပ်ဆောင်ခြင်းသည် ပေးထားသော ဖော်ပြချက်ကို အကဲဖြတ်ရန် ကြိုးပမ်းမည်ဖြစ်ပြီး၊ ဖော်ပြချက်၏ တန်ဖိုး (အကယ်၍ အကဲဖြတ်မှု အောင်မြင်လျှင်) သို့မဟုတ် <code>failed</code> ဟူသော သင်္ကေတ (အကယ်၍ အကဲဖြတ်မှု ကျရှုံးလျှင်) ကို ပြန်ပေးပါလိမ့်မည်။ အောက်တွင် ဖော်ပြထားသော driver loop ရှိ <code>ambeval</code> ကို ခေါ်ဆိုမှုသည် loop ကို ဆက်လက်လုပ်ဆောင်ပေးပြီး <code>try-again</code> တောင်းဆိုမှုကို အထောက်အပံ့ပေးသည့် ပိုမိုရှုပ်ထွေးသော continuation procedures များကို အသုံးပြုထားပါသည်။
+</p>
+<p><code>amb</code> evaluator ၏ ရှုပ်ထွေးမှု အများစုသည် execution procedures များ တစ်ခုနှင့်တစ်ခု ခေါ်ဆိုကြစဉ် continuations များကို လက်ဆင့်ကမ်းပေးသည့် ယန္တရားမှ ဖြစ်ပေါ်လာခြင်း ဖြစ်သည်။ အောက်ပါကုဒ်များကို လေ့လာရာတွင်၊ execution procedure တစ်ခုစီကို <a href="4_002e1.xhtml#g_t4_002e1_002e7">4.1.7</a> တွင် ပေးထားသော ရိုးရိုး evaluator အတွက် သက်ဆိုင်ရာ procedure နှင့် နှိုင်းယှဉ်ကြည့်သင့်ပါသည်။
+</p>
+<a id="Simple-expressions"></a>
+<h5 class="subsubheading">ရိုးရှင်းသော ဖော်ပြချက်များ (Simple expressions)</h5>
+
+<p>အရှင်းဆုံး ဖော်ပြချက် အမျိုးအစားများအတွက် execution procedures များသည် continuations များကို စီမံခန့်ခွဲရန် လိုအပ်သည်မှလွဲ၍ ရိုးရိုး evaluator အတွက် လုပ်ထုံးလုပ်နည်းများနှင့် အခြေခံအားဖြင့် တူညီကြပါသည်။ execution procedures များသည် ၎င်းတို့ထံ ပေးလိုက်သော failure continuation ကို လက်ဆင့်ကမ်းပေးပြီး ဖော်ပြချက်၏ တန်ဖိုးနှင့်အတူ ရိုးရှင်းစွာ အောင်မြင်သွားပါသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">analyze-self-evaluating exp</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">env succeed fail</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">succeed exp fail</span><span class="clo">)))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">analyze-quoted exp</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">qval </span><span class="opn">(</span><span class="pln">text-of-quotation exp</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">env succeed fail</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">succeed qval fail</span><span class="clo">))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">analyze-variable exp</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">env succeed fail</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">succeed </span><span class="opn">(</span><span class="pln">lookup-variable-value exp env</span><span class="clo">)</span><span class="pln">
+             fail</span><span class="clo">)))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">analyze-lambda exp</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">vars </span><span class="opn">(</span><span class="pln">lambda-parameters exp</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">bproc </span><span class="opn">(</span><span class="pln">analyze-sequence 
+                </span><span class="opn">(</span><span class="pln">lambda-body exp</span><span class="clo">))))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">env succeed fail</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">succeed </span><span class="opn">(</span><span class="pln">make-procedure vars bproc env</span><span class="clo">)</span><span class="pln">
+               fail</span><span class="clo">))))</span></pre></div>
+
+<p>ကိန်းရှင်တစ်ခုကို ရှာဖွေခြင်း (looking up) သည် အမြဲတမ်း 'အောင်မြင်' (succeeds) ကြောင်း သတိပြုပါ။ အကယ်၍ <code>lookup-variable-value</code> က ကိန်းရှင်ကို ရှာမတွေ့ပါက၊ ထုံးစံအတိုင်း အမှားတစ်ခုကို အကြောင်းကြားပါလိမ့်မည်။ ထိုကဲ့သို့သော "ကျရှုံးမှု" မျိုးသည် ပရိုဂရမ်၏ ချို့ယွင်းချက် (သတ်မှတ်မထားသော ကိန်းရှင်တစ်ခုကို ညွှန်းဆိုခြင်း) ကို ညွှန်ပြခြင်း ဖြစ်သည်။ ၎င်းသည် လက်ရှိကြိုးပမ်းနေသော ရွေးချယ်မှုအစား အခြား nondeterministic ရွေးချယ်မှုတစ်ခုကို စမ်းကြည့်သင့်သည်ဟု ညွှန်ပြခြင်း မဟုတ်ပါ။
+</p>
+<a id="Conditionals-and-sequences"></a>
+<h5 class="subsubheading">Conditionals နှင့် sequences များ</h5>
+
+<p>Conditionals များကိုလည်း ရိုးရိုး evaluator မှာကဲ့သို့ပင် ဆင်တူသော နည်းလမ်းဖြင့် ကိုင်တွယ်ပါသည်။ <code>analyze-if</code> မှ ထုတ်ပေးလိုက်သော execution procedure သည် predicate တန်ဖိုး မှန်မမှန် စစ်ဆေးပြီး consequent သို့မဟုတ် alternative ကို ဆက်လက်လုပ်ဆောင်မည့် success continuation နှင့်အတူ predicate execution procedure <code>pproc</code> ကို ခေါ်ဆိုပါသည်။ အကယ်၍ <code>pproc</code> ကို လုပ်ဆောင်မှု ကျရှုံးပါက၊ <code>if</code> ဖော်ပြချက်အတွက် မူလ failure continuation ကို ခေါ်ဆိုပါသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">analyze-if exp</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">pproc </span><span class="opn">(</span><span class="pln">analyze </span><span class="opn">(</span><span class="pln">if-predicate exp</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">cproc </span><span class="opn">(</span><span class="pln">analyze </span><span class="opn">(</span><span class="pln">if-consequent exp</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">aproc </span><span class="opn">(</span><span class="pln">analyze </span><span class="opn">(</span><span class="pln">if-alternative exp</span><span class="clo">))))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">env succeed fail</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">pproc env
+             </span><span class="roman"><span class="com">;; success continuation for evaluating</span></span><span class="pln">
+             </span><span class="roman"><span class="com">;; the predicate to obtain </span><code><span class="com">pred-value</span></code></span><span class="pln">
+             </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">pred-value fail2</span><span class="clo">)</span><span class="pln">
+               </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">true? pred-value</span><span class="clo">)</span><span class="pln">
+                   </span><span class="opn">(</span><span class="pln">cproc env succeed fail2</span><span class="clo">)</span><span class="pln">
+                   </span><span class="opn">(</span><span class="pln">aproc env succeed fail2</span><span class="clo">)))</span><span class="pln">
+             </span><span class="roman"><span class="com">;; failure continuation for</span></span><span class="pln">
+             </span><span class="roman"><span class="com">;; evaluating the predicate</span></span><span class="pln">
+             fail</span><span class="clo">))))</span></pre></div>
+
+<p>Sequences များကိုလည်း continuations များ လက်ဆင့်ကမ်းရန် လိုအပ်သော subprocedure <code>sequentially</code> ရှိ လုပ်ဆောင်ချက်များမှလွဲ၍ ယခင် evaluator မှာကဲ့သို့ပင် ကိုင်တွယ်ပါသည်။ ဆိုလိုသည်မှာ <code>a</code> နှင့် <code>b</code> တို့ကို အစီအစဉ်အတိုင်း လုပ်ဆောင်ရန်အတွက်၊ ကျွန်ုပ်တို့သည် <code>b</code> ကို ခေါ်ဆိုမည့် success continuation နှင့်အတူ <code>a</code> ကို ခေါ်ဆိုပါသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">analyze-sequence exps</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sequentially a b</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">env succeed fail</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">a env
+         </span><span class="roman"><span class="com">;; success continuation for calling </span><code><span class="com">a</span></code></span><span class="pln">
+         </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">a-value fail2</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">b env succeed fail2</span><span class="clo">))</span><span class="pln">
+         </span><span class="roman"><span class="com">;; failure continuation for calling </span><code><span class="com">a</span></code></span><span class="pln">
+         fail</span><span class="clo">)))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">loop first-proc rest-procs</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">null? rest-procs</span><span class="clo">)</span><span class="pln">
+        first-proc
+        </span><span class="opn">(</span><span class="pln">loop </span><span class="opn">(</span><span class="pln">sequentially first-proc 
+                            </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> rest-procs</span><span class="clo">))</span><span class="pln">
+              </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> rest-procs</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">procs </span><span class="opn">(</span><span class="pln">map analyze exps</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">null? procs</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Empty sequence: ANALYZE"</span><span class="clo">))</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">loop </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> procs</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> procs</span><span class="clo">))))</span></pre></div>
+
+<a id="Definitions-and-assignments"></a>
+<h5 class="subsubheading">Definitions နှင့် assignments များ</h5>
+
+<p>သတ်မှတ်ချက်များ (Definitions) သည်လည်း continuations များကို စီမံခန့်ခွဲရန် အခက်အခဲအချို့ ရှိနိုင်သည့် အခြားကိစ္စတစ်ခု ဖြစ်သည်။ အဘယ်ကြောင့်ဆိုသော် variable အသစ်တစ်ခုကို အမှန်တကယ် မသတ်မှတ်မီ definition-value expression ကို အရင်ဆုံး evaluate လုပ်ရန် လိုအပ်သောကြောင့် ဖြစ်သည်။ ဤအချက်ကို ဆောင်ရွက်ရန်အတွက် definition-value execution procedure <code>vproc</code> ကို environment၊ success continuation နှင့် failure continuation တို့ဖြင့် ခေါ်ယူသည်။ အကယ်၍ <code>vproc</code> ကို execute လုပ်ခြင်း အောင်မြင်ပြီး သတ်မှတ်ထားသော variable အတွက် value <code>val</code> တစ်ခု ရရှိခဲ့လျှင် variable ကို သတ်မှတ်ပြီး success ကို ဆက်လက် ပေးပို့သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">analyze-definition exp</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">var </span><span class="opn">(</span><span class="pln">definition-variable exp</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">vproc </span><span class="opn">(</span><span class="pln">analyze 
+                </span><span class="opn">(</span><span class="pln">definition-value exp</span><span class="clo">))))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">env succeed fail</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">vproc env
+             </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">val fail2</span><span class="clo">)</span><span class="pln">
+               </span><span class="opn">(</span><span class="pln">define-variable! var val env</span><span class="clo">)</span><span class="pln">
+               </span><span class="opn">(</span><span class="pln">succeed </span><span class="lit">'ok</span><span class="pln"> fail2</span><span class="clo">))</span><span class="pln">
+             fail</span><span class="clo">))))</span></pre></div>
+
+<p>Assignments များမှာ ပို၍ စိတ်ဝင်စားစရာ ကောင်းသည်။ ဤနေရာသည် continuations များကို လက်ဆင့်ကမ်းရုံတင် မဟုတ်ဘဲ အမှန်တကယ် စတင် အသုံးပြုသည့် ပထမဆုံး နေရာဖြစ်သည်။ Assignments အတွက် execution procedure သည် definitions အတွက် procedure နှင့် ဆင်တူစွာ စတင်သည်။ ၎င်းသည် variable တွင် assign လုပ်မည့် value အသစ်ကို ရယူရန် ဦးစွာ ကြိုးပမ်းသည်။ အကယ်၍ <code>vproc</code> ကို evaluate လုပ်ခြင်း ကျရှုံးခဲ့လျှင် assignment သည်လည်း ကျရှုံးမည် ဖြစ်သည်။
+</p>
+<p>သို့သော် <code>vproc</code> အောင်မြင်ပြီး assignment ကို ဆက်လက် လုပ်ဆောင်သည့်အခါ၊ ဤ computation ၏ အစိတ်အပိုင်းသည် နောက်ပိုင်းတွင် ကျရှုံးသွားနိုင်သည့် ဖြစ်နိုင်ခြေကို ထည့်သွင်းစဉ်းစားရမည်။ ထိုသို့ ကျရှုံးပါက assignment မလုပ်မီ အခြေအနေသို့ ပြန်လှည့်ရန် (backtrack လုပ်ရန်) လိုအပ်မည် ဖြစ်သည်။ ထို့ကြောင့် backtracking process ၏ အစိတ်အပိုင်းအဖြစ် assignment ကို ပြန်လည် ပယ်ဖျက်ရန် (undo လုပ်ရန်) စီစဉ်ရမည် ဖြစ်သည်။<a class="footnote_link" id="DOCF261" href="#FOOT261"><sup>261</sup></a>
+</p>
+<p>ဤအချက်ကို ဆောင်ရွက်ရန်အတွက် <code>vproc</code> ကို success continuation (အောက်တွင် “*1*” ဟု မှတ်ချက်ပေးထားသည်) တစ်ခု ပေးရသည်။ ၎င်းသည် value အသစ်ကို variable ထဲသို့ assign မလုပ်မီ variable ၏ value အဟောင်းကို သိမ်းဆည်းထားပြီးမှ assignment ကို ဆက်လက် လုပ်ဆောင်သည်။ Assignment value နှင့်အတူ ပေးပို့လိုက်သော failure continuation (အောက်တွင် “*2*” ဟု မှတ်ချက်ပေးထားသည်) သည် failure ကို ဆက်လက် မလုပ်ဆောင်မီ variable ၏ value အဟောင်းကို ပြန်လည် သတ်မှတ်ပေးသည်။ ဆိုလိုသည်မှာ အောင်မြင်သော assignment တစ်ခုသည် နောက်ဆက်တွဲ ကျရှုံးမှုတစ်ခုကို ကြားဖြတ် ဟန့်တားမည့် failure continuation တစ်ခုကို ထောက်ပံ့ပေးသည်။ အခြားနည်းဖြင့် <code>fail2</code> ကို ခေါ်မည့် မည်သည့် ကျရှုံးမှုမျိုးမဆို <code>fail2</code> ကို အမှန်တကယ် မခေါ်မီ assignment ကို undo လုပ်ရန်အတွက် ဤ procedure ကို အစားထိုး ခေါ်ယူမည် ဖြစ်သည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">analyze-assignment exp</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">var </span><span class="opn">(</span><span class="pln">assignment-variable exp</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">vproc </span><span class="opn">(</span><span class="pln">analyze 
+                </span><span class="opn">(</span><span class="pln">assignment-value exp</span><span class="clo">))))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">env succeed fail</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">vproc env
+             </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">val fail2</span><span class="clo">)</span><span class="pln">    </span><span class="roman"><span class="com">; *1*</span></span><span class="pln">
+               </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">old-value
+                      </span><span class="opn">(</span><span class="pln">lookup-variable-value 
+                       var 
+                       env</span><span class="clo">)))</span><span class="pln">
+                 </span><span class="opn">(</span><span class="pln">set-variable-value!
+                  var 
+                  val 
+                  env</span><span class="clo">)</span><span class="pln">
+                 </span><span class="opn">(</span><span class="pln">succeed 
+                  </span><span class="lit">'ok</span><span class="pln">
+                  </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln">    </span><span class="roman"><span class="com">; *2*</span></span><span class="pln">
+                    </span><span class="opn">(</span><span class="pln">set-variable-value! 
+                     var
+                     old-value
+                     env</span><span class="clo">)</span><span class="pln">
+                    </span><span class="opn">(</span><span class="pln">fail2</span><span class="clo">)))))</span><span class="pln">
+               fail</span><span class="clo">))))</span></pre></div>
+
+<a id="Procedure-applications"></a>
+<h5 class="subsubheading">Procedure application များ</h5>
+
+<p>Applications များအတွက် execution procedure တွင် continuations များကို စီမံခန့်ခွဲရာ၌ တွေ့ရသော နည်းပညာဆိုင်ရာ ရှုပ်ထွေးမှုများမှလွဲ၍ အတွေးအခေါ်သစ်များ မပါဝင်ပါ။ ဤရှုပ်ထွေးမှုသည် operands များကို evaluate လုပ်နေစဉ် success နှင့် failure continuations များကို ခြေရာခံရန် လိုအပ်သောကြောင့် <code>analyze-application</code> တွင် ဖြစ်ပေါ်လာခြင်း ဖြစ်သည်။ ကျွန်ုပ်တို့သည် သာမန် evaluator တွင်ကဲ့သို့ ရိုးရှင်းသော <code>map</code> ကို အသုံးမပြုဘဲ operands စာရင်းကို evaluate လုပ်ရန် <code>get-args</code> procedure ကို အသုံးပြုသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">analyze-application exp</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">fproc </span><span class="opn">(</span><span class="pln">analyze </span><span class="opn">(</span><span class="pln">operator exp</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">aprocs </span><span class="opn">(</span><span class="pln">map analyze </span><span class="opn">(</span><span class="pln">operands exp</span><span class="clo">))))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">env succeed fail</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">fproc env
+             </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">proc fail2</span><span class="clo">)</span><span class="pln">
+               </span><span class="opn">(</span><span class="pln">get-args 
+                aprocs
+                env
+                </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">args fail3</span><span class="clo">)</span><span class="pln">
+                  </span><span class="opn">(</span><span class="pln">execute-application
+                   proc args succeed fail3</span><span class="clo">))</span><span class="pln">
+                fail2</span><span class="clo">))</span><span class="pln">
+             fail</span><span class="clo">))))</span></pre></div>
+
+<p><code>get-args</code> တွင် <code>aproc</code> execution procedures စာရင်းကို <code>cdr</code>-ing လုပ်ခြင်းနှင့် ရလဒ် <code>args</code> စာရင်းကို <code>cons</code>ing လုပ်ခြင်းတို့ကို၊ စာရင်းထဲရှိ <code>aproc</code> တစ်ခုစီကို <code>get-args</code> ကို recursive ခေါ်ယူမည့် success continuation ဖြင့် ခေါ်ခြင်းအားဖြင့် မည်သို့ လုပ်ဆောင်သည်ကို သတိပြုပါ။ ဤ <code>get-args</code> သို့ recursive ခေါ်ယူမှု တစ်ခုစီတွင် success continuation တစ်ခုရှိပြီး ၎င်း၏ value မှာ အသစ်ရရှိလာသော argument ကို စုဆောင်းထားသော argument များစာရင်းသို့ <code>cons</code> လုပ်ထားသော value ဖြစ်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">get-args aprocs env succeed fail</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">null? aprocs</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">succeed </span><span class="lit">'</span><span class="opn">(</span><span class="clo">)</span><span class="pln"> fail</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">((</span><span class="kwd">car</span><span class="pln"> aprocs</span><span class="clo">)</span><span class="pln"> 
+       env
+       </span><span class="com">;; </span><span class="roman"><span class="com">success continuation for this </span><code><span class="com">aproc</span></code></span><span class="pln">
+       </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">arg fail2</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">get-args 
+          </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> aprocs</span><span class="clo">)</span><span class="pln">
+          env
+          </span><span class="com">;; </span><span class="roman"><span class="com">success continuation for</span></span><span class="pln">
+          </span><span class="com">;; </span><span class="roman"><span class="com">recursive call to </span><code><span class="com">get-args</span></code></span><span class="pln">
+          </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">args fail3</span><span class="clo">)</span><span class="pln">
+            </span><span class="opn">(</span><span class="pln">succeed </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> arg args</span><span class="clo">)</span><span class="pln">
+                     fail3</span><span class="clo">))</span><span class="pln">
+          fail2</span><span class="clo">))</span><span class="pln">
+       fail</span><span class="clo">)))</span></pre></div>
+
+<p><code>execute-application</code> မှ လုပ်ဆောင်သော အမှန်တကယ် procedure application သည် continuations များကို စီမံခန့်ခွဲရန် လိုအပ်သည်မှလွဲ၍ သာမန် evaluator တွင်ကဲ့သို့ပင် ဆောင်ရွက်သည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">execute-application 
+         proc args succeed fail</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pln">primitive-procedure? proc</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">succeed 
+          </span><span class="opn">(</span><span class="pln">apply-primitive-procedure 
+           proc args</span><span class="clo">)</span><span class="pln">
+          fail</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">((</span><span class="pln">compound-procedure? proc</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">((</span><span class="pln">procedure-body proc</span><span class="clo">)</span><span class="pln">
+          </span><span class="opn">(</span><span class="pln">extend-environment 
+           </span><span class="opn">(</span><span class="pln">procedure-parameters proc</span><span class="clo">)</span><span class="pln">
+           args
+           </span><span class="opn">(</span><span class="pln">procedure-environment proc</span><span class="clo">))</span><span class="pln">
+          succeed
+          fail</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Unknown procedure type: 
+                      EXECUTE-APPLICATION"</span><span class="pln">
+                     proc</span><span class="clo">))))</span></pre></div>
+
+<a id="Evaluating-amb-expressions"></a>
+<h5 class="subsubheading"><code>amb</code> expressions များကို evaluate လုပ်ခြင်း</h5>
+
+<p><code>amb</code> special form သည် nondeterministic language တွင် အဓိကကျသော အစိတ်အပိုင်းဖြစ်သည်။ ဤနေရာတွင် ကျွန်ုပ်တို့သည် interpretation process ၏ အနှစ်သာရနှင့် continuations များကို ခြေရာခံရခြင်း၏ အကြောင်းရင်းကို တွေ့မြင်နိုင်သည်။ <code>amb</code> အတွက် execution procedure သည် <code>amb</code> expression ၏ ဖြစ်နိုင်ခြေရှိသော value အားလုံးအတွက် execution procedures များကို တစ်ခုပြီးတစ်ခု ပတ်ကြည့်မည့် loop <code>try-next</code> တစ်ခုကို သတ်မှတ်ပေးသည်။ Execution procedure တစ်ခုစီကို နောက်တစ်ခုသို့ ထပ်မံကြိုးစားမည့် failure continuation တစ်ခုဖြင့် ခေါ်ယူသည်။ ထပ်မံကြိုးစားရန် ရွေးချယ်စရာများ မရှိတော့သည့်အခါ <code>amb</code> expression တစ်ခုလုံး ကျရှုံးသွားမည်ဖြစ်သည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">analyze-amb exp</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">cprocs
+         </span><span class="opn">(</span><span class="pln">map analyze </span><span class="opn">(</span><span class="pln">amb-choices exp</span><span class="clo">))))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">env succeed fail</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">try-next choices</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">null? choices</span><span class="clo">)</span><span class="pln">
+            </span><span class="opn">(</span><span class="pln">fail</span><span class="clo">)</span><span class="pln">
+            </span><span class="opn">((</span><span class="kwd">car</span><span class="pln"> choices</span><span class="clo">)</span><span class="pln"> 
+             env
+             succeed
+             </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln">
+               </span><span class="opn">(</span><span class="pln">try-next </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> choices</span><span class="clo">))))))</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">try-next cprocs</span><span class="clo">))))</pre></div>
+
+<a id="Driver-loop-1"></a>
+<h5 class="subsubheading">Driver loop</h5>
+
+<p><code>amb</code> evaluator အတွက် driver loop သည် expression တစ်ခုကို evaluate လုပ်ရာတွင် အသုံးပြုသူမှ နောက်တစ်ကြိမ် ထပ်မံကြိုးစားနိုင်စေရန် ခွင့်ပြုထားသော လုပ်ဆောင်ချက်ကြောင့် ရှုပ်ထွေးပါသည်။ driver သည် <code>internal-loop</code> ဟုခေါ်သော procedure တစ်ခုကို အသုံးပြုပြီး ၎င်းသည် <code>try-again</code> ဟုခေါ်သော procedure တစ်ခုကို argument အဖြစ် လက်ခံပါသည်။ ရည်ရွယ်ချက်မှာ <code>try-again</code> ကို ခေါ်ယူလိုက်ခြင်းဖြင့် nondeterministic evaluation ရှိ နောက်ထပ် မစမ်းသပ်ရသေးသော alternative တစ်ခုသို့ ဆက်လက်လုပ်ဆောင်ရန် ဖြစ်ပါသည်။ <code>Internal-loop</code> သည် အသုံးပြုသူမှ driver loop တွင် <code>try-again</code> ဟု ရိုက်နှိပ်လိုက်ပါက <code>try-again</code> ကို ခေါ်ယူမည်ဖြစ်ပြီး၊ သို့မဟုတ်ပါက <code>ambeval</code> ကို ခေါ်ယူခြင်းဖြင့် evaluation အသစ်တစ်ခုကို စတင်မည် ဖြစ်သည်။
+</p>
+<p>ဤ <code>ambeval</code> ခေါ်ယူမှုအတွက် failure continuation သည် နောက်ထပ် value များ မရှိတော့ကြောင်း အသုံးပြုသူကို အသိပေးပြီး driver loop ကို ပြန်လည်စတင်စေသည်။
+</p>
+<p><code>ambeval</code> ခေါ်ယူမှုအတွက် success continuation သည် ပိုမိုနက်နဲပါသည်။ ကျွန်ုပ်တို့သည် ရရှိလာသော value ကို print ထုတ်ပြီးနောက် နောက်ထပ် alternative တစ်ခုကို ထပ်မံစမ်းသပ်နိုင်မည့် <code>try-again</code> procedure ဖြင့် internal loop ကို ပြန်လည်ခေါ်ယူပါသည်။ ဤ <code>next-alternative</code> procedure သည် success continuation ထံသို့ ပေးပို့လိုက်သော ဒုတိယမြောက် argument ဖြစ်သည်။ ပုံမှန်အားဖြင့်၊ ဤဒုတိယမြောက် argument ကို လက်ရှိ evaluation branch သည် နောက်ပိုင်းတွင် အဆင်မပြေဖြစ်ခဲ့ပါက အသုံးပြုရန် failure continuation တစ်ခုအဖြစ် ကျွန်ုပ်တို့ ယူဆကြသည်။ သို့သော် ဤကိစ္စတွင်မူ၊ ကျွန်ုပ်တို့သည် အောင်မြင်သော evaluation တစ်ခုကို ပြီးမြောက်ခဲ့ပြီးဖြစ်သောကြောင့် အခြားသော အောင်မြင်နိုင်မည့် evaluation များကို ရှာဖွေနိုင်ရန်အတွက် “failure” alternative branch ကို ခေါ်ယူနိုင်ခြင်း ဖြစ်ပါသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> input-prompt  </span><span class="str">";;; Amb-Eval input:"</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> output-prompt </span><span class="str">";;; Amb-Eval value:"</span><span class="clo">)</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">driver-loop</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">internal-loop try-again</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">prompt-for-input input-prompt</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">input </span><span class="opn">(</span><span class="pln">read</span><span class="clo">)))</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> input </span><span class="lit">'try-again</span><span class="clo">)</span><span class="pln">
+          </span><span class="opn">(</span><span class="pln">try-again</span><span class="clo">)</span><span class="pln">
+          </span><span class="opn">(</span><span class="kwd">begin</span><span class="pln">
+            </span><span class="opn">(</span><span class="pln">newline</span><span class="clo">)</span><span class="pln">
+            </span><span class="opn">(</span><span class="pln">display 
+             </span><span class="str">";;; Starting a new problem "</span><span class="clo">)</span><span class="pln">
+            </span><span class="opn">(</span><span class="pln">ambeval 
+             input
+             the-global-environment
+             </span><span class="roman"><span class="com">;; </span><code><span class="com">ambeval</span></code><span class="com"> success</span></span><span class="pln">
+             </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">val next-alternative</span><span class="clo">)</span><span class="pln">
+               </span><span class="opn">(</span><span class="pln">announce-output 
+                output-prompt</span><span class="clo">)</span><span class="pln">
+               </span><span class="opn">(</span><span class="pln">user-print val</span><span class="clo">)</span><span class="pln">
+               </span><span class="opn">(</span><span class="pln">internal-loop 
+                next-alternative</span><span class="clo">))</span><span class="pln">
+             </span><span class="roman"><span class="com">;; </span><code><span class="com">ambeval</span></code><span class="com"> failure</span></span><span class="pln">
+             </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln">
+               </span><span class="opn">(</span><span class="pln">announce-output
+                </span><span class="str">";;; There are no 
+                 more values of"</span><span class="clo">)</span><span class="pln">
+               </span><span class="opn">(</span><span class="pln">user-print input</span><span class="clo">)</span><span class="pln">
+               </span><span class="opn">(</span><span class="pln">driver-loop</span><span class="clo">)))))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">internal-loop
+   </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln">
+     </span><span class="opn">(</span><span class="pln">newline</span><span class="clo">)</span><span class="pln">
+     </span><span class="opn">(</span><span class="pln">display 
+      </span><span class="str">";;; There is no current problem"</span><span class="clo">)</span><span class="pln">
+     </span><span class="opn">(</span><span class="pln">driver-loop</span><span class="clo">))))</span></pre></div>
+
+<p><code>internal-loop</code> ကို စတင်ခေါ်ယူစဉ်တွင် လက်ရှိလုပ်ဆောင်နေသော problem မရှိကြောင်း ပြောဆိုပြီး driver loop ကို ပြန်စတင်စေမည့် <code>try-again</code> procedure ကို အသုံးပြုသည်။ ၎င်းသည် လုပ်ဆောင်နေသော evaluation တစ်ခုမျှ မရှိသည့်အချိန်တွင် အသုံးပြုသူမှ <code>try-again</code> ဟု ရိုက်နှိပ်လိုက်ပါက ဖြစ်ပေါ်လာမည့် အပြုအမူ ဖြစ်ပါသည်။
+</p>
+<blockquote>
+<p><strong><a id="Exercise-4_002e50"></a>လေ့ကျင့်ခန်း ၄.၅၀:</strong> alternative များကို ဘယ်မှညာသို့ အစဉ်လိုက်ရှာဖွေမည့်အစား random အစီအစဉ်ဖြင့် ရှာဖွေသည့် <code>amb</code> နှင့် ဆင်တူသော <code>ramb</code> ဟုခေါ်သော special form အသစ်တစ်ခုကို implement လုပ်ပါ။ ၎င်းသည် <a href="#Exercise-4_002e49">လေ့ကျင့်ခန်း ၄.၄၉</a> ရှိ Alyssa ၏ ပြဿနာကို မည်သို့ ကူညီပေးနိုင်သည်ကို ပြသပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-4_002e51"></a>လေ့ကျင့်ခန်း ၄.၅၁:</strong> failure ဖြစ်သွားသော်လည်း မူလအတိုင်း ပြန်မပြောင်းလဲစေသော <code>permanent-set!</code> ဟုခေါ်သော assignment အမျိုးအစားအသစ်တစ်ခုကို implement လုပ်ပါ။ ဥပမာအားဖြင့်၊ အောက်ပါအတိုင်း list တစ်ခုမှ မတူညီသော element နှစ်ခုကို ရွေးချယ်နိုင်ပြီး အောင်မြင်သော ရွေးချယ်မှုတစ်ခု ဖြစ်စေရန်အတွက် ကြိုးစားခဲ့ရသော အကြိမ်အရေအတွက်ကို ရေတွက်နိုင်ပါသည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> count </span><span class="lit">0</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">x </span><span class="opn">(</span><span class="pln">an-element-of </span><span class="lit">'</span><span class="opn">(</span><span class="pln">a b c</span><span class="clo">)))</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">y </span><span class="opn">(</span><span class="pln">an-element-of </span><span class="lit">'</span><span class="opn">(</span><span class="pln">a b c</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">permanent-set! count </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> count </span><span class="lit">1</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">require </span><span class="opn">(</span><span class="pln">not </span><span class="opn">(</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> x y</span><span class="clo">)))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">list x y count</span><span class="clo">))</span><span class="pln">
+
+</span><i><span class="com">;;; Starting a new problem</span></i><span class="pln">
+</span><i><span class="com">;;; Amb-Eval value:</span></i><span class="pln">
+</span><i><span class="opn">(</span><span class="pln">a b </span><span class="lit">2</span><span class="clo">)</span></i><span class="pln">
+
+</span><i><span class="com">;;; Amb-Eval input:</span></i><span class="pln">
+try-again
+
+</span><i><span class="com">;;; Amb-Eval value:</span></i><span class="pln">
+</span><i><span class="opn">(</span><span class="pln">a c </span><span class="lit">3</span><span class="clo">)</span></i>
+</pre></div>
+
+<p>အကယ်၍ ဤနေရာတွင် <code>permanent-set!</code> အစား <code>set!</code> ကို အသုံးပြုခဲ့ပါက မည်သည့် value များ ထွက်ပေါ်လာမည်နည်း။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-4_002e52"></a>လေ့ကျင့်ခန်း ၄.၅၂:</strong> expression တစ်ခု၏ failure ကို အသုံးပြုသူမှ ဖမ်းယူနိုင်စေမည့် <code>if-fail</code> ဟုခေါ်သော construct အသစ်တစ်ခုကို implement လုပ်ပါ။ <code>if-fail</code> သည် expression နှစ်ခုကို လက်ခံပါသည်။ ၎င်းသည် ပထမ expression ကို ပုံမှန်အတိုင်း evaluate လုပ်ပြီး evaluation အောင်မြင်ပါက ပုံမှန်အတိုင်း value ကို return ပြန်ပေးသည်။ သို့သော် evaluation fail ဖြစ်သွားပါက အောက်ပါ ဥပမာတွင် ပြထားသည့်အတိုင်း ဒုတိယ expression ၏ value ကို return ပြန်ပေးမည် ဖြစ်သည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><i><span class="com">;;; Amb-Eval input:</span></i><span class="pln">
+</span><span class="opn">(</span><span class="pln">if-fail 
+ </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">x </span><span class="opn">(</span><span class="pln">an-element-of </span><span class="lit">'</span><span class="opn">(</span><span class="lit">1</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="lit">5</span><span class="clo">))))</span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">require </span><span class="opn">(</span><span class="pln">even? x</span><span class="clo">))</span><span class="pln">
+   x</span><span class="clo">)</span><span class="pln">
+ </span><span class="lit">'all-odd</span><span class="clo">)</span><span class="pln">
+
+</span><i><span class="com">;;; Starting a new problem</span></i><span class="pln">
+</span><i><span class="com">;;; Amb-Eval value:</span></i><span class="pln">
+</span><i><span class="pln">all-odd</span></i><span class="pln">
+
+</span><i><span class="com">;;; Amb-Eval input:</span></i><span class="pln">
+</span><span class="opn">(</span><span class="pln">if-fail
+ </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">x </span><span class="opn">(</span><span class="pln">an-element-of </span><span class="lit">'</span><span class="opn">(</span><span class="lit">1</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="lit">5</span><span class="pln"> </span><span class="lit">8</span><span class="clo">))))</span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">require </span><span class="opn">(</span><span class="pln">even? x</span><span class="clo">))</span><span class="pln">
+   x</span><span class="clo">)</span><span class="pln">
+ </span><span class="lit">'all-odd</span><span class="clo">)</span><span class="pln">
+
+</span><i><span class="com">;;; Starting a new problem</span></i><span class="pln">
+</span><i><span class="com">;;; Amb-Eval value:</span></i><span class="pln">
+</span><i><span class="lit">8</span></i>
+</pre></div>
+</blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-4_002e53"></a>လေ့ကျင့်ခန်း ၄.၅၃:</strong> <a href="#Exercise-4_002e51">လေ့ကျင့်ခန်း ၄.၅၁</a> တွင် ဖော်ပြထားသော <code>permanent-set!</code> နှင့် <a href="#Exercise-4_002e52">လေ့ကျင့်ခန်း ၄.၅၂</a> တွင် ဖော်ပြထားသော <code>if-fail</code> တို့ကို အသုံးပြု၍ အောက်ပါတို့ကို evaluate လုပ်ပါက မည်သည့်ရလဒ် ထွက်ပေါ်လာမည်နည်း။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">pairs </span><span class="lit">'</span><span class="opn">(</span><span class="clo">)))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">if-fail 
+   </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">p </span><span class="opn">(</span><span class="pln">prime-sum-pair 
+             </span><span class="lit">'</span><span class="opn">(</span><span class="lit">1</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="lit">5</span><span class="pln"> </span><span class="lit">8</span><span class="clo">)</span><span class="pln"> 
+             </span><span class="lit">'</span><span class="opn">(</span><span class="lit">20</span><span class="pln"> </span><span class="lit">35</span><span class="pln"> </span><span class="lit">110</span><span class="clo">))))</span><span class="pln">
+     </span><span class="opn">(</span><span class="pln">permanent-set! pairs 
+                     </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> p pairs</span><span class="clo">))</span><span class="pln">
+     </span><span class="opn">(</span><span class="pln">amb</span><span class="clo">))</span><span class="pln">
+   pairs</span><span class="clo">))</span></pre></div>
+</blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-4_002e54"></a>လေ့ကျင့်ခန်း ၄.၅၄:</strong> အကယ်၍ <code>require</code> ကို nondeterministic program ၏ အစိတ်အပိုင်းတစ်ခုအဖြစ် အသုံးပြုသူမှ <code>amb</code> ကို အသုံးပြုကာ ရိုးရိုး procedure တစ်ခုအနေနှင့် implement လုပ်နိုင်သည်ကို သတိမမူမိခဲ့ပါက၊ ၎င်းကို special form တစ်ခုအနေနှင့် implement လုပ်ရမည် ဖြစ်သည်။ ထိုသို့ပြုလုပ်ရန် syntax procedure များ ဖြစ်သည့်
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">require? exp</span><span class="clo">)</span><span class="pln"> 
+  </span><span class="opn">(</span><span class="pln">tagged-list? exp </span><span class="lit">'require</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">require-predicate exp</span><span class="clo">)</span><span class="pln"> 
+  </span><span class="opn">(</span><span class="kwd">cadr</span><span class="pln"> exp</span><span class="clo">))</span></pre></div>
+
+<p>နှင့် <code>analyze</code> ရှိ dispatch ထဲတွင် clause အသစ်တစ်ခု ဖြစ်သော
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">((</span><span class="pln">require? exp</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">analyze-require exp</span><span class="clo">))</span></pre></div>
+
+<p>အပြင် <code>require</code> expression များကို ကိုင်တွယ်ပေးမည့် <code>analyze-require</code> procedure လည်း လိုအပ်မည်ဖြစ်သည်။ အောက်ပါ <code>analyze-require</code> ၏ definition ကို ဖြည့်စွက်ပါ။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">analyze-require exp</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">pproc </span><span class="opn">(</span><span class="pln">analyze 
+                </span><span class="opn">(</span><span class="pln">require-predicate exp</span><span class="clo">))))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">env succeed fail</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">pproc env
+             </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">pred-value fail2</span><span class="clo">)</span><span class="pln">
+               </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> ⟨</span><span class="pun">??</span><span class="pln">⟩
+                   ⟨</span><span class="pun">??</span><span class="pln">⟩
+                   </span><span class="opn">(</span><span class="pln">succeed </span><span class="lit">'ok</span><span class="pln"> fail2</span><span class="clo">)))</span><span class="pln">
+             fail</span><span class="clo">))))</span></pre></div>
+</blockquote>
+
+<div class="footnote">
+<h4 class="footnotes-heading">အောက်ခြေမှတ်စုများ</h4>
+
+<div id="FOOT246"><p><a class="footnote_backlink" href="#DOCF246"><sup>246</sup></a>
+ကိန်းဂဏန်းတွေဟာ prime ဖြစ်၊ မဖြစ် စစ်ဆေးပေးတဲ့ <code>prime?</code> ဆိုတဲ့ procedure တစ်ခုကို ကျွန်ုပ်တို့ အရင်က အဓိပ္ပာယ်ဖွင့်ဆိုခဲ့ပြီးပြီလို့ ယူဆပါမယ်။ <code>prime?</code> ကို အဓိပ္ပာယ်ဖွင့်ဆိုထားသည့်တိုင် <code>prime-sum-pair</code> procedure ဟာ အပိုင်း <a href="1_002e1.xhtml#g_t1_002e1_002e7">1.1.7</a> ရဲ့ အစမှာ ကျွန်ုပ်တို့ ဖော်ပြခဲ့တဲ့ square-root function ကို အဓိပ္ပာယ်ဖွင့်ဆိုဖို့ ကြိုးစားခဲ့တဲ့ အသုံးမဝင်တဲ့ “pseudo-Lisp” နဲ့ ဆင်တူနေနိုင်ပါတယ်။ တကယ်တော့ အဲဒီလိုမျိုး square-root procedure တစ်ခုကို nondeterministic program တစ်ခုအနေနဲ့ အမှန်တကယ် ဖော်ပြနိုင်ပါတယ်။ Evaluator ထဲကို ရှာဖွေမှုယန္တရား (search mechanism) တစ်ခု ထည့်သွင်းခြင်းအားဖြင့်၊ သက်သက်သာသာ declarative ဖြစ်တဲ့ ဖော်ပြချက်တွေနဲ့ အဖြေတွေကို ဘယ်လိုတွက်ချက်ရမလဲဆိုတဲ့ imperative သတ်မှတ်ချက်တွေကြားက ခြားနားချက်ကို ကျွန်ုပ်တို့ လျှော့ချနေတာ ဖြစ်ပါတယ်။ အပိုင်း <a href="4_002e4.xhtml#g_t4_002e4">4.4</a> မှာ ဒီလမ်းကြောင်းအတိုင်း ပိုပြီးတော့တောင် လုပ်ဆောင်သွားမှာ ဖြစ်ပါတယ်။</p>
+</div>
+<div id="FOOT247"><p><a class="footnote_backlink" href="#DOCF247"><sup>247</sup></a>
+Nondeterministic programming အတွက် <code>amb</code> ဆိုတဲ့ စိတ်ကူးကို ၁၉၆၁ ခုနှစ်မှာ John McCarthy က ပထမဦးဆုံး ဖော်ပြခဲ့တာ ဖြစ်ပါတယ် (<a href="References.xhtml#McCarthy-1963">McCarthy 1963</a> ကိုကြည့်ပါ။)။</p>
+</div>
+<div id="FOOT248"><p><a class="footnote_backlink" href="#DOCF248"><sup>248</sup></a>
+အမှန်စင်စစ်၊ nondeterministic နည်းလမ်းနဲ့ ရွေးချယ်မှုတစ်ခုတည်းကို ပြန်ပေးတာနဲ့ ရွေးချယ်မှုအားလုံးကို ပြန်ပေးတာကြားက ခြားနားချက်ဟာ ကျွန်ုပ်တို့ရဲ့ ရှုထောင့်ပေါ်မှာ အနည်းငယ် မူတည်ပါတယ်။ တန်ဖိုးကို အသုံးပြုတဲ့ ကုဒ် (code) ရဲ့ ရှုထောင့်ကနေကြည့်ရင် nondeterministic choice ဟာ တန်ဖိုးတစ်ခုတည်းကိုပဲ ပြန်ပေးပါတယ်။ ကုဒ်ကို ရေးသားတဲ့ ပရိုဂရမ်မာ (programmer) ရဲ့ ရှုထောင့်ကနေကြည့်ရင်တော့ nondeterministic choice ဟာ ဖြစ်နိုင်ခြေရှိတဲ့ တန်ဖိုးအားလုံးကို ပြန်ပေးနိုင်ပြီး၊ တန်ဖိုးတစ်ခုချင်းစီကို သီးခြားစီ စစ်ဆေးနိုင်ဖို့အတွက် တွက်ချက်မှုဟာ အကိုင်းအခက်တွေ (branches) အဖြစ် ကွဲထွက်သွားပါတယ်။</p>
+</div>
+<div id="FOOT249"><p><a class="footnote_backlink" href="#DOCF249"><sup>249</sup></a>
+ဒါဟာ အလွန်အမင်း ထိရောက်မှုမရှိတဲ့ ယန္တရားတစ်ခု ဖြစ်တယ်လို့ တစ်စုံတစ်ယောက်က ကန့်ကွက်နိုင်ပါတယ်။ လွယ်ကူတဲ့ ပြဿနာအချို့ကို ဒီနည်းလမ်းနဲ့ ဖြေရှင်းဖို့အတွက် processor ပေါင်း သန်းနဲ့ချီ လိုအပ်နိုင်ပြီး၊ အဲဒီ processor အများစုဟာ အချိန်အတော်များများမှာ အလုပ်မလုပ်ဘဲ အားနေနိုင်ပါတယ်။ ဒီကန့်ကွက်မှုကို သမိုင်းနောက်ခံနဲ့ ယှဉ်ပြီး စဉ်းစားသင့်ပါတယ်။ Memory ဆိုတာ တစ်ချိန်က အခုလိုပဲ အလွန်စျေးကြီးတဲ့ အရာတစ်ခု ဖြစ်ခဲ့ပါတယ်။ ၁၉၆၄ ခုနှစ်မှာ <abbr>RAM</abbr> တစ် megabyte ရဲ့ စျေးနှုန်းဟာ ဒေါ်လာ ၄၀၀,၀၀၀ ခန့် ရှိခဲ့ပါတယ်။ အခုအချိန်မှာတော့ ကိုယ်ပိုင်ကွန်ပျူတာတိုင်းမှာ <abbr>RAM</abbr> megabyte ပေါင်းများစွာ ပါဝင်နေပြီး အဲဒီ <abbr>RAM</abbr> အများစုဟာ အချိန်အတော်များများမှာ အသုံးမပြုဘဲ ရှိနေတတ်ပါတယ်။ အမြောက်အမြား ထုတ်လုပ်တဲ့ အီလက်ထရွန်နစ်ပစ္စည်းတွေရဲ့ ကုန်ကျစရိတ် သက်သာလာမှုကို လျှော့တွက်ဖို့ ခက်ခဲပါတယ်။</p>
+</div>
+<div id="FOOT250"><p><a class="footnote_backlink" href="#DOCF250"><sup>250</sup></a>
+<a id="Footnote-250"></a>Automagically: “အလိုအလျောက် (Automatically) ဖြစ်သော်လည်း၊ အကြောင်းပြချက် တစ်စုံတစ်ရာကြောင့် (ပုံမှန်အားဖြင့် အလွန်ရှုပ်ထွေးလွန်းခြင်း၊ သို့မဟုတ် အလွန်ရုပ်ဆိုးလွန်းခြင်း၊ သို့မဟုတ် အလွန်ပင် သေးဖွဲလွန်းခြင်းကြောင့်) ပြောဆိုသူက ရှင်းမပြချင်တဲ့ အနေအထားမျိုးကို ဆိုလိုပါတယ်။” (<a href="References.xhtml#Steele-et-al_002e-1983">Steele et al. 1983</a>, <a href="References.xhtml#Raymond-1993">Raymond 1993</a>)</p>
+</div>
+<div id="FOOT251"><p><a class="footnote_backlink" href="#DOCF251"><sup>251</sup></a>
+Programming language တွေထဲမှာ automatic search strategies တွေ ပေါင်းစပ်ထည့်သွင်းခြင်းဟာ ရှည်လျားပြီး အမျိုးမျိုးသော သမိုင်းကြောင်း ရှိခဲ့ပါတယ်။ Search နဲ့ automatic backtracking ပါဝင်တဲ့ programming language တစ်ခုမှာ nondeterministic algorithms တွေကို လှပပြေပြစ်စွာ ရေးသားနိုင်တယ်ဆိုတဲ့ ပထမဦးဆုံး အကြံပြုချက်တွေဟာ Robert <a href="References.xhtml#Floyd-_00281967_0029">Floyd (1967)</a> ဆီကနေ လာခဲ့တာ ဖြစ်ပါတယ်။ Carl <a href="References.xhtml#Hewitt-_00281969_0029">Hewitt (1969)</a> က automatic chronological backtracking ကို တိုက်ရိုက်ပံ့ပိုးပေးထားတဲ့ Planner ဆိုတဲ့ programming language ကို တီထွင်ခဲ့ပြီး၊ ၎င်းမှာ built-in depth-first search strategy တစ်ခု ပါဝင်ပါတယ်။ <a href="References.xhtml#Sussman-et-al_002e-_00281971_0029">Sussman et al. (1971)</a> က ဒီဘာသာစကားရဲ့ အစိတ်အပိုင်းတစ်ခုဖြစ်တဲ့ MicroPlanner ကို အကောင်အထည်ဖော်ခဲ့ပြီး၊ ၎င်းကို ပြဿနာဖြေရှင်းခြင်းနဲ့ ရိုဘော့စီမံကိန်း (robot planning) လုပ်ငန်းတွေမှာ အသုံးပြုခဲ့ပါတယ်။ Logic နဲ့ theorem proving ကနေ ပေါ်ပေါက်လာတဲ့ အလားတူ စိတ်ကူးစိတ်သန်းတွေဟာ Edinburgh နဲ့ Marseille တို့မှာ Prolog (ဒါကို အပိုင်း <a href="4_002e4.xhtml#g_t4_002e4">4.4</a> မှာ ဆွေးနွေးပါမယ်) ဆိုတဲ့ လှပတဲ့ ဘာသာစကား ပေါ်ပေါက်လာစေဖို့ အကြောင်းဖန်ခဲ့ပါတယ်။ Automatic search နဲ့ ပတ်သက်ပြီး လုံလောက်တဲ့ စိတ်ပျက်မှုတွေ ကြုံတွေ့ရပြီးနောက်၊ <a href="References.xhtml#McDermott-and-Sussman-_00281972_0029">McDermott and Sussman (1972)</a> ဟာ search strategy ကို programmer က ထိန်းချုပ်နိုင်တဲ့ ယန္တရားတွေ ပါဝင်တဲ့ Conniver ဆိုတဲ့ ဘာသာစကားကို ဖော်ဆောင်ခဲ့ပါတယ်။ ဒါပေမဲ့ ဒါဟာ ကိုင်တွယ်ရ ခက်ခဲတာကြောင့် <a href="References.xhtml#Sussman-and-Stallman-1975">Sussman and Stallman 1975</a> တို့ဟာ လျှပ်စစ်ပတ်လမ်းတွေအတွက် symbolic analysis နည်းလမ်းတွေကို လေ့လာရင်း ပိုမိုကိုင်တွယ်ရလွယ်ကူတဲ့ ချဉ်းကပ်မှုတစ်ခုကို ရှာဖွေတွေ့ရှိခဲ့ပါတယ်။ သူတို့ဟာ အချက်အလက်တွေကို ဆက်သွယ်ပေးထားတဲ့ logical dependencies တွေကို ခြေရာခံခြင်းအပေါ် အခြေခံတဲ့ non-chronological backtracking စနစ်တစ်ခုကို ဖော်ဆောင်ခဲ့ပြီး၊ အဲဒီနည်းပညာကို <a id="index-dependency_002ddirected-backtracking"></a>
+<em>dependency-directed backtracking</em> လို့ လူသိများလာခဲ့ပါတယ်။ သူတို့ရဲ့ နည်းလမ်းဟာ ရှုပ်ထွေးပေမဲ့၊ ပိုလျှံနေတဲ့ ရှာဖွေမှုတွေကို နည်းနိုင်သမျှနည်းအောင် လုပ်ဆောင်ပေးတဲ့အတွက် ထိရောက်မှုရှိတဲ့ ပရိုဂရမ်တွေကို ထုတ်ပေးနိုင်ခဲ့ပါတယ်။ <a href="References.xhtml#Doyle-_00281979_0029">Doyle (1979)</a> နဲ့ <a href="References.xhtml#McAllester-_00281978_003b-1980_0029">McAllester (1978; 1980)</a> တို့ဟာ Stallman နဲ့ Sussman တို့ရဲ့ နည်းလမ်းတွေကို ယေဘုယျပြုပြီး ရှင်းလင်းအောင် လုပ်ဆောင်ခဲ့ကြပြီး၊ အခုအခါမှာ <a id="index-truth-maintenance"></a>
+<em>truth maintenance</em> လို့ ခေါ်တဲ့ search ကို ဖော်ဆောင်ဖို့အတွက် paradigm အသစ်တစ်ခုကို ဖော်ထုတ်ခဲ့ပါတယ်။ ခေတ်မီ ပြဿနာဖြေရှင်းရေး စနစ်တွေ အားလုံးဟာ truth-maintenance system ပုံစံတစ်မျိုးမျိုးကို အောက်ခံအလွှာ (substrate) အဖြစ် အသုံးပြုကြပါတယ်။ Truth-maintenance system တွေ တည်ဆောက်ပုံနဲ့ truth maintenance ကို အသုံးပြုတဲ့ applications တွေအကြောင်းကို <a href="References.xhtml#Forbus-and-deKleer-1993">Forbus and deKleer 1993</a> မှာ ဖတ်ရှုနိုင်ပါတယ်။ <a href="References.xhtml#Zabih-et-al_002e-1987">Zabih et al. 1987</a> မှာ <code>amb</code> အပေါ် အခြေခံထားတဲ့ Scheme ရဲ့ nondeterministic extension တစ်ခုအကြောင်း ဖော်ပြထားပါတယ်။ ၎င်းဟာ ဒီအပိုင်းမှာ ဖော်ပြထားတဲ့ interpreter နဲ့ ဆင်တူပေမဲ့ chronological backtracking ထက် dependency-directed backtracking ကို အသုံးပြုထားတဲ့အတွက် ပိုမိုဆန်းသစ်ပါတယ်။ <a href="References.xhtml#Winston-1992">Winston 1992</a> မှာ backtracking နှစ်မျိုးလုံးရဲ့ နိဒါန်းကို ဖော်ပြထားပါတယ်။</p>
+</div>
+<div id="FOOT252"><p><a class="footnote_backlink" href="#DOCF252"><sup>252</sup></a>
+ကျွန်ုပ်တို့ရဲ့ ပရိုဂရမ်မှာ list တစ်ခုရဲ့ elements တွေဟာ တစ်ခုနဲ့တစ်ခု ကွဲပြားခြင်း (distinct) ရှိ၊ မရှိ ဆုံးဖြတ်ဖို့ အောက်ပါ procedure ကို အသုံးပြုထားပါတယ်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">distinct? items</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pln">null? items</span><span class="clo">)</span><span class="pln"> true</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="pln">null? </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> items</span><span class="clo">))</span><span class="pln"> true</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="pln">member </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> items</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> items</span><span class="clo">))</span><span class="pln"> false</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> </span><span class="opn">(</span><span class="pln">distinct? </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> items</span><span class="clo">)))))</span></pre></div>
+
+<p><code>Member</code> ဟာ <code>memq</code> နဲ့ ဆင်တူပါတယ်၊ ဒါပေမဲ့ ညီမျှမှုကို စစ်ဆေးဖို့အတွက် <code>eq?</code> အစား <code>equal?</code> ကို အသုံးပြုထားတာပဲ ကွဲပြားပါတယ်။</p>
+</div>
+<div id="FOOT253"><p><a class="footnote_backlink" href="#DOCF253"><sup>253</sup></a>
+ဒါကို ၁၉၆၀ ပြည့်လွန်နှစ်တွေက Litton Industries က ထုတ်ဝေခဲ့တဲ့ “Problematical Recreations” ဆိုတဲ့ စာအုပ်ငယ်လေးကနေ ယူထားတာဖြစ်ပြီး၊ အဲဒီမှာ <cite>Kansas State Engineer</cite> ကို ရည်ညွှန်းဖော်ပြထားပါတယ်။</p>
+</div>
+<div id="FOOT254"><p><a class="footnote_backlink" href="#DOCF254"><sup>254</sup></a>
+ဒီနေရာမှာ list တစ်ခုချင်းစီရဲ့ ပထမဆုံး element ဟာ ကျန်တဲ့ စကားလုံးတွေအတွက် part of speech ကို သတ်မှတ်ပေးတယ်ဆိုတဲ့ သတ်မှတ်ချက်ကို အသုံးပြုပါတယ်။</p>
+</div>
+<div id="FOOT255"><p><a class="footnote_backlink" href="#DOCF255"><sup>255</sup></a>
+<code>parse-word</code> ဟာ unparsed input list ကို ပြင်ဆင်ဖို့ <code>set!</code> ကို အသုံးပြုထားတာကို သတိပြုပါ။ ဒါဟာ အလုပ်လုပ်နိုင်ဖို့အတွက်၊ ကျွန်ုပ်တို့ရဲ့ <code>amb</code> evaluator ဟာ backtrack လုပ်တဲ့အခါ <code>set!</code> ရဲ့ သက်ရောက်မှုတွေကို ပြန်လည်ပြင်ဆင် (undo) ပေးရပါမယ်။</p>
+</div>
+<div id="FOOT256"><p><a class="footnote_backlink" href="#DOCF256"><sup>256</sup></a>
+ဒီ definition ဟာ recursive ဖြစ်နေတာကို သတိပြုပါ—verb တစ်ခုရဲ့ နောက်မှာ prepositional phrases အရေအတွက် မည်မျှမဆို လိုက်ပါနိုင်ပါတယ်။</p>
+</div>
+<div id="FOOT257"><p><a class="footnote_backlink" href="#DOCF257"><sup>257</sup></a>
+ဒီလို grammar မျိုးဟာ အကန့်အသတ်မရှိ ရှုပ်ထွေးသွားနိုင်ပေမဲ့၊ စစ်မှန်တဲ့ ဘာသာစကား နားလည်နိုင်စွမ်း (real language understanding) နဲ့ ယှဉ်ရင်တော့ ကစားစရာ (toy) တစ်ခုမျှသာ ဖြစ်ပါတယ်။ ကွန်ပျူတာကနေ စစ်မှန်တဲ့ သဘာဝဘာသာစကားကို နားလည်နိုင်ဖို့အတွက် syntactic analysis နဲ့ အဓိပ္ပာယ် ဖွင့်ဆိုချက် (interpretation of meaning) တို့ကို စနစ်တကျ ပေါင်းစပ်ဖို့ လိုအပ်ပါတယ်။ အခြားတစ်ဖက်မှာတော့၊ သေးငယ်တဲ့ toy parsers လေးတွေတောင်မှ information-retrieval systems လိုမျိုး ပရိုဂရမ်တွေအတွက် လွယ်ကူပြောင်းလွယ်တဲ့ command languages တွေကို ပံ့ပိုးပေးရာမှာ အသုံးဝင်နိုင်ပါတယ်။ <a href="References.xhtml#Winston-1992">Winston 1992</a> မှာ စစ်မှန်တဲ့ ဘာသာစကား နားလည်မှုအတွက် တွက်ချက်မှုဆိုင်ရာ ချဉ်းကပ်ပုံတွေနဲ့ command languages တွေမှာ simple grammars တွေရဲ့ အသုံးချပုံတွေကို ဆွေးနွေးထားပါတယ်။</p>
+</div>
+<div id="FOOT258"><p><a class="footnote_backlink" href="#DOCF258"><sup>258</sup></a>
+Alyssa ရဲ့ စိတ်ကူးဟာ ကောင်းကောင်း အလုပ်လုပ်သော်လည်း (ပြီးတော့ အံ့သြစရာကောင်းလောက်အောင်လည်း ရိုးရှင်းပါတယ်)၊ ၎င်းကနေ ထုတ်ပေးလိုက်တဲ့ ဝါကျတွေဟာ အနည်းငယ် ပျင်းစရာကောင်းပါတယ်—အဲဒီဝါကျတွေဟာ ဒီဘာသာစကားရဲ့ ဖြစ်နိုင်ခြေရှိတဲ့ ဝါကျတွေကို စိတ်ဝင်စားစရာကောင်းတဲ့ ပုံစံမျိုးနဲ့ ဖော်ပြမပေးနိုင်ပါဘူး။ တကယ်တော့ အဲဒီ grammar ဟာ နေရာတော်တော်များများမှာ recursive အလွန်ဖြစ်နေပြီး၊ Alyssa ရဲ့ နည်းစနစ်ဟာ အဲဒီ recursion တွေထဲက တစ်ခုထဲမှာ “ကျရှုံး” ပြီး ပိတ်မိသွားတတ်ပါတယ်။ ဒါကို ဖြေရှင်းဖို့ နည်းလမ်းအတွက် <a href="#Exercise-4_002e50">လေ့ကျင့်ခန်း 4.50</a> ကို ကြည့်ပါ။</p>
+</div>
+<div id="FOOT259"><p><a class="footnote_backlink" href="#DOCF259"><sup>259</sup></a>
+အပိုင်း <a href="4_002e2.xhtml#g_t4_002e2">4.2</a> မှာ lazy evaluator ကို အကောင်အထည်ဖော်ဖို့အတွက် အပိုင်း <a href="4_002e1.xhtml#g_t4_002e1_002e1">4.1.1</a> ရဲ့ သာမန် metacircular evaluator ကို ပြင်ဆင်ပြီး အသုံးပြုခဲ့ပါတယ်။ ဒါနဲ့ ဆန့်ကျင်ဘက်အနေနဲ့၊ <code>amb</code> evaluator အတွက်တော့ အပိုင်း <a href="4_002e1.xhtml#g_t4_002e1_002e7">4.1.7</a> ရဲ့ analyzing evaluator ကို အခြေခံသွားမှာ ဖြစ်ပါတယ်၊ ဘာကြောင့်လဲဆိုတော့ အဲဒီ evaluator မှာပါတဲ့ execution procedures တွေဟာ backtracking ကို အကောင်အထည်ဖော်ဖို့အတွက် အဆင်ပြေတဲ့ မူဘောင်တစ်ခုကို ပံ့ပိုးပေးထားလို့ ဖြစ်ပါတယ်။</p>
+</div>
+<div id="FOOT260"><p><a class="footnote_backlink" href="#DOCF260"><sup>260</sup></a>
+Evaluator ဟာ <code>let</code> (အပိုင်း <a href="4_002e1.xhtml#Exercise-4_002e22">လေ့ကျင့်ခန်း 4.22</a> ကိုကြည့်ပါ) ကို ပံ့ပိုးပေးထားတယ်လို့ ကျွန်ုပ်တို့ ယူဆထားပါတယ်၊ ၎င်းကို ကျွန်ုပ်တို့ရဲ့ nondeterministic programs တွေမှာ အသုံးပြုထားပါတယ်။</p>
+</div>
+<div id="FOOT261"><p><a class="footnote_backlink" href="#DOCF261"><sup>261</sup></a>
+Internal definitions တွေကို scan out လုပ်တယ်လို့ (<a href="4_002e1.xhtml#g_t4_002e1_002e6">4.1.6</a>) ယူဆနိုင်တဲ့အတွက်၊ definitions တွေကို ပြန်ဖျက်ဖို့ (undoing) အတွက် ကျွန်ုပ်တို့ စိုးရိမ်စရာ မလိုပါဘူး။</p>
+</div>
+</div>
+<nav class="header">
+<p>
+Next: <a href="4_002e4.xhtml#g_t4_002e4" accesskey="n" rel="next">4.4</a>, Prev: <a href="4_002e2.xhtml#g_t4_002e2" accesskey="p" rel="prev">4.2</a>, Up: <a href="#g_t4_002e3" accesskey="u" rel="prev">4.3</a>   [<a href="index.xhtml#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+
+
+</section><span class="bottom jump" title="Jump to bottom"><a href="#pagebottom" accesskey="b">⇣</a></span><a id="pagebottom"></a>
+</body>
+</html>
