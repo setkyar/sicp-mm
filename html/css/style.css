@@ -25,7 +25,7 @@ html {
   font-family: "Linux Libertine O", serif;
   font-size: 170%; /* 100% for epub */
   color: #383838;
-  line-height: 1.5;
+  line-height: 1.8;
   /* 'liga' turns on ligatures, 'ss06' picks alternate ampersand */
   -moz-font-feature-settings: "liga" 1, "ss06";
   -ms-font-feature-settings: "liga" 1, "ss06";
@@ -453,7 +453,7 @@ a#References ~ p {
 
 @media (max-width: 960px) {
   html {
-    line-height: 1.5;
+    line-height: 1.8;
   }
 
   pre, pre code, pre var {
