@@ -1,0 +1,1670 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="my" lang="my">
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>Structure and Interpretation of Computer Programs, 2e: 2.5</title>
+
+<meta name="description" content="Structure and Interpretation of Computer Programs, 2e: 2.5" />
+<meta name="keywords" content="Structure and Interpretation of Computer Programs, 2e: 2.5" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="Generator" content="texi2any" />
+<meta charset="utf-8" />
+<link href="index.xhtml#Top" rel="start" title="Top" />
+<link href="Term-Index.xhtml#Term-Index" rel="index" title="Term Index" />
+<link href="index.xhtml#SEC_Contents" rel="contents" title="Table of Contents" />
+<link href="Chapter-2.xhtml#Chapter-2" rel="prev" title="Chapter 2" />
+<link href="Chapter-3.xhtml#Chapter-3" rel="next" title="Chapter 3" />
+<link href="2_002e4.xhtml#g_t2_002e4_002e3" rel="prev" title="2.4.3" />
+
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/prettify.css" rel="stylesheet" type="text/css" />
+
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/footnotes.js" type="text/javascript"></script>
+<script src="js/browsertest.js" type="text/javascript"></script>
+</head>
+
+<body>
+<section><span class="top jump" title="Jump to top"><a href="#pagetop" accesskey="t">⇡</a></span><a id="pagetop"></a><a id="g_t2_002e5"></a>
+<nav class="header">
+<p>
+Next: <a href="Chapter-3.xhtml#Chapter-3" accesskey="n" rel="next">Chapter 3</a>, Prev: <a href="2_002e4.xhtml#g_t2_002e4" accesskey="p" rel="prev">2.4</a>, Up: <a href="Chapter-2.xhtml#Chapter-2" accesskey="u" rel="prev">Chapter 2</a>   [<a href="index.xhtml#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+<a id="Systems-with-Generic-Operations"></a>
+<h3 class="section"><span class="secnum">2.5</span><span class="sectitle">Generic Operations များပါဝင်သော စနစ်များ</span></h3>
+
+<p>ယခင်ကဏ္ဍတွင်၊ ဒေတာအရာဝတ္ထု (data objects) များကို နည်းလမ်းတစ်ခုထက်ပို၍ ကိုယ်စားပြုနိုင်သော စနစ်များကို မည်သို့ဒီဇိုင်းထုတ်ရမည်ကို ကျွန်ုပ်တို့တွေ့ခဲ့ရသည်။ အဓိကအချက်မှာ ဒေတာလုပ်ဆောင်ချက်များကို သတ်မှတ်ပေးသည့် ကုဒ်များကို generic interface လုပ်ထုံးလုပ်နည်းများ (procedures) အသုံးပြု၍ ကိုယ်စားပြုမှုအမျိုးမျိုးနှင့် ချိတ်ဆက်ပေးရန် ဖြစ်သည်။ ယခုအခါ ဤအိုင်ဒီယာကိုပင် အသုံးပြု၍ မတူညီသော ကိုယ်စားပြုမှုများအပေါ် generic ဖြစ်သော လုပ်ဆောင်ချက်များကို သတ်မှတ်ရန်သာမက၊ မတူညီသော argument အမျိုးအစားများအပေါ် generic ဖြစ်သော လုပ်ဆောင်ချက်များကို သတ်မှတ်ရန်အတွက်ပါ မည်သို့အသုံးပြုရမည်ကို တွေ့မြင်ရမည်ဖြစ်သည်။ ကျွန်ုပ်တို့သည် မတူညီသော ဂဏန်းသင်္ချာလုပ်ဆောင်ချက် package အတော်များများကို တွေ့ခဲ့ပြီးဖြစ်သည်- ကျွန်ုပ်တို့၏ဘာသာစကားတွင် ပါရှိပြီးသား အခြေခံဂဏန်းသင်္ချာ (<code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>)၊ <a href="2_002e1.xhtml#g_t2_002e1_002e1">2.1.1</a> ရှိ ရာရှင်နယ်ကိန်းဂဏန်းသင်္ချာ (<code>add-rat</code>, <code>sub-rat</code>, <code>mul-rat</code>, <code>div-rat</code>) နှင့် <a href="2_002e4.xhtml#g_t2_002e4_002e3">2.4.3</a> တွင် ကျွန်ုပ်တို့ အကောင်အထည်ဖော်ခဲ့သော ကိန်းရှုပ်ဂဏန်းသင်္ချာတို့ ဖြစ်ကြသည်။ ယခု ကျွန်ုပ်တို့သည် ယခင်က တည်ဆောက်ခဲ့သော ဂဏန်းသင်္ချာ package များအားလုံးကို စုစည်းထားသည့် ဂဏန်းသင်္ချာလုပ်ဆောင်ချက် package တစ်ခုကို တည်ဆောက်ရန်အတွက် data-directed နည်းပညာများကို အသုံးပြုပါမည်။
+</p>
+<p><a href="#Figure-2_002e23">Figure 2.23</a> တွင် ကျွန်ုပ်တို့ တည်ဆောက်မည့် စနစ်၏ တည်ဆောက်ပုံကို ပြသထားသည်။ abstraction barriers များကို သတိပြုပါ။ “numbers” ကို အသုံးပြုသူတစ်ဦး၏ အမြင်အရ၊ ပေးပို့လိုက်သော မည်သည့်ကိန်းဂဏန်းမျိုးမဆိုတွင် လုပ်ဆောင်နိုင်သည့် <code>add</code> ဟူသော procedure တစ်ခုတည်းသာ ရှိသည်။ <code>Add</code> သည် သီးခြားစီဖြစ်သော သာမန်ဂဏန်းသင်္ချာ (ordinary-arithmetic)၊ ရာရှင်နယ်ဂဏန်းသင်္ချာ (rational-arithmetic) နှင့် ကိန်းရှုပ်ဂဏန်းသင်္ချာ (complex-arithmetic) package များကို ကိန်းဂဏန်းများအသုံးပြုသည့် ပရိုဂရမ်များမှ တညီတညွတ်တည်း ဝင်ရောက်အသုံးပြုနိုင်ရန် ခွင့်ပြုပေးသော generic interface ၏ အစိတ်အပိုင်းတစ်ခု ဖြစ်သည်။ မည်သည့် တစ်သီးပုဂ္ဂလ ဂဏန်းသင်္ချာ package မဆို (ဥပမာ- complex package ကဲ့သို့) မတူညီသော ကိုယ်စားပြုမှုများ (ဥပမာ- rectangular နှင့် polar) အတွက် ဒီဇိုင်းထုတ်ထားသော package များကို ပေါင်းစပ်ပေးသည့် generic procedures များ (ဥပမာ- <code>add-complex</code>) မှတစ်ဆင့် ၎င်းကိုယ်တိုင် ဝင်ရောက်အသုံးပြုနိုင်သည်။ ထို့အပြင်၊ စနစ်၏ တည်ဆောက်ပုံမှာ ပေါင်းစပ်နိုင်သော ဂုဏ်သတ္တိ (additive) ရှိသောကြောင့် တစ်သီးပုဂ္ဂလ ဂဏန်းသင်္ချာ package များကို သီးခြားစီ ဒီဇိုင်းထုတ်နိုင်ပြီး generic ဂဏန်းသင်္ချာစနစ်တစ်ခု ဖြစ်လာစေရန် ၎င်းတို့ကို ပေါင်းစပ်နိုင်သည်။
+</p>
+<figure class="float">
+<a id="Figure-2_002e23"></a>
+<object style="width: 59.40ex; height: 54.22ex;" data="fig/chap2/Fig2.23b.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>Figure 2.23:</strong> Generic ဂဏန်းသင်္ချာစနစ်။</p>
+</figcaption>
+</figure>
+
+
+<a id="g_t2_002e5_002e1"></a>
+<a id="Generic-Arithmetic-Operations"></a>
+<h4 class="subsection"><span class="secnum">2.5.1</span><span class="sectitle">မျိုးစုံသုံး သင်္ချာ လုပ်ဆောင်ချက်များ (Generic Arithmetic Operations)</span></h4>
+
+<p>မျိုးစုံသုံး သင်္ချာ လုပ်ဆောင်ချက်များကို ပုံစံထုတ်ခြင်း လုပ်ငန်းသည် မျိုးစုံသုံး ကိန်းရှုပ် လုပ်ဆောင်ချက်များကို ပုံစံထုတ်ခြင်းနှင့် ဆင်တူပါသည်။ ဥပမာအားဖြင့်၊ သာမန်ကိန်းများပေါ်တွင် သာမန်အခြေခံပေါင်းခြင်း <code>+</code> ကဲ့သို့လည်းကောင်း၊ အပိုင်းကိန်းများပေါ်တွင် <code>add-rat</code> ကဲ့သို့လည်းကောင်း၊ ကိန်းရှုပ်များပေါ်တွင် <code>add-complex</code> ကဲ့သို့လည်းကောင်း အလုပ်လုပ်နိုင်သည့် မျိုးစုံသုံး ပေါင်းခြင်း လုပ်ထုံးလုပ်နည်း <code>add</code> တစ်ခု ရှိစေချင်ပါသည်။ ကျွန်ုပ်တို့သည် <code>add</code> နှင့် အခြားသော မျိုးစုံသုံး သင်္ချာလုပ်ဆောင်ချက်များကို <a href="2_002e4.xhtml#g_t2_002e4_002e3">2.4.3</a> တွင် ကိန်းရှုပ်များအတွက် မျိုးစုံသုံး selector များ အကောင်အထည်ဖော်ရာတွင် အသုံးပြုခဲ့သည့် နည်းဗျူဟာအတိုင်းပင် အကောင်အထည်ဖော်နိုင်ပါသည်။ ကျွန်ုပ်တို့သည် ကိန်းဂဏန်း အမျိုးအစား တစ်ခုစီတွင် အမျိုးအစားအမှတ်အသား (type tag) တစ်ခု ချိတ်ဆက်ပေးမည်ဖြစ်ပြီး၊ မျိုးစုံသုံး လုပ်ထုံးလုပ်နည်းကို ၎င်း၏ argument များ၏ data type အပေါ် မူတည်၍ သင့်လျော်သော package ဆီသို့ dispatch လုပ်စေမည် ဖြစ်သည်။
+</p>
+<p>မျိုးစုံသုံး သင်္ချာလုပ်ထုံးလုပ်နည်းများကို အောက်ပါအတိုင်း သတ်မှတ်ထားသည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">add x y</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">apply-generic </span><span class="lit">'add</span><span class="pln"> x y</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sub x y</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">apply-generic </span><span class="lit">'sub</span><span class="pln"> x y</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">mul x y</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">apply-generic </span><span class="lit">'mul</span><span class="pln"> x y</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">div x y</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">apply-generic </span><span class="lit">'div</span><span class="pln"> x y</span><span class="clo">))</span></pre></div>
+
+<p>ကျွန်ုပ်တို့သည် သာမန်ကိန်းများ <a id="index-ordinary"></a> (<em>ordinary</em> numbers)၊ ဆိုလိုသည်မှာ ကျွန်ုပ်တို့ ဘာသာစကား၏ အခြေခံ (primitive) ကိန်းများကို ကိုင်တွယ်ရန် package တစ်ခုကို စတင် ထည့်သွင်း (install) ပါမည်။ ဤကိန်းများကို <code>scheme-number</code> ဆိုသည့် သင်္ကေတဖြင့် tag ပြုလုပ်ပါမည်။ ဤ package အတွင်းရှိ သင်္ချာလုပ်ဆောင်ချက်များသည် အခြေခံ သင်္ချာလုပ်ထုံးလုပ်နည်းများပင် ဖြစ်သည် (ထို့ကြောင့် အမှတ်အသားမပါသော ကိန်းများကို ကိုင်တွယ်ရန် အပိုလုပ်ထုံးလုပ်နည်းများ သတ်မှတ်ရန် မလိုပါ)။ ဤလုပ်ဆောင်ချက် တစ်ခုစီသည် argument နှစ်ခု ယူသောကြောင့်၊ ၎င်းတို့ကို <code>(scheme-number scheme-number)</code> စာရင်းဖြင့် key ပေးထားသော ဇယားတွင် ထည့်သွင်းထားသည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">install-scheme-number-package</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">tag x</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">attach-tag </span><span class="lit">'scheme-number</span><span class="pln"> x</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">put </span><span class="lit">'add</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">scheme-number scheme-number</span><span class="clo">)</span><span class="pln">
+       </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">x y</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">tag </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> x y</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">put </span><span class="lit">'sub</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">scheme-number scheme-number</span><span class="clo">)</span><span class="pln">
+       </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">x y</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">tag </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> x y</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">put </span><span class="lit">'mul</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">scheme-number scheme-number</span><span class="clo">)</span><span class="pln">
+       </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">x y</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">tag </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x y</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">put </span><span class="lit">'div</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">scheme-number scheme-number</span><span class="clo">)</span><span class="pln">
+       </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">x y</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">tag </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> x y</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">put </span><span class="lit">'make</span><span class="pln"> </span><span class="lit">'scheme-number</span><span class="pln">
+       </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">tag x</span><span class="clo">)))</span><span class="pln">
+  </span><span class="lit">'done</span><span class="clo">)</span></pre></div>
+
+<p>Scheme-number package ကို အသုံးပြုသူများသည် အမှတ်အသားပြုထားသော (tagged) သာမန်ကိန်းများကို အောက်ပါ လုပ်ထုံးလုပ်နည်းဖြင့် ဖန်တီးမည်ဖြစ်သည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-scheme-number n</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">((</span><span class="pln">get </span><span class="lit">'make</span><span class="pln"> </span><span class="lit">'scheme-number</span><span class="clo">)</span><span class="pln"> n</span><span class="clo">))</span></pre></div>
+
+<p>ယခု မျိုးစုံသုံး သင်္ချာစနစ်၏ မူဘောင် (framework) အဆင်သင့်ဖြစ်ပြီဖြစ်၍ ကိန်းဂဏန်း အမျိုးအစားသစ်များကို အလွယ်တကူ ထည့်သွင်းနိုင်ပြီ ဖြစ်သည်။ ဤသည်မှာ အပိုင်းကိန်း (rational arithmetic) တွက်ချက်မှုများကို လုပ်ဆောင်ပေးသော package ဖြစ်သည်။ ပေါင်းစပ်နိုင်စွမ်း (additivity) ၏ အကျိုးကျေးဇူးအနေဖြင့်၊ <a href="2_002e1.xhtml#g_t2_002e1_002e1">2.1.1</a> မှ အပိုင်းကိန်းဆိုင်ရာ ကုဒ်များကို ပြင်ဆင်မှုမရှိဘဲ package အတွင်းရှိ internal procedure များအဖြစ် အသုံးပြုနိုင်သည်ကို သတိပြုပါ -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">install-rational-package</span><span class="clo">)</span><span class="pln">
+  </span><span class="roman"><span class="com">;; internal procedures</span></span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">numer x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> x</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">denom x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> x</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-rat n d</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">g </span><span class="opn">(</span><span class="pln">gcd n d</span><span class="clo">)))</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> n g</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> d g</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">add-rat x y</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">make-rat </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">numer x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">denom y</span><span class="clo">))</span><span class="pln">
+                 </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">numer y</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">denom x</span><span class="clo">)))</span><span class="pln">
+              </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">denom x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">denom y</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sub-rat x y</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">make-rat </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">numer x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">denom y</span><span class="clo">))</span><span class="pln">
+                 </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">numer y</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">denom x</span><span class="clo">)))</span><span class="pln">
+              </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">denom x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">denom y</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">mul-rat x y</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">make-rat </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">numer x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">numer y</span><span class="clo">))</span><span class="pln">
+              </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">denom x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">denom y</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">div-rat x y</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">make-rat </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">numer x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">denom y</span><span class="clo">))</span><span class="pln">
+              </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">denom x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">numer y</span><span class="clo">))))</span><span class="pln">
+  </span><span class="roman"><span class="com">;; interface to rest of the system</span></span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">tag x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">attach-tag </span><span class="lit">'rational</span><span class="pln"> x</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">put </span><span class="lit">'add</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">rational rational</span><span class="clo">)</span><span class="pln">
+       </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">x y</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">tag </span><span class="opn">(</span><span class="pln">add-rat x y</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">put </span><span class="lit">'sub</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">rational rational</span><span class="clo">)</span><span class="pln">
+       </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">x y</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">tag </span><span class="opn">(</span><span class="pln">sub-rat x y</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">put </span><span class="lit">'mul</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">rational rational</span><span class="clo">)</span><span class="pln">
+       </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">x y</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">tag </span><span class="opn">(</span><span class="pln">mul-rat x y</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">put </span><span class="lit">'div</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">rational rational</span><span class="clo">)</span><span class="pln">
+       </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">x y</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">tag </span><span class="opn">(</span><span class="pln">div-rat x y</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">put </span><span class="lit">'make</span><span class="pln"> </span><span class="lit">'rational</span><span class="pln">
+       </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">n d</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">tag </span><span class="opn">(</span><span class="pln">make-rat n d</span><span class="clo">))))</span><span class="pln">
+  </span><span class="lit">'done</span><span class="clo">)</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-rational n d</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">((</span><span class="pln">get </span><span class="lit">'make</span><span class="pln"> </span><span class="lit">'rational</span><span class="clo">)</span><span class="pln"> n d</span><span class="clo">))</span></pre></div>
+
+<p>ကျွန်ုပ်တို့သည် <code>complex</code> ဆိုသည့် tag ကို အသုံးပြု၍ ကိန်းရှုပ်များကို ကိုင်တွယ်ရန် အလားတူ package တစ်ခုကို ထည့်သွင်းနိုင်ပါသည်။ package ကို ဖန်တီးရာတွင်၊ rectangular နှင့် polar package များမှ သတ်မှတ်ထားသော <code>make-from-real-imag</code> နှင့် <code>make-from-mag-ang</code> လုပ်ဆောင်ချက်များကို ဇယားမှ ထုတ်ယူ (extract) ပါသည်။ ပေါင်းစပ်နိုင်စွမ်း (Additivity) ကြောင့် <a href="2_002e4.xhtml#g_t2_002e4_002e1">2.4.1</a> မှ <code>add-complex</code>၊ <code>sub-complex</code>၊ <code>mul-complex</code> နှင့် <code>div-complex</code> လုပ်ထုံးလုပ်နည်းများကိုပင် internal procedure များအဖြစ် အသုံးပြုနိုင်ခွင့် ရရှိစေပါသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">install-complex-package</span><span class="clo">)</span><span class="pln">
+  </span><span class="roman"><span class="com">;; imported procedures from rectangular</span></span><span class="com"> </span><span class="pln">
+  </span><span class="roman"><span class="com">;; and polar packages</span></span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-from-real-imag x y</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">((</span><span class="pln">get </span><span class="lit">'make-from-real-imag</span><span class="pln"> 
+          </span><span class="lit">'rectangular</span><span class="clo">)</span><span class="pln"> 
+     x y</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-from-mag-ang r a</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">((</span><span class="pln">get </span><span class="lit">'make-from-mag-ang</span><span class="pln"> </span><span class="lit">'polar</span><span class="clo">)</span><span class="pln"> 
+     r a</span><span class="clo">))</span><span class="pln">
+  </span><span class="roman"><span class="com">;; internal procedures</span></span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">add-complex z1 z2</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">make-from-real-imag 
+     </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">real-part z1</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">real-part z2</span><span class="clo">))</span><span class="pln">
+     </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">imag-part z1</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">imag-part z2</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sub-complex z1 z2</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">make-from-real-imag 
+     </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="opn">(</span><span class="pln">real-part z1</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">real-part z2</span><span class="clo">))</span><span class="pln">
+     </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="opn">(</span><span class="pln">imag-part z1</span><span class="clo)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">imag-part z2</span><span class="clo)</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">mul-complex z1 z2</span><span class="clo)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">make-from-mag-ang 
+     </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">magnitude z1</span><span class="clo)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">magnitude z2</span><span class="clo)</span><span class="clo">)</span><span class="pln">
+     </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">angle z1</span><span class="clo)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">angle z2</span><span class="clo)</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">div-complex z1 z2</span><span class="clo)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">make-from-mag-ang 
+     </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> </span><span class="opn">(</span><span class="pln">magnitude z1</span><span class="clo)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">magnitude z2</span><span class="clo)</span><span class="clo">)</span><span class="pln">
+     </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="opn">(</span><span class="pln">angle z1</span><span class="clo)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">angle z2</span><span class="clo)</span><span class="clo)</span><span class="clo">))))</span><span class="pln">
+  </span><span class="roman"><span class="com">;; interface to rest of the system</span></span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">tag z</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">attach-tag </span><span class="lit">'complex</span><span class="pln"> z</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">put </span><span class="lit">'add</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">complex complex</span><span class="clo">)</span><span class="pln">
+       </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">z1 z2</span><span class="clo">)</span><span class="pln"> 
+         </span><span class="opn">(</span><span class="pln">tag </span><span class="opn">(</span><span class="pln">add-complex z1 z2</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">put </span><span class="lit">'sub</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">complex complex</span><span class="clo">)</span><span class="pln">
+       </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">z1 z2</span><span class="clo">)</span><span class="pln"> 
+         </span><span class="opn">(</span><span class="pln">tag </span><span class="opn">(</span><span class="pln">sub-complex z1 z2</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">put </span><span class="lit">'mul</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">complex complex</span><span class="clo">)</span><span class="pln">
+       </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">z1 z2</span><span class="clo">)</span><span class="pln"> 
+         </span><span class="opn">(</span><span class="pln">tag </span><span class="opn">(</span><span class="pln">mul-complex z1 z2</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">put </span><span class="lit">'div</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">complex complex</span><span class="clo">)</span><span class="pln">
+       </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">z1 z2</span><span class="clo">)</span><span class="pln"> 
+         </span><span class="opn">(</span><span class="pln">tag </span><span class="opn">(</span><span class="pln">div-complex z1 z2</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">put </span><span class="lit">'make-from-real-imag</span><span class="pln"> </span><span class="lit">'complex</span><span class="pln">
+       </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">x y</span><span class="clo">)</span><span class="pln"> 
+         </span><span class="opn">(</span><span class="pln">tag </span><span class="opn">(</span><span class="pln">make-from-real-imag x y</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">put </span><span class="lit">'make-from-mag-ang</span><span class="pln"> </span><span class="lit">'complex</span><span class="pln">
+       </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">r a</span><span class="clo">)</span><span class="pln"> 
+         </span><span class="opn">(</span><span class="pln">tag </span><span class="opn">(</span><span class="pln">make-from-mag-ang r a</span><span class="clo">))))</span><span class="pln">
+  </span><span class="lit">'done</span><span class="clo">)</span></pre></div>
+
+<p>ကိန်းရှုပ် (complex-number) package ပြင်ပရှိ ပရိုဂရမ်များသည် ကိန်းရှုပ်များကို ကိန်းစစ် (real part) နှင့် ကိန်းယောင် (imaginary part) များမှသော်လည်းကောင်း၊ ပမာဏ (magnitude) နှင့် ထောင့် (angle) များမှသော်လည်းကောင်း တည်ဆောက်နိုင်ပါသည်။ မူလက rectangular နှင့် polar package များတွင် သတ်မှတ်ထားသော အခြေခံလုပ်ထုံးလုပ်နည်းများကို complex package သို့ မည်သို့ export လုပ်ပြီး၊ ထိုမှတစ်ဆင့် ပြင်ပကမ္ဘာသို့ မည်သို့ export လုပ်သည်ကို သတိပြုပါ။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-complex-from-real-imag x y</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">((</span><span class="pln">get </span><span class="lit">'make-from-real-imag</span><span class="pln"> </span><span class="lit">'complex</span><span class="clo)</span><span class="pln"> x y</span><span class="clo)</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-complex-from-mag-ang r a</span><span class="clo)</span><span class="pln">
+  </span><span class="opn">((</span><span class="pln">get </span><span class="lit">'make-from-mag-ang</span><span class="pln"> </span><span class="lit">'complex</span><span class="clo)</span><span class="pln"> r a</span><span class="clo)</span><span class="clo">)</span></pre></div>
+
+<p>ဤနေရာတွင် ကျွန်ုပ်တို့ရှိသည်မှာ အဆင့်နှစ်ဆင့်ရှိသော tag စနစ် ဖြစ်သည်။ rectangular ပုံစံဖြင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>3</mn>
+    <mo>+</mo>
+    <mn>4</mn>
+    <mi>i</mi>
+  </mrow>
+</math> ကဲ့သို့သော ပုံမှန်ကိန်းရှုပ်တစ်ခုကို <a href="#Figure-2_002e24">ပုံ ၂.၂၄</a> တွင် ပြထားသည့်အတိုင်း ဖော်ပြပါမည်။ အပြင်ဘက် tag (<code>complex</code>) ကို ကိန်းဂဏန်းအား complex package သို့ လမ်းညွှန်ရန် အသုံးပြုသည်။ complex package အတွင်းသို့ ရောက်ရှိသွားပါက၊ နောက်ထပ် tag (<code>rectangular</code>) ကို rectangular package သို့ လမ်းညွှန်ရန် အသုံးပြုသည်။ ကြီးမားပြီး ရှုပ်ထွေးသော စနစ်တစ်ခုတွင် အဆင့်များစွာ ရှိနိုင်ပြီး၊ အဆင့်တစ်ခုစီသည် နောက်တစ်ခုနှင့် မျိုးစုံသုံး လုပ်ဆောင်ချက်များမှတစ်ဆင့် ချိတ်ဆက်ထားနိုင်သည်။ data object တစ်ခုသည် "အောက်ဘက်" သို့ ဖြတ်သန်းသွားသောအခါ၊ ၎င်းကို သင့်လျော်သော package သို့ လမ်းညွှန်ရန် အသုံးပြုသော အပြင်ဘက် tag ကို (<code>contents</code> အား အသုံးပြု၍) ဖယ်ရှားလိုက်ပြီး၊ နောက်ထပ် dispatch လုပ်ရန်အတွက် နောက်တစ်ဆင့်ရှိ tag (ရှိခဲ့လျှင်) ကို မြင်တွေ့ရမည် ဖြစ်သည်။
+</p>
+<figure class="float">
+<a id="Figure-2_002e24"></a>
+<object style="width: 41.53ex; height: 12.00ex;" data="fig/chap2/Fig2.24d.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>ပုံ ၂.၂၄ -</strong> <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>3</mn>
+    <mo>+</mo>
+    <mn>4</mn>
+    <mi>i</mi>
+  </mrow>
+</math> ကို rectangular ပုံစံဖြင့် ဖော်ပြချက်။</p>
+</figcaption>
+</figure>
+
+<p>အထက်ပါ package များတွင်၊ ကျွန်ုပ်တို့သည် <code>add-rat</code>၊ <code>add-complex</code> နှင့် အခြားသော သင်္ချာလုပ်ထုံးလုပ်နည်းများကို မူလက ရေးသားထားသည့်အတိုင်း အသုံးပြုခဲ့သည်။ သို့သော်၊ ဤသတ်မှတ်ချက်များသည် မတူညီသော installation procedure များ၏ internal ဖြစ်သွားပြီးနောက်တွင်၊ ၎င်းတို့သည် တစ်ခုနှင့်တစ်ခု ကွဲပြားသော အမည်များ ရှိရန် မလိုအပ်တော့ပေ။ ကျွန်ုပ်တို့သည် package နှစ်ခုလုံးတွင် ၎င်းတို့ကို <code>add</code>၊ <code>sub</code>၊ <code>mul</code> နှင့် <code>div</code> ဟု ရိုးရိုးရှင်းရှင်းပင် အမည်ပေးနိုင်ပါသည်။
+</p>
+<blockquote>
+<p><strong><a id="Exercise-2_002e77"></a>လေ့ကျင့်ခန်း ၂.၇၇ -</strong> Louis Reasoner သည် <a href="#Figure-2_002e24">ပုံ ၂.၂၄</a> တွင် ပြထားသော object <code>z</code> ပေါ်တွင် <code>(magnitude z)</code> expression ကို တွက်ချက်ရန် ကြိုးစားသည်။ သူ အံ့သြသွားသည်မှာ၊ အဖြေ ၅ ရမည့်အစား <code>apply-generic</code> ထံမှ <code>(complex)</code> အမျိုးအစားများပေါ်တွင် <code>magnitude</code> လုပ်ဆောင်ချက်အတွက် method မရှိကြောင်း error message ကို ရရှိခဲ့သည်။ သူသည် ဤအခြေအနေကို Alyssa P. Hacker အား ပြသရာ၊ သူမက “ပြဿနာက complex-number selector တွေကို <code>complex</code> ကိန်းတွေအတွက် ဘယ်တုန်းကမှ မသတ်မှတ်ခဲ့ဘူး၊ <code>polar</code> နဲ့ <code>rectangular</code> ကိန်းတွေအတွက်ပဲ သတ်မှတ်ခဲ့တာ။ ဒါ အလုပ်လုပ်ဖို့ဆိုရင် <code>complex</code> package ထဲမှာ အောက်ပါအတိုင်း ပေါင်းထည့်လိုက်ရုံပဲ” ဟု ဆိုသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">put </span><span class="lit">'real-part</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">complex</span><span class="clo">)</span><span class="pln"> real-part</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">put </span><span class="lit">'imag-part</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">complex</span><span class="clo">)</span><span class="pln"> imag-part</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">put </span><span class="lit">'magnitude</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">complex</span><span class="clo">)</span><span class="pln"> magnitude</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">put </span><span class="lit">'angle</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">complex</span><span class="clo">)</span><span class="pln"> angle</span><span class="clo">)</span></pre></div>
+
+<p>ဤအရာသည် အဘယ်ကြောင့် အလုပ်လုပ်သည်ကို အသေးစိတ် ဖော်ပြပါ။ ဥပမာအနေဖြင့်၊ <a href="#Figure-2_002e24">ပုံ ၂.၂၄</a> တွင် ပြထားသော object <code>z</code> ပေါ်တွင် <code>(magnitude z)</code> expression ကို တွက်ချက်ရာတွင် ခေါ်ယူသွားသော လုပ်ထုံးလုပ်နည်း အားလုံးကို ခြေရာခံပြပါ။ အထူးသဖြင့်၊ <code>apply-generic</code> ကို ဘယ်နှစ်ကြိမ် ခေါ်ယူသနည်း။ အခြေအနေ တစ်ခုစီတွင် မည်သည့် လုပ်ထုံးလုပ်နည်းသို့ dispatch လုပ်သနည်း။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e78"></a>လေ့ကျင့်ခန်း ၂.၇၈ -</strong> <code>scheme-number</code> package အတွင်းရှိ internal procedure များသည် အခြေခံအားဖြင့် primitive procedure များဖြစ်သော <code>+</code>၊ <code>-</code> စသည်တို့ကို ခေါ်ယူခြင်းထက် မပိုပါ။ ကျွန်ုပ်တို့၏ type-tag စနစ်သည် data object တစ်ခုစီတွင် အမျိုးအစားတစ်ခု ချိတ်ဆက်ထားရန် လိုအပ်သောကြောင့် ဘာသာစကား၏ primitive များကို တိုက်ရိုက်အသုံးပြုရန် မဖြစ်နိုင်ခဲ့ပါ။ သို့သော် အမှန်စင်စစ်တွင် Lisp အကောင်အထည်ဖော်မှု အားလုံးတွင် ၎င်းတို့အတွင်းပိုင်း၌ အသုံးပြုသော type စနစ်တစ်ခု ရှိကြသည်။ <code>symbol?</code> နှင့် <code>number?</code> ကဲ့သို့သော primitive predicate များသည် data object များတွင် သတ်မှတ်ထားသော အမျိုးအစားများ ရှိမရှိကို ဆုံးဖြတ်ပေးသည်။ ကျွန်ုပ်တို့၏ မျိုးစုံသုံးစနစ်သည် Scheme ၏ အတွင်းပိုင်း type စနစ်ကို အကျိုးရှိရှိ အသုံးချနိုင်ရန် <a href="2_002e4.xhtml#g_t2_002e4_002e2">2.4.2</a> မှ <code>type-tag</code>၊ <code>contents</code>၊ နှင့် <code>attach-tag</code> သတ်မှတ်ချက်များကို ပြင်ဆင်ပါ။ ဆိုလိုသည်မှာ၊ သာမန်ကိန်းများကို <code>car</code> အနေဖြင့် <code>scheme-number</code> သင်္ကေတပါသော pair များအဖြစ် ဖော်ပြမည့်အစား Scheme ကိန်းများအဖြစ် ရိုးရိုးရှင်းရှင်း ဖော်ပြခြင်းမှအပ စနစ်သည် ယခင်အတိုင်း အလုပ်လုပ်ရမည်။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e79"></a>လေ့ကျင့်ခန်း ၂.၇၉ -</strong> ကိန်းနှစ်ခု ညီမျှခြင်း ရှိမရှိ စစ်ဆေးသော မျိုးစုံသုံး equality predicate <code>equ?</code> ကို သတ်မှတ်ပြီး မျိုးစုံသုံး သင်္ချာ package တွင် ထည့်သွင်းပါ။ ဤလုပ်ဆောင်ချက်သည် သာမန်ကိန်းများ၊ အပိုင်းကိန်းများနှင့် ကိန်းရှုပ်များအတွက် အလုပ်လုပ်ရမည်။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e80"></a>လေ့ကျင့်ခန်း ၂.၈၀ -</strong> argument သည် သုည ဟုတ်မဟုတ် စစ်ဆေးသော မျိုးစုံသုံး predicate <code>=zero?</code> ကို သတ်မှတ်ပြီး မျိုးစုံသုံး သင်္ချာ package တွင် ထည့်သွင်းပါ။ ဤလုပ်ဆောင်ချက်သည် သာမန်ကိန်းများ၊ အပိုင်းကိန်းများနှင့် ကိန်းရှုပ်များအတွက် အလုပ်လုပ်ရမည်။
+</p></blockquote>
+
+<a id="g_t2_002e5_002e2"></a>
+<a id="Combining-Data-of-Different-Types"></a>
+<h4 class="subsection"><span class="secnum">2.5.2</span><span class="sectitle">Combining Data of Different Types</span></h4>
+
+<p>ကျွန်ုပ်တို့သည် သာမန်ကိန်းများ၊ ကိန်းရှုပ်များ၊ ရာရှင်နယ်ကိန်းများနှင့် ကျွန်ုပ်တို့ တီထွင်ရန် ဆုံးဖြတ်ထားသော အခြား မည်သည့် ကိန်းအမျိုးအစားကိုမဆို လွှမ်းခြုံနိုင်သည့် စုစည်းထားသော အရိသ်မက်တစ် (arithmetic) စနစ်တစ်ခုကို မည်သို့ သတ်မှတ်ရမည်ကို တွေ့ရှိခဲ့ပြီး ဖြစ်သော်လည်း အရေးကြီးသော ပြဿနာတစ်ခုကို လျစ်လျူရှုခဲ့ကြသည်။ ယခုအချိန်အထိ ကျွန်ုပ်တို့ သတ်မှတ်ခဲ့သော လုပ်ဆောင်ချက်များသည် မတူညီသော ဒေတာအမျိုးအစားများကို တစ်ခုနှင့်တစ်ခု လုံးဝ သီးခြားဖြစ်နေသကဲ့သို့ သဘောထားကြသည်။ ထို့ကြောင့် ဥပမာအားဖြင့် သာမန်ကိန်းနှစ်ခု သို့မဟုတ် ကိန်းရှုပ်နှစ်ခုကို ပေါင်းရန်အတွက် သီးခြား package များ ရှိနေသည်။ ကျွန်ုပ်တို့ မစဉ်းစားရသေးသည့် အချက်မှာ ကိန်းရှုပ်တစ်ခုနှင့် သာမန်ကိန်းတစ်ခုကို ပေါင်းခြင်းကဲ့သို့သော အမျိုးအစား နယ်နိမိတ်များကို ကျော်ဖြတ်သည့် လုပ်ဆောင်ချက်များကို သတ်မှတ်ရန်မှာ အဓိပ္ပာယ်ရှိသည်ဟူသော အချက်ဖြစ်သည်။ ကျွန်ုပ်တို့သည် ကျွန်ုပ်တို့၏ ပရိုဂရမ် အစိတ်အပိုင်းများကို သီးခြားစီ တည်ဆောက်နိုင်ရန်နှင့် နားလည်နိုင်ရန်အတွက် ၎င်းတို့အကြားတွင် အတားအဆီးများကို အသေအချာ ထည့်သွင်းထားခဲ့သည်။ ကျွန်ုပ်တို့သည် ဤ အမျိုးအစား-ကျော်ဖြတ် လုပ်ဆောင်ချက်များကို ကျွန်ုပ်တို့၏ မော်ဂျူး (module) နယ်နိမိတ်များကို ဆိုးဆိုးရွားရွား ချိုးဖောက်ခြင်း မရှိဘဲ ဂရုတစိုက် ထိန်းချုပ်ထားသော နည်းလမ်းဖြင့် မိတ်ဆက်ပေးလိုပါသည်။
+</p>
+<p>အမျိုးအစား-ကျော်ဖြတ် လုပ်ဆောင်ချက်များကို ကိုင်တွယ်ရန် နည်းလမ်းတစ်ခုမှာ လုပ်ဆောင်ချက်သည် အကျုံးဝင်သည့် ဖြစ်နိုင်ခြေရှိသော အမျိုးအစား ပေါင်းစပ်မှု တစ်ခုချင်းစီအတွက် မတူညီသော လုပ်ထုံးလုပ်နည်း (procedure) တစ်ခုကို ဒီဇိုင်းထုတ်ရန် ဖြစ်သည်။ ဥပမာအားဖြင့်၊ ကျွန်ုပ်တို့သည် ကိန်းရှုပ် (complex number) package ကို ချဲ့ထွင်နိုင်ပြီး ကိန်းရှုပ်များကို သာမန်ကိန်းများ (ordinary numbers) နှင့် ပေါင်းရန် လုပ်ထုံးလုပ်နည်းတစ်ခုကို ပံ့ပိုးပေးကာ ၎င်းကို <code>(complex scheme-number)</code> ဟူသော တက်ဂ် (tag) ကို အသုံးပြု၍ ဇယားတွင် ထည့်သွင်းနိုင်သည်:<a class="footnote_link" id="DOCF115" href="#FOOT115"><sup>115</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">add-complex-to-schemenum z x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">make-from-real-imag </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">real-part z</span><span class="clo">)</span><span class="pln"> x</span><span class="clo">)</span><span class="pln">
+                       </span><span class="opn">(</span><span class="pln">imag-part z</span><span class="clo">)))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">put </span><span class="lit">'add</span><span class="pln"> 
+     </span><span class="lit">'</span><span class="opn">(</span><span class="pln">complex scheme-number</span><span class="clo">)</span><span class="pln">
+     </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">z x</span><span class="clo">)</span><span class="pln"> 
+       </span><span class="opn">(</span><span class="pln">tag </span><span class="opn">(</span><span class="pln">add-complex-to-schemenum z x</span><span class="clo">))))</span></pre></div>
+
+<p>ဤနည်းစနစ်သည် အလုပ်ဖြစ်သော်လည်း ရှုပ်ထွေးလှသည်။ ထိုကဲ့သို့သော စနစ်တစ်ခုတွင် အမျိုးအစားသစ်တစ်ခုကို မိတ်ဆက်ခြင်းအတွက် ကုန်ကျစရိတ်မှာ ထိုအမျိုးအစားအတွက် လုပ်ထုံးလုပ်နည်းများ package ကို တည်ဆောက်ရုံသာမက အမျိုးအစား-ကျော်ဖြတ် လုပ်ဆောင်ချက်များကို အကောင်အထည်ဖော်သည့် လုပ်ထုံးလုပ်နည်းများကို တည်ဆောက်ခြင်းနှင့် တပ်ဆင်ခြင်းတို့လည်း ပါဝင်သည်။ ၎င်းသည် အမျိုးအစားကိုယ်တိုင်ပေါ်တွင် လုပ်ဆောင်ချက်များကို သတ်မှတ်ရန် လိုအပ်သည်ထက် ပိုမိုများပြားသော ကုဒ်များ ဖြစ်လာနိုင်သည်။ ဤနည်းလမ်းသည် သီးခြား package များကို ပေါင်းစပ်နိုင်စွမ်းကိုလည်း လျော့နည်းစေသည်၊ သို့မဟုတ် အနည်းဆုံးအားဖြင့် package တစ်ခုချင်းစီကို ဖန်တီးသူများသည် အခြား package များကို ထည့်သွင်းစဉ်းစားရန် လိုအပ်သည့် အတိုင်းအတာကို ကန့်သတ်ရန် ခက်ခဲစေသည်။ ဥပမာအားဖြင့်၊ အထက်ပါ ဥပမာတွင် ကိန်းရှုပ်နှင့် သာမန်ကိန်းများအကြား ရောနှောထားသော လုပ်ဆောင်ချက်များကို ကိုင်တွယ်ခြင်းသည် ကိန်းရှုပ် package ၏ တာဝန်ဖြစ်သင့်သည်ဟု ထင်ရသည်။ သို့သော် ရာရှင်နယ်ကိန်းများနှင့် ကိန်းရှုပ်များကို ပေါင်းစပ်ခြင်းကိုမူ ကိန်းရှုပ် package၊ ရာရှင်နယ် package သို့မဟုတ် ဤ package နှစ်ခုမှ ထုတ်ယူထားသော လုပ်ဆောင်ချက်များကို အသုံးပြုသည့် တတိယ package တစ်ခုခုမှ လုပ်ဆောင်ကောင်း လုပ်ဆောင်နိုင်သည်။ package များအကြား တာဝန်ခွဲဝေမှုဆိုင်ရာ ညီညွတ်သော မူဝါဒများကို ချမှတ်ခြင်းသည် package များစွာနှင့် အမျိုးအစား-ကျော်ဖြတ် လုပ်ဆောင်ချက်များစွာ ရှိသော စနစ်များကို ဒီဇိုင်းထုတ်ရာတွင် အလွန်ခက်ခဲသော အလုပ်တစ်ခု ဖြစ်လာနိုင်သည်။
+</p>
+<a id="Coercion"></a>
+<h5 class="subsubheading">Coercion</h5>
+
+<p>လုံးဝမသက်ဆိုင်သော အမျိုးအစားများပေါ်တွင် လုပ်ဆောင်နေသည့် လုံးဝမသက်ဆိုင်သော လုပ်ဆောင်ချက်များ၏ ယေဘုယျ အခြေအနေတွင်၊ အမျိုးအစား-ကျော်ဖြတ် လုပ်ဆောင်ချက်များကို အတိအလင်း အကောင်အထည်ဖော်ခြင်းသည် ရှုပ်ထွေးသော်လည်း အကောင်းဆုံး မျှော်လင့်နိုင်သည့် အရာဖြစ်သည်။ ကံကောင်းထောက်မစွာဖြင့်၊ ကျွန်ုပ်တို့၏ အမျိုးအစားစနစ်တွင် ရှိနေနိုင်သော ထပ်ဆောင်းတည်ဆောက်ပုံများကို အသုံးချခြင်းဖြင့် ပိုမိုကောင်းမွန်အောင် ပြုလုပ်နိုင်သည်။ မကြာခဏဆိုသလို မတူညီသော ဒေတာအမျိုးအစားများသည် လုံးဝ သီးခြားဖြစ်မနေဘဲ အမျိုးအစားတစ်ခုမှ အရာဝတ္ထုများကို အခြားအမျိုးအစားတစ်ခုအဖြစ် ရှုမြင်နိုင်သည့် နည်းလမ်းများ ရှိနိုင်သည်။ ဤလုပ်ငန်းစဉ်ကို <a id="index-coercion"></a>
+<em>coercion</em> ဟု ခေါ်သည်။
+ဥပမာအားဖြင့်၊ သာမန်ကိန်းတစ်ခုကို ကိန်းရှုပ်တစ်ခုနှင့် အရိသ်မက်တစ်နည်းအရ ပေါင်းစပ်ရန် တောင်းဆိုခံရပါက၊ သာမန်ကိန်းကို စိတ်ကူးယဉ်အပိုင်း (imaginary part) သုညဖြစ်သော ကိန်းရှုပ်တစ်ခုအဖြစ် ရှုမြင်နိုင်သည်။ ဤအရာက ပြဿနာကို ကိန်းရှုပ်နှစ်ခု ပေါင်းစပ်ခြင်းအဖြစ်သို့ ပြောင်းလဲပေးလိုက်ပြီး ကိန်းရှုပ်-အရိသ်မက်တစ် (complex-arithmetic) package မှ ပုံမှန်အတိုင်း ကိုင်တွယ်နိုင်သည်။
+</p>
+<p>ယေဘုယျအားဖြင့်၊ အမျိုးအစားတစ်ခုမှ အရာဝတ္ထုတစ်ခုကို အခြားအမျိုးအစားတစ်ခု၏ ညီမျှသော အရာဝတ္ထုတစ်ခုအဖြစ်သို့ ပြောင်းလဲပေးသည့် coercion လုပ်ထုံးလုပ်နည်းများကို ဒီဇိုင်းထုတ်ခြင်းဖြင့် ဤစိတ်ကူးကို အကောင်အထည်ဖော်နိုင်သည်။ ဤသည်မှာ ပေးထားသော သာမန်ကိန်းတစ်ခုကို ထိုကိန်းစစ်အပိုင်း (real part) နှင့် သုညဖြစ်သော စိတ်ကူးယဉ်အပိုင်းတို့ ပါဝင်သည့် ကိန်းရှုပ်တစ်ခုအဖြစ်သို့ ပြောင်းလဲပေးသော ပုံစံကျ coercion လုပ်ထုံးလုပ်နည်းတစ်ခု ဖြစ်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">scheme-number-</span><span class="pun">&gt;</span><span class="pln">complex n</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">make-complex-from-real-imag 
+   </span><span class="opn">(</span><span class="pln">contents n</span><span class="clo">)</span><span class="pln"> </span><span class="lit">0</span><span class="clo">))</span></pre></div>
+
+<p>ဤ coercion လုပ်ထုံးလုပ်နည်းများကို အမျိုးအစားနှစ်ခု၏ အမည်များအောက်တွင် အညွှန်းတပ်ထားသော အထူး coercion ဇယားတွင် ကျွန်ုပ်တို့ ထည့်သွင်းသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">put-coercion </span><span class="lit">'scheme-number</span><span class="pln"> </span><span class="lit">'complex</span><span class="pln"> 
+              scheme-number-</span><span class="pun">&gt;</span><span class="pln">complex</span><span class="clo">)</span></pre></div>
+
+<p>(ဤဇယားကို စီမံခန့်ခွဲရန်အတွက် <code>put-coercion</code> နှင့် <code>get-coercion</code> လုပ်ထုံးလုပ်နည်းများ ရှိသည်ဟု ကျွန်ုပ်တို့ ယူဆပါသည်။) ယေဘုယျအားဖြင့် အမျိုးအစားတစ်ခုစီမှ မည်သည့် ဒေတာအရာဝတ္ထုကိုမဆို အခြား အမျိုးအစားအားလုံးသို့ ပြောင်းလဲရန် (coerce) အမြဲတမ်း မဖြစ်နိုင်သောကြောင့် ဇယားရှိ အချို့သော နေရာလွတ်များသည် အလွတ်ဖြစ်နေလိမ့်မည်။ ဥပမာအားဖြင့်၊ မည်သည့် ကိန်းရှုပ်ကိုမဆို သာမန်ကိန်းတစ်ခုအဖြစ်သို့ ပြောင်းလဲရန် နည်းလမ်းမရှိသောကြောင့် ဇယားတွင် ယေဘုယျ <code>complex-&gt;scheme-number</code> လုပ်ထုံးလုပ်နည်း ပါဝင်မည်မဟုတ်ပါ။
+</p>
+<p>coercion ဇယားကို သတ်မှတ်ပြီးသည်နှင့်၊ <a href="2_002e4.xhtml#g_t2_002e4_002e3">2.4.3</a> မှ <code>apply-generic</code> လုပ်ထုံးလုပ်နည်းကို ပြင်ဆင်ခြင်းဖြင့် coercion ကို တစ်ပြေးညီ ကိုင်တွယ်နိုင်သည်။ လုပ်ဆောင်ချက်တစ်ခုကို အသုံးချရန် တောင်းဆိုသောအခါ၊ ယခင်အတိုင်းပင် အငြင်းအခုံများ၏ အမျိုးအစားများအတွက် လုပ်ဆောင်ချက်ကို သတ်မှတ်ထားခြင်း ရှိ၊ မရှိကို အရင်စစ်ဆေးသည်။ ရှိပါက၊ လုပ်ဆောင်ချက်-နှင့်-အမျိုးအစား (operation-and-type) ဇယားတွင် တွေ့ရသော လုပ်ထုံးလုပ်နည်းသို့ လွှဲပြောင်းပေးသည်။ မရှိပါက၊ coercion ကို စမ်းကြည့်သည်။ ရိုးရှင်းစေရန်အတွက် အငြင်းအခုံ နှစ်ခုသာ ရှိသော အခြေအနေကိုသာ ကျွန်ုပ်တို့ ထည့်သွင်းစဉ်းစားမည်။<a class="footnote_link" id="DOCF116" href="#FOOT116"><sup>116</sup></a> ပထမအမျိုးအစားမှ အရာဝတ္ထုများကို ဒုတိယအမျိုးအစားသို့ ပြောင်းလဲနိုင်ခြင်း ရှိ၊ မရှိ သိနိုင်ရန် coercion ဇယားကို ကျွန်ုပ်တို့ စစ်ဆေးသည်။ ရှိပါက၊ ပထမအငြင်းအခုံကို ပြောင်းလဲပြီး လုပ်ဆောင်ချက်ကို ထပ်မံကြိုးစားသည်။ ပထမအမျိုးအစားမှ အရာဝတ္ထုများကို ဒုတိယအမျိုးအစားသို့ ယေဘုယျအားဖြင့် ပြောင်းလဲ၍မရပါက၊ ဒုတိယအငြင်းအခုံကို ပထမအငြင်းအခုံ၏ အမျိုးအစားသို့ ပြောင်းလဲရန် နည်းလမ်းရှိ၊ မရှိ အပြန်အလှန် စမ်းသပ်ကြည့်သည်။ နောက်ဆုံးတွင်၊ အမျိုးအစားတစ်ခုကို အခြားတစ်ခုသို့ ပြောင်းလဲရန် သိရှိထားသော နည်းလမ်းမရှိပါက၊ ကျွန်ုပ်တို့ လက်လျှော့လိုက်သည်။ ဤသည်မှာ လုပ်ထုံးလုပ်နည်း ဖြစ်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">apply-generic op </span><span class="pun">.</span><span class="pln"> args</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">type-tags </span><span class="opn">(</span><span class="pln">map type-tag args</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">proc </span><span class="opn">(</span><span class="pln">get op type-tags</span><span class="clo">)))</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> proc
+          </span><span class="opn">(</span><span class="pln">apply proc </span><span class="opn">(</span><span class="pln">map contents args</span><span class="clo">))</span><span class="pln">
+          </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> </span><span class="opn">(</span><span class="pln">length args</span><span class="clo">)</span><span class="pln"> </span><span class="lit">2</span><span class="clo">)</span><span class="pln">
+              </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">type1 </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> type-tags</span><span class="clo">))</span><span class="pln">
+                    </span><span class="opn">(</span><span class="pln">type2 </span><span class="opn">(</span><span class="cadr">cadr</span><span class="pln"> type-tags</span><span class="clo">))</span><span class="pln">
+                    </span><span class="opn">(</span><span class="pln">a1 </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> args</span><span class="clo">))</span><span class="pln">
+                    </span><span class="opn">(</span><span class="pln">a2 </span><span class="opn">(</span><span class="cadr">cadr</span><span class="pln"> args</span><span class="clo">)))</span><span class="pln">
+                </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">t1-</span><span class="pun">&gt;</span><span class="pln">t2 
+                       </span><span class="opn">(</span><span class="pln">get-coercion type1
+                                     type2</span><span class="clo">))</span><span class="pln">
+                      </span><span class="opn">(</span><span class="pln">t2-</span><span class="pun">&gt;</span><span class="pln">t1 
+                       </span><span class="opn">(</span><span class="pln">get-coercion type2 
+                                     type1</span><span class="clo">)))</span><span class="pln">
+                  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">(</span><span class="pln">t1-</span><span class="pun">&gt;</span><span class="pln">t2
+                         </span><span class="opn">(</span><span class="pln">apply-generic 
+                          op </span><span class="opn">(</span><span class="pln">t1-</span><span class="pun">&gt;</span><span class="pln">t2 a1</span><span class="clo">)</span><span class="pln"> a2</span><span class="clo">))</span><span class="pln">
+                        </span><span class="opn">(</span><span class="pln">t2-</span><span class="pun">&gt;</span><span class="pln">t1
+                         </span><span class="opn">(</span><span class="pln">apply-generic 
+                          op a1 </span><span class="opn">(</span><span class="pln">t2-</span><span class="pun">&gt;</span><span class="pln">t1 a2</span><span class="clo">)))</span><span class="pln">
+                        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln">
+                         </span><span class="opn">(</span><span class="err">error</span><span class="pln"> 
+                          </span><span class="str">"No method for 
+                           these types"</span><span class="pln">
+                          </span><span class="opn">(</span><span class="pln">list 
+                           op 
+                           type-tags</span><span class="clo">))))))</span><span class="pln">
+              </span><span class="opn">(</span><span class="err">error</span><span class="pln"> 
+               </span><span class="str">"No method for these types"</span><span class="pln">
+               </span><span class="opn">(</span><span class="pln">list op type-tags</span><span class="clo">)))))))</span></pre></div>
+
+<p>ဤ coercion စနစ်သည် အထက်တွင် ဖော်ပြခဲ့သော အတိအလင်း အမျိုးအစား-ကျော်ဖြတ် လုပ်ဆောင်ချက်များကို သတ်မှတ်သည့် နည်းလမ်းထက် အားသာချက်များစွာ ရှိပါသည်။ အမျိုးအစားများကို ဆက်စပ်ပေးရန် coercion လုပ်ထုံးလုပ်နည်းများကို ရေးသားရန် လိုအပ်နေသေးသော်လည်း (အမျိုးအစား <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ခုရှိသော စနစ်တစ်ခုအတွက် ဖြစ်နိုင်ခြေရှိသော လုပ်ထုံးလုပ်နည်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mi>n</mi>
+    <mn>2</mn>
+  </msup>
+</math> ခု)၊ အမျိုးအစား အစုအဝေးတစ်ခုစီနှင့် ဂျန်နရစ် (generic) လုပ်ဆောင်ချက် တစ်ခုစီအတွက် မတူညီသော လုပ်ထုံးလုပ်နည်းတစ်ခုစီ ရေးမည့်အစား အမျိုးအစား တစ်တွဲစီအတွက် လုပ်ထုံးလုပ်နည်း တစ်ခုစီသာ ရေးသားရန် လိုအပ်ပါသည်။<a class="footnote_link" id="DOCF117" href="#FOOT117"><sup>117</sup></a> ကျွန်ုပ်တို့ ဤနေရာတွင် အားကိုးနေသည်မှာ အမျိုးအစားများအကြား သင့်လျော်သော အသွင်ပြောင်းမှုသည် အမျိုးအစားများအပေါ်တွင်သာ မူတည်ပြီး အသုံးချမည့် လုပ်ဆောင်ချက်ပေါ်တွင် မူတည်ခြင်း မရှိဟူသော အချက်ပင် ဖြစ်သည်။
+</p>
+<p>အခြားတစ်ဖက်တွင်မူ၊ ကျွန်ုပ်တို့၏ coercion စနစ်သည် လုံလောက်သော ယေဘုယျ မဆန်သည့် အသုံးချမှုများလည်း ရှိနိုင်ပါသည်။ ပေါင်းစပ်မည့် အရာဝတ္ထုနှစ်ခုလုံးကို အခြားတစ်ခု၏ အမျိုးအစားသို့ ပြောင်းလဲ၍မရသည့်တိုင်အောင်၊ အရာဝတ္ထုနှစ်ခုလုံးကို တတိယ အမျိုးအစားတစ်ခုသို့ ပြောင်းလဲခြင်းဖြင့် လုပ်ဆောင်ချက်ကို လုပ်ဆောင်နိုင်ကောင်း လုပ်ဆောင်နိုင်သည်။ ထိုကဲ့သို့သော ရှုပ်ထွေးမှုများကို ကိုင်တွယ်ရန်နှင့် ကျွန်ုပ်တို့၏ ပရိုဂရမ်များတွင် မော်ဂျူးဖြစ်မှု (modularity) ကို ထိန်းသိမ်းထားနိုင်ရန်အတွက်၊ နောက်တွင် ဆွေးနွေးမည့်အတိုင်း အမျိုးအစားများအကြား ဆက်နွယ်မှုများရှိ နောက်ထပ် တည်ဆောက်ပုံများကို အသုံးချသည့် စနစ်များကို တည်ဆောက်ရန် များသောအားဖြင့် လိုအပ်ပါသည်။
+</p>
+<a id="Hierarchies-of-types"></a>
+<h5 class="subsubheading">Hierarchies of types</h5>
+
+<p>အထက်တွင် တင်ပြခဲ့သော coercion စနစ်သည် အမျိုးအစား အစုံများအကြား သဘာဝကျသော ဆက်နွယ်မှုများ ရှိနေခြင်းအပေါ် အခြေခံထားသည်။ မကြာခဏဆိုသလို မတူညီသော အမျိုးအစားများ အချင်းချင်း မည်သို့ ဆက်နွယ်နေသည်ဟူသော အချက်တွင် ပိုမို "ကမ္ဘာလုံးဆိုင်ရာ" (global) ကျသော တည်ဆောက်ပုံများ ရှိတတ်သည်။ ဥပမာအားဖြင့်၊ အင်တီဂျာ (integers) များ၊ ရာရှင်နယ်ကိန်းများ၊ ကိန်းစစ်များနှင့် ကိန်းရှုပ်များကို ကိုင်တွယ်ရန် ဂျန်နရစ် အရိသ်မက်တစ် စနစ်တစ်ခုကို တည်ဆောက်နေသည်ဟု ဆိုပါစို့။ ထိုသို့သော စနစ်မျိုးတွင် အင်တီဂျာတစ်ခုကို ရာရှင်နယ်ကိန်း အမျိုးအစားတစ်ခုအဖြစ် မှတ်ယူရန်မှာ အလွန် သဘာဝကျပြီး၊ ရာရှင်နယ်ကိန်းကို တစ်ဖန် ကိန်းစစ် အမျိုးအစားတစ်ခုအဖြစ်လည်းကောင်း၊ ကိန်းစစ်ကို တစ်ဖန် ကိန်းရှုပ် အမျိုးအစားတစ်ခုအဖြစ်လည်းကောင်း မှတ်ယူနိုင်သည်။ ကျွန်ုပ်တို့တွင် အမှန်တကယ် ရှိနေသည်မှာ <a id="index-hierarchy-of-types"></a>
+<em>hierarchy of types</em> (အမျိုးအစား အဆင့်ဆင့်) ဖြစ်ပြီး၊ ၎င်းတွင် ဥပမာအားဖြင့် အင်တီဂျာများသည် ရာရှင်နယ်ကိန်းများ၏ <a id="index-subtype"></a>
+<em>subtype</em> (အမျိုးအစားခွဲ) ဖြစ်သည် (ဆိုလိုသည်မှာ ရာရှင်နယ်ကိန်းတစ်ခုတွင် အသုံးပြုနိုင်သော မည်သည့် လုပ်ဆောင်ချက်ကိုမဆို အင်တီဂျာတစ်ခုတွင်လည်း အလိုအလျောက် အသုံးပြုနိုင်သည်)။ ပြောင်းပြန်အားဖြင့်၊ ရာရှင်နယ်ကိန်းများသည် အင်တီဂျာများ၏ <a id="index-supertype"></a>
+<em>supertype</em> (အထက်တန်းစား အမျိုးအစား) ဖြစ်သည်ဟု ဆိုကြသည်။ ကျွန်ုပ်တို့ ဤနေရာတွင် ရှိနေသော သီးခြား hierarchy မှာ အလွန်ရိုးရှင်းသော အမျိုးအစားဖြစ်ပြီး အမျိုးအစားတစ်ခုစီတွင် အများဆုံး supertype တစ်ခုနှင့် အများဆုံး subtype တစ်ခုသာ ရှိသည်။ <a id="index-tower"></a>
+<em>tower</em> (မျှော်စင်) ဟု ခေါ်သော ထိုကဲ့သို့သော တည်ဆောက်ပုံကို <a href="#Figure-2_002e25">Figure 2.25</a> တွင် သရုပ်ဖော်ထားသည်။
+</p>
+<figure class="float">
+<a id="Figure-2_002e25"></a>
+<object style="width: 8.46ex; height: 22.71ex;" data="fig/chap2/Fig2.25.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>Figure 2.25:</strong> အမျိုးအစား မျှော်စင်တစ်ခု။</p>
+</figcaption>
+</figure>
+
+<p>ကျွန်ုပ်တို့တွင် tower တည်ဆောက်ပုံရှိပါက၊ hierarchy ထဲသို့ အမျိုးအစားသစ်တစ်ခု ထည့်သွင်းခြင်း ပြဿနာကို များစွာ ရိုးရှင်းစေနိုင်သည်၊ အကြောင်းမှာ အမျိုးအစားသစ်သည် ၎င်း၏ အထက်ရှိ နောက်ထပ် supertype တွင် မည်သို့ အံဝင်ခွင်ကျ ဖြစ်သည်နှင့် ၎င်း၏ အောက်ရှိ အမျိုးအစား၏ supertype မည်သို့ ဖြစ်သည်ကိုသာ ဖော်ပြရန် လိုအပ်သောကြောင့် ဖြစ်သည်။ ဥပမာအားဖြင့်၊ ကျွန်ုပ်တို့သည် အင်တီဂျာတစ်ခုကို ကိန်းရှုပ်တစ်ခုသို့ ပေါင်းလိုပါက၊ <code>integer-&gt;complex</code> ဟူသော အထူး coercion လုပ်ထုံးလုပ်နည်းကို အတိအလင်း သတ်မှတ်ရန် မလိုပါ။ အစား၊ အင်တီဂျာတစ်ခုကို ရာရှင်နယ်ကိန်းအဖြစ် မည်သို့ ပြောင်းလဲနိုင်သည်၊ ရာရှင်နယ်ကိန်းတစ်ခုကို ကိန်းစစ်အဖြစ် မည်သို့ ပြောင်းလဲသည်၊ နှင့် ကိန်းစစ်တစ်ခုကို ကိန်းရှုပ်အဖြစ် မည်သို့ ပြောင်းလဲသည်တို့ကို ကျွန်ုပ်တို့ သတ်မှတ်သည်။ ထို့နောက် အင်တီဂျာကို ဤအဆင့်များမှတစ်ဆင့် ကိန်းရှုပ်အဖြစ်သို့ ပြောင်းလဲရန် စနစ်အား ခွင့်ပြုပြီးနောက် ကိန်းရှုပ်နှစ်ခုကို ပေါင်းလိုက်သည်။
+</p>
+<p>ကျွန်ုပ်တို့၏ <code>apply-generic</code> လုပ်ထုံးလုပ်နည်းကို အောက်ပါအတိုင်း ပြန်လည် ဒီဇိုင်းထုတ်နိုင်သည်- အမျိုးအစား တစ်ခုစီအတွက်၊ ထိုအမျိုးအစားရှိ အရာဝတ္ထုများကို tower ၏ အထက်တစ်ဆင့်သို့ "မြှင့်တင်ပေးသော" (raises) <code>raise</code> လုပ်ထုံးလုပ်နည်းတစ်ခုကို ပံ့ပိုးပေးရန် လိုအပ်သည်။ ထို့နောက် စနစ်သည် မတူညီသော အမျိုးအစားရှိ အရာဝတ္ထုများပေါ်တွင် အလုပ်လုပ်ရန် လိုအပ်လာသောအခါ၊ အရာဝတ္ထုများ အားလုံးသည် tower ၏ အဆင့်တစ်ခုတည်းသို့ ရောက်ရှိသည်အထိ နိမ့်သော အမျိုးအစားများကို ဆက်တိုက် မြှင့်တင်ပေးနိုင်သည်။ (<a href="#Exercise-2_002e83">Exercise 2.83</a> နှင့် <a href="#Exercise-2_002e84">Exercise 2.84</a> တို့သည် ထိုကဲ့သို့သော ဗျူဟာကို အကောင်အထည်ဖော်ခြင်း၏ အသေးစိတ် အချက်အလက်များနှင့် သက်ဆိုင်သည်။)
+</p>
+<p>tower ၏ နောက်ထပ် အားသာချက်တစ်ခုမှာ အမျိုးအစားတိုင်းသည် supertype ပေါ်တွင် သတ်မှတ်ထားသော လုပ်ဆောင်ချက်အားလုံးကို "အမွေဆက်ခံသည်" (inherits) ဟူသော အယူအဆကို အလွယ်တကူ အကောင်အထည်ဖော်နိုင်ခြင်း ဖြစ်သည်။ ဥပမာအားဖြင့်၊ အင်တီဂျာတစ်ခု၏ ကိန်းစစ်အပိုင်းကို ရှာရန် အထူးလုပ်ထုံးလုပ်နည်းတစ်ခုကို မပံ့ပိုးထားသော်လည်း၊ အင်တီဂျာများသည် ကိန်းရှုပ်များ၏ subtype ဖြစ်နေသည့်အတွက် <code>real-part</code> သည် အင်တီဂျာများအတွက် သတ်မှတ်ပြီးသား ဖြစ်နေလိမ့်မည်ဟု ကျွန်ုပ်တို့ မျှော်လင့်သင့်သည်။ tower တစ်ခုတွင်၊ <code>apply-generic</code> ကို ပြင်ဆင်ခြင်းဖြင့် ၎င်းကို တစ်ပြေးညီ ဖြစ်ပျက်စေရန် စီစဉ်နိုင်သည်။ လိုအပ်သော လုပ်ဆောင်ချက်ကို ပေးထားသော အရာဝတ္ထု၏ အမျိုးအစားအတွက် တိုက်ရိုက် သတ်မှတ်မထားပါက၊ အရာဝတ္ထုကို ၎င်း၏ supertype သို့ မြှင့်တင်ပြီး ထပ်မံ ကြိုးစားသည်။ ဤသို့ဖြင့် လိုချင်သော လုပ်ဆောင်ချက်ကို လုပ်ဆောင်နိုင်သည့် အဆင့်တစ်ခုကို တွေ့သည့်အထိ သို့မဟုတ် ထိပ်ဆုံးသို့ ရောက်သည့်အထိ (ထိုအခြေအနေတွင် ကျွန်ုပ်တို့ လက်လျှော့လိုက်သည်) ကျွန်ုပ်တို့၏ အငြင်းအခုံကို ပြောင်းလဲရင်း tower ပေါ်သို့ တက်သွားနိုင်သည်။
+</p>
+<p>ယေဘုယျကျသော hierarchy ထက် tower ၏ နောက်ထပ် အားသာချက်တစ်ခုမှာ ဒေတာအရာဝတ္ထုတစ်ခုကို အရိုးရှင်းဆုံး ကိုယ်စားပြုမှုသို့ "နှိမ့်ချရန်" (lower) ရိုးရှင်းသော နည်းလမ်းကို ပေးစွမ်းခြင်း ဖြစ်သည်။ ဥပမာအားဖြင့်၊ ကျွန်ုပ်တို့သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>2</mn>
+    <mo>+</mo>
+    <mn>3</mn>
+    <mi>i</mi>
+  </mrow>
+</math> ကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>4</mn>
+    <mo>−<!-- − --></mo>
+    <mn>3</mn>
+    <mi>i</mi>
+  </mrow>
+</math> နှင့် ပေါင်းပါက၊ ရလဒ်ကို ကိန်းရှုပ် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>6</mn>
+    <mo>+</mo>
+    <mn>0</mn>
+    <mi>i</mi>
+  </mrow>
+</math> အဖြစ် ရရှိမည့်အစား အင်တီဂျာ 6 အဖြစ် ရရှိလျှင် ကောင်းလိမ့်မည်။
+<a href="#Exercise-2_002e85">Exercise 2.85</a> တွင် ထိုကဲ့သို့သော lowering လုပ်ဆောင်ချက်ကို အကောင်အထည်ဖော်သည့် နည်းလမ်းကို ဆွေးနွေးထားသည်။
+(လှည့်ကွက်မှာ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>6</mn>
+    <mo>+</mo>
+    <mn>0</mn>
+    <mi>i</mi>
+  </mrow>
+</math> ကဲ့သို့သော နှိမ့်ချနိုင်သော အရာဝတ္ထုများကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>6</mn>
+    <mo>+</mo>
+    <mn>2</mn>
+    <mi>i</mi>
+  </mrow>
+</math> ကဲ့သို့သော နှိမ့်ချ၍မရသော အရာဝတ္ထုများမှ ခွဲခြားသိမြင်ရန် ယေဘုယျနည်းလမ်းတစ်ခု လိုအပ်ခြင်းပင် ဖြစ်သည်။)
+</p>
+<a id="Inadequacies-of-hierarchies"></a>
+<h5 class="subsubheading">Inadequacies of hierarchies</h5>
+
+<p>ကျွန်ုပ်တို့၏ စနစ်ရှိ ဒေတာအမျိုးအစားများကို tower တစ်ခုတွင် သဘာဝကျကျ စီစဉ်နိုင်ပါက၊ ကျွန်ုပ်တို့ တွေ့ခဲ့ရသည့်အတိုင်း မတူညီသော အမျိုးအစားများပေါ်ရှိ ဂျန်နရစ် လုပ်ဆောင်ချက်များကို ကိုင်တွယ်ရသည့် ပြဿနာများကို များစွာ ရိုးရှင်းစေသည်။ ကံမကောင်းစွာဖြင့်၊ များသောအားဖြင့် ထိုသို့ မဟုတ်ကြပါ။
+<a href="#Figure-2_002e26">Figure 2.26</a> သည် ရောနှောထားသော အမျိုးအစားများ၏ ပိုမိုရှုပ်ထွေးသော စီစဉ်မှုကို သရုပ်ဖော်ထားပြီး၊ ဤအရာသည် ဂျီဩမေတြီ ရုပ်ပုံလွှာ အမျိုးအစားများအကြား ဆက်နွယ်မှုများကို ပြသနေသည်။ ယေဘုယျအားဖြင့် အမျိုးအစားတစ်ခုတွင် subtype တစ်ခုထက်မက ရှိနိုင်သည်ကို ကျွန်ုပ်တို့ တွေ့ရသည်။ ဥပမာအားဖြင့် တြိဂံများနှင့် စတုဂံများသည် နှစ်ခုလုံး ပိုလီဂွန် (polygons) များ၏ subtype များ ဖြစ်ကြသည်။ ထို့အပြင် အမျိုးအစားတစ်ခုတွင် supertype တစ်ခုထက်မကလည်း ရှိနိုင်သည်။ ဥပမာအားဖြင့် နားသန်ထောင့်မှန်တြိဂံ (isosceles right triangle) တစ်ခုကို နားသန်တြိဂံ သို့မဟုတ် ထောင့်မှန်တြိဂံ အဖြစ် ရှုမြင်နိုင်သည်။ ဤ supertype အများအပြား ရှိနေခြင်း ပြဿနာမှာ အထူးသဖြင့် ခက်ခဲလှသည်၊ အကြောင်းမှာ ၎င်းသည် hierarchy တွင် အမျိုးအစားတစ်ခုကို "မြှင့်တင်ရန်" ထူးခြားသော နည်းလမ်းတစ်ခုတည်း မရှိဟု ဆိုလိုသောကြောင့် ဖြစ်သည်။
+အရာဝတ္ထုတစ်ခုသို့ လုပ်ဆောင်ချက်တစ်ခု အသုံးချရန်အတွက် "မှန်ကန်သော" supertype ကို ရှာဖွေခြင်းသည် <code>apply-generic</code> ကဲ့သို့သော လုပ်ထုံးလုပ်နည်းအတွက် တစ်ခုလုံးသော အမျိုးအစား ကွန်ရက်တစ်လျှောက် အတော်အတန် ရှာဖွေရန် လိုအပ်နိုင်သည်။ အမျိုးအစားတစ်ခုအတွက် subtype အများအပြား ရှိနေလေ့ရှိသောကြောင့်၊ တန်ဖိုးတစ်ခုကို အမျိုးအစား hierarchy အောက်သို့ "နှိမ့်ချရန်" (coercing down) တွင်လည်း အလားတူ ပြဿနာမျိုး ရှိသည်။ ကြီးမားသော စနစ်များကို ဒီဇိုင်းထုတ်ရာတွင် မော်ဂျူးဖြစ်မှုကို ထိန်းသိမ်းထားရင်း အပြန်အလှန် ဆက်နွယ်နေသော အမျိုးအစား အမြောက်အမြားကို ကိုင်တွယ်ခြင်းသည် အလွန်ခက်ခဲပြီး လက်ရှိ သုတေသန ပြုလုပ်နေသော နယ်ပယ်တစ်ခု ဖြစ်သည်။<a class="footnote_link" id="DOCF118" href="#FOOT118"><sup>118</sup></a>
+</p>
+<figure class="float">
+<a id="Figure-2_002e26"></a>
+<object style="width: 68.12ex; height: 44.21ex;" data="fig/chap2/Fig2.26f.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>Figure 2.26:</strong> ဂျီဩမေတြီ ရုပ်ပုံလွှာ အမျိုးအစားများအကြား ဆက်နွယ်မှုများ။</p>
+</figcaption>
+</figure>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e81"></a>Exercise 2.81:</strong> Louis Reasoner သည် <code>apply-generic</code> သည် အငြင်းအခုံများမှာ အမျိုးအစား တူညီနေစေကာမူ တစ်ခု၏ အမျိုးအစားကို အခြားတစ်ခု၏ အမျိုးအစားသို့ ပြောင်းလဲရန် (coerce) ကြိုးစားနိုင်သည်ကို သတိပြုမိခဲ့သည်။ ထို့ကြောင့်၊ အမျိုးအစားတစ်ခုစီ၏ အငြင်းအခုံများကို ၎င်းတို့၏ ကိုယ်ပိုင်အမျိုးအစားသို့ <a id="index-coerce"></a>
+<em>coerce</em> လုပ်ရန် coercion ဇယားတွင် လုပ်ထုံးလုပ်နည်းများကို ထည့်သွင်းရန် လိုအပ်သည်ဟု သူက တွေးဆသည်။ ဥပမာအားဖြင့်၊ အထက်တွင် ဖော်ပြထားသော <code>scheme-number-&gt;complex</code> coercion အပြင်၊ သူသည် အောက်ပါတို့ကို ပြုလုပ်လိမ့်မည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">scheme-number-</span><span class="pun">&gt;</span><span class="pln">scheme-number n</span><span class="clo">)</span><span class="pln"> n</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">complex-</span><span class="pun">&gt;</span><span class="pln">complex z</span><span class="clo">)</span><span class="pln"> z</span><span class="clo">)</span><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">put-coercion </span><span class="lit">'scheme-number</span><span class="pln"> </span><span class="lit">'scheme-number</span><span class="pln">
+              scheme-number-</span><span class="pun">&gt;</span><span class="pln">scheme-number</span><span class="clo">)</span><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">put-coercion </span><span class="lit">'complex</span><span class="pln"> </span><span class="lit">'complex</span><span class="pln"> 
+              complex-</span><span class="pun">&gt;</span><span class="pln">complex</span><span class="clo">)</span></pre></div>
+
+<ol>
+<li> Louis ၏ coercion လုပ်ထုံးလုပ်နည်းများကို ထည့်သွင်းထားလျှင်၊ ထိုအမျိုးအစားများအတွက် ဇယားတွင် ရှာမတွေ့သော လုပ်ဆောင်ချက်တစ်ခုအတွက် <code>apply-generic</code> ကို <code>scheme-number</code> အမျိုးအစား အငြင်းအခုံ နှစ်ခု သို့မဟုတ် <code>complex</code> အမျိုးအစား အငြင်းအခုံ နှစ်ခုနှင့် ခေါ်ဆိုပါက မည်သို့ ဖြစ်ပျက်မည်နည်း။ ဥပမာအားဖြင့်၊ ကျွန်ုပ်တို့သည် ဂျန်နရစ် ထပ်ကိန်း (exponentiation) လုပ်ဆောင်ချက်တစ်ခုကို သတ်မှတ်ထားသည်ဟု ယူဆပါ-
+
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">exp x y</span><span class="clo">)</span><span class="pln"> 
+  </span><span class="opn">(</span><span class="pln">apply-generic </span><span class="lit">'exp</span><span class="pln"> x y</span><span class="clo">))</span></pre></div>
+
+<p>ထို့နောက် ထပ်ကိန်းအတွက် လုပ်ထုံးလုပ်နည်းတစ်ခုကို Scheme-number package တွင် ထည့်သွင်းထားသော်လည်း အခြား မည်သည့် package တွင်မှ ထည့်မထားပါ-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="roman"><span class="com">;; following added to Scheme-number package</span></span><span class="pln">
+</span><span class="opn">(</span><span class="pln">put </span><span class="lit">'exp</span><span class="pln"> 
+     </span><span class="lit">'</span><span class="opn">(</span><span class="pln">scheme-number scheme-number</span><span class="clo">)</span><span class="pln">
+     </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">x y</span><span class="clo">)</span><span class="pln"> 
+       </span><span class="opn">(</span><span class="pln">tag </span><span class="opn">(</span><span class="pln">expt x y</span><span class="clo">))))</span><span class="pln"> 
+       </span><span class="roman"><span class="com">; using primitive </span><code><span class="com">expt</span></code></span>
+</pre></div>
+
+<p>ကျွန်ုပ်တို့သည် <code>exp</code> ကို ကိန်းရှုပ်နှစ်ခုကို အငြင်းအခုံများအဖြစ် အသုံးပြု၍ ခေါ်ဆိုပါက မည်သို့ ဖြစ်မည်နည်း။
+</p>
+</li><li> အမျိုးအစား တူညီနေသော အငြင်းအခုံများနှင့် ပတ်သက်၍ coercion အတွက် တစ်ခုခု လုပ်ဆောင်ရမည်ဟူသော Louis ၏ အဆိုမှာ မှန်ကန်ပါသလား၊ သို့မဟုတ် <code>apply-generic</code> သည် ရှိရင်းစွဲအတိုင်း မှန်ကန်စွာ အလုပ်လုပ်ပါသလား။
+
+</li><li> အငြင်းအခုံ နှစ်ခုမှာ အမျိုးအစား တူညီနေပါက coercion ကို မကြိုးစားရန် <code>apply-generic</code> ကို ပြင်ဆင်ပါ။
+
+</li></ol>
+</blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e82"></a>Exercise 2.82:</strong> အငြင်းအခုံ အများအပြားရှိသော ယေဘုယျ အခြေအနေတွင် coercion ကို ကိုင်တွယ်ရန် <code>apply-generic</code> ကို မည်သို့ ယေဘုယျပြုရမည်ကို ပြသပါ။ ဗျူဟာတစ်ခုမှာ အငြင်းအခုံ အားလုံးကို ပထမဆုံး အငြင်းအခုံ၏ အမျိုးအစားသို့ ပြောင်းလဲရန် ကြိုးစားခြင်း၊ ထို့နောက် ဒုတိယ အငြင်းအခုံ၏ အမျိုးအစားသို့ ပြောင်းလဲရန် ကြိုးစားခြင်း စသည်ဖြင့် ဖြစ်သည်။ ဤဗျူဟာ (နှင့် အထက်တွင် ပေးထားသော အငြင်းအခုံ နှစ်ခုပါ ဗားရှင်း) သည် လုံလောက်သော ယေဘုယျ မဆန်သည့် အခြေအနေတစ်ခုကို ဥပမာပေးပါ။ (အရိပ်အမြွက်- ဇယားထဲတွင် စမ်းသပ်ခြင်း ခံရမည်မဟုတ်သော သင့်လျော်သည့် အမျိုးအစား-ရောနှော လုပ်ဆောင်ချက် အချို့ ရှိနေနိုင်သည့် အခြေအနေကို စဉ်းစားပါ။)
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e83"></a>Exercise 2.83:</strong> သင်သည် <a href="#Figure-2_002e25">Figure 2.25</a> တွင် ပြထားသော အမျိုးအစား မျှော်စင် (tower of types) ဖြစ်သည့် integer, rational, real, complex တို့ကို ကိုင်တွယ်ရန် ဂျန်နရစ် အရိသ်မက်တစ် စနစ်တစ်ခုကို ဒီဇိုင်းထုတ်နေသည်ဟု ယူဆပါ။ အမျိုးအစား တစ်ခုစီအတွက် (complex မှလွဲ၍)၊ ထိုအမျိုးအစားရှိ အရာဝတ္ထုများကို tower ၏ အထက်တစ်ဆင့်သို့ မြှင့်တင်ပေးသော လုပ်ထုံးလုပ်နည်းတစ်ခုကို ဒီဇိုင်းထုတ်ပါ။ အမျိုးအစား တစ်ခုစီအတွက် (complex မှလွဲ၍) အလုပ်လုပ်မည့် ဂျန်နရစ် <code>raise</code> လုပ်ဆောင်ချက်တစ်ခုကို မည်သို့ တပ်ဆင်ရမည်ကို ပြသပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e84"></a>Exercise 2.84:</strong> <a href="#Exercise-2_002e83">Exercise 2.83</a> ၏ <code>raise</code> လုပ်ဆောင်ချက်ကို အသုံးပြု၍၊ ဤအပိုင်းတွင် ဆွေးနွေးခဲ့သည့်အတိုင်း ဆက်တိုက် မြှင့်တင်ခြင်း (successive raising) နည်းလမ်းဖြင့် ၎င်း၏ အငြင်းအခုံများကို အမျိုးအစား တူညီသွားအောင် ပြုလုပ်ရန် <code>apply-generic</code> လုပ်ထုံးလုပ်နည်းကို ပြင်ဆင်ပါ။ အမျိုးအစား နှစ်ခုတွင် မည်သည့်အမျိုးအစားမှာ tower ၏ အထက်တွင် ပိုရောက်နေသည်ကို စမ်းသပ်ရန် နည်းလမ်းတစ်ခုကို သင် ကြံဆရပါလိမ့်မည်။ ၎င်းကို စနစ်၏ ကျန်ရှိသော အစိတ်အပိုင်းများနှင့် "ကိုက်ညီသော" ပုံစံဖြင့် ပြုလုပ်ပြီး tower သို့ အဆင့်သစ်များ ထည့်သွင်းရာတွင် ပြဿနာ မဖြစ်စေရန် ပြုလုပ်ပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e85"></a>Exercise 2.85:</strong> ဤအပိုင်းတွင် ဒေတာအရာဝတ္ထုတစ်ခုကို အမျိုးအစား မျှော်စင်တွင် ဖြစ်နိုင်သမျှ အောက်ဆုံးသို့ နှိမ့်ချခြင်းဖြင့် "ရိုးရှင်းအောင်" ပြုလုပ်သည့် နည်းလမ်းတစ်ခုကို ဖော်ပြခဲ့သည်။ <a href="#Exercise-2_002e83">Exercise 2.83</a> တွင် ဖော်ပြထားသော tower အတွက် ၎င်းကို လုပ်ဆောင်ပေးသော <code>drop</code> လုပ်ထုံးလုပ်နည်းတစ်ခုကို ဒီဇိုင်းထုတ်ပါ။ အရာဝတ္ထုတစ်ခုကို နှိမ့်ချနိုင်ခြင်း ရှိ၊ မရှိကို ယေဘုယျ နည်းလမ်းတစ်ခုခုဖြင့် ဆုံးဖြတ်ရန်မှာ အဓိက အချက်ဖြစ်သည်။ ဥပမာအားဖြင့်၊ ကိန်းရှုပ် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>1.5</mn>
+    <mo>+</mo>
+    <mn>0</mn>
+    <mi>i</mi>
+  </mrow>
+</math> ကို <code>real</code> အထိ နှိမ့်ချနိုင်ပြီး၊ ကိန်းရှုပ် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>1</mn>
+    <mo>+</mo>
+    <mn>0</mn>
+    <mi>i</mi>
+  </mrow>
+</math> ကို <code>integer</code> အထိ နှိမ့်ချနိုင်ကာ၊ ကိန်းရှုပ် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>2</mn>
+    <mo>+</mo>
+    <mn>3</mn>
+    <mi>i</mi>
+  </mrow>
+</math> ကိုမူ လုံးဝ နှိမ့်ချ၍ မရပါ။ အရာဝတ္ထုတစ်ခုကို နှိမ့်ချနိုင်ခြင်း ရှိ၊ မရှိ ဆုံးဖြတ်ရန် အစီအစဉ်တစ်ခုမှာ ဤသို့ဖြစ်သည်- အရာဝတ္ထုတစ်ခုကို tower အောက်သို့ "တွန်းချပေးသော" ဂျန်နရစ် လုပ်ဆောင်ချက် <code>project</code> ကို အရင်သတ်မှတ်ပါ။ ဥပမာအားဖြင့်၊ ကိန်းရှုပ်တစ်ခုကို project လုပ်ခြင်းတွင် ၎င်း၏ စိတ်ကူးယဉ်အပိုင်းကို ဖယ်ရှားခြင်း ပါဝင်လိမ့်မည်။ ထို့နောက် ကိန်းတစ်ခုကို <code>project</code> လုပ်ပြီး ရလဒ်ကို မူလအမျိုးအစားသို့ ပြန်လည် <code>raise</code> လုပ်သောအခါ မူလကိန်းနှင့် တူညီသော အရာတစ်ခုကို ရရှိပါက ထိုကိန်းကို drop လုပ်နိုင်သည်။ အရာဝတ္ထုတစ်ခုကို ဖြစ်နိုင်သမျှ အောက်ဆုံးအထိ drop လုပ်ပေးသော <code>drop</code> လုပ်ထုံးလုပ်နည်းကို ရေးသားခြင်းဖြင့် ဤစိတ်ကူးကို အသေးစိတ် မည်သို့ အကောင်အထည်ဖော်ရမည်ကို ပြသပါ။ အမျိုးမျိုးသော projection လုပ်ဆောင်ချက်များကို ဒီဇိုင်းထုတ်ပြီး<a class="footnote_link" id="DOCF119" href="#FOOT119"><sup>119</sup></a> <code>project</code> ကို စနစ်တွင် ဂျန်နရစ် လုပ်ဆောင်ချက်တစ်ခုအဖြစ် တပ်ဆင်ရန် လိုအပ်ပါလိမ့်မည်။ <a href="#Exercise-2_002e79">Exercise 2.79</a> တွင် ဖော်ပြထားသည့်အတိုင်း ဂျန်နရစ် တူညီမှု ပရဒီကိတ် (equality predicate) ကိုလည်း အသုံးပြုရန် လိုအပ်ပါလိမ့်မည်။ နောက်ဆုံးတွင်၊ ၎င်း၏ အဖြေများကို "ရိုးရှင်းအောင်" ပြုလုပ်ရန် <a href="#Exercise-2_002e84">Exercise 2.84</a> မှ <code>apply-generic</code> ကို <code>drop</code> ကို အသုံးပြု၍ ပြန်လည် ရေးသားပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e86"></a>Exercise 2.86:</strong> ကျွန်ုပ်တို့သည် ၎င်းတို့၏ ကိန်းစစ်အပိုင်း၊ စိတ်ကူးယဉ်အပိုင်း၊ magnitude နှင့် angle တို့မှာ သာမန်ကိန်းများ၊ ရာရှင်နယ်ကိန်းများ သို့မဟုတ် စနစ်တွင် ကျွန်ုပ်တို့ ထည့်သွင်းလိုသော အခြားကိန်းများ ဖြစ်နိုင်သည့် ကိန်းရှုပ်များကို ကိုင်တွယ်လိုသည်ဟု ဆိုပါစို့။ ၎င်းကို အဆင်ပြေစေရန် စနစ်သို့ ပြုလုပ်ရန် လိုအပ်သော အပြောင်းအလဲများကို ဖော်ပြပြီး အကောင်အထည်ဖော်ပါ။ သာမန်ကိန်းများနှင့် ရာရှင်နယ်ကိန်းများအပေါ်တွင် ဂျန်နရစ် ဖြစ်သော <code>sine</code> နှင့် <code>cosine</code> ကဲ့သို့သော လုပ်ဆောင်ချက်များကို သင် သတ်မှတ်ရပါလိမ့်မည်။
+</p></blockquote>
+
+<a id="g_t2_002e5_002e3"></a>
+<a id="Example_003a-Symbolic-Algebra"></a>
+<h4 class="subsection"><span class="secnum">2.5.3</span><span class="sectitle">ဥပမာ- သင်္ကေတသုံး အက္ခရာသင်္ချာ (Symbolic Algebra)</span></h4>
+
+<p>သင်္ကေတသုံး အက္ခရာသင်္ချာ ဖော်ပြချက် (symbolic algebraic expressions) များကို တွက်ချက်ကိုင်တွယ်ခြင်းသည် အဆင့်မြင့်စနစ်ကြီးများ (large-scale systems) ကို ဒီဇိုင်းထုတ်ရာတွင် ကြုံတွေ့ရလေ့ရှိသည့် အခက်ခဲဆုံး ပြဿနာများစွာကို ဖော်ပြပေးနိုင်သော ရှုပ်ထွေးသည့် လုပ်ငန်းစဉ်တစ်ခု ဖြစ်သည်။ ယေဘုယျအားဖြင့် အက္ခရာသင်္ချာ ဖော်ပြချက်တစ်ခုကို ဆင့်ကဲတည်ဆောက်ပုံ (hierarchical structure) တစ်ခုအဖြစ် ရှုမြင်နိုင်ပြီး၊ ၎င်းသည် operand များအပေါ် သက်ရောက်သည့် operator များ၏ အပင်သဏ္ဌာန်တည်ဆောက်ပုံ (tree) တစ်ခု ဖြစ်သည်။ ကျွန်ုပ်တို့သည် ကိန်းသေ (constants) နှင့် ကိန်းရှင် (variables) များကဲ့သို့သော အခြေခံအရာဝတ္ထု (primitive objects) များမှ စတင်၍၊ ၎င်းတို့ကို ပေါင်းခြင်းနှင့် မြှောက်ခြင်းကဲ့သို့သော အက္ခရာသင်္ချာဆိုင်ရာ operator များဖြင့် ပေါင်းစပ်ကာ အက္ရာသင်္ချာ ဖော်ပြချက်များကို တည်ဆောက်နိုင်သည်။ အခြားသော ဘာသာစကားများကဲ့သို့ပင်၊ ကျွန်ုပ်တို့သည် ပေါင်းစပ်အရာဝတ္ထု (compound objects) များကို ရိုးရှင်းသော အသုံးအနှုန်းများဖြင့် ရည်ညွှန်းနိုင်စေရန် abstraction များကို ဖန်တီးကြသည်။ သင်္ကေတသုံး အက္ခရာသင်္ချာတွင် တွေ့ရလေ့ရှိသော abstraction များမှာ linear combination၊ ပိုလီနိုမီယယ် (polynomial)၊ rational function သို့မဟုတ် ထရိဂိုနိုမေတြီ ဖန်ရှင် (trigonometric function) တို့ ဖြစ်ကြသည်။ ၎င်းတို့ကို ဖော်ပြချက်များကို လုပ်ဆောင်ရာတွင် လမ်းညွှန်ပေးနိုင်သော ပေါင်းစပ် "အမျိုးအစားများ" (compound types) အဖြစ် သတ်မှတ်နိုင်သည်။ ဥပမာအားဖြင့်၊ ကျွန်ုပ်တို့သည် ဖော်ပြချက်
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mrow class="MJX-TeXAtom-ORD">
+    <msup>
+      <mi>x</mi>
+      <mn>2</mn>
+    </msup>
+    <mi>sin</mi>
+    <mo>⁡<!-- ⁡ --></mo>
+    <mo stretchy="false">(</mo>
+    <msup>
+      <mi>y</mi>
+      <mn>2</mn>
+    </msup>
+    <mo>+</mo>
+    <mn>1</mn>
+    <mo stretchy="false">)</mo>
+  </mrow>
+  <mo>+</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>x</mi>
+    <mi>cos</mi>
+    <mo>⁡<!-- ⁡ --></mo>
+    <mn>2</mn>
+    <mi>y</mi>
+  </mrow>
+  <mo>+</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>cos</mi>
+    <mo>⁡<!-- ⁡ --></mo>
+    <mo stretchy="false">(</mo>
+    <msup>
+      <mi>y</mi>
+      <mn>3</mn>
+    </msup>
+    <mo>−<!-- − --></mo>
+    <mn>2</mn>
+    <msup>
+      <mi>y</mi>
+      <mn>2</mn>
+    </msup>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math>
+ကို ကိန်းပြည့် (integers) မြှောက်ဖော်ကိန်းများပါဝင်သော <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>y</mi>
+</math> ပိုလီနိုမီယယ်များ၏ ထရိဂိုနိုမေတြီ ဖန်ရှင်များကို မြှောက်ဖော်ကိန်း (coefficients) များအဖြစ် အသုံးပြုထားသည့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> ပိုလီနိုမီယယ်တစ်ခုအဖြစ် ဖော်ပြနိုင်သည်။
+</p>
+<p>ကျွန်ုပ်တို့သည် ဤနေရာတွင် ပြီးပြည့်စုံသော အက္ခရာသင်္ချာ တွက်ချက်ကိုင်တွယ်မှုစနစ်တစ်ခုကို တည်ဆောက်ရန် ကြိုးပမ်းမည်မဟုတ်ပါ။ ထိုသို့သော စနစ်များသည် နက်နဲသော အက္ခရာသင်္ချာ ဗဟုသုတများနှင့် ကောင်းမွန်လှပသော algorithm များပါဝင်သည့် အလွန်တရာ ရှုပ်ထွေးသော ပရိုဂရမ်များ ဖြစ်ကြသည်။ ကျွန်ုပ်တို့ လုပ်ဆောင်မည်မှာ အက္ခရာသင်္ချာ တွက်ချက်မှု၏ ရိုးရှင်းသော်လည်း အရေးကြီးသော အစိတ်အပိုင်းတစ်ခုဖြစ်သည့် ပိုလီနိုမီယယ်များ၏ သင်္ချာတွက်ချက်ခြင်း (arithmetic of polynomials) ကို လေ့လာခြင်း ဖြစ်သည်။ ထိုသို့သော စနစ်တစ်ခုကို ဒီဇိုင်းထုတ်သူ ကြုံတွေ့ရမည့် ဆုံးဖြတ်ချက် အမျိုးအစားများနှင့်၊ ဤလုပ်ငန်းစဉ်ကို စနစ်တကျဖြစ်အောင် ကူညီပေးနိုင်ရန် abstract data နှင့် generic operations ဆိုင်ရာ အကြံဉာဏ်များကို မည်သို့အသုံးချရမည်ကို ကျွန်ုပ်တို့ သရုပ်ဖော်ပြသသွားမည် ဖြစ်သည်။
+</p>
+<a id="Arithmetic-on-polynomials"></a>
+<h5 class="subsubheading">ပိုလီနိုမီယယ်များ အပေါ်တွင် သင်္ချာတွက်ချက်ခြင်း (Arithmetic on polynomials)</h5>
+
+<p>ပိုလီနိုမီယယ်များ အပေါ်တွင် သင်္ချာတွက်ချက်မှု ပြုလုပ်နိုင်မည့် စနစ်တစ်ခုကို ဒီဇိုင်းထုတ်ရာတွင် ကျွန်ုပ်တို့၏ ပထမဆုံးအလုပ်မှာ ပိုလီနိုမီယယ်ဆိုသည်မှာ အဘယ်နည်းဆိုသည်ကို ဆုံးဖြတ်ရန် ဖြစ်သည်။ ပိုလီနိုမီယယ်များကို ပုံမှန်အားဖြင့် ကိန်းရှင်အချို့ (ပိုလီနိုမီယယ်၏ <a id="index-indeterminates"></a>
+<em>indeterminates</em> များ) နှင့် ဆက်စပ်၍ အဓိပ္ပာယ်ဖွင့်ဆိုကြသည်။
+ရိုးရှင်းစေရန်အတွက်၊ ကျွန်ုပ်တို့သည် indeterminate တစ်ခုတည်းသာပါဝင်သော ပိုလီနိုမီယယ်များ (<a id="index-univariate-polynomials"></a>
+<em>univariate polynomials</em>) ကိုသာ ကန့်သတ်လေ့လာပါမည်။<a class="footnote_link" id="DOCF120" href="#FOOT120"><sup>120</sup></a> ပိုလီနိုမီယယ်တစ်ခုကို ကိန်းစု (terms) များ၏ စုစုပေါင်းအဖြစ် အဓိပ္ပာယ်ဖွင့်ဆိုပါမည်။ ထိုကိန်းစုတစ်ခုချင်းစီသည် မြှောက်ဖော်ကိန်း (coefficient) တစ်ခု၊ indeterminate ၏ ထပ်ညွှန်းတစ်ခု၊ သို့မဟုတ် မြှောက်ဖော်ကိန်းနှင့် indeterminate ၏ ထပ်ညွှန်းတို့၏ မြှောက်လဒ်တစ်ခု ဖြစ်နိုင်သည်။ မြှောက်ဖော်ကိန်း (coefficient) ဆိုသည်မှာ ပိုလီနိုမီယယ်၏ indeterminate အပေါ် မှီခိုခြင်းမရှိသော အက္ခရာသင်္ချာ ဖော်ပြချက်တစ်ခု ဖြစ်သည်။ ဥပမာအားဖြင့်၊
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>5</mn>
+    <msup>
+      <mi>x</mi>
+      <mn>2</mn>
+    </msup>
+  </mrow>
+  <mo>+</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>3</mn>
+    <mi>x</mi>
+  </mrow>
+  <mo>+</mo>
+  <mn>7</mn>
+</math>
+သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> ပါဝင်သော ရိုးရှင်းသည့် ပိုလီနိုမီယယ်တစ်ခုဖြစ်ပြီး၊
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <msup>
+      <mi>y</mi>
+      <mn>2</mn>
+    </msup>
+    <mo>+</mo>
+    <mn>1</mn>
+    <mo stretchy="false">)</mo>
+    <msup>
+      <mi>x</mi>
+      <mn>3</mn>
+    </msup>
+  </mrow>
+  <mo>+</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <mn>2</mn>
+    <mi>y</mi>
+    <mo stretchy="false">)</mo>
+    <mi>x</mi>
+    <mo>+</mo>
+    <mn>1</mn>
+  </mrow>
+</math>
+သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>y</mi>
+</math> ပိုလီနိုမီယယ်များကို မြှောက်ဖော်ကိန်းများအဖြစ် အသုံးပြုထားသော <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> ပိုလီနိုမီယယ်တစ်ခု ဖြစ်သည်။
+</p>
+<p>ကျွန်ုပ်တို့သည် အစကတည်းကပင် ခက်ခဲနက်နဲသော ပြဿနာအချို့ကို စတင်ကြုံတွေ့နေရပြီ ဖြစ်သည်။ အထက်ပါ ပိုလီနိုမီယယ်များထဲမှ ပထမတစ်ခုသည် ပိုလီနိုမီယယ် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>5</mn>
+    <msup>
+      <mi>y</mi>
+      <mn>2</mn>
+    </msup>
+    <mo>+</mo>
+    <mn>3</mn>
+    <mi>y</mi>
+    <mo>+</mo>
+    <mn>7</mn>
+  </mrow>
+</math> နှင့် အတူတူပင် ဖြစ်ပါသလား၊ သို့မဟုတ် မတူပါသလား။ သင့်လျော်သော အဖြေမှာ "အကယ်၍ ကျွန်ုပ်တို့သည် ပိုလီနိုမီယယ်ကို သင်္ချာဆိုင်ရာ ဖန်ရှင်တစ်ခုအဖြစ် သက်သက်သာ ရှုမြင်ပါက 'ဟုတ်ပါသည်' ဖြစ်ပြီး၊ အကယ်၍ တည်ဆောက်ပုံဆိုင်ရာ ပုံသဏ္ဌာန် (syntactic form) တစ်ခုအဖြစ် ရှုမြင်ပါက 'မဟုတ်ပါ' ဖြစ်လိမ့်မည်။" ဒုတိယမြောက် ပိုလီနိုမီယယ်သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> ပိုလီနိုမီယယ်များကို မြှောက်ဖော်ကိန်းများအဖြစ် အသုံးပြုထားသော <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>y</mi>
+</math> ပိုလီနိုမီယယ်တစ်ခုနှင့် အက္ခရာသင်္ချာသဘောအရ ညီမျှသည်။ ကျွန်ုပ်တို့၏ စနစ်သည် ဤအချက်ကို သိရှိနားလည်သင့်သလား၊ သို့မဟုတ် မသိရှိသင့်သလား။ ထို့အပြင်၊ ပိုလီနိုမီယယ်တစ်ခုကို ကိုယ်စားပြုရန် အခြားနည်းလမ်းများစွာ ရှိပါသေးသည်—ဥပမာအားဖြင့် ဆခွဲကိန်းများ၏ မြှောက်လဒ်အဖြစ်၊ သို့မဟုတ် (univariate polynomial အတွက်) အဖြေ (roots) များ၏ အစုအဖြစ်၊ သို့မဟုတ် သတ်မှတ်ထားသော အမှတ်များတွင် ပိုလီနိုမီယယ်၏ တန်ဖိုးများကို စာရင်းပြုစုခြင်းအဖြစ် ကိုယ်စားပြုနိုင်သည်။<a class="footnote_link" id="DOCF121" href="#FOOT121"><sup>121</sup></a> ကျွန်ုပ်တို့၏ အက္ခရာသင်္ချာ တွက်ချက်ကိုင်တွယ်မှုစနစ်တွင် "ပိုလီနိုမီယယ်" ဆိုသည်မှာ ၎င်း၏ နောက်ကွယ်မှ သင်္ချာဆိုင်ရာ အဓိပ္ပာယ်ထက် သတ်သတ်မှတ်မှတ် တည်ဆောက်ပုံဆိုင်ရာ ပုံသဏ္ဌာန် (syntactic form) တစ်ခုသာ ဖြစ်သည်ဟု ဆုံးဖြတ်ခြင်းဖြင့် ဤမေးခွန်းများကို ကျော်လွှားနိုင်သည်။
+</p>
+<p>ယခုအခါ ပိုလီနိုမီယယ်များအပေါ် သင်္ချာတွက်ချက်မှု မည်သို့ပြုလုပ်ရမည်ကို စဉ်းစားရပါမည်။ ဤရိုးရှင်းသော စနစ်တွင် ကျွန်ုပ်တို့သည် ပေါင်းခြင်းနှင့် မြှောက်ခြင်းကိုသာ ထည့်သွင်းစဉ်းစားပါမည်။ ထို့အပြင် ပေါင်းစပ်မည့် ပိုလီနိုမီယယ်နှစ်ခုသည် indeterminate တစ်ခုတည်းသာ ရှိရမည်ဟု ကျွန်ုပ်တို့ ကန့်သတ်ထားပါမည်။
+</p>
+<p>ကျွန်ုပ်တို့၏ စနစ်ကို ဒီဇိုင်းထုတ်ရာတွင် ရင်းနှီးပြီးသားဖြစ်သော data abstraction ၏ စည်းမျဉ်းကို လိုက်နာပါမည်။ ပိုလီနိုမီယယ်များကို ကိန်းရှင်တစ်ခုနှင့် ကိန်းစုများ အစုအဝေးတစ်ခု ပါဝင်သော <a id="index-poly"></a>
+<em>poly</em> ဟုခေါ်သည့် data structure တစ်ခုကို အသုံးပြု၍ ကိုယ်စားပြုပါမည်။ <code>poly</code> တစ်ခုမှ အဆိုပါ အစိတ်အပိုင်းများကို ထုတ်ယူပေးမည့် <code>variable</code> နှင့် <code>term-list</code> ဟူသော selector များနှင့်၊ ပေးထားသော ကိန်းရှင်နှင့် ကိန်းစုစာရင်းမှ <code>poly</code> တစ်ခုကို တည်ဆောက်ပေးမည့် <code>make-poly</code> ဟူသော constructor တစ်ခု ရှိသည်ဟု ကျွန်ုပ်တို့ ယူဆပါမည်။ ကိန်းရှင်သည် သင်္ကေတ (symbol) တစ်ခုသာ ဖြစ်လိမ့်မည်၊ ထို့ကြောင့် ကိန်းရှင်များကို နှိုင်းယှဉ်ရန် 
+<a href="2_002e3.xhtml#g_t2_002e3_002e2">2.3.2</a> ပါ <code>same-variable?</code> လုပ်ထုံးလုပ်နည်းကို အသုံးပြုနိုင်သည်။ အောက်ပါ လုပ်ထုံးလုပ်နည်းများသည် poly များ၏ ပေါင်းခြင်းနှင့် မြှောက်ခြင်းကို အဓိပ္ပာယ်ဖွင့်ဆိုထားခြင်း ဖြစ်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">add-poly p1 p2</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">same-variable? </span><span class="opn">(</span><span class="pln">variable p1</span><span class="clo">)</span><span class="pln"> 
+                      </span><span class="opn">(</span><span class="pln">variable p2</span><span class="clo">))</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">make-poly 
+       </span><span class="opn">(</span><span class="pln">variable p1</span><span class="clo">)</span><span class="pln">
+       </span><span class="opn">(</span><span class="pln">add-terms </span><span class="opn">(</span><span class="pln">term-list p1</span><span class="clo">)</span><span class="pln">
+                  </span><span class="opn">(</span><span class="pln">term-list p2</span><span class="clo">)))</span><span class="pln">
+      </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Polys not in same var: 
+              ADD-POLY"</span><span class="pln">
+             </span><span class="opn">(</span><span class="pln">list p1 p2</span><span class="clo">))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">mul-poly p1 p2</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">same-variable? </span><span class="opn">(</span><span class="pln">variable p1</span><span class="clo">)</span><span class="pln"> 
+                      </span><span class="opn">(</span><span class="pln">variable p2</span><span class="clo">))</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">make-poly 
+       </span><span class="opn">(</span><span class="pln">variable p1</span><span class="clo">)</span><span class="pln">
+       </span><span class="opn">(</span><span class="pln">mul-terms </span><span class="opn">(</span><span class="pln">term-list p1</span><span class="clo">)</span><span class="pln">
+                  </span><span class="opn">(</span><span class="pln">term-list p2</span><span class="clo">)))</span><span class="pln">
+      </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Polys not in same var: 
+              MUL-POLY"</span><span class="pln">
+             </span><span class="opn">(</span><span class="pln">list p1 p2</span><span class="clo">))))</span></pre></div>
+
+<p>ကျွန်ုပ်တို့၏ generic arithmetic system တွင် ပိုလီနိုမီယယ်များကို ထည့်သွင်းနိုင်ရန်၊ ၎င်းတို့ကို type tag များ ပေးရန် လိုအပ်သည်။ ကျွန်ုပ်တို့သည် <code>polynomial</code> ဟူသော tag ကို အသုံးပြုမည်ဖြစ်ပြီး၊ tag ပါရှိသော ပိုလီနိုမီယယ်များအပေါ် သင့်လျော်သော operation များကို operation table ထဲတွင် ထည့်သွင်းသတ်မှတ်ပါမည်။ ကျွန်ုပ်တို့၏ ကုဒ်အားလုံးကို <a href="#g_t2_002e5_002e1">2.5.1</a> ရှိ လုပ်ထုံးလုပ်နည်းများနှင့် ဆင်တူသော polynomial package အတွက် ထည့်သွင်းသတ်မှတ်သည့် လုပ်ထုံးလုပ်နည်း (installation procedure) တစ်ခုတွင် ထည့်သွင်းပါမည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">install-polynomial-package</span><span class="clo">)</span><span class="pln">
+  </span><span class="roman"><span class="com">;; အတွင်းပိုင်း လုပ်ထုံးလုပ်နည်းများ</span></span><span class="pln">
+  </span><span class="roman"><span class="com">;; poly ၏ ကိုယ်စားပြုပုံ</span></span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-poly variable term-list</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> variable term-list</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">variable p</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> p</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">term-list p</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> p</span><span class="clo">))</span><span class="pln">
+  ⟨</span><em><span class="pln">အပိုင်း </span><span class="lit">2.3.2</span><span class="pln"> မှ </span><code><span class="pln">same-variable?</span></code><span class="pln"> 
+   နှင့် </span><code><span class="pln">variable?</span></code><span class="pln"> လုပ်ထုံးလုပ်နည်းများ</span></em><span class="pln">⟩
+
+  </span><span class="roman"><span class="com">;; ကိန်းစုများနှင့် ကိန်းစုစာရင်းများ၏ ကိုယ်စားပြုပုံ</span></span><span class="pln">
+  ⟨</span><em><span class="pln">အောက်ပါ စာသားများမှ </span><code><span class="pln">adjoin-term</span></code><span class="pln"> </span><span class="roman"><span class="pun">…</span></span><span class="pln"> </span><code><span class="pln">coeff</span></code><span class="pln"> 
+  လုပ်ထုံးလုပ်နည်းများ</span></em><span class="pln">⟩
+
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">add-poly p1 p2</span><span class="clo">)</span><span class="pln"> </span><span class="roman"><span class="pun">…</span></span><span class="clo">)</span><span class="pln">
+  ⟨</span><em><span class="pln"><code>add-poly</code> မှ အသုံးပြုသော လုပ်ထုံးလုပ်နည်းများ</span></em><span class="pln">⟩
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">mul-poly p1 p2</span><span class="clo">)</span><span class="pln"> </span><span class="roman"><span class="pun">…</span></span><span class="clo">)</span><span class="pln">
+  ⟨</span><em><span class="pln"><code>mul-poly</code> မှ အသုံးပြုသော လုပ်ထုံးလုပ်နည်းများ</span></em><span class="pln">⟩
+
+  </span><span class="roman"><span class="com">;; စနစ်၏ ကျန်ရှိသော အစိတ်အပိုင်းများနှင့် ဆက်သွယ်မည့် မျက်နှာစာ (interface)</span></span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">tag p</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">attach-tag </span><span class="lit">'polynomial</span><span class="pln"> p</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">put </span><span class="lit">'add</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">polynomial polynomial</span><span class="clo">)</span><span class="pln">
+       </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">p1 p2</span><span class="clo">)</span><span class="pln"> 
+         </span><span class="opn">(</span><span class="pln">tag </span><span class="opn">(</span><span class="pln">add-poly p1 p2</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">put </span><span
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">add-terms L1 L2</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pln">empty-termlist? L1</span><span class="clo">)</span><span class="pln"> L2</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="pln">empty-termlist? L2</span><span class="clo">)</span><span class="pln"> L1</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln">
+         </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">t1 </span><span class="opn">(</span><span class="pln">first-term L1</span><span class="clo">))</span><span class="pln"> 
+               </span><span class="opn">(</span><span class="pln">t2 </span><span class="opn">(</span><span class="pln">first-term L2</span><span class="clo">)))</span><span class="pln">
+           </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pun">&gt;</span><span class="pln"> </span><span class="opn">(</span><span class="pln">order t1</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">order t2</span><span class="clo">))</span><span class="pln">
+                  </span><span class="opn">(</span><span class="pln">adjoin-term
+                   t1 
+                   </span><span class="opn">(</span><span class="pln">add-terms </span><span class="opn">(</span><span class="pln">rest-terms L1</span><span class="clo">)</span><span class="pln"> 
+                              L2</span><span class="clo">)))</span><span class="pln">
+                 </span><span class="opn">((</span><span class="pun">&lt;</span><span class="pln"> </span><span class="opn">(</span><span class="pln">order t1</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">order t2</span><span class="clo">))</span><span class="pln">
+                  </span><span class="opn">(</span><span class="pln">adjoin-term
+                   t2 
+                   </span><span class="opn">(</span><span class="pln">add-terms 
+                    L1 
+                    </span><span class="opn">(</span><span class="pln">rest-terms L2</span><span class="clo">))))</span><span class="pln">
+                 </span><span class="opn">(</span><span class="kwd">else</span><span class="pln">
+                  </span><span class="opn">(</span><span class="pln">adjoin-term
+                   </span><span class="opn">(</span><span class="pln">make-term 
+                    </span><span class="opn">(</span><span class="pln">order t1</span><span class="clo">)</span><span class="pln">
+                    </span><span class="opn">(</span><span class="pln">add </span><span class="opn">(</span><span class="pln">coeff t1</span><span class="clo">)</span><span class="pln"> 
+                         </span><span class="opn">(</span><span class="pln">coeff t2</span><span class="clo">)))</span><span class="pln">
+                   </span><span class="opn">(</span><span class="pln">add-terms 
+                    </span><span class="opn">(</span><span class="pln">rest-terms L1</span><span class="clo">)</span><span class="pln">
+                    </span><span class="opn">(</span><span class="pln">rest-terms L2</span><span class="clo">)))))))))</span></pre></div>
+
+<p>ဤနေရာတွင် သတိပြုရန် အရေးကြီးဆုံးအချက်မှာ ပေါင်းစပ်နေသည့် term များ၏ coefficient (မြှောက်ဖော်ကိန်း) များကို ပေါင်းရန် generic addition procedure ဖြစ်သော <code>add</code> ကို အသုံးပြုထားခြင်း ဖြစ်သည်။ ၎င်းမှာ အောက်တွင် ဖော်ပြထားသည့်အတိုင်း အစွမ်းထက်သော အကျိုးကျေးဇူးများကို ဖြစ်ပေါ်စေပါသည်။
+</p>
+<p>Term list နှစ်ခုကို မြှောက်ရန်အတွက်၊ ပထမ list ၏ term တစ်ခုချင်းစီကို အခြား list တစ်ခုလုံးရှိ term များအားလုံးနှင့် မြှောက်ရမည် ဖြစ်သည်။ ၎င်းအတွက် ပေးထားသော term တစ်ခုနှင့် term list တစ်ခုလုံးကို မြှောက်ပေးသည့် <code>mul-term-by-all-terms</code> ကို ထပ်ခါတလဲလဲ အသုံးပြုရပါမည်။ ရရှိလာသော (ပထမ list ရှိ term တစ်ခုစီအတွက် တစ်ခုစီဖြစ်သော) term list များကို စုပေါင်းပြီး ပေါင်းလဒ်တစ်ခုအဖြစ် ရယူပါသည်။ Term နှစ်ခုကို မြှောက်ခြင်းသည် factor များ၏ order (ထပ်ညွှန်း) များပေါင်းလဒ်ကို order အဖြစ်ရရှိပြီး၊ factor များ၏ coefficient များ မြှောက်လဒ်ကို coefficient အဖြစ်ရရှိသော term တစ်ခုကို ဖြစ်ပေါ်စေပါသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">mul-terms L1 L2</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">empty-termlist? L1</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">the-empty-termlist</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">add-terms 
+       </span><span class="opn">(</span><span class="pln">mul-term-by-all-terms 
+        </span><span class="opn">(</span><span class="pln">first-term L1</span><span class="clo">)</span><span class="pln"> L2</span><span class="clo">)</span><span class="pln">
+       </span><span class="opn">(</span><span class="pln">mul-terms </span><span class="opn">(</span><span class="pln">rest-terms L1</span><span class="clo">)</span><span class="pln"> L2</span><span class="clo">))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">mul-term-by-all-terms t1 L</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">empty-termlist? L</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">the-empty-termlist</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">t2 </span><span class="opn">(</span><span class="pln">first-term L</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">adjoin-term
+         </span><span class="opn">(</span><span class="pln">make-term 
+          </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">order t1</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">order t2</span><span class="clo">))</span><span class="pln">
+          </span><span class="opn">(</span><span class="pln">mul </span><span class="opn">(</span><span class="pln">coeff t1</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">coeff t2</span><span class="clo">)))</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">mul-term-by-all-terms 
+          t1 
+          </span><span class="opn">(</span><span class="pln">rest-terms L</span><span class="clo">))))))</span></pre></div>
+
+<p>ဤသည်မှာ polynomial ပေါင်းခြင်းနှင့် မြှောက်ခြင်းအတွက် လုပ်ဆောင်ရမည့် အဓိကအချက်များပင် ဖြစ်ပါသည်။ ကျွန်ုပ်တို့သည် term များကို generic procedure များဖြစ်သော <code>add</code> နှင့် <code>mul</code> ကို အသုံးပြု၍ လုပ်ဆောင်ထားသောကြောင့်၊ ကျွန်ုပ်တို့၏ polynomial package သည် generic arithmetic package မှ သိရှိသော မည်သည့် coefficient အမျိုးအစားကိုမဆို အလိုအလျောက် ကိုင်တွယ်နိုင်စွမ်း ရှိပါသည်။ အကယ်၍ ကျွန်ုပ်တို့သည် <a href="#g_t2_002e5_002e2">2.5.2</a> တွင် ဆွေးနွေးခဲ့သော coercion mechanism ကဲ့သို့သော အရာတစ်ခုကို ထည့်သွင်းထားပါက၊ မတူညီသော coefficient အမျိုးအစားများရှိသည့် polynomial များအပေါ် လုပ်ဆောင်ချက်များကိုလည်း အလိုအလျောက် ကိုင်တွယ်နိုင်မည် ဖြစ်ပါသည်။ ဥပမာ-
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">[</mo>
+    <mn>3</mn>
+    <msup>
+      <mi>x</mi>
+      <mn>2</mn>
+    </msup>
+    <mo>+</mo>
+    <mo stretchy="false">(</mo>
+    <mn>2</mn>
+    <mo>+</mo>
+    <mn>3</mn>
+    <mi>i</mi>
+    <mo stretchy="false">)</mo>
+    <mi>x</mi>
+    <mo>+</mo>
+    <mn>7</mn>
+    <mo stretchy="false">]</mo>
+    <mo>⋅<!-- ⋅ --></mo>
+  </mrow>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mrow>
+      <mo>[</mo>
+      <msup>
+        <mi>x</mi>
+        <mn>4</mn>
+      </msup>
+      <mo>+</mo>
+      <mrow class="MJX-TeXAtom-ORD">
+        <mfrac>
+          <mn>2</mn>
+          <mn>3</mn>
+        </mfrac>
+      </mrow>
+      <msup>
+        <mi>x</mi>
+        <mn>2</mn>
+      </msup>
+      <mo>+</mo>
+      <mo stretchy="false">(</mo>
+      <mn>5</mn>
+      <mo>+</mo>
+      <mn>3</mn>
+      <mi>i</mi>
+      <mo stretchy="false">)</mo>
+      <mo>]</mo>
+    </mrow>
+    <mo>.</mo>
+  </mrow>
+</math>
+ကျွန်ုပ်တို့သည် polynomial ပေါင်းခြင်းနှင့် မြှောက်ခြင်း procedure များဖြစ်သော <code>add-poly</code> နှင့် <code>mul-poly</code> တို့ကို generic arithmetic system တွင် <code>polynomial</code> အမျိုးအစားအတွက် <code>add</code> နှင့် <code>mul</code> operation များအဖြစ် တပ်ဆင်ထားသောကြောင့်၊ ကျွန်ုပ်တို့၏ system သည် အောက်ပါကဲ့သို့သော polynomial လုပ်ဆောင်ချက်များကိုလည်း အလိုအလျောက် ကိုင်တွယ်နိုင်မည်ဖြစ်သည်-
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mrow class="MJX-TeXAtom-ORD">
+      <mo maxsize="1.623em" minsize="1.623em">[</mo>
+    </mrow>
+    <mo stretchy="false">(</mo>
+    <mi>y</mi>
+    <mo>+</mo>
+    <mn>1</mn>
+    <mo stretchy="false">)</mo>
+    <msup>
+      <mi>x</mi>
+      <mn>2</mn>
+    </msup>
+  </mrow>
+  <mo>+</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <msup>
+      <mi>y</mi>
+      <mn>2</mn>
+    </msup>
+    <mo>+</mo>
+    <mn>1</mn>
+    <mo stretchy="false">)</mo>
+    <mi>x</mi>
+  </mrow>
+  <mo>+</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <mi>y</mi>
+    <mo>−<!-- − --></mo>
+    <mn>1</mn>
+    <mo stretchy="false">)</mo>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mo maxsize="1.623em" minsize="1.623em">]</mo>
+    </mrow>
+    <mo>⋅<!-- ⋅ --></mo>
+  </mrow>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mrow class="MJX-TeXAtom-ORD">
+      <mo maxsize="1.623em" minsize="1.623em">[</mo>
+    </mrow>
+    <mo stretchy="false">(</mo>
+    <mi>y</mi>
+    <mo>−<!-- − --></mo>
+    <mn>2</mn>
+    <mo stretchy="false">)</mo>
+    <mi>x</mi>
+  </mrow>
+  <mo>+</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <msup>
+      <mi>y</mi>
+      <mn>3</mn>
+    </msup>
+    <mo>+</mo>
+    <mn>7</mn>
+    <mo stretchy="false">)</mo>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mo maxsize="1.623em" minsize="1.623em">]</mo>
+    </mrow>
+    <mo>.</mo>
+  </mrow>
+</math>
+အကြောင်းမှာ system သည် coefficient များကို ပေါင်းစပ်ရန် ကြိုးစားသောအခါ၊ ၎င်းသည် <code>add</code> နှင့် <code>mul</code> မှတစ်ဆင့် လုပ်ဆောင်မည် ဖြစ်သောကြောင့် ဖြစ်သည်။ Coefficient များကိုယ်တိုင်က (<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>y</mi>
+</math> ပါဝင်သော) polynomial များ ဖြစ်နေသောကြောင့်၊ ၎င်းတို့ကို <code>add-poly</code> နှင့် <code>mul-poly</code> အသုံးပြု၍ ပေါင်းစပ်ပါလိမ့်မည်။ ရလဒ်မှာ "data-directed recursion" တစ်မျိုးဖြစ်ပြီး၊ ဥပမာအားဖြင့် <code>mul-poly</code> ကို ခေါ်ဆိုခြင်းသည် coefficient များကို မြှောက်ရန်အတွက် <code>mul-poly</code> ကိုပင် recursive ခေါ်ဆိုမှုများ ဖြစ်ပေါ်စေပါလိမ့်မည်။ အကယ်၍ coefficient များ၏ coefficient များသည်လည်း polynomial များ ဖြစ်နေခဲ့လျှင် (ဥပမာ variable သုံးခုပါသော polynomial များကို ကိုယ်စားပြုရန် အသုံးပြုခြင်းကဲ့သို့သော)၊ data direction သည် system ကို နောက်ထပ် recursive ခေါ်ဆိုမှု တစ်ဆင့်ဆီသို့ ဆက်လက်လုပ်ဆောင်စေမည် ဖြစ်ပြီး၊ data ၏ တည်ဆောက်ပုံအရ လိုအပ်သလောက် အဆင့်များအထိ လုပ်ဆောင်သွားမည် ဖြစ်သည်။<a class="footnote_link" id="DOCF123" href="#FOOT123"><sup>123</sup></a>
+</p>
+<a id="Representing-term-lists"></a>
+<h5 class="subsubheading">Term list များကို ကိုယ်စားပြုခြင်း</h5>
+
+<p>နောက်ဆုံးအနေနှင့်၊ term list များအတွက် ကောင်းမွန်သော ကိုယ်စားပြုမှု (representation) တစ်ခုကို အကောင်အထည်ဖော်ရန် လုပ်ဆောင်ရပါမည်။ Term list တစ်ခုသည် အနှစ်သာရအားဖြင့် term ၏ order ကို key အဖြစ် အသုံးပြုထားသော coefficient အစုအဝေးတစ်ခု ဖြစ်သည်။ ထို့ကြောင့် <a href="2_002e3.xhtml#g_t2_002e3_002e3">2.3.3</a> တွင် ဆွေးနွေးခဲ့သော set များကို ကိုယ်စားပြုသည့် မည်သည့်နည်းလမ်းကိုမဆို ဤလုပ်ငန်းအတွက် အသုံးပြုနိုင်ပါသည်။ အခြားတစ်ဖက်တွင်မူ၊ ကျွန်ုပ်တို့၏ <code>add-terms</code> နှင့် <code>mul-terms</code> procedure များသည် term list များကို အကြီးဆုံး order မှ အငယ်ဆုံး order သို့ အစဉ်လိုက် အမြဲတမ်း အသုံးပြုပါသည်။ ထို့ကြောင့် ကျွန်ုပ်တို့သည် ordered list representation တစ်မျိုးမျိုးကို အသုံးပြုပါမည်။
+</p>
+<p>Term list ကို ကိုယ်စားပြုမည့် list ကို မည်သို့ တည်ဆောက်သင့်သနည်း။ ထည့်သွင်းစဉ်းစားရမည့် အချက်တစ်ခုမှာ ကျွန်ုပ်တို့ ကိုင်တွယ်အသုံးပြုမည့် polynomial များ၏ "density" (သိပ်သည်းဆ) ဖြစ်သည်။ Polynomial တစ်ခုတွင် order အများစုအတွက် coefficient များသည် သုညမဟုတ်ဘဲ တန်ဖိုးရှိနေပါက ၎င်းကို <a id="index-dense"></a>
+<em>dense</em> (သိပ်သည်းသော) ဟု ခေါ်သည်။ အကယ်၍ ၎င်းတွင် သုညဖြစ်သော term များစွာပါဝင်ပါက ၎င်းကို <a id="index-sparse"></a>
+<em>sparse</em> (ကျဲသော) ဟု ခေါ်သည်။ ဥပမာ-
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mi>A</mi>
+  <mo>:</mo>
+  <mspace width="1em"/>
+  <mrow class="MJX-TeXAtom-ORD">
+    <msup>
+      <mi>x</mi>
+      <mn>5</mn>
+    </msup>
+  </mrow>
+  <mo>+</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>2</mn>
+    <msup>
+      <mi>x</mi>
+      <mn>4</mn>
+    </msup>
+  </mrow>
+  <mo>+</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>3</mn>
+    <msup>
+      <mi>x</mi>
+      <mn>2</mn>
+    </msup>
+  </mrow>
+  <mo>−<!-- − --></mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>2</mn>
+    <mi>x</mi>
+  </mrow>
+  <mo>−<!-- − --></mo>
+  <mn>5</mn>
+</math>
+သည် dense polynomial တစ်ခုဖြစ်ပြီး၊
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mi>B</mi>
+  <mo>:</mo>
+  <mspace width="1em"/>
+  <msup>
+    <mi>x</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mn>100</mn>
+    </mrow>
+  </msup>
+  <mo>+</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>2</mn>
+    <msup>
+      <mi>x</mi>
+      <mn>2</mn>
+    </msup>
+  </mrow>
+  <mo>+</mo>
+  <mn>1</mn>
+</math>
+သည် sparse ဖြစ်သည်။
+</p>
+<p>Dense polynomial များ၏ term list များကို coefficient များ၏ list အဖြစ် ကိုယ်စားပြုခြင်းသည် အထိရောက်ဆုံး ဖြစ်သည်။ ဥပမာအားဖြင့်၊ အထက်ပါ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>A</mi>
+</math> ကို <code>(1 2 0 3 -2 -5)</code> အဖြစ် ကောင်းမွန်စွာ ကိုယ်စားပြုနိုင်ပါသည်။ ဤကိုယ်စားပြုမှုတွင် term တစ်ခု၏ order သည် ၎င်း term ၏ coefficient နှင့် စတင်သည့် sublist ၏ အလျားမှ 1 ကို နှုတ်ထားသော တန်ဖိုး ဖြစ်သည်။<a class="footnote_link" id="DOCF124" href="#FOOT124"><sup>124</sup></a> ၎င်းသည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>B</mi>
+</math> ကဲ့သို့သော sparse polynomial များအတွက်မူ ဆိုးရွားသော ကိုယ်စားပြုမှု ဖြစ်ပါလိမ့်မည်။ အဘယ်ကြောင့်ဆိုသော် အနည်းငယ်သာရှိသော သုညမဟုတ်သည့် term များကြားတွင် သုညအမြောက်အမြားပါသော list အကြီးကြီးတစ်ခု ဖြစ်နေမည်ဖြစ်သောကြောင့် ဖြစ်သည်။ Sparse polynomial တစ်ခု၏ term list အတွက် ပိုမိုသင့်လျော်သော ကိုယ်စားပြုမှုမှာ သုညမဟုတ်သော term များ၏ list အဖြစ် ကိုယ်စားပြုခြင်းဖြစ်ပြီး၊ term တစ်ခုချင်းစီသည် ၎င်း၏ order နှင့် coefficient တို့ပါဝင်သော list တစ်ခု ဖြစ်သည်။ ထိုစနစ်တွင် polynomial <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>B</mi>
+</math> ကို <code>((100 1) (2 2) (0 1))</code> အဖြစ် ထိရောက်စွာ ကိုယ်စားပြုနိုင်ပါသည်။ Polynomial တွက်ချက်မှု အများစုသည် sparse polynomial များအပေါ်တွင်သာ လုပ်ဆောင်ရလေ့ရှိသောကြောင့်၊ ကျွန်ုပ်တို့သည် ဤနည်းလမ်းကို အသုံးပြုပါမည်။ Term list များကို အကြီးဆုံး order မှ အငယ်ဆုံး order သို့ စီထားသော term များ၏ list များအဖြစ် ကိုယ်စားပြုမည်ဟု ယူဆပါမည်။ ဤသို့ ဆုံးဖြတ်ပြီးပါက term များ နှင့် term list များအတွက် selector နှင့် constructor များကို အကောင်အထည်ဖော်ရန်မှာ ရိုးရှင်းပါသည်-<a class="footnote_link" id="DOCF125" href="#FOOT125"><sup>125</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">adjoin-term term term-list</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">=</span><span class="pln">zero? </span><span class="opn">(</span><span class="pln">coeff term</span><span class="clo">))</span><span class="pln">
+      term-list
+      </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> term term-list</span><span class="clo">)))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">the-empty-termlist</span><span class="clo">)</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">first-term term-list</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> term-list</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">rest-terms term-list</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> term-list</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">empty-termlist? term-list</span><span class="clo">)</span><span class="pln"> 
+  </span><span class="opn">(</span><span class="pln">null? term-list</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-term order coeff</span><span class="clo">)</span><span class="pln"> 
+  </span><span class="opn">(</span><span class="pln">list order coeff</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">order term</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> term</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">coeff term</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cadr</span><span class="pln"> term</span><span class="clo">))</span></pre></div>
+
+<p>ဤနေရာတွင် <code>=zero?</code> ကို <a href="#Exercise-2_002e80">Exercise 2.80</a> တွင် အဓိပ္ပာယ်ဖွင့်ဆိုထားသည့်အတိုင်း အသုံးပြုထားပါသည်။ (အောက်ပါ <a href="#Exercise-2_002e87">Exercise 2.87</a> ကိုလည်း ကြည့်ပါ။)
+</p>
+<p>Polynomial package ကို အသုံးပြုသူများသည် အောက်ပါ procedure ကို အသုံးပြု၍ (tagged) polynomial များကို ဖန်တီးနိုင်မည်ဖြစ်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-polynomial var terms</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">((</span><span class="pln">get </span><span class="lit">'make</span><span class="pln"> </span><span class="lit">'polynomial</span><span class="clo">)</span><span class="pln"> var terms</span><span class="clo">))</span></pre></div>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e87"></a>Exercise 2.87:</strong> Generic arithmetic package ရှိ polynomial များအတွက် <code>=zero?</code> ကို တပ်ဆင်ပါ။ ၎င်းသည် coefficient ကိုယ်တိုင်က polynomial ဖြစ်နေသော polynomial များအတွက် <code>adjoin-term</code> ကို အလုပ်လုပ်စေမည် ဖြစ်သည်။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e88"></a>Exercise 2.88:</strong> Polynomial များကို နှုတ်ခြင်း (subtraction) ထည့်သွင်းရန် polynomial system ကို တိုးချဲ့ပါ။ (အရိပ်အမြွက်- generic negation operation တစ်ခုကို သတ်မှတ်ခြင်းက အထောက်အကူပြုနိုင်သည်ကို သင်တွေ့ရှိနိုင်ပါသည်။)
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e89"></a>Exercise 2.89:</strong> အထက်တွင် ဖော်ပြခဲ့သော dense polynomial များအတွက် သင့်လျော်သည့် term-list ကိုယ်စားပြုမှုကို အကောင်အထည်ဖော်သည့် procedure များကို သတ်မှတ်ပါ။
+</p></blockquote>
+<blockquote>
+<p><strong><a id="Exercise-2_002e90"></a>လေ့ကျင့်ခန်း ၂.၉၀:</strong> ကျွန်ုပ်တို့သည် sparse ကော dense ဖြစ်သော polynomial များအတွက်ပါ ထိရောက်မှုရှိသည့် polynomial စနစ်တစ်ခုကို လိုချင်သည်ဆိုပါစို့။ ဤသို့ပြုလုပ်ရန် နည်းလမ်းတစ်ခုမှာ ကျွန်ုပ်တို့၏စနစ်တွင် term-list ကို ကိုယ်စားပြုသော ပုံစံနှစ်မျိုးလုံးကို ခွင့်ပြုရန်ဖြစ်သည်။ ဤအခြေအနေသည် <a href="2_002e4.xhtml#g_t2_002e4">၂.၄</a> ရှိ complex-number ဥပမာနှင့် ဆင်တူသည်၊ ထိုနေရာတွင် rectangular နှင့် polar ကိုယ်စားပြုမှု နှစ်မျိုးလုံးကို ခွင့်ပြုခဲ့သည်။ ဤသို့ပြုလုပ်ရန် ကျွန်ုပ်တို့သည် မတူညီသော term list အမျိုးအစားများကို ခွဲခြားရမည်ဖြစ်ပြီး term lists များပေါ်ရှိ လုပ်ဆောင်ချက်များကို generic ဖြစ်အောင် ပြုလုပ်ရမည်။ ဤယေဘုယျပြုခြင်းကို အကောင်အထည်ဖော်ရန် polynomial စနစ်ကို ပြန်လည်ဒီဇိုင်းဆွဲပါ။ ဤသည်မှာ ကြီးမားသော အားထုတ်မှုတစ်ခုဖြစ်ပြီး သာမန်အပြောင်းအလဲမျှသာ မဟုတ်ပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e91"></a>လေ့ကျင့်ခန်း ၂.၉၁:</strong> univariate polynomial တစ်ခုကို အခြားတစ်ခုနှင့် စားပြီး polynomial စားလဒ် (quotient) နှင့် polynomial အကြွင်း (remainder) တို့ကို ထုတ်ပေးနိုင်သည်။ ဥပမာအားဖြင့်၊
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mfrac>
+      <mrow>
+        <msup>
+          <mi>x</mi>
+          <mn>5</mn>
+        </msup>
+        <mo>−<!-- − --></mo>
+        <mn>1</mn>
+      </mrow>
+      <mrow>
+        <msup>
+          <mi>x</mi>
+          <mn>2</mn>
+        </msup>
+        <mo>−<!-- − --></mo>
+        <mn>1</mn>
+      </mrow>
+    </mfrac>
+  </mrow>
+  <mspace width="thinmathspace"/>
+  <mo>=</mo>
+  <mspace width="thinmathspace"/>
+  <mrow class="MJX-TeXAtom-ORD">
+    <msup>
+      <mi>x</mi>
+      <mn>3</mn>
+    </msup>
+    <mo>+</mo>
+    <mi>x</mi>
+    <mo>,</mo>
+  </mrow>
+  <mtext> remainder </mtext>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>x</mi>
+    <mo>−<!-- − --></mo>
+    <mn>1.</mn>
+  </mrow>
+</math>
+စားခြင်းကို long division မှတစ်ဆင့် လုပ်ဆောင်နိုင်သည်။ ဆိုလိုသည်မှာ၊ တည်ကိန်း၏ အမြင့်ဆုံးထပ်ညွှန်းရှိသော term ကို စားကိန်း၏ အမြင့်ဆုံးထပ်ညွှန်းရှိသော term နှင့် စားပါ။ ရလဒ်သည် စားလဒ်၏ ပထမဆုံး term ဖြစ်သည်။ ထို့နောက် ရလဒ်ကို စားကိန်းနှင့် မြှောက်ပါ၊ ၎င်းကို တည်ကိန်းမှ နုတ်ပါ၊ ထို့နောက် ထိုခြားနားချက်ကို စားကိန်းနှင့် recursively စားခြင်းဖြင့် ကျန်ရှိသော အဖြေကို ထုတ်ယူပါ။ စားကိန်း၏ order သည် တည်ကိန်း၏ order ထက် ကျော်လွန်သွားသောအခါ ရပ်တန့်ပြီး ထိုတည်ကိန်းကို အကြွင်းအဖြစ် သတ်မှတ်ပါ။ ထို့အပြင် တည်ကိန်းသည် သုညဖြစ်သွားပါက စားလဒ်နှင့် အကြွင်း နှစ်မျိုးလုံးအတွက် သုညကို ပြန်ပေးပါ။
+</p>
+<p>ကျွန်ုပ်တို့သည် <code>add-poly</code> နှင့် <code>mul-poly</code> မော်ဒယ်ပေါ်တွင် အခြေခံ၍ <code>div-poly</code> procedure တစ်ခုကို ဒီဇိုင်းဆွဲနိုင်သည်။ ဤ procedure သည် poly နှစ်ခုတွင် variable တူညီခြင်း ရှိမရှိ စစ်ဆေးသည်။ တူညီပါက <code>div-poly</code> သည် variable ကို ခွာထုတ်ပြီး term lists များပေါ်တွင် စားခြင်းလုပ်ဆောင်ချက်ကို လုပ်ဆောင်ပေးသော <code>div-terms</code> ထံသို့ ပေးပို့သည်။ နောက်ဆုံးတွင် <code>div-poly</code> သည် <code>div-terms</code> မှ ပေးပို့သော ရလဒ်တွင် variable ကို ပြန်လည်တွဲဆက်ပေးသည်။ စားခြင်း၏ စားလဒ်နှင့် အကြွင်း နှစ်မျိုးလုံးကို တွက်ချက်ရန် <code>div-terms</code> ကို ဒီဇိုင်းဆွဲခြင်းက ပို၍အဆင်ပြေသည်။ <code>div-terms</code> သည် term lists နှစ်ခုကို arguments အဖြစ် ယူနိုင်ပြီး စားလဒ် term list နှင့် အကြွင်း term list တို့ ပါဝင်သော list တစ်ခုကို ပြန်ပေးနိုင်သည်။
+</p>
+<p>လွဲနေသော expression များကို ဖြည့်စွက်ခြင်းဖြင့် အောက်ပါ <code>div-terms</code> ၏ definition ကို ပြည့်စုံအောင် လုပ်ဆောင်ပါ။ polys နှစ်ခုကို arguments အဖြစ် ယူပြီး စားလဒ်နှင့် အကြွင်း polys တို့၏ list ကို ပြန်ပေးမည့် <code>div-poly</code> ကို အကောင်အထည်ဖော်ရန် ၎င်းကို အသုံးပြုပါ။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">div-terms L1 L2</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">empty-termlist? L1</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">list </span><span class="opn">(</span><span class="pln">the-empty-termlist</span><span class="clo">)</span><span class="pln"> 
+            </span><span class="opn">(</span><span class="pln">the-empty-termlist</span><span class="clo">))</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">t1 </span><span class="opn">(</span><span class="pln">first-term L1</span><span class="clo">))</span><span class="pln">
+            </span><span class="opn">(</span><span class="pln">t2 </span><span class="opn">(</span><span class="pln">first-term L2</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;</span><span class="pln"> </span><span class="opn">(</span><span class="pln">order t2</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">order t1</span><span class="clo">))</span><span class="pln">
+            </span><span class="opn">(</span><span class="pln">list </span><span class="opn">(</span><span class="pln">the-empty-termlist</span><span class="clo">)</span><span class="pln"> L1</span><span class="clo">)</span><span class="pln">
+            </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">new-c </span><span class="opn">(</span><span class="pln">div </span><span class="opn">(</span><span class="pln">coeff t1</span><span class="clo">)</span><span class="pln"> 
+                              </span><span class="opn">(</span><span class="pln">coeff t2</span><span class="clo">)))</span><span class="pln">
+                  </span><span class="opn">(</span><span class="pln">new-o </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="opn">(</span><span class="pln">order t1</span><span class="clo">)</span><span class="pln"> 
+                            </span><span class="opn">(</span><span class="pln">order t2</span><span class="clo">))))</span><span class="pln">
+              </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">rest-of-result
+                     ⟨</span><var><span class="pln">compute rest of result 
+                     recursively</span></var><span class="pln">⟩ </span><span class="clo">))</span><span class="pln">
+                ⟨</span><var><span class="pln">form complete result</span></var><span class="pln">⟩ </span><span class="clo">))))))</span></pre></div>
+</blockquote>
+
+<a id="Hierarchies-of-types-in-symbolic-algebra"></a>
+<h5 class="subsubheading">Hierarchies of types in symbolic algebra</h5>
+
+<p>ကျွန်ုပ်တို့၏ polynomial စနစ်သည် အမျိုးအစားတစ်ခုမှ အရာဝတ္ထုများ (polynomials) သည် အမှန်တကယ်တွင် မတူညီသော အမျိုးအစားများစွာရှိသော အရာဝတ္ထုများကို အစိတ်အပိုင်းများအဖြစ် ပိုင်ဆိုင်ထားသည့် ရှုပ်ထွေးသော အရာဝတ္ထုများ ဖြစ်နိုင်ပုံကို သရုပ်ဖော်သည်။ ဤအချက်သည် generic operations များကို သတ်မှတ်ရာတွင် အမှန်တကယ် အခက်အခဲ မရှိစေပါ။ ကျွန်ုပ်တို့သည် compound types များ၏ အစိတ်အပိုင်းများကို လိုအပ်သလို ကိုင်တွယ်ဆောင်ရွက်ရန် သင့်လျော်သော generic operations များကိုသာ ထည့်သွင်းရန် လိုအပ်ပါသည်။ အမှန်တကယ်တွင်၊ polynomial ၏ အစိတ်အပိုင်းများသည်လည်း polynomial များ ဖြစ်နိုင်သောကြောင့် polynomials များသည် “recursive data abstraction” တစ်မျိုးဖြစ်ကြောင်း ကျွန်ုပ်တို့ တွေ့ခဲ့ရသည်။ ကျွန်ုပ်တို့၏ generic operations နှင့် data-directed programming ပုံစံသည် ဤရှုပ်ထွေးမှုကို အခက်အခဲမရှိ ကိုင်တွယ်နိုင်သည်။
+</p>
+<p>အခြားတစ်ဖက်တွင်မူ၊ polynomial algebra သည် data types များကို tower ပုံစံဖြင့် သဘာဝကျကျ မစီစဉ်နိုင်သော စနစ်တစ်ခု ဖြစ်သည်။ ဥပမာအားဖြင့်၊ coefficients များသည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>y</mi>
+</math> ၏ polynomials ဖြစ်သော <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> ၏ polynomials များ ရှိနိုင်သည်။ ထို့အတူ coefficients များသည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> ၏ polynomials ဖြစ်သော <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>y</mi>
+</math> ၏ polynomials များလည်း ရှိနိုင်သည်။ ဤအမျိုးအစားနှစ်ခုလုံးသည် မည်သည့်သဘာဝကျသော နည်းလမ်းနှင့်မျှ တစ်ခုက တစ်ခု၏ “အထက်” တွင် မရှိသော်လည်း၊ set တစ်ခုစီမှ element များကို ပေါင်းစပ်ရန် လိုအပ်လေ့ရှိသည်။ ဤသို့ပြုလုပ်ရန် နည်းလမ်းများစွာ ရှိပါသည်။ ဖြစ်နိုင်ခြေတစ်ခုမှာ polynomial နှစ်ခုလုံးတွင် တူညီသော ပင်မ variable ရှိစေရန် term များကို ချဲ့ထွင်ခြင်းနှင့် ပြန်လည်စီစဉ်ခြင်းဖြင့် polynomial တစ်ခုကို အခြားတစ်ခု၏ အမျိုးအစားသို့ ပြောင်းလဲခြင်း ဖြစ်သည်။ variable များကို အစဉ်လိုက်စီခြင်းဖြင့် ဤအရာပေါ်တွင် tower ကဲ့သို့သော ဖွဲ့စည်းပုံကို သတ်မှတ်နိုင်ပြီး၊ ထိုသို့ဖြင့် မည်သည့် polynomial ကိုမဆို ဦးစားပေးအမြင့်ဆုံး variable က လွှမ်းမိုးပြီး ဦးစားပေးနိမ့်သော variable များကို coefficients များထဲတွင် မြှုပ်နှံထားသည့် “canonical form” သို့ အမြဲပြောင်းလဲနိုင်သည်။ ဤဗျူဟာသည် အတော်အတန် ကောင်းမွန်စွာ အလုပ်လုပ်သော်လည်း၊ ပြောင်းလဲခြင်းသည် polynomial ကို မလိုအပ်ဘဲ ချဲ့ထွင်စေနိုင်ပြီး ဖတ်ရခက်ခဲစေကာ အလုပ်လုပ်ရာတွင် ထိရောက်မှု နည်းပါးစေနိုင်သည်။ tower ဗျူဟာသည် ဤနယ်ပယ်အတွက် သို့မဟုတ် user က trigonometric functions၊ power series နှင့် integrals ကဲ့သို့သော အမျိုးမျိုးသော ပေါင်းစပ်ပုံစံများဖြင့် အမျိုးအစားဟောင်းများကို အသုံးပြု၍ အမျိုးအစားသစ်များကို dynamic နည်းဖြင့် တီထွင်နိုင်သော မည်သည့်နယ်ပယ်အတွက်မဆို သဘာဝမကျသည်မှာ သေချာပါသည်။
+</p>
+<p>ကြီးမားသော algebraic-manipulation စနစ်များ၏ ဒီဇိုင်းတွင် coercion ကို ထိန်းချုပ်ခြင်းသည် ကြီးမားသော ပြဿနာတစ်ခု ဖြစ်နေခြင်းမှာ အံ့သြစရာ မဟုတ်ပါ။ ထိုကဲ့သို့သော စနစ်များ၏ ရှုပ်ထွေးမှု အတော်များများသည် ကွဲပြားသော အမျိုးအစားများအကြား ဆက်စပ်မှုများနှင့် သက်ဆိုင်သည်။ အမှန်စင်စစ်၊ ကျွန်ုပ်တို့သည် coercion ကို လုံးဝနားမလည်သေးဟု ပြောလျှင် မှန်ပါလိမ့်မည်။ အမှန်တကယ်တွင်မူ၊ ကျွန်ုပ်တို့သည် data type ဟူသော အယူအဆကိုပင် လုံးဝနားမလည်သေးပါ။ သို့သော်လည်း၊ ကျွန်ုပ်တို့ သိရှိထားသောအရာများသည် ကြီးမားသော စနစ်များ၏ ဒီဇိုင်းကို ပံ့ပိုးရန် အားကောင်းသော ဖွဲ့စည်းပုံနှင့် modularity အခြေခံမူများကို ပေးဆောင်ပါသည်။
+</p>
+<blockquote>
+<p><strong><a id="Exercise-2_002e92"></a>လေ့ကျင့်ခန်း ၂.၉၂:</strong> variable များပေါ်တွင် အစီအစဉ်တစ်ခု သတ်မှတ်ခြင်းဖြင့်၊ မတူညီသော variable များရှိသော polynomials များအတွက် ပေါင်းခြင်းနှင့် မြှောက်ခြင်း အလုပ်လုပ်စေရန် polynomial package ကို ချဲ့ထွင်ပါ။ (ဤသည်မှာ မလွယ်ကူပါ!)
+</p></blockquote>
+
+<a id="Extended-exercise_003a-Rational-functions"></a>
+<h5 class="subsubheading">နောက်ဆက်တွဲ လေ့ကျင့်ခန်း: Rational functions</h5>
+
+<p>ကျွန်ုပ်တို့၏ generic arithmetic စနစ်တွင် <a id="index-rational-functions"></a>
+<em>rational functions</em> များကိုပါဝင်စေရန် ချဲ့ထွင်နိုင်သည်။ 
+၎င်းတို့သည် အပိုင်းကိန်းများဖြစ်ပြီး numerator နှင့် denominator တို့မှာ
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mrow class="MJX-TeXAtom-ORD">
+      <mfrac>
+        <mrow>
+          <mi>x</mi>
+          <mo>+</mo>
+          <mn>1</mn>
+        </mrow>
+        <mrow>
+          <msup>
+            <mi>x</mi>
+            <mn>3</mn>
+          </msup>
+          <mo>−<!-- − --></mo>
+          <mn>1</mn>
+        </mrow>
+      </mfrac>
+    </mrow>
+    <mo>.</mo>
+  </mrow>
+</math>
+ကဲ့သို့သော polynomials များ ဖြစ်ကြသည်။
+စနစ်သည် rational functions များကို ပေါင်း၊ နှုတ်၊ မြှောက်၊ စား ပြုလုပ်နိုင်ရမည်ဖြစ်ပြီး၊
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mfrac>
+      <mrow>
+        <mi>x</mi>
+        <mo>+</mo>
+        <mn>1</mn>
+      </mrow>
+      <mrow>
+        <msup>
+          <mi>x</mi>
+          <mn>3</mn>
+        </msup>
+        <mo>−<!-- − --></mo>
+        <mn>1</mn>
+      </mrow>
+    </mfrac>
+  </mrow>
+  <mo>+</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mfrac>
+      <mi>x</mi>
+      <mrow>
+        <msup>
+          <mi>x</mi>
+          <mn>2</mn>
+        </msup>
+        <mo>−<!-- − --></mo>
+        <mn>1</mn>
+      </mrow>
+    </mfrac>
+  </mrow>
+  <mspace width="thinmathspace"/>
+  <mo>=</mo>
+  <mspace width="thinmathspace"/>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mrow class="MJX-TeXAtom-ORD">
+      <mfrac>
+        <mrow>
+          <msup>
+            <mi>x</mi>
+            <mn>3</mn>
+          </msup>
+          <mo>+</mo>
+          <mn>2</mn>
+          <msup>
+            <mi>x</mi>
+            <mn>2</mn>
+          </msup>
+          <mo>+</mo>
+          <mn>3</mn>
+          <mi>x</mi>
+          <mo>+</mo>
+          <mn>1</mn>
+        </mrow>
+        <mrow>
+          <msup>
+            <mi>x</mi>
+            <mn>4</mn>
+          </msup>
+          <mo>+</mo>
+          <msup>
+            <mi>x</mi>
+            <mn>3</mn>
+          </msup>
+          <mo>−<!-- − --></mo>
+          <mi>x</mi>
+          <mo>−<!-- − --></mo>
+          <mn>1</mn>
+        </mrow>
+      </mfrac>
+    </mrow>
+    <mo>.</mo>
+  </mrow>
+</math>
+ကဲ့သို့သော တွက်ချက်မှုများကို လုပ်ဆောင်နိုင်ရမည်။
+(ဤနေရာတွင် ဘုံဆခွဲကိန်းများကို ဖယ်ထုတ်ခြင်းဖြင့် စုစုပေါင်းပေါင်းလဒ်ကို ရိုးရှင်းအောင် ပြုလုပ်ထားသည်။ သာမန် “cross multiplication” သည် ပဉ္စမထပ်ကိန်း polynomial အပေါ်တွင် စတုတ္ထထပ်ကိန်း polynomial တစ်ခုကို ထွက်ပေါ်စေလိမ့်မည်။)
+</p>
+<p>ကျွန်ုပ်တို့၏ rational-arithmetic package ကို generic operations များ အသုံးပြုရန် ပြုပြင်မွမ်းမံပါက၊ အပိုင်းကိန်းများကို အနိမ့်ဆုံးကိန်းသို့ လျှော့ချသည့် ပြဿနာမှလွဲ၍ ကျန်ရှိသည်များကို ကျွန်ုပ်တို့ လိုချင်သည့်အတိုင်း လုပ်ဆောင်ပေးလိမ့်မည်။
+</p>
+<blockquote>
+<p><strong><a id="Exercise-2_002e93"></a>လေ့ကျင့်ခန်း ၂.၉၃:</strong> generic operations များကို အသုံးပြုရန် rational-arithmetic package ကို ပြုပြင်မွမ်းမံပါ၊ သို့သော် <code>make-rat</code> ကို အပိုင်းကိန်းများကို အနိမ့်ဆုံးကိန်းသို့ လျှော့ချရန် မကြိုးစားစေရန် ပြောင်းလဲပါ။ rational function တစ်ခု ထုတ်ပေးရန် polynomial နှစ်ခုပေါ်တွင် <code>make-rational</code> ကို ခေါ်ဆိုခြင်းဖြင့် သင်၏စနစ်ကို စမ်းသပ်ပါ:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> p1 </span><span class="opn">(</span><span class="pln">make-polynomial </span><span class="lit">'x</span><span class="pln"> </span><span class="lit">'</span><span class="opn">((</span><span class="lit">2</span><span class="pln"> </span><span class="lit">1</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="lit">0</span><span class="pln"> </span><span class="lit">1</span><span class="clo">))))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> p2 </span><span class="opn">(</span><span class="pln">make-polynomial </span><span class="lit">'x</span><span class="pln"> </span><span class="lit">'</span><span class="opn">((</span><span class="lit">3</span><span class="pln"> </span><span class="lit">1</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="lit">0</span><span class="pln"> </span><span class="lit">1</span><span class="clo">))))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> rf </span><span class="opn">(</span><span class="pln">make-rational p2 p1</span><span class="clo">))</span></pre></div>
+
+<p>ယခု <code>add</code> ကို အသုံးပြု၍ <code>rf</code> ကို ၎င်းကိုယ်တိုင်သို့ ပေါင်းပါ။ ဤပေါင်းခြင်းလုပ်ငန်းစဉ်သည် အပိုင်းကိန်းများကို အနိမ့်ဆုံးကိန်းသို့ မလျှော့ချသည်ကို သင်တွေ့ရပါလိမ့်မည်။
+</p></blockquote>
+
+<p>ကျွန်ုပ်တို့သည် ကိန်းပြည့်များတွင် အသုံးပြုခဲ့သည့် အယူအဆအတိုင်းပင် — numerator နှင့် denominator နှစ်ခုလုံးကို ၎င်းတို့၏ အကြီးဆုံးဘုံဆခွဲကိန်း (greatest common divisor) နှင့် စားရန် <code>make-rat</code> ကို ပြုပြင်မွမ်းမံခြင်းဖြင့် — polynomial အပိုင်းကိန်းများကို အနိမ့်ဆုံးကိန်းသို့ လျှော့ချနိုင်သည်။ “အကြီးဆုံးဘုံဆခွဲကိန်း” ဟူသော အယူအဆသည် polynomials များအတွက်လည်း အဓိပ္ပာယ်ရှိသည်။ အမှန်စင်စစ်၊ ကျွန်ုပ်တို့သည် ကိန်းပြည့်များအတွက် အလုပ်လုပ်သော Euclid’s Algorithm နှင့် အခြေခံအားဖြင့် တူညီသော algorithm ကို အသုံးပြု၍ polynomials နှစ်ခု၏ <abbr>GCD</abbr> ကို တွက်ချက်နိုင်သည်။<a class="footnote_link" id="DOCF126" href="#FOOT126"><sup>126</sup></a> ကိန်းပြည့်ဗားရှင်းမှာ
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">gcd a b</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> b </span><span class="lit">0</span><span class="clo">)</span><span class="pln">
+      a
+      </span><span class="opn">(</span><span class="pln">gcd b </span><span class="opn">(</span><span class="pln">remainder a b</span><span class="clo">))))</span></pre></div>
+
+<p>ဤအရာကို အသုံးပြု၍ term lists များပေါ်တွင် အလုပ်လုပ်သော <abbr>GCD</abbr> operation တစ်ခုကို သတ်မှတ်ရန် ထင်ရှားသော ပြုပြင်မွမ်းမံမှုကို ပြုလုပ်နိုင်သည်:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">gcd-terms a b</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">empty-termlist? b</span><span class="clo">)</span><span class="pln">
+      a
+      </span><span class="opn">(</span><span class="pln">gcd-terms b </span><span class="opn">(</span><span class="pln">remainder-terms a b</span><span class="clo">))))</span></pre></div>
+
+<p>ဤနေရာတွင် <code>remainder-terms</code> သည် <a href="#Exercise-2_002e91">လေ့ကျင့်ခန်း ၂.၉၁</a> တွင် အကောင်အထည်ဖော်ခဲ့သော term-list စားခြင်းလုပ်ဆောင်ချက် <code>div-terms</code> မှ ပြန်ပေးသော list ၏ အကြွင်းအပိုင်းကို ထုတ်ယူပေးသည်။
+</p>
+<blockquote>
+<p><strong><a id="Exercise-2_002e94"></a>လေ့ကျင့်ခန်း ၂.၉၄:</strong> <code>div-terms</code> ကို အသုံးပြု၍ <code>remainder-terms</code> procedure ကို အကောင်အထည်ဖော်ပါ၊ ၎င်းကို အသုံးပြု၍ <code>gcd-terms</code> ကို အထက်ပါအတိုင်း သတ်မှတ်ပါ။ ယခု poly နှစ်ခု၏ polynomial <abbr>GCD</abbr> ကို တွက်ချက်သော <code>gcd-poly</code> procedure တစ်ခုကို ရေးသားပါ။ (poly နှစ်ခုသည် variable တူညီခြင်း မရှိပါက procedure သည် error တစ်ခု ပြသရမည်။) polynomials များအတွက် <code>gcd-poly</code> သို့လည်းကောင်း၊ သာမန်ကိန်းဂဏန်းများအတွက် သာမန် <code>gcd</code> သို့လည်းကောင်း လျှော့ချပေးမည့် generic operation <code>greatest-common-divisor</code> ကို စနစ်အတွင်း ထည့်သွင်းပါ။ စမ်းသပ်မှုတစ်ခုအနေဖြင့်၊ အောက်ပါအတိုင်း ကြိုးစားပါ
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> p1 
+  </span><span class="opn">(</span><span class="pln">make-polynomial 
+   </span><span class="lit">'x</span><span class="pln"> </span><span class="lit">'</span><span class="opn">((</span><span class="lit">4</span><span class="pln"> </span><span class="lit">1</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="lit">3</span><span class="pln"> </span><span class="lit">-1</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="lit">2</span><span class="pln"> </span><span class="lit">-2</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="lit">1</span><span class="pln"> </span><span class="lit">2</span><span class="clo">))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> p2 
+  </span><span class="opn">(</span><span class="pln">make-polynomial 
+   </span><span class="lit">'x</span><span class="pln"> </span><span class="lit">'</span><span class="opn">((</span><span class="lit">3</span><span class="pln"> </span><span class="lit">1</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="lit">1</span><span class="pln"> </span><span class="lit">-1</span><span class="clo">))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">greatest-common-divisor p1 p2</span><span class="clo">)</span></pre></div>
+
+<p>ပြီးလျှင် သင်၏ရလဒ်ကို ကိုယ်တိုင်တွက်ချက်၍ စစ်ဆေးပါ။
+</p></blockquote>
+<blockquote>
+<p><strong><a id="Exercise-2_002e95"></a>Exercise 2.95:</strong> <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>P</mi>
+    <mn>1</mn>
+  </msub>
+</math>, <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>P</mi>
+    <mn>2</mn>
+  </msub>
+</math>, နှင့်
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>P</mi>
+    <mn>3</mn>
+  </msub>
+</math> တို့ကို အောက်ပါ polynomial များအဖြစ် သတ်မှတ်ပါ-
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mtable columnalign="right left" rowspacing="4pt" columnspacing="1em">
+    <mtr>
+      <mtd>
+        <msub>
+          <mi>P</mi>
+          <mn>1</mn>
+        </msub>
+        <mo>:</mo>
+      </mtd>
+      <mtd>
+        <msup>
+          <mi>x</mi>
+          <mn>2</mn>
+        </msup>
+        <mo>−<!-- − --></mo>
+        <mn>2</mn>
+        <mi>x</mi>
+        <mo>+</mo>
+        <mn>1</mn>
+        <mo>,</mo>
+      </mtd>
+    </mtr>
+    <mtr>
+      <mtd>
+        <msub>
+          <mi>P</mi>
+          <mn>2</mn>
+        </msub>
+        <mo>:</mo>
+      </mtd>
+      <mtd>
+        <mn>11</mn>
+        <msup>
+          <mi>x</mi>
+          <mn>2</mn>
+        </msup>
+        <mo>+</mo>
+        <mn>7</mn>
+        <mo>,</mo>
+      </mtd>
+    </mtr>
+    <mtr>
+      <mtd>
+        <msub>
+          <mi>P</mi>
+          <mn>3</mn>
+        </msub>
+        <mo>:</mo>
+      </mtd>
+      <mtd>
+        <mn>13</mn>
+        <mi>x</mi>
+        <mo>+</mo>
+        <mn>5.</mn>
+      </mtd>
+    </mtr>
+  </mtable>
+</math>
+ယခု <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>Q</mi>
+    <mn>1</mn>
+  </msub>
+</math> ကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>P</mi>
+    <mn>1</mn>
+  </msub>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>P</mi>
+    <mn>2</mn>
+  </msub>
+</math> တို့၏ မြှောက်လဒ်အဖြစ်လည်းကောင်း၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>Q</mi>
+    <mn>2</mn>
+  </msub>
+</math> ကို
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>P</mi>
+    <mn>1</mn>
+  </msub>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>P</mi>
+    <mn>3</mn>
+  </msub>
+</math> တို့၏ မြှောက်လဒ်အဖြစ်လည်းကောင်း သတ်မှတ်ပြီး၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>Q</mi>
+    <mn>1</mn>
+  </msub>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>Q</mi>
+    <mn>2</mn>
+  </msub>
+</math> တို့၏ <abbr>GCD</abbr> ကို တွက်ထုတ်ရန် <code>greatest-common-divisor</code>
+(<a href="#Exercise-2_002e94">Exercise 2.94</a>) ကို အသုံးပြုပါ။
+ရရှိလာသော အဖြေသည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>P</mi>
+    <mn>1</mn>
+  </msub>
+</math> နှင့် တူညီမှုမရှိသည်ကို သတိပြုပါ။ ဤဥပမာသည် တွက်ချက်မှုအတွင်းသို့ ကိန်းပြည့်မဟုတ်သော လုပ်ဆောင်ချက်များ (noninteger operations) ကို ရောက်ရှိလာစေပြီး၊ <abbr>GCD</abbr> algorithm တွင် အခက်အခဲများ ဖြစ်ပေါ်စေပါသည်။<a class="footnote_link" id="DOCF127" href="#FOOT127"><sup>127</sup></a> ဘာဖြစ်နေသည်ကို နားလည်စေရန် <abbr>GCD</abbr> ကို တွက်ချက်နေစဉ်အတွင်း <code>gcd-terms</code> ကို trace လုပ်ကြည့်ပါ သို့မဟုတ် စားခြင်းကို ကိုယ်တိုင် လက်ဖြင့် တွက်ချက်ကြည့်ပါ။
+</p></blockquote>
+
+<p><abbr>GCD</abbr> algorithm ၏ အောက်ပါ ပြုပြင်မွမ်းမံမှုကို အသုံးပြုပါက <a href="#Exercise-2_002e95">Exercise 2.95</a> တွင် တွေ့ရသော ပြဿနာကို ဖြေရှင်းနိုင်ပါသည် (ဤနည်းလမ်းသည် ကိန်းပြည့် coefficient များရှိသော polynomial များအတွက်သာ အမှန်တကယ် အလုပ်လုပ်ပါသည်)။ <abbr>GCD</abbr> တွက်ချက်မှုတွင် မည်သည့် polynomial စားခြင်းကိုမဆို မလုပ်ဆောင်မီ၊ စားကိန်း (dividend) ကို ကိန်းပြည့်ကိန်းသေ (integer constant factor) တစ်ခုဖြင့် မြှောက်ပေးရမည်ဖြစ်ပြီး၊ ၎င်းကိန်းသေသည် စားနေစဉ်အတွင်း အပိုင်းကိန်းများ မထွက်ပေါ်လာစေရန် အာမခံနိုင်သော ကိန်းဖြစ်ရပါမည်။ ထို့ကြောင့် ကျွန်ုပ်တို့၏ အဖြေသည် အမှန်တကယ် <abbr>GCD</abbr> နှင့် ကိန်းပြည့်ကိန်းသေတစ်ခုစာ ကွာခြားနေမည်ဖြစ်သော်လည်း၊ ရာရှင်နယ်ဖန်ရှင် (rational functions) များကို အရှင်းဆုံးပုံစံ (lowest terms) သို့ လျှော့ချရာတွင် ၎င်းသည် အရေးမကြီးပါ။ <abbr>GCD</abbr> ကို ပိုင်းဝေနှင့် ပိုင်းခြေ နှစ်ခုလုံးကို စားရန် အသုံးပြုမည်ဖြစ်သောကြောင့် ထိုကိန်းပြည့်ကိန်းသေသည် အချင်းချင်း ကျေသွားမည် ဖြစ်သည်။
+</p>
+<p>ပို၍ တိတိကျကျ ပြောရလျှင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>P</mi>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>Q</mi>
+</math> တို့သည် polynomial များ ဖြစ်ပါက၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>O</mi>
+    <mn>1</mn>
+  </msub>
+</math> ကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>P</mi>
+</math> ၏ order (ဆိုလိုသည်မှာ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>P</mi>
+</math> ၏ အကြီးဆုံး term ၏ order) ဟု သတ်မှတ်ပြီး <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>O</mi>
+    <mn>2</mn>
+  </msub>
+</math> ကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>Q</mi>
+</math> ၏ order ဟု သတ်မှတ်ပါ။ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>c</mi>
+</math> ကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>Q</mi>
+</math> ၏ leading coefficient ဟု သတ်မှတ်ပါ။ ထိုအခါ အကယ်၍ ကျွန်ုပ်တို့သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>P</mi>
+</math> ကို <a id="index-integerizing-factor"></a>
+<em>integerizing factor</em> ဖြစ်သော
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mi>c</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mn>1</mn>
+      <mo>+</mo>
+      <msub>
+        <mi>O</mi>
+        <mn>1</mn>
+      </msub>
+      <mo>−<!-- − --></mo>
+      <msub>
+        <mi>O</mi>
+        <mn>2</mn>
+      </msub>
+    </mrow>
+  </msup>
+</math> နှင့် မြှောက်ပါက၊ ရရှိလာသော polynomial ကို <code>div-terms</code> algorithm အသုံးပြု၍ အပိုင်းကိန်းများ မထွက်ပေါ်စေဘဲ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>Q</mi>
+</math> နှင့် စားနိုင်ကြောင်း ပြသနိုင်ပါသည်။ စားကိန်းကို ဤကိန်းသေဖြင့် မြှောက်ပြီးမှ စားခြင်းလုပ်ဆောင်ချက်ကို တစ်ခါတစ်ရံ <a id="index-pseudodivision"></a>
+<em>pseudodivision</em> (<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>P</mi>
+</math> ကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>Q</mi>
+</math> ဖြင့် စားခြင်း) ဟု ခေါ်ဆိုသည်။ စားခြင်းမှ ရရှိလာသော အကြွင်းကို <a id="index-pseudoremainder"></a>
+<em>pseudoremainder</em> ဟု ခေါ်သည်။
+</p>
+<blockquote>
+<p><strong><a id="Exercise-2_002e96"></a>Exercise 2.96:</strong>
+</p><ol>
+<li> <code>pseudoremainder-terms</code> procedure ကို အကောင်အထည်ဖော်ပါ။ ၎င်းသည် <code>remainder-terms</code> နှင့် ဆင်တူသော်လည်း <code>div-terms</code> ကို မခေါ်ဆိုမီ စားကိန်းကို အထက်တွင် ဖော်ပြထားသော integerizing factor ဖြင့် မြှောက်ရမည်ဖြစ်သည်။ <code>gcd-terms</code> တွင် <code>pseudoremainder-terms</code> ကို အသုံးပြုရန် ပြင်ဆင်ပါ၊ ထို့နောက် <a href="#Exercise-2_002e95">Exercise 2.95</a> ရှိ ဥပမာတွင် <code>greatest-common-divisor</code> သည် ကိန်းပြည့် coefficient များပါဝင်သော အဖြေကို ထုတ်ပေးကြောင်း စစ်ဆေးပါ။
+
+</li><li> ယခု <abbr>GCD</abbr> တွင် ကိန်းပြည့် coefficient များ ရှိလာပြီဖြစ်သော်လည်း ၎င်းတို့သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>P</mi>
+    <mn>1</mn>
+  </msub>
+</math> ၏ coefficient များထက် ပိုကြီးနေပါသည်။ အဖြေ၏ coefficient များအားလုံးကို ၎င်းတို့၏ (ကိန်းပြည့်) အကြီးဆုံးဘုံစားကိန်းဖြင့် စားခြင်းဖြင့် coefficient များမှ ဘုံ factor များကို ဖယ်ရှားရန် <code>gcd-terms</code> ကို ပြင်ဆင်ပါ။
+
+</li></ol>
+</blockquote>
+
+<p>ထို့ကြောင့် ရာရှင်နယ်ဖန်ရှင်တစ်ခုကို အရှင်းဆုံးပုံစံသို့ လျှော့ချနည်းမှာ အောက်ပါအတိုင်း ဖြစ်ပါသည်-
+</p>
+<ul>
+<li> <a href="#Exercise-2_002e96">Exercise 2.96</a> မှ <code>gcd-terms</code> ဗားရှင်းကို အသုံးပြု၍ ပိုင်းဝေနှင့် ပိုင်းခြေတို့၏ <abbr>GCD</abbr> ကို တွက်ချက်ပါ။
+
+</li><li> <abbr>GCD</abbr> ရရှိသောအခါ၊ ပိုင်းဝေနှင့် ပိုင်းခြေ နှစ်ခုလုံးကို <abbr>GCD</abbr> ဖြင့် မစားမီ တူညီသော integerizing factor ဖြင့် မြှောက်ပါ၊ သို့မှသာ <abbr>GCD</abbr> ဖြင့် စားခြင်းသည် ကိန်းပြည့်မဟုတ်သော coefficient များကို ဖြစ်ပေါ်စေမည် မဟုတ်ပါ။ သင်အသုံးပြုနိုင်သော factor မှာ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mtext>GCD ၏ leading coefficient</mtext>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mn>1</mn>
+      <mo>+</mo>
+      <msub>
+        <mi>O</mi>
+        <mn>1</mn>
+      </msub>
+      <mo>−<!-- − --></mo>
+      <msub>
+        <mi>O</mi>
+        <mn>2</mn>
+      </msub>
+    </mrow>
+  </msup>
+</math> ဖြစ်ပြီး၊ ဤနေရာတွင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>O</mi>
+    <mn>2</mn>
+  </msub>
+</math> သည် <abbr>GCD</abbr> ၏ order ဖြစ်ပြီး <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>O</mi>
+    <mn>1</mn>
+  </msub>
+</math> သည် ပိုင်းဝေနှင့် ပိုင်းခြေတို့၏ order များထဲမှ အကြီးဆုံး ဖြစ်သည်။ ဤနည်းလမ်းသည် ပိုင်းဝေနှင့် ပိုင်းခြေတို့ကို <abbr>GCD</abbr> ဖြင့် စားရာတွင် အပိုင်းကိန်းများ မထွက်ပေါ်စေရန် သေချာစေပါလိမ့်မည်။
+
+</li><li> ဤလုပ်ဆောင်ချက်၏ ရလဒ်သည် ကိန်းပြည့် coefficient များရှိသော ပိုင်းဝေနှင့် ပိုင်းခြေတို့ ဖြစ်လာမည်။ integerizing factor များကြောင့် coefficient များသည် ပုံမှန်အားဖြင့် အလွန်ကြီးမားနေမည် ဖြစ်သဖြင့် နောက်ဆုံးအဆင့်မှာ ပိုင်းဝေနှင့် ပိုင်းခြေ၏ coefficient အားလုံး၏ (ကိန်းပြည့်) အကြီးဆုံးဘုံစားကိန်းကို ရှာဖွေပြီး ထို factor ဖြင့် အားလုံးကို စားခြင်းဖြင့် မလိုအပ်သော factor များကို ဖယ်ရှားရန် ဖြစ်သည်။
+
+</li></ul>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e97"></a>Exercise 2.97:</strong>
+</p><ol>
+<li> ဤ algorithm ကို term list <code>n</code> နှင့် <code>d</code> တို့ကို argument အဖြစ် လက်ခံပြီး အထက်ပါ algorithm ဖြင့် အရှင်းဆုံးပုံစံသို့ လျှော့ချထားသော <code>nn</code>, <code>dd</code> list ကို ပြန်ပေးသည့် <code>reduce-terms</code> procedure အဖြစ် အကောင်အထည်ဖော်ပါ။ ထို့ပြင် <code>add-poly</code> နှင့် ဆင်တူသော <code>reduce-poly</code> procedure ကိုလည်း ရေးသားပါ၊ ၎င်းသည် polynomial နှစ်ခုတွင် variable တူညီမှု ရှိမရှိ စစ်ဆေးရမည်။ တူညီပါက <code>reduce-poly</code> သည် variable ကို ခွာထုတ်ပြီး ပြဿနာကို <code>reduce-terms</code> သို့ ပေးပို့ကာ၊ <code>reduce-terms</code> မှ ပြန်ပေးသော term list နှစ်ခုတွင် variable ကို ပြန်လည် တပ်ဆင်ပေးရမည် ဖြစ်သည်။
+
+</li><li> မူလ <code>make-rat</code> က ကိန်းပြည့်များအတွက် လုပ်ဆောင်ပေးခဲ့သည့်အတိုင်း လုပ်ဆောင်ပေးမည့် <code>reduce-terms</code> နှင့် ဆင်တူသော procedure တစ်ခုကို သတ်မှတ်ပါ-
+
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reduce-integers n d</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">g </span><span class="opn">(</span><span class="pln">gcd n d</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">list </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> n g</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> d g</span><span class="clo">))))</span></pre></div>
+
+<p>ပြီးလျှင် <code>reduce-poly</code> (<code>polynomial</code> argument များအတွက်) သို့မဟုတ် <code>reduce-integers</code> (<code>scheme-number</code> argument များအတွက်) သို့ dispatch လုပ်ရန် <code>apply-generic</code> ကို ခေါ်ဆိုသည့် <code>reduce</code> generic operation တစ်ခုကို သတ်မှတ်ပါ။ ယခုအခါ rational-arithmetic package တွင် ပေးထားသော ပိုင်းဝေနှင့် ပိုင်းခြေကို မပေါင်းစပ်မီ <code>make-rat</code> မှ <code>reduce</code> ကို ခေါ်ဆိုစေခြင်းဖြင့် ရာရှင်နယ်ကိန်းများကို အရှင်းဆုံးပုံစံသို့ အလွယ်တကူ လျှော့ချနိုင်ပြီ ဖြစ်သည်။ ယခု စနစ်သည် ကိန်းပြည့်များ သို့မဟုတ် polynomial များပါဝင်သော ရာရှင်နယ်ဖော်ပြချက် (rational expressions) များကို ကိုင်တွယ်နိုင်ပြီ ဖြစ်သည်။ သင်၏ program ကို စမ်းသပ်ရန် ဤတိုးချဲ့လေ့ကျင့်ခန်း၏ အစတွင် ဖော်ပြထားသော ဥပမာကို စမ်းကြည့်ပါ-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> p1 
+  </span><span class="opn">(</span><span class="pln">make-polynomial </span><span class="lit">'x</span><span class="pln"> </span><span class="lit">'</span><span class="opn">((</span><span class="lit">1</span><span class="pln"> </span><span class="lit">1</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="lit">0</span><span class="pln"> </span><span class="lit">1</span><span class="clo">))))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> p2 
+  </span><span class="opn">(</span><span class="pln">make-polynomial </span><span class="lit">'x</span><span class="pln"> </span><span class="lit">'</span><span class="opn">((</span><span class="lit">3</span><span class="pln"> </span><span class="lit">1</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="lit">0</span><span class="pln"> </span><span class="lit">-1</span><span class="clo">))))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> p3 
+  </span><span class="opn">(</span><span class="pln">make-polynomial </span><span class="lit">'x</span><span class="pln"> </span><span class="lit">'</span><span class="opn">((</span><span class="lit">1</span><span class="pln"> </span><span class="lit">1</span><span class="clo">))))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> p4 
+  </span><span class="opn">(</span><span class="pln">make-polynomial </span><span class="lit">'x</span><span class="pln"> </span><span class="lit">'</span><span class="opn">((</span><span class="lit">2</span><span class="pln"> </span><span class="lit">1</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="lit">0</span><span class="pln"> </span><span class="lit">-1</span><span class="clo">))))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> rf1 </span><span class="opn">(</span><span class="pln">make-rational p1 p2</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> rf2 </span><span class="opn">(</span><span class="pln">make-rational p3 p4</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">add rf1 rf2</span><span class="clo">)</span></pre></div>
+
+<p>မှန်ကန်သော အဖြေကို အရှင်းဆုံးပုံစံဖြင့် ရရှိခြင်း ရှိမရှိ စစ်ဆေးပါ။
+</p></li></ol>
+</blockquote>
+
+<p><abbr>GCD</abbr> တွက်ချက်ခြင်းသည် ရာရှင်နယ်ဖန်ရှင်များအပေါ် လုပ်ဆောင်ချက်များ လုပ်ဆောင်သော မည်သည့်စနစ်၏မဆို အဓိက နှလုံးသား ဖြစ်သည်။ အထက်တွင် အသုံးပြုခဲ့သော algorithm သည် သင်္ချာနည်းအရ ရိုးရှင်းသော်လည်း အလွန်ပင် နှေးကွေးပါသည်။ နှေးကွေးရခြင်းမှာ တစ်စိတ်တစ်ပိုင်းအားဖြင့် စားခြင်းလုပ်ဆောင်ချက် အမြောက်အမြားကြောင့် ဖြစ်ပြီး၊ တစ်စိတ်တစ်ပိုင်းအားဖြင့် pseudodivision များမှ ထွက်ပေါ်လာသော ကြားဖြတ် coefficient များ၏ ကြီးမားလှသော ပမာဏကြောင့် ဖြစ်သည်။ algebraic-manipulation စနစ်များ ဖွံ့ဖြိုးတိုးတက်ရေးတွင် polynomial <abbr>GCD</abbr> များကို တွက်ချက်ရန် ပိုမိုကောင်းမွန်သော algorithm များကို ဒီဇိုင်းထုတ်ခြင်းသည် တက်ကြွသော နယ်ပယ်တစ်ခု ဖြစ်ပါသည်။<a class="footnote_link" id="DOCF128" href="#FOOT128"><sup>128</sup></a>
+</p>
+
+<div class="footnote">
+<h4 class="footnotes-heading">အောက်ခြေမှတ်စုများ</h4>
+
+<div id="FOOT115"><p><a class="footnote_backlink" href="#DOCF115"><sup>115</sup></a>
+ကျွန်ုပ်တို့သည် <code>(scheme-number complex)</code> အမျိုးအစားများကို ကိုင်တွယ်ရန်အတွက်လည်း
+ထပ်တူနီးပါးဖြစ်သော လုပ်ထုံးလုပ်နည်း (procedure) တစ်ခုကို ထောက်ပံ့ပေးရန် လိုအပ်ပါသည်။</p>
+</div>
+<div id="FOOT116"><p><a class="footnote_backlink" href="#DOCF116"><sup>116</sup></a>
+ယေဘုယျပြုခြင်းများအတွက် <a href="#Exercise-2_002e82">Exercise 2.82</a> ကို ကြည့်ပါ။</p>
+</div>
+<div id="FOOT117"><p><a class="footnote_backlink" href="#DOCF117"><sup>117</sup></a>
+အကယ်၍ ကျွန်ုပ်တို့သည် ပါးနပ်စွာ စဉ်းစားမည်ဆိုလျှင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mi>n</mi>
+    <mn>2</mn>
+  </msup>
+</math> ထက် နည်းပါးသော coercion procedures များဖြင့် များသောအားဖြင့် အဆင်ပြေအောင် လုပ်ဆောင်နိုင်ပါသည်။ ဥပမာအားဖြင့်၊ အကယ်၍ ကျွန်ုပ်တို့သည် type 1 မှ type 2 သို့ ပြောင်းလဲခြင်းနှင့် type 2 မှ type 3 သို့ ပြောင်းလဲခြင်းကို သိရှိထားပါက၊ ဤဗဟုသုတကို အသုံးပြု၍ type 1 မှ type 3 သို့ ပြောင်းလဲနိုင်ပါသည်။ ၎င်းသည် စနစ်ထဲသို့ အမျိုးအစားသစ်တစ်ခု ပေါင်းထည့်သောအခါ ကျွန်ုပ်တို့ တိုက်ရိုက်ထောက်ပံ့ပေးရန် လိုအပ်သော coercion procedures အရေအတွက်ကို များစွာ လျှော့ချပေးနိုင်ပါသည်။ အကယ်၍ ကျွန်ုပ်တို့သည် ကျွန်ုပ်တို့၏ စနစ်အတွင်း လိုအပ်သော ခေတ်မီဆန်းသစ်မှုအဆင့်ကို ထည့်သွင်းလိုပါက၊ အမျိုးအစားများကြားရှိ ဆက်နွယ်မှုဆိုင်ရာ “graph” ကို ရှာဖွေစေပြီး၊ တိုက်ရိုက်ထောက်ပံ့ထားသော အရာများမှတစ်ဆင့် ဆင်ခြင်ကောက်ချက်ချနိုင်သော coercion procedures များကို အလိုအလျောက် ထုတ်ပေးနိုင်အောင် ပြုလုပ်နိုင်ပါသည်။</p>
+</div>
+<div id="FOOT118"><p><a class="footnote_backlink" href="#DOCF118"><sup>118</sup></a>
+ဤစာအုပ်၏ ပထမအကြိမ်ထုတ်ဝေမှုတွင်လည်း ပါဝင်ခဲ့သော ဤဖော်ပြချက်သည် လွန်ခဲ့သော တစ်ဆယ့်နှစ်နှစ်က ကျွန်ုပ်တို့ ရေးသားခဲ့စဉ်ကကဲ့သို့ပင် ယခုအချိန်တွင်လည်း မှန်ကန်နေဆဲဖြစ်သည်။ မတူညီသော entities အမျိုးအစားများကြားရှိ ဆက်နွယ်မှုများကို ဖော်ပြရန်အတွက် အသုံးဝင်ပြီး ယေဘုယျကျသော မူဘောင် (framework) တစ်ခု (ဒဿနိကဗေဒပညာရှင်များက “ontology” ဟု ခေါ်ဆိုသည်) ကို တည်ဆောက်ရန်မှာ ခက်ခဲလွန်းလှသည်ဟု ထင်ရသည်။ လွန်ခဲ့သော ဆယ်နှစ်ခန့်က ရှိခဲ့သော ရှုပ်ထွေးမှုများနှင့် ယခုရှိနေသော ရှုပ်ထွေးမှုများကြားရှိ အဓိကကွာခြားချက်မှာ ယခုအခါတွင် မလုံလောက်သော ontological theories အမျိုးမျိုးကို ၎င်းနှင့်အညီ မလုံလောက်သော programming languages အမြောက်အမြားတွင် ထည့်သွင်းလာကြခြင်းပင် ဖြစ်သည်။ ဥပမာအားဖြင့်၊ object-oriented programming languages များ၏ ရှုပ်ထွေးမှုများစွာ—နှင့် ခေတ်ပြိုင် object-oriented languages များကြားရှိ သိမ်မွေ့ပြီး ရှုပ်ထွေးသော ကွာခြားချက်များ—သည် ဆက်နွယ်နေသော အမျိုးအစားများပေါ်တွင် generic operations များကို ကိုင်တွယ်ပုံအပေါ်တွင် ဗဟိုပြုနေသည်။ <a href="Chapter-3.xhtml#Chapter-3">Chapter 3</a> ပါ computational objects များအကြောင်း ကျွန်ုပ်တို့၏ ဆွေးနွေးမှုတွင် ဤကိစ္စရပ်များကို လုံးဝရှောင်ရှားထားပါသည်။ Object-oriented programming နှင့် ရင်းနှီးသော စာဖတ်သူများသည် ကျွန်ုပ်တို့အနေဖြင့် chapter 3 တွင် local state အကြောင်း များစွာပြောဆိုထားသော်လည်း “classes” သို့မဟုတ် “inheritance” အကြောင်းကို လုံးဝမဖော်ပြထားသည်ကို သတိပြုမိပါလိမ့်မည်။ အမှန်စင်စစ်၊ ဤပြဿနာများကို knowledge representation နှင့် automated reasoning ဆိုင်ရာ လုပ်ငန်းများကို အသုံးပြုမှသာ လုံလောက်စွာ ဖြေရှင်းနိုင်မည်ဖြစ်ပြီး computer-language design သက်သက်ဖြင့်သာ ဖြေရှင်းနိုင်မည်မဟုတ်ကြောင်း ကျွန်ုပ်တို့ သံသယရှိပါသည်။</p>
+</div>
+<div id="FOOT119"><p><a class="footnote_backlink" href="#DOCF119"><sup>119</sup></a>
+ကိန်းစစ် (real number) တစ်ခုကို ၎င်း၏ argument နှင့် အနီးစပ်ဆုံး ကိန်းပြည့်ကို ပြန်ပေးသော
+<code>round</code> primitive ကို အသုံးပြု၍ ကိန်းပြည့် (integer) အဖြစ်သို့ ပြောင်းလဲနိုင်ပါသည်။</p>
+</div>
+<div id="FOOT120"><p><a class="footnote_backlink" href="#DOCF120"><sup>120</sup></a>
+အခြားတစ်ဖက်တွင်မူ၊ coefficient များကိုယ်တိုင်က အခြား variables များပါဝင်သော polynomials များဖြစ်နေသည့် polynomials များကို ကျွန်ုပ်တို့ ခွင့်ပြုပါမည်။ ၎င်းသည် အောက်တွင် ဆွေးနွေးထားသည့်အတိုင်း coercion ပြဿနာများကို ဖြစ်ပေါ်စေသော်လည်း၊ အနှစ်သာရအားဖြင့် ကျွန်ုပ်တို့အား အပြည့်အဝ multivariate system တစ်ခုကဲ့သို့ပင် ဖော်ပြနိုင်စွမ်းအား (representational power) ကို ပေးစွမ်းမည်ဖြစ်သည်။</p>
+</div>
+<div id="FOOT121"><p><a class="footnote_backlink" href="#DOCF121"><sup>121</sup></a>
+Univariate polynomials များအတွက်၊ ပေးထားသော အမှတ်အစုများတွင် polynomial ၏ တန်ဖိုးကို ပေးခြင်းသည် အထူးသဖြင့် ကောင်းမွန်သော ကိုယ်စားပြုမှု (representation) တစ်ခု ဖြစ်နိုင်ပါသည်။ ၎င်းသည် polynomial arithmetic ကို အလွန်ရိုးရှင်းစေသည်။ ဥပမာအားဖြင့်၊ ဤနည်းဖြင့် ကိုယ်စားပြုထားသော polynomials နှစ်ခု၏ ပေါင်းလဒ်ကို ရရှိရန်အတွက် သက်ဆိုင်ရာ အမှတ်များရှိ polynomials များ၏ တန်ဖိုးများကို ပေါင်းထည့်ရန်သာ လိုအပ်သည်။ ပိုမိုရင်းနှီးသော ကိုယ်စားပြုမှုသို့ ပြန်လည်ပြောင်းလဲရန်အတွက်၊ အမှတ် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <mo>+</mo>
+    <mn>1</mn>
+  </mrow>
+</math> ရှိ polynomial ၏ တန်ဖိုးများကို ပေးထားလျှင် degree <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ရှိသော polynomial ၏ coefficients များကို မည်သို့ပြန်လည်ရယူရမည်ကို ပြသသည့် Lagrange interpolation formula ကို အသုံးပြုနိုင်ပါသည်။</p>
+</div>
+<div id="FOOT122"><p><a class="footnote_backlink" href="#DOCF122"><sup>122</sup></a>
+ဤ operation သည် <a href="2_002e3.xhtml#Exercise-2_002e62">Exercise 2.62</a> တွင် ကျွန်ုပ်တို့ တည်ဆောက်ခဲ့သော အစီအစဉ်တကျဖြစ်သော
+<code>union-set</code> operation နှင့် အလွန်ဆင်တူပါသည်။ အမှန်စင်စစ်၊ အကယ်၍ ကျွန်ုပ်တို့သည် polynomial ၏ terms များကို indeterminate ၏ ထပ်ညွှန်း (power) အလိုက် စီထားသော အစု (set) တစ်ခုအဖြစ် စဉ်းစားပါက၊ ပေါင်းလဒ်အတွက် term list ကို ထုတ်ပေးသော ပရိုဂရမ်သည် <code>union-set</code> နှင့် ထပ်တူနီးပါး ဖြစ်ပါသည်။</p>
+</div>
+<div id="FOOT123"><p><a class="footnote_backlink" href="#DOCF123"><sup>123</sup></a>
+ဤအရာကို လုံးဝချောမွေ့စွာ လုပ်ဆောင်နိုင်ရန်အတွက်၊ ကျွန်ုပ်တို့၏ generic arithmetic system ထဲသို့ “number” တစ်ခုကို coefficient အဖြစ် ထိုကိန်းပါဝင်သော degree zero ရှိသည့် polynomial အဖြစ် သတ်မှတ်ခြင်းဖြင့် polynomial အဖြစ်သို့ coerce လုပ်နိုင်သော စွမ်းရည်ကိုလည်း ထည့်သွင်းသင့်ပါသည်။ အကယ်၍ ကျွန်ုပ်တို့သည် coefficient <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>y</mi>
+    <mo>+</mo>
+    <mn>1</mn>
+  </mrow>
+</math> ကို coefficient 2 နှင့် ပေါင်းရန် လိုအပ်သော
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">[</mo>
+    <msup>
+      <mi>x</mi>
+      <mn>2</mn>
+    </msup>
+    <mo>+</mo>
+    <mo stretchy="false">(</mo>
+    <mi>y</mi>
+    <mo>+</mo>
+    <mn>1</mn>
+    <mo stretchy="false">)</mo>
+    <mi>x</mi>
+    <mo>+</mo>
+    <mn>5</mn>
+    <mo stretchy="false">]</mo>
+  </mrow>
+  <mo>+</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">[</mo>
+    <msup>
+      <mi>x</mi>
+      <mn>2</mn>
+    </msup>
+    <mo>+</mo>
+    <mn>2</mn>
+    <mi>x</mi>
+    <mo>+</mo>
+    <mn>1</mn>
+    <mo stretchy="false">]</mo>
+    <mo>,</mo>
+  </mrow>
+</math>
+ကဲ့သို့သော operations များကို လုပ်ဆောင်မည်ဆိုပါက ၎င်းသည် လိုအပ်ပါသည်။</p>
+</div>
+<div id="FOOT124"><p><a class="footnote_backlink" href="#DOCF124"><sup>124</sup></a>
+ဤ polynomial ဥပမာများတွင်၊ ကျွန်ုပ်တို့သည် <a href="#Exercise-2_002e78">Exercise 2.78</a> တွင် အကြံပြုထားသော type mechanism ကို အသုံးပြု၍ generic arithmetic system ကို အကောင်အထည်ဖော်ထားသည်ဟု ယူဆပါသည်။ ထို့ကြောင့်၊ သာမန်ကိန်းဂဏန်းများဖြစ်သော coefficients များကို ၎င်းတို့ကိုယ်တိုင် ကိန်းဂဏန်းများအဖြစ်သာ ကိုယ်စားပြုမည်ဖြစ်ပြီး <code>car</code> တွင် <code>scheme-number</code> သင်္ကေတပါဝင်သော pairs များအဖြစ် ကိုယ်စားပြုမည်မဟုတ်ပါ။</p>
+</div>
+<div id="FOOT125"><p><a class="footnote_backlink" href="#DOCF125"><sup>125</sup></a>
+Term lists များသည် အစီအစဉ်တကျဖြစ်သည်ဟု ကျွန်ုပ်တို့ ယူဆထားသော်လည်း၊ <code>adjoin-term</code> ကို လက်ရှိ term list ပေါ်သို့ term အသစ်ကို <code>cons</code> လုပ်ရုံမျှဖြင့် အကောင်အထည်ဖော်ထားပါသည်။ <code>adjoin-term</code> ကို အသုံးပြုသော လုပ်ထုံးလုပ်နည်းများ (ဥပမာ <code>add-terms</code>) သည် ၎င်းကို list တွင် ရှိနေသည်ထက် ပိုမိုမြင့်မားသော order ရှိသည့် term ဖြင့် အမြဲတမ်း ခေါ်ဆိုမည်ဟု အာမခံနိုင်သရွေ့ ဤသို့ လုပ်ဆောင်နိုင်ပါသည်။ အကယ်၍ ကျွန်ုပ်တို့သည် ထိုကဲ့သို့ အာမမခံလိုပါက၊ <code>adjoin-term</code> ကို အစီအစဉ်တကျရှိသော list အဖြစ် ကိုယ်စားပြုထားသည့် sets များအတွက် <code>adjoin-set</code> constructor နှင့် ဆင်တူအောင် အကောင်အထည်ဖော်နိုင်ခဲ့ပါသည် (<a href="2_002e3.xhtml#Exercise-2_002e61">Exercise 2.61</a>)။</p>
+</div>
+<div id="FOOT126"><p><a class="footnote_backlink" href="#DOCF126"><sup>126</sup></a>
+Euclid’s Algorithm သည် polynomials များအတွက် အလုပ်လုပ်သည်ဟူသော အချက်ကို အက္ခရာသင်္ချာတွင် polynomials များသည် <a id="index-Euclidean-ring"></a>
+<em>Euclidean ring</em> ဟု ခေါ်ဆိုသော algebraic domain အမျိုးအစားတစ်ခု ဖြစ်သည်ဟု ဖော်ပြလေ့ရှိပါသည်။ Euclidean ring ဆိုသည်မှာ ပေါင်းခြင်း၊ နှုတ်ခြင်းနှင့် commutative multiplication တို့ကို လက်ခံပြီး၊ ring ၏ element <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> တစ်ခုစီအတွက် အောက်ပါဂုဏ်သတ္တိများရှိသော အပေါင်းကိန်းပြည့် “measure” <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>m</mi>
+    <mo stretchy="false">(</mo>
+    <mi>x</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> တစ်ခုကို သတ်မှတ်ပေးသည့် နည်းလမ်းရှိသော domain တစ်ခု ဖြစ်ပါသည်။ သုညမဟုတ်သော မည်သည့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>y</mi>
+</math> အတွက်မဆို
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>m</mi>
+    <mo stretchy="false">(</mo>
+    <mi>x</mi>
+    <mi>y</mi>
+    <mo stretchy="false">)</mo>
+    <mo>≥<!-- ≥ --></mo>
+    <mi>m</mi>
+    <mo stretchy="false">(</mo>
+    <mi>x</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ဖြစ်ပြီး၊ မည်သည့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> နှင့်
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>y</mi>
+</math> အတွက်မဆို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>y</mi>
+    <mo>=</mo>
+    <mi>q</mi>
+    <mi>x</mi>
+    <mo>+</mo>
+    <mi>r</mi>
+  </mrow>
+</math> ဖြစ်ပြီး <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>r</mi>
+    <mo>=</mo>
+    <mn>0</mn>
+  </mrow>
+</math> သို့မဟုတ် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>m</mi>
+    <mo stretchy="false">(</mo>
+    <mi>r</mi>
+    <mo stretchy="false">)</mo>
+    <mo>&lt;</mo>
+    <mi>m</mi>
+    <mo stretchy="false">(</mo>
+    <mi>x</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ဖြစ်စေမည့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>q</mi>
+</math> တစ်ခု ရှိရမည်ဖြစ်သည်။ စိတ္တဇရှုထောင့် (abstract point of view) မှကြည့်လျှင် ၎င်းသည် Euclid’s Algorithm အလုပ်လုပ်ကြောင်း သက်သေပြရန်အတွက် လိုအပ်သောအချက် ဖြစ်သည်။ ကိန်းပြည့်များ (integers) ၏ domain အတွက်၊ ကိန်းပြည့်တစ်ခု၏ measure <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>m</mi>
+</math> သည် ထိုကိန်းပြည့်၏ ပကတိတန်ဖိုး (absolute value) ပင် ဖြစ်သည်။ Polynomials များ၏ domain အတွက်၊ polynomial တစ်ခု၏ measure သည် ၎င်း၏ degree ပင် ဖြစ်သည်။</p>
+</div>
+<div id="FOOT127"><p><a class="footnote_backlink" href="#DOCF127"><sup>127</sup></a>
+<abbr>MIT</abbr> Scheme ကဲ့သို့သော အကောင်အထည်ဖော်မှုတွင်၊ ၎င်းသည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>Q</mi>
+    <mn>1</mn>
+  </msub>
+</math> နှင့်
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>Q</mi>
+    <mn>2</mn>
+  </msub>
+</math> တို့၏ divisor အမှန်တကယ်ဖြစ်သော polynomial တစ်ခုကို ထုတ်ပေးသော်လည်း coefficient များမှာ rational coefficients များ ဖြစ်ပါလိမ့်မည်။ ကိန်းပြည့်များကို စားခြင်းကြောင့် တိကျမှုကန့်သတ်ထားသော ဆယ်လီစိတ်ကိန်း (decimal numbers) များ ထွက်ပေါ်နိုင်သည့် အခြား Scheme systems အများအပြားတွင်မူ မှန်ကန်သော divisor ကို ရရှိရန် ပျက်ကွက်နိုင်ပါသည်။</p>
+</div>
+<div id="FOOT128"><p><a class="footnote_backlink" href="#DOCF128"><sup>128</sup></a>
+Polynomial <abbr>GCD</abbr> များကို တွက်ချက်ရန်အတွက် အလွန်ထိရောက်ပြီး သပ္ပာယ်သော နည်းလမ်းတစ်ခုကို Richard <a href="References.xhtml#Zippel-_00281979_0029">Zippel (1979)</a> က ရှာဖွေတွေ့ရှိခဲ့သည်။ ဤနည်းလမ်းသည် <a href="Chapter-1.xhtml#Chapter-1">Chapter 1</a> တွင် ကျွန်ုပ်တို့ ဆွေးနွေးခဲ့သော fast test for primality ကဲ့သို့ပင် probabilistic algorithm တစ်ခု ဖြစ်သည်။ Zippel ၏ စာအုပ် (<a href="References.xhtml#Zippel-1993">Zippel 1993</a>) တွင် ဤနည်းလမ်းနှင့်အတူ polynomial <abbr>GCD</abbr> များကို တွက်ချက်ရန် အခြားနည်းလမ်းများကိုလည်း ဖော်ပြထားပါသည်။</p>
+</div>
+</div>
+<nav class="header">
+<p>
+Next: <a href="Chapter-3.xhtml#Chapter-3" accesskey="n" rel="next">Chapter 3</a>, Prev: <a href="2_002e4.xhtml#g_t2_002e4" accesskey="p" rel="prev">2.4</a>, Up: <a href="#g_t2_002e5" accesskey="u" rel="prev">2.5</a>   [<a href="index.xhtml#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+
+
+</section><span class="bottom jump" title="Jump to bottom"><a href="#pagebottom" accesskey="b">⇣</a></span><a id="pagebottom"></a>
+</body>
+</html>
