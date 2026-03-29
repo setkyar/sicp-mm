@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="my" lang="my">
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>Structure and Interpretation of Computer Programs, 2e: 4.2</title>
+
+<meta name="description" content="Structure and Interpretation of Computer Programs, 2e: 4.2" />
+<meta name="keywords" content="Structure and Interpretation of Computer Programs, 2e: 4.2" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="Generator" content="texi2any" />
+<meta charset="utf-8" />
+<link href="index.xhtml#Top" rel="start" title="Top" />
+<link href="Term-Index.xhtml#Term-Index" rel="index" title="Term Index" />
+<link href="index.xhtml#SEC_Contents" rel="contents" title="Table of Contents" />
+<link href="Chapter-4.xhtml#Chapter-4" rel="prev" title="Chapter 4" />
+<link href="4_002e3.xhtml#g_t4_002e3" rel="next" title="4.3" />
+<link href="4_002e1.xhtml#g_t4_002e1_002e7" rel="prev" title="4.1.7" />
+
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/prettify.css" rel="stylesheet" type="text/css" />
+
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/footnotes.js" type="text/javascript"></script>
+<script src="js/browsertest.js" type="text/javascript"></script>
+</head>
+
+<body>
+<section><span class="top jump" title="Jump to top"><a href="#pagetop" accesskey="t">⇡</a></span><a id="pagetop"></a><a id="g_t4_002e2"></a>
+<nav class="header">
+<p>
+Next: <a href="4_002e3.xhtml#g_t4_002e3" accesskey="n" rel="next">4.3</a>, Prev: <a href="4_002e1.xhtml#g_t4_002e1" accesskey="p" rel="prev">4.1</a>, Up: <a href="Chapter-4.xhtml#Chapter-4" accesskey="u" rel="prev">Chapter 4</a>   [<a href="index.xhtml#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+<a id="Variations-on-a-Scheme-_002d_002d_002d-Lazy-Evaluation"></a>
+<h3 class="section"><span class="secnum">4.2</span><span class="sectitle">Scheme အပေါ် မူကွဲများ — Lazy Evaluation</span></h3>
+
+<p>ယခုအခါ ကျွန်ုပ်တို့တွင် Lisp ပရိုဂရမ်တစ်ခုအဖြစ် ဖော်ပြထားသည့် evaluator တစ်ခု ရှိနေပြီဖြစ်သဖြင့်၊ evaluator ကို ပြင်ဆင်ရုံဖြင့် ဘာသာစကား ဒီဇိုင်းတွင် အခြားရွေးချယ်စရာများကို စမ်းသပ်ကြည့်နိုင်ပါသည်။ အမှန်စင်စစ်၊ ဘာသာစကားအသစ်များကို လက်ရှိရှိနေသော အဆင့်မြင့်ဘာသာစကားတစ်ခုအတွင်း ဘာသာစကားအသစ်ကို ထည့်သွင်းထားသည့် evaluator တစ်ခုကို ဦးစွာရေးသားခြင်းဖြင့် တီထွင်လေ့ရှိကြသည်။ ဥပမာအားဖြင့်၊ Lisp အသိုင်းအဝိုင်းမှ အခြားအဖွဲ့ဝင်တစ်ဦးနှင့် Lisp တွင် ပြုလုပ်ရန် အဆိုပြုထားသော ပြင်ဆင်မှုအချို့ကို ဆွေးနွေးလိုပါက၊ ထိုအပြောင်းအလဲကို ထည့်သွင်းထားသည့် evaluator တစ်ခုကို ပေးပို့နိုင်ပါသည်။ လက်ခံရရှိသူသည် ထို evaluator အသစ်ဖြင့် စမ်းသပ်နိုင်ပြီး နောက်ထပ် ပြင်ဆင်မှုများအဖြစ် မှတ်ချက်များ ပြန်လည်ပေးပို့နိုင်ပါသည်။ အဆင့်မြင့် အကောင်အထည်ဖော်မှု အခြေခံသည် evaluator ကို စမ်းသပ်ရန်နှင့် အမှားရှာရန် ပိုမိုလွယ်ကူစေရုံသာမက၊ ကျွန်ုပ်တို့၏ embedded Lisp evaluator သည် အောက်ခံ Lisp မှ primitives နှင့် control structure များကို အသုံးပြုသကဲ့သို့ပင်၊ ဒီဇိုင်နာအနေဖြင့် အောက်ခံဘာသာစကားမှ စွမ်းဆောင်ရည်များကို snarf<a class="footnote_link" id="DOCF235" href="#FOOT235"><sup>235</sup></a> လုပ်ရန်လည်း အခွင့်အလမ်း ပေးပါသည်။ နောင်အခါမှသာ (လိုအပ်ပါက) ဒီဇိုင်နာသည် အဆင့်နိမ့်ဘာသာစကား သို့မဟုတ် ဟာ့ဒ်ဝဲတွင် အလုံးစုံ အကောင်အထည်ဖော်မှုကို တည်ဆောက်ရန် ကြိုးပမ်းရမည်ဖြစ်သည်။ ဤအပိုင်းနှင့် နောက်အပိုင်းတွင် သိသာထင်ရှားသော အပိုဆောင်း expressive power ကို ပေးစွမ်းနိုင်သော Scheme အပေါ် မူကွဲအချို့ကို လေ့လာပါမည်။
+</p>
+
+<a id="g_t4_002e2_002e1"></a>
+<a id="Normal-Order-and-Applicative-Order"></a>
+<h4 class="subsection"><span class="secnum">4.2.1</span><span class="sectitle">Normal Order နှင့် Applicative Order</span></h4>
+
+<p><a href="1_002e1.xhtml#g_t1_002e1">1.1</a> တွင်၊ ကျွန်ုပ်တို့သည် evaluation model များအကြောင်း စတင်ဆွေးနွေးခဲ့ရာ၌ Scheme သည် <a id="index-applicative_002dorder"></a>
+<em>applicative-order</em> ဘာသာစကားတစ်ခု ဖြစ်ကြောင်း သတိပြုခဲ့ကြသည်၊ ဆိုလိုသည်မှာ Scheme procedure များသို့ ပေးပို့သော argument အားလုံးကို procedure ကို အသုံးချချိန်တွင် အကဲဖြတ်ပါသည်။ ၎င်းနှင့် ဆန့်ကျင်ဘက်ဖြစ်သော <a id="index-normal_002dorder"></a>
+<em>normal-order</em> ဘာသာစကားများသည် procedure argument များ၏ အကဲဖြတ်မှုကို အမှန်တကယ် လိုအပ်လာသည့် တန်ဖိုးများအထိ ဆိုင်းငံ့ထားပါသည်။ Procedure argument များကို အကဲဖြတ်ခြင်းကို နောက်ဆုံးဖြစ်နိုင်သော အချိန်အထိ (ဥပမာ- primitive operation တစ်ခုမှ လိုအပ်လာသည့်အချိန်အထိ) ဆိုင်းငံ့ထားခြင်းကို <a id="index-lazy-evaluation"></a>
+<em>lazy evaluation</em> ဟု ခေါ်ဆိုပါသည်။<a class="footnote_link" id="DOCF236" href="#FOOT236"><sup>236</sup></a> အောက်ပါ procedure ကို လေ့လာကြည့်ပါ-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">try a b</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> a </span><span class="lit">0</span><span class="clo">)</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> b</span><span class="clo">))</span></pre></div>
+
+<p><code>(try 0 (/ 1 0))</code> ကို အကဲဖြတ်ခြင်းသည် Scheme တွင် error တစ်ခု ဖြစ်ပေါ်စေပါသည်။ Lazy evaluation ဖြင့်ဆိုပါက error ရှိမည်မဟုတ်ပါ။ ထိုဖော်ပြချက်ကို အကဲဖြတ်ပါက 1 ကို ပြန်ပေးလိမ့်မည်၊ အကြောင်းမှာ argument ဖြစ်သော <code>(/ 1 0)</code> ကို မည်သည့်အခါမျှ အကဲဖြတ်မည် မဟုတ်သောကြောင့် ဖြစ်သည်။
+</p>
+<p>Lazy evaluation ကို အသုံးပြုထားသော ဥပမာတစ်ခုမှာ procedure <code>unless</code> ၏ အဓိပ္ပာယ်သတ်မှတ်ချက် ဖြစ်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">unless condition 
+                usual-value 
+                exceptional-value</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> condition 
+      exceptional-value 
+      usual-value</span><span class="clo">))</span></pre></div>
+
+<p>၎င်းကို အောက်ပါကဲ့သို့သော ဖော်ပြချက်များတွင် အသုံးပြုနိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">unless </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> b </span><span class="lit">0</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> a b</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">begin</span><span class="pln"> 
+          </span><span class="opn">(</span><span class="pln">display </span><span class="str">"exception: returning 0"</span><span class="clo">)</span><span class="pln">
+          </span><span class="lit">0</span><span class="clo">))</span></pre></div>
+
+<p>၎င်းသည် applicative-order ဘာသာစကားတွင် အလုပ်လုပ်မည်မဟုတ်ပါ၊ အကြောင်းမှာ <code>unless</code> ကို မခေါ်ဆိုမီ usual value နှင့် exceptional value နှစ်ခုလုံးကို အကဲဖြတ်မည် ဖြစ်သောကြောင့်ဖြစ်သည် (<a href="1_002e1.xhtml#Exercise-1_002e6">Exercise 1.6</a> နှင့် နှိုင်းယှဉ်ကြည့်ပါ)။ Lazy evaluation ၏ အားသာချက်တစ်ခုမှာ <code>unless</code> ကဲ့သို့သော procedure အချို့သည် ၎င်းတို့၏ argument အချို့ကို အကဲဖြတ်ရာတွင် အမှားများ ဖြစ်ပေါ်စေခြင်း သို့မဟုတ် အဆုံးမရှိခြင်း ဖြစ်နေစေကာမူ အသုံးဝင်သော တွက်ချက်မှုများကို လုပ်ဆောင်နိုင်ခြင်း ဖြစ်သည်။
+</p>
+<p>အကယ်၍ procedure တစ်ခု၏ body သို့ မဝင်မီ argument တစ်ခုကို အကဲမဖြတ်ရသေးပါက၊ ထို procedure သည် ထို argument အပေါ်တွင် <a id="index-non_002dstrict"></a>
+<em>non-strict</em> ဖြစ်သည်ဟု ကျွန်ုပ်တို့ ပြောဆိုပါသည်။ အကယ်၍ procedure ၏ body သို့ မဝင်မီ argument ကို အကဲဖြတ်ပြီး ဖြစ်ပါက၊ ထို procedure သည် ထို argument အပေါ်တွင် <a id="index-strict"></a>
+<em>strict</em> ဖြစ်သည်ဟု ကျွန်ုပ်တို့ ပြောဆိုပါသည်။<a class="footnote_link" id="DOCF237" href="#FOOT237"><sup>237</sup></a> စစ်မှန်သော applicative-order ဘာသာစကားတွင်၊ procedure အားလုံးသည် argument တစ်ခုစီအပေါ်တွင် strict ဖြစ်ကြသည်။ စစ်မှန်သော normal-order ဘာသာစကားတွင်၊ compound procedure အားလုံးသည် argument တစ်ခုစီအပေါ်တွင် non-strict ဖြစ်ကြပြီး၊ primitive procedure များသည် strict သို့မဟုတ် non-strict ဖြစ်နိုင်သည်။ ပရိုဂရမ်မာများအား ၎င်းတို့သတ်မှတ်သော procedure များ၏ strictness အပေါ် အသေးစိတ် ထိန်းချုပ်နိုင်ခွင့်ပေးထားသော ဘာသာစကားများလည်း ရှိပါသည် (<a href="#Exercise-4_002e31">Exercise 4.31</a> ကို ကြည့်ပါ)။
+</p>
+<p>Non-strict အဖြစ် အကျိုးရှိရှိ ပြုလုပ်နိုင်သော procedure ၏ ထင်ရှားသော ဥပမာတစ်ခုမှာ <code>cons</code> (သို့မဟုတ် ယေဘုယျအားဖြင့် ဒေတာ တည်ဆောက်ပုံများအတွက် constructor အားလုံးနီးပါး) ဖြစ်သည်။ Element များ၏ တန်ဖိုးများကို မသိရှိရသေးသော်လည်း၊ element များကို ပေါင်းစပ်၍ ဒေတာ တည်ဆောက်ပုံများ ပြုလုပ်ခြင်းနှင့် ရရှိလာသော ဒေတာ တည်ဆောက်ပုံများအပေါ် လုပ်ဆောင်ခြင်းဖြင့် အသုံးဝင်သော တွက်ချက်မှုများကို လုပ်ဆောင်နိုင်သည်။ ဥပမာအားဖြင့်၊ list တစ်ခုအတွင်းရှိ တစ်ခုချင်းစီသော element များ၏ တန်ဖိုးကို မသိဘဲ list ၏ အလျားကို တွက်ချက်ခြင်းသည် အဓိပ္ပာယ်ရှိလှပါသည်။ ကျွန်ုပ်တို့သည် <a href="#g_t4_002e2_002e3">4.2.3</a> တွင် <a href="Chapter-3.xhtml#Chapter-3">Chapter 3</a> မှ streams များကို non-strict <code>cons</code> pairs များဖြင့် ဖွဲ့စည်းထားသော list များအဖြစ် အကောင်အထည်ဖော်ရန်အတွက် ဤအကြံဉာဏ်ကို အသုံးပြုပါမည်။
+</p>
+<blockquote>
+<p><strong><a id="Exercise-4_002e25"></a>Exercise 4.25:</strong> (သာမန် applicative-order Scheme တွင်) အထက်တွင် ဖော်ပြထားသည့်အတိုင်း <code>unless</code> ကို သတ်မှတ်ပြီး၊ <code>factorial</code> ကို <code>unless</code> ကို အသုံးပြု၍ အောက်ပါအတိုင်း သတ်မှတ်သည်ဟု ဆိုကြပါစို့။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">factorial n</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">unless </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> n </span><span class="lit">1</span><span class="clo">)</span><span class="pln">
+          </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> n </span><span class="opn">(</span><span class="pln">factorial </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> n </span><span class="lit">1</span><span class="clo">)))</span><span class="pln">
+          </span><span class="lit">1</span><span class="clo">))</span></pre></div>
+
+<p>အကယ်၍ ကျွန်ုပ်တို့သည် <code>(factorial 5)</code> ကို အကဲဖြတ်ရန် ကြိုးစားပါက ဘာဖြစ်မည်နည်း။ ကျွန်ုပ်တို့၏ သတ်မှတ်ချက်များသည် normal-order ဘာသာစကားတွင် အလုပ်လုပ်ပါမည်လား။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-4_002e26"></a>Exercise 4.26:</strong> Ben Bitdiddle နှင့် Alyssa P. Hacker တို့သည် <code>unless</code> ကဲ့သို့သော အရာများကို အကောင်အထည်ဖော်ရန်အတွက် lazy evaluation ၏ အရေးပါမှုအပေါ် သဘောထားကွဲလွဲနေကြသည်။ Ben က <code>unless</code> ကို applicative order တွင် special form တစ်ခုအဖြစ် အကောင်အထည်ဖော်ရန် ဖြစ်နိုင်ကြောင်း ထောက်ပြသည်။ Alyssa က အကယ်၍ ထိုသို့လုပ်ဆောင်ပါက <code>unless</code> သည် syntax တစ်ခုသာ ဖြစ်သွားမည်ဖြစ်ပြီး၊ higher-order procedures များနှင့် တွဲဖက်အသုံးပြုနိုင်သော procedure တစ်ခု ဖြစ်တော့မည်မဟုတ်ကြောင်း ပြန်လည်ချေပသည်။ နှစ်ဖက်စလုံး၏ ငြင်းခုံမှုဆိုင်ရာ အသေးစိတ်အချက်အလက်များကို ဖြည့်စွက်ပါ။ <code>unless</code> ကို (<code>cond</code> သို့မဟုတ် <code>let</code> ကဲ့သို့သော) derived expression တစ်ခုအဖြစ် မည်သို့ အကောင်အထည်ဖော်ရမည်ကို ပြသပါ၊ ထို့ပြင် <code>unless</code> ကို special form အဖြစ် မဟုတ်ဘဲ procedure တစ်ခုအဖြစ် ရရှိနိုင်ခြင်းက အသုံးဝင်မည့် အခြေအနေတစ်ခု၏ ဥပမာကို ပေးပါ။
+</p></blockquote>
+
+<a id="g_t4_002e2_002e2"></a>
+<a id="An-Interpreter-with-Lazy-Evaluation"></a>
+<h4 class="subsection"><span class="secnum">4.2.2</span><span class="sectitle">Lazy Evaluation ပါဝင်သော Interpreter တစ်ခု</span></h4>
+
+<p>ဤအခန်းတွင် ကျွန်ုပ်တို့သည် compound procedure များ၏ argument တစ်ခုစီတိုင်းတွင် non-strict ဖြစ်သည်မှအပ Scheme နှင့် တူညီသော normal-order ဘာသာစကားတစ်ခုကို အကောင်အထည်ဖော်မည် ဖြစ်သည်။ Primitive procedure များသည် strict ဖြစ်နေဆဲ ဖြစ်လိမ့်မည်။ ၎င်းအနက်ဖွင့်ဆိုသည့် ဘာသာစကားသည် ဤနည်းအတိုင်း လုပ်ဆောင်နိုင်စေရန် <a href="4_002e1.xhtml#g_t4_002e1_002e1">4.1.1</a> ရှိ evaluator ကို ပြုပြင်မွမ်းမံရန် မခက်ခဲပါ။ လိုအပ်သော ပြောင်းလဲမှုအားလုံးနီးပါးသည် procedure application ပေါ်တွင် အဓိကမူတည်သည်။
+</p>
+<p>အခြေခံစိတ်ကူးမှာ procedure တစ်ခုကို apply လုပ်သောအခါ၊ မည်သည့် argument များကို evaluate လုပ်မည်၊ မည်သည့်အရာများကို delay လုပ်မည်ကို interpreter က ဆုံးဖြတ်ရမည် ဖြစ်သည်။ ဆိုင်းငံ့ထားသော argument များကို evaluate မလုပ်ဘဲ၊ ၎င်းတို့အစား <a id="index-thunks"></a>
+<em>thunks</em> ဟုခေါ်သော object များအဖြစ် ပြောင်းလဲလိုက်သည်။<a class="footnote_link" id="DOCF238" href="#FOOT238"><sup>238</sup></a> Thunk တွင် ၎င်းကို လိုအပ်သောအခါ argument ၏ value ကို ထုတ်ပေးနိုင်ရန် လိုအပ်သော အချက်အလက်များ ပါဝင်ရမည်ဖြစ်ပြီး၊ ၎င်းသည် application ပြုလုပ်ချိန်၌ evaluate လုပ်ခဲ့သကဲ့သို့ ဖြစ်ရမည်။ ထို့ကြောင့် thunk တွင် argument expression နှင့် procedure application ကို evaluate လုပ်နေသော environment တို့ ပါဝင်ရမည်။
+</p>
+<p>Thunk တစ်ခုအတွင်းရှိ expression ကို evaluate လုပ်ခြင်း လုပ်ငန်းစဉ်ကို
+<a id="index-forcing"></a>
+<em>forcing</em> ဟု ခေါ်သည်။<a class="footnote_link" id="DOCF239" href="#FOOT239"><sup>239</sup></a>
+ယေဘုယျအားဖြင့် thunk တစ်ခုကို ၎င်း၏ value လိုအပ်မှသာ force လုပ်လိမ့်မည်- ၎င်းကို thunk ၏ value ကို အသုံးပြုမည့် primitive procedure ထံ ပေးပို့သောအခါ၊ ၎င်းသည် conditional တစ်ခု၏ predicate value ဖြစ်နေသောအခါ နှင့် ၎င်းသည် procedure အဖြစ် apply လုပ်တော့မည့် operator ၏ value ဖြစ်နေသောအခါမျိုးတွင် ဖြစ်သည်။ ကျွန်ုပ်တို့တွင် ရရှိနိုင်သော ဒီဇိုင်းရွေးချယ်မှုတစ်ခုမှာ <a id="index-memoize"></a>
+<em>memoize</em> လုပ်မလား၊ မလုပ်ဘူးလား ဆိုသည်ပင် ဖြစ်သည်၊ ၎င်းကို <a href="3_002e5.xhtml#g_t3_002e5_002e1">3.5.1</a> ရှိ delayed object များတွင် လုပ်ဆောင်ခဲ့သကဲ့သို့ပင် ဖြစ်သည်။ Memoization ဖြင့် thunk ကို ပထမဆုံးအကြိမ် force လုပ်သောအခါ၊ တွက်ချက်ထားသော value ကို သိမ်းဆည်းထားသည်။ နောက်ပိုင်း force လုပ်မှုများသည် တွက်ချက်မှုကို ထပ်မလုပ်တော့ဘဲ သိမ်းဆည်းထားသော value ကိုသာ ပြန်ပေးမည် ဖြစ်သည်။ အပလီကေးရှင်း အတော်များများအတွက် ပိုမိုထိရောက်သောကြောင့် ကျွန်ုပ်တို့၏ interpreter ကို memoize လုပ်ရန် ဖန်တီးပါမည်။ သို့သော် ဤနေရာတွင် ခက်ခဲသော ထည့်သွင်းစဉ်းစားစရာများ ရှိပါသည်။<a class="footnote_link" id="DOCF240" href="#FOOT240"><sup>240</sup></a>
+</p>
+<a id="Modifying-the-evaluator"></a>
+<h5 class="subsubheading">Evaluator ကို ပြုပြင်မွမ်းမံခြင်း</h5>
+
+<p>Lazy evaluator နှင့် <a href="4_002e1.xhtml#g_t4_002e1">4.1</a> ရှိ evaluator တို့၏ အဓိကကွာခြားချက်မှာ <code>eval</code> နှင့် <code>apply</code> တို့တွင် procedure application များကို ကိုင်တွယ်ပုံဖြစ်သည်။
+</p>
+<p><code>eval</code> ၏ <code>application?</code> clause သည် အောက်ပါအတိုင်း ဖြစ်လာသည်
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">((</span><span class="pln">application? exp</span><span class="clo">)</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">apply </span><span class="opn">(</span><span class="pln">actual-value </span><span class="opn">(</span><span class="pln">operator exp</span><span class="clo">)</span><span class="pln"> env</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">operands exp</span><span class="clo">)</span><span class="pln">
+        env</span><span class="clo">))</span></pre></div>
+
+<p>၎င်းသည် <a href="4_002e1.xhtml#g_t4_002e1_002e1">4.1.1</a> ရှိ <code>eval</code> ၏ <code>application?</code> clause နှင့် အတော်လေး ဆင်တူပါသည်။ သို့သော် lazy evaluation အတွက်မူ ကျွန်ုပ်တို့သည် <code>apply</code> ကို operand expression များဖြင့်သာ ခေါ်ဆိုပြီး ၎င်းတို့ကို evaluate လုပ်ရာမှ ရရှိလာသော argument များဖြင့် မဟုတ်ပါ။ အကယ်၍ argument များကို delay လုပ်မည်ဆိုလျှင် thunk များ တည်ဆောက်ရန် environment လိုအပ်သောကြောင့် ၎င်းကိုလည်း ထည့်ပေးရမည်ဖြစ်သည်။ <code>apply</code> သည် ၎င်း၏ အမျိုးအစား (primitive သို့မဟုတ် compound) ပေါ် မူတည်၍ ခွဲခြားလုပ်ဆောင်ရန်အတွက် အမှန်တကယ် apply လုပ်မည့် procedure ကို လိုအပ်သောကြောင့် operator ကိုမူ evaluate လုပ်နေဆဲဖြစ်သည်။
+</p>
+<p>Expression တစ်ခု၏ အမှန်တကယ် value လိုအပ်သည့် အခါတိုင်း၊ ကျွန်ုပ်တို့သည် အောက်ပါအတိုင်း အသုံးပြုသည်
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">actual-value exp env</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">force-it </span><span class="opn">(</span><span class="pln">eval exp env</span><span class="clo">)))</span></pre></div>
+
+<p><code>eval</code> တစ်ခုတည်း အသုံးပြုမည့်အစား အကယ်၍ expression ၏ value သည် thunk ဖြစ်နေပါက ၎င်းကို force လုပ်နိုင်ရန်အတွက် ဖြစ်သည်။
+</p>
+<p>ကျွန်ုပ်တို့၏ <code>apply</code> version အသစ်သည်လည်း <a href="4_002e1.xhtml#g_t4_002e1_002e1">4.1.1</a> ရှိ version နှင့် အတော်လေး ဆင်တူပါသည်။ ကွာခြားချက်မှာ <code>eval</code> က evaluate မလုပ်ရသေးသော operand expression များကို ထည့်ပေးလိုက်ခြင်း ဖြစ်သည်- Primitive procedure များအတွက် (strict ဖြစ်သော) primitive ကို apply မလုပ်မီ argument အားလုံးကို evaluate လုပ်သည်; compound procedure များအတွက် (non-strict ဖြစ်သော) procedure ကို apply မလုပ်မီ argument အားလုံးကို delay လုပ်သည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">apply procedure arguments env</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pln">primitive-procedure? procedure</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">apply-primitive-procedure
+          procedure
+          </span><span class="opn">(</span><span class="pln">list-of-arg-values 
+           arguments 
+           env</span><span class="clo">)))</span><span class="pln">  </span><span class="roman"><span class="com">; changed</span></span><span class="pln">
+        </span><span class="opn">((</span><span class="pln">compound-procedure? procedure</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">eval-sequence
+          </span><span class="opn">(</span><span class="pln">procedure-body procedure</span><span class="clo">)</span><span class="pln">
+          </span><span class="opn">(</span><span class="pln">extend-environment
+           </span><span class="opn">(</span><span class="pln">procedure-parameters procedure</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">list-of-delayed-args 
+            arguments 
+            env</span><span class="clo">)</span><span class="pln">   </span><span class="roman"><span class="com">; changed</span></span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">procedure-environment procedure</span><span class="clo">))))</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Unknown procedure 
+                      type: APPLY"</span><span class="pln"> 
+                     procedure</span><span class="clo">))))</span></pre></div>
+
+<p>Argument များကို လုပ်ဆောင်သော procedure များသည် <a href="4_002e1.xhtml#g_t4_002e1_002e1">4.1.1</a> မှ <code>list-of-values</code> နှင့် တူညီကြသော်လည်း <code>list-of-delayed-args</code> သည် argument များကို evaluate လုပ်မည့်အစား delay လုပ်ခြင်းနှင့် <code>list-of-arg-values</code> သည် <code>eval</code> အစား <code>actual-value</code> ကို အသုံးပြုခြင်းတို့သာ ကွာခြားသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">list-of-arg-values exps env</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">no-operands? exps</span><span class="clo">)</span><span class="pln">
+      </span><span class="lit">'</span><span class="opn">(</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> </span><span class="opn">(</span><span class="pln">actual-value 
+             </span><span class="opn">(</span><span class="pln">first-operand exps</span><span class="clo">)</span><span class="pln"> 
+             env</span><span class="clo">)</span><span class="pln">
+            </span><span class="opn">(</span><span class="pln">list-of-arg-values 
+             </span><span class="opn">(</span><span class="pln">rest-operands exps</span><span class="clo">)</span><span class="pln">
+             env</span><span class="clo">))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">list-of-delayed-args exps env</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">no-operands? exps</span><span class="clo">)</span><span class="pln">
+      </span><span class="lit">'</span><span class="opn">(</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> </span><span class="opn">(</span><span class="pln">delay-it 
+             </span><span class="opn">(</span><span class="pln">first-operand exps</span><span class="clo">)</span><span class="pln"> 
+             env</span><span class="clo">)</span><span class="pln">
+            </span><span class="opn">(</span><span class="pln">list-of-delayed-args 
+             </span><span class="opn">(</span><span class="pln">rest-operands exps</span><span class="clo">)</span><span class="pln">
+             env</span><span class="clo">))))</span></pre></div>
+
+<p>Evaluator တွင် ကျွန်ုပ်တို့ ပြောင်းလဲရမည့် နောက်တစ်နေရာမှာ <code>if</code> ကို ကိုင်တွယ်ပုံတွင် ဖြစ်သည်။ ထိုနေရာတွင် predicate expression သည် true သို့မဟုတ် false ဖြစ်မဖြစ် မစစ်ဆေးမီ ၎င်း၏ value ကို ရယူရန် <code>eval</code> အစား <code>actual-value</code> ကို အသုံးပြုရမည်ဖြစ်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">eval-if exp env</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">true? </span><span class="opn">(</span><span class="pln">actual-value </span><span class="opn">(</span><span class="pln">if-predicate exp</span><span class="clo">)</span><span class="pln"> 
+                           env</span><span class="clo">))</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">eval </span><span class="opn">(</span><span class="pln">if-consequent exp</span><span class="clo">)</span><span class="pln"> env</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">eval </span><span class="opn">(</span><span class="pln">if-alternative exp</span><span class="clo">)</span><span class="pln"> env</span><span class="clo">)))</span></pre></div>
+
+<p>နောက်ဆုံးအနေဖြင့်၊ ကျွန်ုပ်တို့သည် <code>driver-loop</code> procedure (<a href="4_002e1.xhtml#g_t4_002e1_002e4">4.1.4</a>) ကို <code>eval</code> အစား <code>actual-value</code> အသုံးပြုရန် ပြောင်းလဲရမည်။ သို့မှသာ delayed value တစ်ခုသည် read-eval-print loop သို့ ပြန်ရောက်လာပါက ၎င်းကို print မထုတ်မီ force လုပ်မည်ဖြစ်သည်။ ၎င်းသည် lazy evaluator ဖြစ်ကြောင်း ဖော်ပြရန် prompt များကိုလည်း ပြောင်းလဲပါမည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define input-prompt  </span><span class="str">";;; L-Eval input:"</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define output-prompt </span><span class="str">";;; L-Eval value:"</span><span class="clo">)</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">driver-loop</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">prompt-for-input input-prompt</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">input </span><span class="opn">(</span><span class="pln">read</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">output </span><span class="opn">(</span><span class="pln">actual-value 
+                   input 
+                   the-global-environment</span><span class="clo">)))</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">announce-output output-prompt</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">user-print output</span><span class="clo">)))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">driver-loop</span><span class="clo">))</span></pre></div>
+
+<p>ဤအပြောင်းအလဲများ ပြုလုပ်ပြီးနောက်၊ ကျွန်ုပ်တို့သည် evaluator ကို စတင်၍ စမ်းသပ်နိုင်သည်။ <a href="#g_t4_002e2_002e1">4.2.1</a> တွင် ဆွေးနွေးခဲ့သော <code>try</code> expression ကို အောင်မြင်စွာ evaluate လုပ်နိုင်ခြင်းက interpreter သည် lazy evaluation ကို လုပ်ဆောင်နေကြောင်း ညွှန်ပြနေသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> the-global-environment 
+  </span><span class="opn">(</span><span class="pln">setup-environment</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">driver-loop</span><span class="clo">)</span><span class="pln">
+
+</span><i><span class="com">;;; L-Eval input:</span></i><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">try a b</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> a </span><span class="lit">0</span><span class="clo">)</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> b</span><span class="clo">))</span><span class="pln">
+
+</span><i><span class="com">;;; L-Eval value:</span></i><span class="pln">
+</span><i><span class="pln">ok</span></i><span class="pln">
+
+</span><i><span class="com">;;; L-Eval input:</span></i><span class="pln">
+</span><span class="opn">(</span><span class="pln">try </span><span class="lit">0</span><span class="pln"> </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> </span><span class="lit">0</span><span class="clo">))</span><span class="pln">
+
+</span><i><span class="com">;;; L-Eval value:</span></i><span class="pln">
+</span><i><span class="lit">1</span></i>
+</pre></div>
+
+<a id="Representing-thunks"></a>
+<h5 class="subsubheading">Thunk များကို ဖော်ပြခြင်း</h5>
+
+<p>ကျွန်ုပ်တို့၏ evaluator သည် procedure များကို argument များထံ apply လုပ်သောအခါ thunk များ ဖန်တီးရန်နှင့် ထို thunk များကို နောက်မှ force လုပ်ရန် စီစဉ်ရမည်။ Thunk တစ်ခုသည် argument ကို နောက်မှ ထုတ်ပေးနိုင်ရန်အတွက် expression ကို environment နှင့်အတူ ထုပ်ပိုးထားရမည်။ Thunk ကို force လုပ်ရန်၊ ကျွန်ုပ်တို့သည် thunk ထဲမှ expression နှင့် environment ကို ထုတ်ယူပြီး environment ထဲတွင် expression ကို evaluate လုပ်ရုံသာဖြစ်သည်။ Expression ၏ value သည် ကိုယ်တိုင် thunk ဖြစ်နေခဲ့လျှင် ၎င်းကိုပါ force လုပ်နိုင်ရန်နှင့် thunk မဟုတ်သော အရာတစ်ခု ရောက်သည်အထိ ဆက်လက်လုပ်ဆောင်နိုင်ရန် <code>eval</code> ထက် <code>actual-value</code> ကို အသုံးပြုသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">force-it obj</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">thunk? obj</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">actual-value </span><span class="opn">(</span><span class="pln">thunk-exp obj</span><span class="clo">)</span><span class="pln"> 
+                    </span><span class="opn">(</span><span class="pln">thunk-env obj</span><span class="clo">))</span><span class="pln">
+      obj</span><span class="clo">))</span></pre></div>
+
+<p>Expression တစ်ခုကို environment နှင့် ထုပ်ပိုးရန် လွယ်ကူသော နည်းလမ်းတစ်ခုမှာ expression နှင့် environment ပါဝင်သော list တစ်ခု ပြုလုပ်ခြင်း ဖြစ်သည်။ ထို့ကြောင့် ကျွန်ုပ်တို့သည် thunk တစ်ခုကို အောက်ပါအတိုင်း ဖန်တီးသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">delay-it exp env</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">list </span><span class="lit">'thunk</span><span class="pln"> exp env</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">thunk? obj</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">tagged-list? obj </span><span class="lit">'thunk</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">thunk-exp thunk</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cadr</span><span class="pln"> thunk</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">thunk-env thunk</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">caddr</span><span class="pln"> thunk</span><span class="clo">))</span></pre></div>
+
+<p>အမှန်တကယ်တွင် ကျွန်ုပ်တို့၏ interpreter အတွက် လိုချင်သည်မှာ ဤအရာမျိုး မဟုတ်ဘဲ memoize လုပ်ထားသော thunk များ ဖြစ်သည်။ Thunk တစ်ခုကို force လုပ်သောအခါ၊ သိမ်းဆည်းထားသော expression ကို ၎င်း၏ value ဖြင့် အစားထိုးပြီး <code>thunk</code> tag ကို ပြောင်းလဲခြင်းအားဖြင့် ၎င်းကို evaluate လုပ်ပြီးသား thunk တစ်ခုအဖြစ် ပြောင်းလဲမည် ဖြစ်သည်။ သို့မှသာ ၎င်းကို evaluate လုပ်ပြီးသားအဖြစ် မှတ်မိနိုင်မည် ဖြစ်သည်။<a class="footnote_link" id="DOCF241" href="#FOOT241"><sup>241</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">evaluated-thunk? obj</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">tagged-list? obj </span><span class="lit">'evaluated-thunk</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">thunk-value evaluated-thunk</span><span class="clo">)</span><span class="pln"> 
+  </span><span class="opn">(</span><span class="kwd">cadr</span><span class="pln"> evaluated-thunk</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">force-it obj</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pln">thunk? obj</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">result
+                </span><span class="opn">(</span><span class="pln">actual-value 
+                 </span><span class="opn">(</span><span class="pln">thunk-exp obj</span><span class="clo">)</span><span class="pln">
+                 </span><span class="opn">(</span><span class="pln">thunk-env obj</span><span class="clo">))))</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">set-car! obj </span><span class="lit">'evaluated-thunk</span><span class="clo">)</span><span class="pln">
+           </span><span class="com">;; </span><span class="roman"><span class="com">replace </span><code><span class="com">exp</span></code><span class="com"> with its value:</span></span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">set-car! </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> obj</span><span class="clo">)</span><span class="pln"> result</span><span class="clo">)</span><span class="pln"> 
+           </span><span class="com">;; </span><span class="roman"><span class="com">forget unneeded </span><code><span class="com">env</span></code><span class="com">:</span></span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">set-cdr! </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> obj</span><span class="clo">)</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="clo">))</span><span class="pln"> 
+           result</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">((</span><span class="pln">evaluated-thunk? obj</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">thunk-value obj</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> obj</span><span class="clo">)))</span></pre></div>
+
+<p>တူညီသော <code>delay-it</code> procedure သည် memoization ပါသည်ဖြစ်စေ၊ မပါသည်ဖြစ်စေ အလုပ်လုပ်သည်ကို သတိပြုပါ။
+</p>
+<blockquote>
+<p><strong><a id="Exercise-4_002e27"></a>လေ့ကျင့်ခန်း 4.27:</strong> အောက်ပါ definition များကို lazy evaluator တွင် ရိုက်ထည့်သည်ဟု ဆိုပါစို့-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> count </span><span class="lit">0</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">id x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> count </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> count </span><span class="lit">1</span><span class="clo">))</span><span class="pln"> x</span><span class="clo">)</span></pre></div>
+
+<p>အောက်ပါ interaction များတွင် လိုအပ်နေသော value များကို ဖြည့်စွက်ပြီး သင်၏ အဖြေများကို ရှင်းပြပါ။<a class="footnote_link" id="DOCF242" href="#FOOT242"><sup>242</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> w </span><span class="opn">(</span><span class="pln">id </span><span class="opn">(</span><span class="pln">id </span><span class="lit">10</span><span class="clo">)))</span><span class="pln">
+
+</span><i><span class="com">;;; L-Eval input:</span></i><span class="pln">
+count
+
+</span><i><span class="com">;;; L-Eval value:</span></i><span class="pln">
+⟨</span><var><span class="pln">response</span></var><span class="pln">⟩
+
+</span><i><span class="com">;;; L-Eval input:</span></i><span class="pln">
+w
+
+</span><i><span class="com">;;; L-Eval value:</span></i><span class="pln">
+⟨</span><var><span class="pln">response</span></var><span class="pln">⟩
+
+</span><i><span class="com">;;; L-Eval input:</span></i><span class="pln">
+count
+
+</span><i><span class="com">;;; L-Eval value:</span></i><span class="pln">
+⟨</span><var><span class="pln">response</span></var><span class="pln">⟩</span></pre></div>
+</blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-4_002e28"></a>လေ့ကျင့်ခန်း 4.28:</strong> <code>Eval</code> သည် operator ၏ value ကို force လုပ်ရန်အတွက် <code>apply</code> ထံ မပေးပို့မီ operator ကို evaluate လုပ်ရန် <code>eval</code> အစား <code>actual-value</code> ကို အသုံးပြုသည်။ ဤကဲ့သို့ force လုပ်ရန် လိုအပ်မှုကို သက်သေပြနိုင်မည့် ဥပမာတစ်ခု ပေးပါ။
+</p>
+<p><strong><a id="Exercise-4_002e29"></a>လေ့ကျင့်ခန်း 4.29:</strong> Memoization မပါဘဲ run ပါက memoization ပါသည်ထက် အလွန်နှေးကွေးသွားမည့် program တစ်ခုကို ပြပါ။ ထို့အပြင် <a href="#Exercise-4_002e27">လေ့ကျင့်ခန်း 4.27</a> တွင် သတ်မှတ်ခဲ့သော <code>id</code> procedure နှင့် 0 မှ စတင်သော <code>count</code> တို့ပါဝင်သည့် အောက်ပါ interaction ကို စဉ်းစားပါ-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x x</span><span class="clo">))</span><span class="pln">
+
+</span><i><span class="com">;;; L-Eval input:</span></i><span class="pln">
+</span><span class="opn">(</span><span class="pln">square </span><span class="opn">(</span><span class="pln">id </span><span class="lit">10</span><span class="clo">))</span><span class="pln">
+
+</span><i><span class="com">;;; L-Eval value:</span></i><span class="pln">
+⟨</span><var><span class="pln">response</span></var><span class="pln">⟩
+
+</span><i><span class="com">;;; L-Eval input:</span></i><span class="pln">
+count
+
+</span><i><span class="com">;;; L-Eval value:</span></i><span class="pln">
+⟨</span><var><span class="pln">response</span></var><span class="pln">⟩</span></pre></div>
+
+<p>Evaluator က memoize လုပ်သည့် အခြေအနေနှင့် မလုပ်သည့် အခြေအနေ နှစ်ခုလုံးအတွက် တုံ့ပြန်ချက်များကို ပေးပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-4_002e30"></a>လေ့ကျင့်ခန်း 4.30:</strong> C programmer ဟောင်းတစ်ဦးဖြစ်သူ Cy D. Fect သည် lazy evaluator သည် sequence တစ်ခုအတွင်းရှိ expression များကို force မလုပ်သောကြောင့် side effect အချို့ ဘယ်တော့မှ ဖြစ်ပေါ်လာမည် မဟုတ်ကြောင်း စိုးရိမ်နေသည်။ Sequence တစ်ခုရှိ နောက်ဆုံး expression မှအပ ကျန် expression များ၏ value ကို အသုံးမပြုသောကြောင့် (ထို expression များသည် variable assignment သို့မဟုတ် print ထုတ်ခြင်းကဲ့သို့သော effect များအတွက်သာ ရှိနေခြင်းဖြစ်သည်)၊ ထို value ကို force ဖြစ်စေမည့် နောက်ဆက်တွဲ အသုံးပြုမှု (ဥပမာ- primitive procedure တစ်ခုသို့ argument အဖြစ် ပေးပို့ခြင်းမျိုး) မရှိနိုင်ပါ။ ထို့ကြောင့် Cy က sequence များကို evaluate လုပ်သောအခါ နောက်ဆုံးတစ်ခုမှအပ ကျန် expression အားလုံးကို force လုပ်ရမည်ဟု ယူဆသည်။ သူသည် <a href="4_002e1.xhtml#g_t4_002e1_002e1">4.1.1</a> မှ <code>eval-sequence</code> ကို <code>eval</code> အစား <code>actual-value</code> အသုံးပြုရန် အောက်ပါအတိုင်း ပြင်ဆင်ရန် အဆိုပြုသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">eval-sequence exps env</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pln">last-exp? exps</span><span class="clo">)</span><span class="pln"> 
+         </span><span class="opn">(</span><span class="pln">eval </span><span class="opn">(</span><span class="pln">first-exp exps</span><span class="clo">)</span><span class="pln"> env</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> 
+         </span><span class="opn">(</span><span class="pln">actual-value </span><span class="opn">(</span><span class="pln">first-exp exps</span><span class="clo">)</span><span class="pln"> 
+                       env</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">eval-sequence </span><span class="opn">(</span><span class="pln">rest-exps exps</span><span class="clo">)</span><span class="pln"> 
+                        env</span><span class="clo">))))</span></pre></div>
+
+<ol>
+<li> Ben Bitdiddle က Cy မှားနေသည်ဟု ယူဆသည်။ သူသည် <a href="2_002e2.xhtml#Exercise-2_002e23">လေ့ကျင့်ခန်း 2.23</a> တွင် ဖော်ပြထားသော <code>for-each</code> procedure ကို Cy အား ပြသခဲ့ပြီး၊ ၎င်းသည် side effect ပါဝင်သော sequence တစ်ခု၏ အရေးကြီးသော ဥပမာတစ်ခု ဖြစ်သည်-
+
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">for-each proc items</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">null? items</span><span class="clo">)</span><span class="pln">
+      </span><span class="lit">'done</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">begin</span><span class="pln"> </span><span class="opn">(</span><span class="pln">proc </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> items</span><span class="clo">))</span><span class="pln">
+             </span><span class="opn">(</span><span class="pln">for-each proc 
+                       </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> items</span><span class="clo">)))))</span></pre></div>
+
+<p>သူက စာသားထဲရှိ evaluator (မူလ <code>eval-sequence</code> ပါဝင်သော) သည် ဤအရာကို မှန်ကန်စွာ ကိုင်တွယ်နိုင်သည်ဟု ဆိုသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><i><span class="com">;;; L-Eval input:</span></i><span class="pln">
+</span><span class="opn">(</span><span class="pln">for-each
+ </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">newline</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">display x</span><span class="clo">))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">list </span><span class="lit">57</span><span class="pln"> </span><span class="lit">321</span><span class="pln"> </span><span class="lit">88</span><span class="clo">))</span><span class="pln">
+</span><i><span class="lit">57</span></i><span class="pln">
+</span><i><span class="lit">321</span></i><span class="pln">
+</span><i><span class="lit">88</span></i><span class="pln">
+
+</span><i><span class="com">;;; L-Eval value:</span></i><span class="pln">
+</span><i><span class="pln">done</span></i>
+</pre></div>
+
+<p><code>for-each</code> ၏ လုပ်ဆောင်ချက်နှင့် ပတ်သက်၍ Ben အဘယ်ကြောင့် မှန်ကန်ကြောင်း ရှင်းပြပါ။
+</p>
+</li><li> Cy က <code>for-each</code> ဥပမာနှင့် ပတ်သက်၍ Ben မှန်ကန်ကြောင်း သဘောတူသော်လည်း ၎င်းသည် သူ <code>eval-sequence</code> ကို ပြောင်းလဲရန် အဆိုပြုစဉ်က စဉ်းစားခဲ့သော program မျိုး မဟုတ်ကြောင်း ပြောကြားသည်။ သူသည် lazy evaluator တွင် အောက်ပါ procedure နှစ်ခုကို သတ်မှတ်လိုက်သည်-
+
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">p1 x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> x </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> x </span><span class="lit">'</span><span class="opn">(</span><span class="lit">2</span><span class="clo">)))</span><span class="pln"> x</span><span class="clo">)</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">p2 x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">p e</span><span class="clo">)</span><span class="pln"> e x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">p </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> x </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> x </span><span class="lit">'</span><span class="opn">(</span><span class="lit">2</span><span class="clo">)))))</span></pre></div>
+
+<p>မူလ <code>eval-sequence</code> ဖြင့် <code>(p1 1)</code> နှင့် <code>(p2 1)</code> တို့၏ value များမှာ အဘယ်နည်း။ Cy အဆိုပြုထားသော <code>eval-sequence</code> အပြောင်းအလဲဖြင့်ဆိုလျှင် value များမှာ မည်သို့ ဖြစ်မည်နည်း။
+</p>
+</li><li> သူအဆိုပြုသကဲ့သို့ <code>eval-sequence</code> ကို ပြောင်းလဲခြင်းသည် အပိုင်း (၁) ရှိ ဥပမာ၏ လုပ်ဆောင်ချက်ကို မထိခိုက်စေကြောင်းလည်း Cy က ထောက်ပြသည်။ ၎င်းသည် အဘယ်ကြောင့် မှန်ကန်ရသနည်းဟု ရှင်းပြပါ။
+
+</li><li> Lazy evaluator တွင် sequence များကို မည်သို့ ကိုင်တွယ်သင့်သည်ဟု သင် ထင်မြင်ပါသနည်း။ Cy ၏ ချဉ်းကပ်ပုံ၊ စာအုပ်ထဲမှ ချဉ်းကပ်ပုံ သို့မဟုတ် အခြားသော ချဉ်းကပ်ပုံ တစ်မျိုးမျိုးကို သင် နှစ်သက်ပါသလား။
+
+</li></ol>
+</blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-4_002e31"></a>လေ့ကျင့်ခန်း 4.31:</strong> ဤအခန်းတွင် အသုံးပြုထားသော ချဉ်းကပ်ပုံမှာ Scheme သို့ incompatible ဖြစ်သော အပြောင်းအလဲတစ်ခုကို ပြုလုပ်သောကြောင့် အနည်းငယ် စိတ်ပျက်စရာ ကောင်းသည်။ Lazy evaluation ကို ordinary Scheme program များ ယခင်အတိုင်း အလုပ်လုပ်နိုင်စေမည့်
+<a id="index-upward_002dcompatible-extension"></a>
+<em>upward-compatible extension</em> တစ်ခုအဖြစ် အကောင်အထည်ဖော်ခြင်းက ပိုကောင်းပါလိမ့်မည်။ Procedure declaration များ၏ syntax ကို ချဲ့ထွင်ပြီး argument များကို delay လုပ်မလား၊ မလုပ်ဘူးလား ဆိုသည်ကို user က ထိန်းချုပ်နိုင်အောင် ကျွန်ုပ်တို့ လုပ်ဆောင်နိုင်သည်။ ထိုသို့ လုပ်ဆောင်နေစဉ်တွင် user အား memoization ပါဝင်သော သို့မဟုတ် မပါဝင်သော delay လုပ်ခြင်းကို ရွေးချယ်ခွင့် ပေးနိုင်သည်။ ဥပမာအားဖြင့် definition မှာ-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">f a </span><span class="opn">(</span><span class="pln">b lazy</span><span class="clo">)</span><span class="pln"> c </span><span class="opn">(</span><span class="pln">d lazy-memo</span><span class="clo">))</span><span class="pln">
+  </span><span class="roman"><span class="pun">…</span></span><span class="clo">)</span></pre></div>
+
+<p>၎င်းသည် argument လေးခုပါသော procedure <code>f</code> ကို သတ်မှတ်ပေးမည် ဖြစ်ပြီး၊ ပထမနှင့် တတိယ argument များကို procedure ခေါ်ဆိုချိန်တွင် evaluate လုပ်မည်၊ ဒုတိယ argument ကို delay လုပ်မည်ဖြစ်ပြီး၊ စတုတ္ထ argument ကိုမူ delay ရော memoize ပါ လုပ်ဆောင်မည်ဖြစ်သည်။ ထို့ကြောင့် သာမန် procedure definition များသည် ordinary Scheme ကဲ့သို့ပင် လုပ်ဆောင်မည်ဖြစ်ပြီး၊ compound procedure တိုင်း၏ parameter တစ်ခုစီတွင် <code>lazy-memo</code> declaration ထည့်သွင်းခြင်းက ဤအခန်းတွင် ဖော်ပြထားသော lazy evaluator ၏ လုပ်ဆောင်ချက်ကို ရရှိစေမည်ဖြစ်သည်။ Scheme သို့ ထိုကဲ့သို့သော extension တစ်ခု ဖြစ်လာစေရန် လိုအပ်သော အပြောင်းအလဲများကို ဒီဇိုင်းထုတ်၍ အကောင်အထည်ဖော်ပါ။ <code>define</code> အတွက် syntax အသစ်ကို ကိုင်တွယ်ရန် syntax procedure အသစ်များကို အကောင်အထည်ဖော်ရမည်။ မည်သည့်အချိန်တွင် argument များကို delay လုပ်မည်ကို ဆုံးဖြတ်ရန်နှင့် ၎င်းနှင့်အညီ force သို့မဟုတ် delay လုပ်ရန် <code>eval</code> သို့မဟုတ် <code>apply</code> အတွက်လည်း စီစဉ်ရမည်။ ထို့အပြင် သင့်လျော်သလို memoize လုပ်ရန် သို့မဟုတ် မလုပ်ရန်အတွက်လည်း စီစဉ်ရမည်ဖြစ်သည်။
+</p></blockquote>
+
+<a id="g_t4_002e2_002e3"></a>
+<a id="Streams-as-Lazy-Lists"></a>
+<h4 class="subsection"><span class="secnum">4.2.3</span><span class="sectitle">Streams များကို Lazy Lists များအဖြစ် အသုံးပြုခြင်း</span></h4>
+
+<p><a href="3_002e5.xhtml#g_t3_002e5_002e1">3.5.1</a> တွင်၊ ကျွန်ုပ်တို့သည် stream များကို delayed lists များအဖြစ် မည်သို့ အကောင်အထည်ဖော်ရမည်ကို ပြသခဲ့သည်။
+ကျွန်ုပ်တို့သည် <code>delay</code> နှင့် <code>cons-stream</code> ဆိုသည့် special forms များကို မိတ်ဆက်ပေးခဲ့ပြီး၊ ၎င်းတို့သည် stream တစ်ခု၏ <code>cdr</code> ကို တွက်ချက်ရန်အတွက် “ကတိကဝတ်” (promise) တစ်ခုကို တည်ဆောက်ရန် ခွင့်ပြုပေးကာ၊ ထိုကတိကဝတ်ကို နောက်ပိုင်းမှသာ အမှန်တကယ် ဖြည့်ဆည်းစေခြင်း ဖြစ်သည်။ Evaluation process အပေါ် ပိုမိုထိန်းချုပ်ရန် လိုအပ်သည့် အခါတိုင်း special forms များ မိတ်ဆက်ပေးသည့် ဤယေဘုယျနည်းလမ်းကို ကျွန်ုပ်တို့ အသုံးပြုနိုင်သော်လည်း၊ ၎င်းသည် အဆင်မပြေလှပါ။ အကြောင်းတစ်ခုမှာ special form သည် procedure တစ်ခုကဲ့သို့ first-class object မဟုတ်သောကြောင့်၊ ၎င်းကို higher-order procedures များနှင့်အတူ တွဲဖက် အသုံးမပြုနိုင်ခြင်းကြောင့် ဖြစ်သည်။<a class="footnote_link" id="DOCF243" href="#FOOT243"><sup>243</sup></a> ထို့အပြင်၊ ကျွန်ုပ်တို့သည် stream များကို list များနှင့် ဆင်တူသော်လည်း ထပ်တူမကျသော data object အမျိုးအစားသစ်တစ်ခုအဖြစ် ဖန်တီးရန် ဖိအားပေးခံခဲ့ရပြီး၊ ၎င်းသည် stream များအတွက် အခြေခံ list operations များ (<code>map</code>, <code>append</code> စသည်ဖြင့်) ကို ပြန်လည် အကောင်အထည်ဖော်ရန် လိုအပ်စေခဲ့သည်။
+</p>
+<p>Lazy evaluation နှင့်ဆိုလျှင် stream များနှင့် list များသည် ထပ်တူဖြစ်နိုင်သောကြောင့်၊ special forms များ သို့မဟုတ် သီးခြား list နှင့် stream operations များ မလိုအပ်တော့ပါ။ ကျွန်ုပ်တို့ လုပ်ဆောင်ရန် လိုအပ်သည်မှာ <code>cons</code> ကို non-strict ဖြစ်အောင် စီစဉ်ရန်သာ ဖြစ်သည်။ ဤအရာကို အောင်မြင်ရန် နည်းလမ်းတစ်ခုမှာ non-strict primitives များအတွက် ခွင့်ပြုရန် lazy evaluator ကို တိုးချဲ့ပြီး၊ <code>cons</code> ကို ၎င်းတို့ထဲမှ တစ်ခုအဖြစ် အကောင်အထည်ဖော်ရန် ဖြစ်သည်။ ပိုမိုလွယ်ကူသော နည်းလမ်းမှာ (<a href="2_002e1.xhtml#g_t2_002e1_002e3">2.1.3</a>) တွင် ဖော်ပြခဲ့သည့်အတိုင်း <code>cons</code> ကို primitive တစ်ခုအဖြစ် အကောင်အထည်ဖော်ရန် အခြေခံကျသော လိုအပ်ချက်မရှိကြောင်း ပြန်လည်သတိရရန် ဖြစ်သည်။ ယင်းအစား၊ ကျွန်ုပ်တို့သည် pairs များကို procedures များအဖြစ် ကိုယ်စားပြုနိုင်သည်:<a class="footnote_link" id="DOCF244" href="#FOOT244"><sup>244</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> x y</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">m</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">m x y</span><span class="clo">)))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> z</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">z </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">p q</span><span class="clo">)</span><span class="pln"> p</span><span class="clo">)))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> z</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">z </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">p q</span><span class="clo">)</span><span class="pln"> q</span><span class="clo">)))</span></pre></div>
+
+<p>ဤအခြေခံ operations များအရ၊ list operations များ၏ စံသတ်မှတ်ချက်များသည် အကန့်အသတ်ရှိသော list များသာမက အကန့်အသတ်မဲ့ list များ (streams) နှင့်လည်း အလုပ်လုပ်မည်ဖြစ်ပြီး၊ stream operations များကို list operations များအဖြစ် အကောင်အထည်ဖော်နိုင်သည်။ ဤသည်မှာ ဥပမာအချို့ ဖြစ်သည်:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">list-ref items n</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> n </span><span class="lit">0</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> items</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">list-ref </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> items</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> n </span><span class="lit">1</span><span class="clo">))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">map proc items</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">null? items</span><span class="clo">)</span><span class="pln">
+      </span><span class="lit">'</span><span class="opn">(</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> </span><span class="opn">(</span><span class="pln">proc </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> items</span><span class="clo">))</span><span class="pln">
+            </span><span class="opn">(</span><span class="pln">map proc </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> items</span><span class="clo">)))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">scale-list items factor</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">map </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x factor</span><span class="clo">))</span><span class="pln">
+       items</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">add-lists list1 list2</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pln">null? list1</span><span class="clo">)</span><span class="pln"> list2</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="pln">null? list2</span><span class="clo">)</span><span class="pln"> list1</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> list1</span><span class="clo">)</span><span class="pln"> 
+                       </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> list2</span><span class="clo">))</span><span class="pln">
+                    </span><span class="opn">(</span><span class="pln">add-lists
+                     </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> list1</span><span class="clo">)</span><span class="pln"> 
+                     </span><span class="op|">(</span><span class="kwd">cdr</span><span class="pln"> list2</span><span class="clo">))))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> ones </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> ones</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> integers 
+  </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> </span><span class="opn">(</span><span class="pln">add-lists ones integers</span><span class="clo">)))</span><span class="pln">
+
+</span><i><span class="com">;;; L-Eval input:</span></i><span class="pln">
+</span><span class="opn">(</span><span class="pln">list-ref integers </span><span class="lit">17</span><span class="clo">)</span><span class="pln">
+
+</span><i><span class="com">;;; L-Eval value:</span></i><span class="pln">
+</span><i><span class="lit">18</span></i>
+</pre></div>
+
+<p>ဤ lazy lists များသည် <a href="Chapter-3.xhtml#Chapter-3">Chapter 3</a> မှ stream များထက်ပင် ပို၍ "ပျင်းရိ" (lazier) ကြောင်း သတိပြုပါ:
+list ၏ <code>car</code> ရော <code>cdr</code> ပါ နှောင့်နှေး (delayed) ထားသည်။<a class="footnote_link" id="DOCF245" href="#FOOT245"><sup>245</sup></a> အမှန်စင်စစ်၊ lazy pair တစ်ခု၏ <code>car</code> သို့မဟုတ် <code>cdr</code> ကို access လုပ်ခြင်းသည်ပင် list element တစ်ခု၏ value ကို အတင်းအကျပ် တွက်ချက်ရန် (force) မလိုအပ်ပါ။ Value ကို အမှန်တကယ် လိုအပ်သည့်အခါမှသာ (ဥပမာ primitive တစ်ခု၏ argument အဖြစ် အသုံးပြုရန် သို့မဟုတ် အဖြေအဖြစ် ရိုက်နှိပ်ရန်) အတင်းအကျပ် တွက်ချက်လိမ့်မည်ဖြစ်သည်။
+</p>
+<p>Lazy pairs များသည် <a href="3_002e5.xhtml#g_t3_002e5_002e4">3.5.4</a> တွင် stream များကြောင့် ဖြစ်ပေါ်လာသော ပြဿနာကိုလည်း ဖြေရှင်းပေးသည်။ ထိုစဉ်က loop များပါဝင်သော စနစ်များ၏ stream model များကို ဖော်မြူလာထုတ်ရာတွင် <code>cons-stream</code> မှ ပံ့ပိုးပေးထားသည့်အပြင် ကျွန်ုပ်တို့၏ program များတွင် explicit <code>delay</code> operations များကိုပါ ထည့်သွင်းရန် လိုအပ်နိုင်သည်ကို တွေ့ရှိခဲ့ရသည်။ Lazy evaluation နှင့်ဆိုလျှင် procedures များသို့ ပေးပို့သော arguments အားလုံးကို တူညီစွာ နှောင့်နှေးစေသည်။ ဥပမာအားဖြင့်၊ ကျွန်ုပ်တို့သည် <a href="3_002e5.xhtml#g_t3_002e5_002e4">3.5.4</a> တွင် မူလရည်ရွယ်ထားသည့်အတိုင်း list များကို integrate လုပ်ရန်နှင့် differential equations များကို ဖြေရှင်းရန် procedures များကို အောက်ပါအတိုင်း အကောင်အထည်ဖော်နိုင်သည်:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">integral integrand initial-value dt</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> int
+    </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> initial-value
+          </span><span class="opn">(</span><span class="pln">add-lists </span><span class="opn">(</span><span class="pln">scale-list integrand dt</span><span class="clo">)</span><span class="pln"> 
+                     int</span><span class="clo">)))</span><span class="pln">
+  int</span><span class="clo">)</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">solve f y0 dt</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> y </span><span class="opn">(</span><span class="pln">integral dy y0 dt</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> dy </span><span class="opn">(</span><span class="pln">map f y</span><span class="clo">))</span><span class="pln">
+  y</span><span class="clo">)</span><span class="pln">
+
+</span><i><span class="com">;;; L-Eval input:</span></i><span class="pln">
+</span><span class="opn">(</span><span class="pln">list-ref </span><span class="opn">(</span><span class="pln">solve </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">x</span><span class="clo">)</span><span class="pln"> x</span><span class="clo">)</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> </span><span class="lit">0.001</span><span class="clo">)</span><span class="pln"> </span><span class="lit">1000</span><span class="clo">)</span><span class="pln">
+
+</span><i><span class="com">;;; L-Eval value:</span></i><span class="pln">
+</span><i><span class="lit">2.716924</span></i>
+</pre></div>
+
+<blockquote>
+<p><strong><a id="Exercise-4_002e32"></a>Exercise 4.32:</strong> <a href="Chapter-3.xhtml#Chapter-3">Chapter 3</a> မှ stream များနှင့် ဤအပိုင်းတွင် ဖော်ပြထားသော ပိုမိုပျင်းရိသော "lazier" lazy lists များအကြား ကွာခြားချက်ကို ဖော်ပြသည့် ဥပမာအချို့ကို ပေးပါ။ ဤအပိုဆောင်း ပျင်းရိမှု (extra laziness) ကို သင်မည်သို့ အသုံးချနိုင်သနည်း?
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-4_002e33"></a>Exercise 4.33:</strong> Ben Bitdiddle သည် အထက်တွင် ပေးထားသော lazy list implementation ကို အောက်ပါ expression ကို evaluate လုပ်ခြင်းဖြင့် စမ်းသပ်ခဲ့သည်
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">car</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">a b c</span><span class="clo">))</span></pre></div>
+
+<p>သူ အံ့အားသင့်သွားရသည်မှာ၊ ဤအရာသည် error တစ်ခု ထွက်ပေါ်စေခဲ့သည်။ အတန်ကြာ စဉ်းစားပြီးနောက်၊ quoted expressions များကို ဖတ်ခြင်းဖြင့် ရရှိလာသော "lists" များသည် <code>cons</code>, <code>car</code> နှင့် <code>cdr</code> တို့၏ အဓိပ္ပာယ်ဖွင့်ဆိုချက်အသစ်များဖြင့် ကိုင်တွယ်ထားသော lists များနှင့် ကွာခြားနေကြောင်း သူသဘောပေါက်သွားခဲ့သည်။ driver loop တွင် ရိုက်ထည့်လိုက်သော quoted lists များသည် စစ်မှန်သော lazy lists များ ဖြစ်လာစေရန်အတွက် evaluator ၏ quoted expressions များအပေါ် ကိုင်တွယ်ပုံကို ပြင်ဆင်ပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-4_002e34"></a>Exercise 4.34:</strong> Evaluator ၏ driver loop ကို lazy pairs နှင့် lists များသည် သင့်လျော်သော နည်းလမ်းဖြင့် print ထုတ်နိုင်ရန် ပြင်ဆင်ပါ။ (အကန့်အသတ်မဲ့ list များအတွက် သင်မည်သို့ လုပ်ဆောင်မည်နည်း?) ထို့အပြင် evaluator သည် lazy pairs များကို print ထုတ်ရန်အတွက် ခွဲခြားသိရှိနိုင်စေရန် ၎င်းတို့၏ representation ကိုလည်း ပြင်ဆင်ရန် လိုအပ်နိုင်သည်။
+</p></blockquote>
+
+<div class="footnote">
+<h4 class="footnotes-heading">အောက်ခြေမှတ်စုများ</h4>
+
+<div id="FOOT235"><p><a class="footnote_backlink" href="#DOCF235"><sup>235</sup></a>
+Snarf: “ပိုင်ရှင်၏ ခွင့်ပြုချက် ပါသည်ဖြစ်စေ၊ မပါသည်ဖြစ်စေ အသုံးပြုရန် ရည်ရွယ်ချက်ဖြင့် အထူးသဖြင့် စာရွက်စာတမ်း အကြီးစား သို့မဟုတ် ဖိုင်တစ်ခုကို ရယူခြင်း။”  Snarf down: “စုပ်ယူခြင်း၊ လုပ်ဆောင်ခြင်း သို့မဟုတ် နားလည်သဘောပေါက်ခြင်း အဓိပ္ပာယ်သက်ရောက်လေ့ရှိသော snarf ပြုလုပ်ခြင်း။”  (ဤအဓိပ္ပာယ်ဖွင့်ဆိုချက်များကို <a href="References.xhtml#Steele-et-al_002e-1983">Steele et al. 1983</a> မှ snarf လုပ်ထားခြင်းဖြစ်သည်။ <a href="References.xhtml#Raymond-1993">Raymond 1993</a> ကိုလည်း ကြည့်ပါ။)</p>
+</div>
+<div id="FOOT236"><p><a class="footnote_backlink" href="#DOCF236"><sup>236</sup></a>
+“lazy” ဝေါဟာရနှင့် “normal-order” ဝေါဟာရတို့၏ ကွာခြားချက်မှာ အနည်းငယ် ဝေဝါးပါသည်။ ယေဘုယျအားဖြင့် “lazy” သည် သီးခြား evaluator များ၏ လုပ်ဆောင်ချက် ယန္တရားများကို ရည်ညွှန်းပြီး၊ “normal-order” သည် သီးခြား evaluation strategy တစ်ခုခုအပေါ် မမှီခိုဘဲ ဘာသာစကားများ၏ semantics ကို ရည်ညွှန်းသည်။ သို့သော် ဤကွဲပြားမှုသည် တင်းကျပ်လွန်းခြင်း မရှိဘဲ၊ ဤဝေါဟာရနှစ်ခုကို တစ်ခုနှင့်တစ်ခု အပြန်အလှန် အသုံးပြုလေ့ရှိကြသည်။</p>
+</div>
+<div id="FOOT237"><p><a class="footnote_backlink" href="#DOCF237"><sup>237</sup></a>
+“strict” နှင့် “non-strict” ဝေါဟာရများသည် ဘာသာစကားတစ်ခုလုံးထက် တစ်ဦးချင်းစီ၏ procedure များနှင့် argument များကို ရည်ညွှန်းသည်မှအပ “applicative-order” နှင့် “normal-order” တို့နှင့် အခြေခံအားဖြင့် အဓိပ္ပာယ်တူပါသည်။ ပရိုဂရမ်မင်းဘာသာစကားဆိုင်ရာ ညီလာခံတစ်ခုတွင် တစ်စုံတစ်ဦးက “normal-order ဘာသာစကားဖြစ်သော Hassle တွင် အချို့သော strict primitives များ ပါဝင်သည်။ အခြား procedure များသည် ၎င်းတို့၏ argument များကို lazy evaluation ဖြင့် ရယူကြသည်။” ဟု ပြောသည်ကို သင်ကြားဖူးပေလိမည်။</p>
+</div>
+<div id="FOOT238"><p><a class="footnote_backlink" href="#DOCF238"><sup>238</sup></a>
+စကားလုံး <a id="index-thunk"></a>
+<em>thunk</em> ကို Algol 60 ရှိ call-by-name ၏ implementation အကြောင်း ဆွေးနွေးနေသော အလွတ်သဘော လုပ်ငန်းအဖွဲ့တစ်ခုမှ တီထွင်ခဲ့ခြင်း ဖြစ်သည်။ expression အား ခွဲခြမ်းစိတ်ဖြာခြင်း (“thinking about”) အများစုကို compile time တွင် ပြုလုပ်နိုင်သည်ကို ၎င်းတို့ သတိပြုမိခဲ့ကြသည်။ ထို့ကြောင့် run time တွင် expression သည် “thunk” about (စဉ်းစားပြီးသား) ဖြစ်နေမည်ဖြစ်သည်။ (<a href="References.xhtml#Ingerman-et-al_002e-1960">Ingerman et al. 1960</a>)။</p>
+</div>
+<div id="FOOT239"><p><a class="footnote_backlink" href="#DOCF239"><sup>239</sup></a>
+ဒါဟာ stream များကို ဖော်ပြရန်အတွက် <a href="Chapter-3.xhtml#Chapter-3">အခန်း ၃</a> တွင် မိတ်ဆက်ခဲ့သည့် delayed object များပေါ်ရှိ <code>force</code> ကို အသုံးပြုခြင်းနှင့် ဆင်တူသည်။ ကျွန်ုပ်တို့ ဤနေရာတွင် လုပ်ဆောင်နေသည့်အရာနှင့် <a href="Chapter-3.xhtml#Chapter-3">အခန်း ၃</a> တွင် လုပ်ဆောင်ခဲ့သည့်အရာတို့အကြား အရေးကြီးသော ကွာခြားချက်မှာ ကျွန်ုပ်တို့သည် delaying နှင့် forcing ကို evaluator အတွင်းသို့ တည်ဆောက်ထည့်သွင်းနေခြင်း ဖြစ်သည်။ ထို့ကြောင့် ၎င်းကို ဘာသာစကားတစ်ခုလုံးတွင် တပြေးညီဖြစ်စေပြီး အလိုအလျောက် ဖြစ်ပေါ်စေခြင်း ဖြစ်သည်။</p>
+</div>
+<div id="FOOT240"><p><a class="footnote_backlink" href="#DOCF240"><sup>240</sup></a>
+Lazy evaluation ကို memoization နှင့် ပေါင်းစပ်ထားခြင်းကို <a id="index-call_002dby_002dneed-1"></a>
+<em>call-by-need</em> argument passing ဟု တစ်ခါတစ်ရံ ခေါ်ဆိုကြပြီး ၎င်းသည် <a id="index-call_002dby_002dname-1"></a>
+<em>call-by-name</em> argument passing နှင့် ကွာခြားသည်။ (Algol 60 တွင် စတင်မိတ်ဆက်ခဲ့သော call-by-name သည် memoized မလုပ်ထားသော lazy evaluation နှင့် ဆင်တူသည်။) ဘာသာစကား ဒီဇိုင်နာများအနေဖြင့် ကျွန်ုပ်တို့၏ evaluator ကို memoize လုပ်ရန်၊ memoize မလုပ်ရန် သို့မဟုတ် ပရိုဂရမ်မာများအတွက် ရွေးချယ်စရာအဖြစ် ထားရှိရန် တည်ဆောက်နိုင်သည် (<a href="#Exercise-4_002e31">လေ့ကျင့်ခန်း ၄.၃၁</a>)။ <a href="Chapter-3.xhtml#Chapter-3">အခန်း ၃</a> မှ သင် မျှော်လင့်ထားနိုင်သည့်အတိုင်း၊ assignments များ ရှိနေပါက ဤရွေးချယ်မှုများသည် သိမ်မွေ့ပြီး ရှုပ်ထွေးသော ကိစ္စရပ်များကို ဖြစ်ပေါ်စေသည်။ (<a href="#Exercise-4_002e27">လေ့ကျင့်ခန်း ၄.၂၇</a> နှင့် <a href="#Exercise-4_002e29">လေ့ကျင့်ခန်း ၄.၂၉</a> ကို ကြည့်ပါ။) <a href="References.xhtml#Clinger-_00281982_0029">Clinger (1982)</a> ၏ ကောင်းမွန်သော ဆောင်းပါးတစ်ပုဒ်တွင် ဤနေရာတွင် ပေါ်ပေါက်လာသော ရှုပ်ထွေးမှုများ၏ ရှုထောင့်ပေါင်းစုံကို ရှင်းလင်းရန် ကြိုးပမ်းထားသည်။</p>
+</div>
+<div id="FOOT241"><p><a class="footnote_backlink" href="#DOCF241"><sup>241</sup></a>
+Expression ၏ တန်ဖိုးကို တွက်ချက်ပြီးသည်နှင့် thunk ထဲမှ <code>env</code> ကိုလည်း ဖျက်ပစ်သည်ကို သတိပြုပါ။ ၎င်းသည် interpreter မှ ပြန်ပေးသော တန်ဖိုးများအပေါ် ထူးခြားမှု မရှိစေပါ။ သို့သော် ၎င်းသည် နေရာလွတ် ချွေတာရန် ကူညီပေးသည်၊ အကြောင်းမှာ thunk မှ <code>env</code> သို့ ညွှန်းဆိုချက်ကို ၎င်းမလိုအပ်တော့သည့်အချိန်တွင် ဖယ်ရှားလိုက်ခြင်းဖြင့် ဤ structure အား <a id="index-garbage_002dcollected"></a>
+<em>garbage-collected</em> လုပ်ခွင့်ပေးပြီး ၎င်း၏ နေရာလွတ်ကို ပြန်လည်အသုံးပြုခွင့်ပေးသောကြောင့် ဖြစ်သည်။ ဤအကြောင်းကို <a href="5_002e3.xhtml#g_t5_002e3">၅.၃</a> တွင် ဆွေးနွေးပါမည်။
+</p>
+<p>အလားတူပင်၊ <a href="3_002e5.xhtml#g_t3_002e5_002e1">၃.၅.၁</a> ရှိ memoized delayed object များတွင် မလိုအပ်သော environment များကို garbage-collected လုပ်ခွင့်ပေးနိုင်ခဲ့သည်။ ၎င်းကို <code>memo-proc</code> အား တန်ဖိုးကို သိမ်းဆည်းပြီးနောက် procedure <code>proc</code> (<code>delay</code> ကို evaluate လုပ်ခဲ့သော environment ပါဝင်သည်) ကို စွန့်ပစ်ရန် <code>(set! proc '())</code> ကဲ့သို့သော အရာတစ်ခုကို လုပ်ဆောင်စေခြင်းဖြင့် ဖြစ်သည်။</p>
+</div>
+<div id="FOOT242"><p><a class="footnote_backlink" href="#DOCF242"><sup>242</sup></a>
+ဤလေ့ကျင့်ခန်းသည် lazy evaluation နှင့် side effects တို့၏ အပြန်အလှန်သက်ရောက်မှုမှာ အလွန်ရှုပ်ထွေးနိုင်ကြောင်း ပြသနေသည်။ ဤသည်မှာ <a href="Chapter-3.xhtml#Chapter-3">အခန်း ၃</a> ရှိ ဆွေးနွေးချက်မှ သင် မျှော်လင့်ထားနိုင်သည့်အတိုင်းပင် ဖြစ်သည်။</p>
+</div>
+<div id="FOOT243"><p><a class="footnote_backlink" href="#DOCF243"><sup>243</sup></a>
+ဒါဟာ <a href="#Exercise-4_002e26">လေ့ကျင့်ခန်း ၄.၂၆</a> မှာ ပါတဲ့ <code>unless</code> procedure ရဲ့ ပြဿနာအတိအကျပါပဲ။</p>
+</div>
+<div id="FOOT244"><p><a class="footnote_backlink" href="#DOCF244"><sup>244</sup></a>
+ဤသည်မှာ <a href="2_002e1.xhtml#Exercise-2_002e4">လေ့ကျင့်ခန်း ၂.၄</a> တွင် ဖော်ပြထားသော procedural representation ဖြစ်သည်။ အခြေခံအားဖြင့် မည်သည့် procedural representation (ဥပမာ- message-passing implementation) မဆို ကောင်းမွန်စွာ လုပ်ဆောင်နိုင်ပါလိမ့်မည်။ ဤ definition များကို driver loop တွင် ရိုက်ထည့်ရုံဖြင့် lazy evaluator တွင် ထည့်သွင်းနိုင်သည်ကို သတိပြုပါ။ အကယ်၍ ကျွန်ုပ်တို့သည် မူလက <code>cons</code>၊ <code>car</code> နှင့် <code>cdr</code> တို့ကို global environment တွင် primitive များအဖြစ် ထည့်သွင်းခဲ့ပါက၊ ၎င်းတို့ကို ပြန်လည်သတ်မှတ် (redefined) ပါလိမ့်မည်။ (<a href="#Exercise-4_002e33">လေ့ကျင့်ခန်း ၄.၃၃</a> နှင့် <a href="#Exercise-4_002e34">လေ့ကျင့်ခန်း ၄.၃၄</a> ကိုလည်း ကြည့်ပါ။)</p>
+</div>
+<div id="FOOT245"><p><a class="footnote_backlink" href="#DOCF245"><sup>245</sup></a>
+၎င်းသည် ကျွန်ုပ်တို့အား sequence များသာမက ပိုမိုယေဘုယျကျသော list structure အမျိုးအစားများ၏ delayed version များကို ဖန်တီးနိုင်စေသည်။ <a href="References.xhtml#Hughes-1990">Hughes 1990</a> တွင် “lazy trees” ၏ အသုံးချပုံအချို့ကို ဆွေးနွေးထားသည်။</p>
+</div>
+</div>
+<nav class="header">
+<p>
+Next: <a href="4_002e3.xhtml#g_t4_002e3" accesskey="n" rel="next">4.3</a>, Prev: <a href="4_002e1.xhtml#g_t4_002e1" accesskey="p" rel="prev">4.1</a>, Up: <a href="#g_t4_002e2" accesskey="u" rel="prev">4.2</a>   [<a href="index.xhtml#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+
+
+</section><span class="bottom jump" title="Jump to bottom"><a href="#pagebottom" accesskey="b">⇣</a></span><a id="pagebottom"></a>
+</body>
+</html>
