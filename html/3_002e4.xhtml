@@ -1,0 +1,880 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="my" lang="my">
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>Structure and Interpretation of Computer Programs, 2e: 3.4</title>
+
+<meta name="description" content="Structure and Interpretation of Computer Programs, 2e: 3.4" />
+<meta name="keywords" content="Structure and Interpretation of Computer Programs, 2e: 3.4" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="Generator" content="texi2any" />
+<meta charset="utf-8" />
+<link href="index.xhtml#Top" rel="start" title="Top" />
+<link href="Term-Index.xhtml#Term-Index" rel="index" title="Term Index" />
+<link href="index.xhtml#SEC_Contents" rel="contents" title="Table of Contents" />
+<link href="Chapter-3.xhtml#Chapter-3" rel="prev" title="Chapter 3" />
+<link href="3_002e5.xhtml#g_t3_002e5" rel="next" title="3.5" />
+<link href="3_002e3.xhtml#g_t3_002e3_002e5" rel="prev" title="3.3.5" />
+
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/prettify.css" rel="stylesheet" type="text/css" />
+
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/footnotes.js" type="text/javascript"></script>
+<script src="js/browsertest.js" type="text/javascript"></script>
+</head>
+
+<body>
+<section><span class="top jump" title="Jump to top"><a href="#pagetop" accesskey="t">⇡</a></span><a id="pagetop"></a><a id="g_t3_002e4"></a>
+<nav class="header">
+<p>
+Next: <a href="3_002e5.xhtml#g_t3_002e5" accesskey="n" rel="next">3.5</a>, Prev: <a href="3_002e3.xhtml#g_t3_002e3" accesskey="p" rel="prev">3.3</a>, Up: <a href="Chapter-3.xhtml#Chapter-3" accesskey="u" rel="prev">Chapter 3</a>   [<a href="index.xhtml#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+<a id="Concurrency_003a-Time-Is-of-the-Essence"></a>
+<h3 class="section"><span class="secnum">3.4</span><span class="sectitle">Concurrency: Time Is of the Essence</span></h3>
+
+<p>ကျွန်ုပ်တို့သည် မော်ဒယ်ဖန်တီးခြင်းအတွက် ကိရိယာများအဖြစ် ဒေသန္တရ အခြေအနေ (local state) ရှိသော တွက်ချက်မှုဆိုင်ရာ အရာဝတ္ထု (computational objects) များ၏ စွမ်းအားကို မြင်တွေ့ခဲ့ရပြီးဖြစ်သည်။ သို့သော်၊ <a href="3_002e1.xhtml#g_t3_002e1_002e3">၃.၁.၃</a> တွင် သတိပေးခဲ့သည့်အတိုင်း၊ ဤစွမ်းအားအတွက် ပေးဆပ်ရသည့် တန်ဖိုးရှိသည်- ၎င်းမှာ ရည်ညွှန်းချက် ပွင့်လင်းမြင်သာမှု (referential transparency) ဆုံးရှုံးခြင်းဖြစ်ပြီး၊ တူညီမှုနှင့် ပြောင်းလဲမှုတို့အကြောင်း ရှုပ်ထွေးသော မေးခွန်းများ ပေါ်ထွက်လာစေကာ ပိုမိုနက်နဲသော ပတ်ဝန်းကျင် ပုံစံငယ် (environment model) ကို အသုံးပြုနိုင်ရန်အတွက် အစားထိုးမှု ပုံစံငယ် (substitution model) ကို စွန့်လွှတ်ရန် လိုအပ်လာသည်။
+</p>
+<p>အခြေအနေ (state)၊ တူညီမှုနှင့် ပြောင်းလဲမှုတို့၏ ရှုပ်ထွေးမှုအောက်တွင် ရှိနေသည့် အဓိကပြဿနာမှာ တန်ဖိုးသတ်မှတ်ခြင်း (assignment) ကို စတင်အသုံးပြုခြင်းဖြင့် ကျွန်ုပ်တို့၏ တွက်ချက်မှုဆိုင်ရာ ပုံစံငယ်များထဲသို့ <a id="index-time"></a>
+<em>အချိန်</em> ကို ထည့်သွင်းစဉ်းစားရန် ဖိအားပေးခံရခြင်းဖြစ်သည်။ တန်ဖိုးသတ်မှတ်ခြင်းကို မိတ်မဆက်မီက၊ ကျွန်ုပ်တို့၏ ပရိုဂရမ်အားလုံးသည် အချိန်နှင့် မသက်ဆိုင်ခဲ့ကြဘဲ မည်သည့်ဖော်ပြချက် (expression) မဆို ၎င်း၏တန်ဖိုးသည် အမြဲတမ်း တစ်သမတ်တည်းဖြစ်ခဲ့သည်။ ဆန့်ကျင်ဘက်အားဖြင့်၊ <a href="3_002e1.xhtml#g_t3_002e1_002e1">၃.၁.၁</a> ၏ အစတွင် မိတ်ဆက်ခဲ့သည့် ဘဏ်အကောင့်မှ ငွေထုတ်ယူခြင်းနှင့် ကျန်ရှိသော လက်ကျန်ငွေကို ပြန်ပေးခြင်းဆိုင်ရာ မော်ဒယ်၏ ဥပမာကို ပြန်လည်အမှတ်ရကြည့်ပါ-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">withdraw </span><span class="lit">25</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">75</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">withdraw </span><span class="lit">25</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">50</span></i>
+</pre></div>
+
+<p>ဤနေရာတွင် တူညီသော ဖော်ပြချက်ကို ထပ်ခါတလဲလဲ တွက်ချက်ခြင်းသည် မတူညီသော တန်ဖိုးများကို ထွက်ပေါ်စေသည်။ ဤလုပ်ဆောင်ချက်သည် တန်ဖိုးသတ်မှတ်ခြင်းဆိုင်ရာ ထုတ်ပြန်ချက်များ (ဤကိစ္စတွင် variable <code>balance</code> သို့ တန်ဖိုးသတ်မှတ်ခြင်းများ) ကို လုပ်ဆောင်ခြင်းက <a id="index-moments-in-time"></a>
+<em>အချိန်ကာလ အခိုက်အတန့်များ</em> ကို သတ်မှတ်ပေးလိုက်ခြင်းကြောင့် ဖြစ်ပေါ်လာခြင်းဖြစ်သည်။ ဖော်ပြချက်တစ်ခုကို တွက်ချက်ခြင်း၏ ရလဒ်သည် ဖော်ပြချက်ကိုယ်တိုင်အပေါ်တွင်သာမက တွက်ချက်မှုသည် ထိုအခိုက်အတန့်များ၏ အလျင် သို့မဟုတ် အပြီးတွင် ဖြစ်ပေါ်သလား ဆိုသည့်အချက်အပေါ်တွင်လည်း မူတည်နေသည်။ ဒေသန္တရ အခြေအနေရှိသော တွက်ချက်မှုဆိုင်ရာ အရာဝတ္ထုများဖြင့် မော်ဒယ်များ တည်ဆောက်ခြင်းသည် ပရိုဂရမ်ရေးသားခြင်းတွင် အချိန်ကို မရှိမဖြစ်လိုအပ်သော သဘောတရားတစ်ခုအဖြစ် ရင်ဆိုင်ရန် ကျွန်ုပ်တို့ကို ဖိအားပေးသည်။
+</p>
+<p>ကျွန်ုပ်တို့သည် ရုပ်ပိုင်းဆိုင်ရာ ကမ္ဘာကို ကျွန်ုပ်တို့ မြင်တွေ့ရပုံနှင့် ကိုက်ညီစေရန် တွက်ချက်မှုဆိုင်ရာ ပုံစံငယ်များကို တည်ဆောက်ရာတွင် ပိုမိုနက်နဲစွာ သွားနိုင်သည်။ ကမ္ဘာပေါ်ရှိ အရာဝတ္ထုများသည် တစ်ကြိမ်လျှင် တစ်ခုစီ အစဉ်လိုက် ပြောင်းလဲနေခြင်း မဟုတ်ပါ။ ယင်းအစား ၎င်းတို့သည် <a id="index-concurrently"></a>
+<em>တစ်ပြိုင်တည်း (concurrently)</em> — အားလုံး တစ်ချိန်တည်းတွင် — လုပ်ဆောင်နေသည်ဟု ကျွန်ုပ်တို့ မြင်တွေ့ရသည်။ ထို့ကြောင့် စနစ်များကို တစ်ပြိုင်တည်း လုပ်ဆောင်သော တွက်ချက်မှုဆိုင်ရာ လုပ်ငန်းစဉ်များ၏ အစုအဝေးအဖြစ် မော်ဒယ်ဖန်တီးခြင်းသည် သဘာဝကျလေ့ရှိသည်။ သီးခြားစီဖြစ်သော ဒေသန္တရ အခြေအနေရှိသည့် အရာဝတ္ထုများဖြင့် မော်ဒယ်များကို ဖွဲ့စည်းခြင်းဖြင့် ကျွန်ုပ်တို့၏ ပရိုဂရမ်များကို မော်ဂျူးပုံစံ (modular) ဖြစ်အောင် ပြုလုပ်နိုင်သကဲ့သို့၊ တွက်ချက်မှုဆိုင်ရာ ပုံစံငယ်များကို သီးခြားစီနှင့် တစ်ပြိုင်တည်း တိုးတက်ပြောင်းလဲသွားမည့် အစိတ်အပိုင်းများအဖြစ် ခွဲခြမ်းစိတ်ဖြာခြင်းသည်လည်း သင့်လျော်လှသည်။ ပရိုဂရမ်များကို အစဉ်လိုက် လုပ်ဆောင်သော ကွန်ပျူတာ (sequential computer) ပေါ်တွင် လုပ်ဆောင်ရမည်ဖြစ်သော်လည်း၊ ၎င်းတို့ကို တစ်ပြိုင်တည်း လုပ်ဆောင်မည့်အလား ရေးသားခြင်းသည် ပရိုဂရမ်မာအား မလိုအပ်သော အချိန်ဆိုင်ရာ ကန့်သတ်ချက်များကို ရှောင်ရှားရန် ဖိအားပေးပြီး ပရိုဂရမ်များကို ပိုမို မော်ဂျူးဆန်စေသည်။
+</p>
+<p>ပရိုဂရမ်များကို ပိုမို မော်ဂျူးဆန်စေသည့်အပြင်၊ တစ်ပြိုင်တည်း တွက်ချက်ခြင်း (concurrent computation) သည် အစဉ်လိုက် တွက်ချက်ခြင်းထက် ပိုမိုမြန်ဆန်သော အားသာချက်ကို ပေးနိုင်သည်။ အစဉ်လိုက် ကွန်ပျူတာများသည် တစ်ကြိမ်လျှင် လုပ်ဆောင်ချက် တစ်ခုသာ လုပ်ဆောင်နိုင်သောကြောင့် အလုပ်တစ်ခု ပြီးမြောက်ရန် ကြာမြင့်ချိန်သည် လုပ်ဆောင်ရမည့် လုပ်ဆောင်ချက် စုစုပေါင်း အရေအတွက်နှင့် တိုက်ရိုက်အချိုးကျသည်။<a class="footnote_link" id="DOCF162" href="#FOOT162"><sup>162</sup></a> သို့သော်၊ ပြဿနာတစ်ခုကို အပြန်အလှန် ဆက်သွယ်ရန် အလွန်နည်းပါးပြီး တစ်ခုနှင့်တစ်ခု လွတ်လပ်သော အစိတ်အပိုင်းများအဖြစ် ခွဲခြမ်းနိုင်လျှင် ထိုအစိတ်အပိုင်းများကို သီးခြား ကွန်ပျူတာ ပရိုဆက်ဆာ (processors) များသို့ ခွဲဝေပေးနိုင်ပြီး ရရှိနိုင်သော ပရိုဆက်ဆာ အရေအတွက်နှင့် အချိုးကျသော အရှိန်နှုန်း အားသာချက်ကို ရရှိနိုင်သည်။
+</p>
+<p>ကံမကောင်းစွာဖြင့်၊ တန်ဖိုးသတ်မှတ်ခြင်း (assignment) ကြောင့် ဖြစ်ပေါ်လာသော ရှုပ်ထွေးမှုများသည် ကွန်ကရန့်စီ (concurrency) ရှိလာသောအခါ ပို၍ပင် ပြဿနာဖြစ်လာသည်။ ကမ္ဘာကြီးက ပြိုင်တူ (parallel) လည်ပတ်နေခြင်းကြောင့်ဖြစ်စေ သို့မဟုတ် ကျွန်ုပ်တို့၏ ကွန်ပျူတာများက ထိုသို့လုပ်ဆောင်ခြင်းကြောင့်ဖြစ်စေ၊ တစ်ပြိုင်တည်း လုပ်ဆောင်ခြင်း (concurrent execution) ဟူသော အချက်သည် ကျွန်ုပ်တို့၏ အချိန်အပေါ် နားလည်မှုတွင် ထပ်ဆောင်းရှုပ်ထွေးမှုများကို ဖြစ်ပေါ်စေသည်။
+</p>
+
+<a id="g_t3_002e4_002e1"></a>
+<a id="The-Nature-of-Time-in-Concurrent-Systems"></a>
+<h4 class="subsection"><span class="secnum">3.4.1</span><span class="sectitle">The Nature of Time in Concurrent Systems</span></h4>
+
+<p>အပေါ်ယံအားဖြင့် ကြည့်လျှင် အချိန်သည် ရိုးရှင်းပုံပေါ်သည်။ ၎င်းသည် ဖြစ်ရပ် (events) များအပေါ် သတ်မှတ်ထားသော အစီအစဉ်တစ်ခုဖြစ်သည်။<a class="footnote_link" id="DOCF163" href="#FOOT163"><sup>163</sup></a> မည်သည့်ဖြစ်ရပ် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>A</mi>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>B</mi>
+</math> အတွက်မဆို၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>A</mi>
+</math> သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>B</mi>
+</math> မတိုင်မီ ဖြစ်ပွားသည်၊
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>A</mi>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>B</mi>
+</math> သည် တစ်ပြိုင်တည်း ဖြစ်ပွားသည်၊ သို့မဟုတ် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>A</mi>
+</math> သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>B</mi>
+</math> ပြီးနောက် ဖြစ်ပွားသည်။ ဥပမာအားဖြင့်၊ ဘဏ်အကောင့် ဥပမာသို့ ပြန်သွားရလျှင်၊ မူလက ဒေါ်လာ ၁၀၀ ရှိသော ပူးတွဲအကောင့်တစ်ခုမှ Peter က ဒေါ်လာ ၁၀ ထုတ်ယူပြီး Paul က ဒေါ်လာ ၂၅ ထုတ်ယူသည်ဟု ဆိုကြပါစို့၊ ထိုအခါ အကောင့်ထဲတွင် ၆၅ ဒေါ်လာ ကျန်ရှိမည်ဖြစ်သည်။ ငွေထုတ်ယူမှု နှစ်ခု၏ အစီအစဉ်အပေါ် မူတည်၍ အကောင့်ထဲရှိ လက်ကျန်ငွေ အစီအစဉ်သည် $100 <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mo stretchy="false">→<!-- → --></mo>
+</math> $90 <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mo stretchy="false">→<!-- → --></mo>
+</math> $65 သို့မဟုတ် $100 <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mo stretchy="false">→<!-- → --></mo>
+</math> $75
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mo stretchy="false">→<!-- → --></mo>
+</math> $65 ဖြစ်လိမ့်မည်။ ဘဏ်လုပ်ငန်းစနစ်၏ ကွန်ပျူတာဖြင့် အကောင်အထည်ဖော်မှုတွင်၊ ဤပြောင်းလဲနေသော လက်ကျန်ငွေ အစီအစဉ်ကို variable <code>balance</code> သို့ ဆက်တိုက် တန်ဖိုးသတ်မှတ်ခြင်းများဖြင့် မော်ဒယ်ဖန်တီးနိုင်သည်။
+</p>
+<p>သို့သော် ရှုပ်ထွေးသော အခြေအနေများတွင် ထိုသို့သောအမြင်သည် ပြဿနာရှိနိုင်သည်။ Peter နှင့် Paul အပြင် အခြားသူများသည်လည်း တစ်ကမ္ဘာလုံးတွင် ပျံ့နှံ့နေသော ဘဏ်စက်ကွန်ရက်မှတစ်ဆင့် တူညီသော ဘဏ်အကောင့်ကို အသုံးပြုနေကြသည်ဟု ဆိုကြပါစို့။ အကောင့်ထဲရှိ အမှန်တကယ် လက်ကျန်ငွေ အစီအစဉ်သည် အသုံးပြုမှုများ၏ အသေးစိတ် အချိန်ကိုက်မှုနှင့် စက်များအကြား ဆက်သွယ်မှုဆိုင်ရာ အသေးစိတ်အချက်အလက်များအပေါ်တွင် အလွန်အမင်း မူတည်နေမည်ဖြစ်သည်။
+</p>
+<p>ဖြစ်ရပ်များ၏ အစီအစဉ် မရေရာမှုသည် ကွန်ကရန့်စနစ်များ (concurrent systems) ဒီဇိုင်းရေးဆွဲရာတွင် ကြီးမားသော ပြဿနာများကို ဖြစ်စေနိုင်သည်။ ဥပမာအားဖြင့်၊ Peter နှင့် Paul တို့၏ ငွေထုတ်ယူမှုများကို ဘုံ variable <code>balance</code> ကို မျှဝေသုံးစွဲထားသော သီးခြားလုပ်ငန်းစဉ် နှစ်ခုအဖြစ် <a href="3_002e1.xhtml#g_t3_002e1_002e1">၃.၁.၁</a> တွင် ပေးထားသော လုပ်ထုံးလုပ်နည်း (procedure) ဖြင့် အကောင်အထည်ဖော်ထားသည်ဟု ဆိုကြပါစို့-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">withdraw amount</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;=</span><span class="pln"> balance amount</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">begin</span><span class="pln"> 
+        </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> balance 
+              </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> balance amount</span><span class="clo">))</span><span class="pln">
+        balance</span><span class="clo">)</span><span class="pln">
+      </span><span class="str">"Insufficient funds"</span><span class="clo">))</span></pre></div>
+
+<p>အကယ်၍ လုပ်ငန်းစဉ်နှစ်ခုသည် လွတ်လပ်စွာ လုပ်ဆောင်ပါက၊ Peter သည် လက်ကျန်ငွေကို စစ်ဆေးပြီး သင့်လျော်သော ပမာဏတစ်ခုကို ထုတ်ယူရန် ကြိုးစားပေမည်။ သို့သော်၊ Peter က လက်ကျန်ငွေကို စစ်ဆေးချိန်နှင့် ငွေထုတ်ယူမှု မပြီးဆုံးမီ အချိန်ကြားတွင် Paul က ငွေအချို့ကို ထုတ်ယူသွားနိုင်ပြီး၊ ၎င်းက Peter ၏ စစ်ဆေးမှုကို အကျုံးမဝင် ဖြစ်သွားစေသည်။
+</p>
+<p>အခြေအနေက ယခုထက် ပိုဆိုးသွားနိုင်သည်။ အောက်ပါ ဖော်ပြချက်ကို စဉ်းစားကြည့်ပါ-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> balance </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> balance amount</span><span class="clo">))</span></pre></div>
+
+<p>၎င်းကို ငွေထုတ်ယူမှု လုပ်ငန်းစဉ်တစ်ခုစီ၏ အစိတ်အပိုင်းအဖြစ် လုပ်ဆောင်သည်။ ယင်းတွင် အဆင့်သုံးဆင့် ပါဝင်သည်- (၁) <code>balance</code> variable ၏ တန်ဖိုးကို ရယူခြင်း၊ (၂) လက်ကျန်ငွေအသစ်ကို တွက်ချက်ခြင်း၊ (၃) <code>balance</code> ကို ထိုတန်ဖိုးအသစ်ဖြင့် သတ်မှတ်ခြင်း။ အကယ်၍ Peter နှင့် Paul တို့၏ ငွေထုတ်ယူမှုများသည် ဤထုတ်ပြန်ချက်ကို တစ်ပြိုင်တည်း လုပ်ဆောင်ပါက၊ ငွေထုတ်ယူမှု နှစ်ခုသည် <code>balance</code> ကို ရယူခြင်းနှင့် တန်ဖိုးအသစ် သတ်မှတ်ခြင်း အစီအစဉ်တွင် တစ်ခုနှင့်တစ်ခု ကြားဖြတ်ဝင်ရောက်ခြင်း (interleave) ဖြစ်သွားနိုင်သည်။
+</p>
+<p>ပုံ <a href="#Figure-3_002e29">၃.၂၉</a> ရှိ အချိန်ကိုက်ပြပုံ (timing diagram) တွင် <code>balance</code> သည် ၁၀၀ မှ စတင်ပြီး၊ Peter က ၁၀ ထုတ်ယူကာ Paul က ၂၅ ထုတ်ယူသော်လည်း နောက်ဆုံး <code>balance</code> တန်ဖိုးမှာ ၇၅ ဖြစ်နေသည့် ဖြစ်ရပ်အစီအစဉ်တစ်ခုကို ဖော်ပြထားသည်။ ပုံတွင် ပြထားသည့်အတိုင်း၊ ဤလွဲမှားမှု၏ အကြောင်းရင်းမှာ Paul ၏ <code>balance</code> ကို ၇၅ အဖြစ် သတ်မှတ်မှုသည် နှုတ်ရမည့် <code>balance</code> တန်ဖိုးမှာ ၁၀၀ ဖြစ်သည်ဟူသော ယူဆချက်အောက်တွင် လုပ်ဆောင်ခဲ့ခြင်းကြောင့် ဖြစ်သည်။ သို့သော် ထိုယူဆချက်သည် Peter က <code>balance</code> ကို ၉၀ အဖြစ် ပြောင်းလဲလိုက်သောအခါ အကျုံးမဝင် ဖြစ်သွားခဲ့သည်။ ဤသည်မှာ ဘဏ်လုပ်ငန်းစနစ်အတွက် ကြီးမားသော ကျရှုံးမှုဖြစ်သည်၊ အကြောင်းမှာ စနစ်အတွင်းရှိ စုစုပေါင်း ငွေပမာဏမှာ မပြောင်းလဲဘဲ ကျန်ရှိမနေသောကြောင့် ဖြစ်သည်။ ငွေလွှဲပြောင်းမှုများ မတိုင်မီတွင် စုစုပေါင်း ငွေပမာဏမှာ ဒေါ်လာ ၁၀၀ ဖြစ်သည်။ ပြီးနောက်တွင် Peter ၌ ဒေါ်လာ ၁၀၊ Paul ၌ ဒေါ်လာ ၂၅ နှင့် ဘဏ်တွင် ဒေါ်လာ ၇၅ ရှိနေသည်။<a class="footnote_link" id="DOCF164" href="#FOOT164"><sup>164</sup></a>
+</p>
+<figure class="float">
+<a id="Figure-3_002e29"></a>
+<object style="width: 60.18ex; height: 57.93ex;" data="fig/chap3/Fig3.29b.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>ပုံ ၃.၂၉-</strong> ဘဏ်မှ ငွေထုတ်ယူမှု နှစ်ခုတွင် ဖြစ်ရပ်များ၏ အစီအစဉ် ကြားဖြတ်ဝင်ရောက်ခြင်း (interleaving) ကြောင့် နောက်ဆုံးလက်ကျန်ငွေ မမှန်ကန်မှုကို ဖြစ်ပေါ်စေပုံကို ပြသသော အချိန်ကိုက်ပြပုံ။</p>
+</figcaption>
+</figure>
+
+<p>ဤနေရာတွင် ဖော်ပြထားသော ယေဘုယျဖြစ်ရပ်မှာ လုပ်ငန်းစဉ် အများအပြားသည် ဘုံအခြေအနေပြောင်းလဲကိန်း (common state variable) တစ်ခုကို မျှဝေသုံးစွဲနိုင်ခြင်းဖြစ်သည်။ ဤအရာကို ရှုပ်ထွေးစေသည့်အချက်မှာ လုပ်ငန်းစဉ်တစ်ခုထက်ပို၍ မျှဝေထားသော အခြေအနေကို တစ်ချိန်တည်းတွင် ကိုင်တွယ်ရန် ကြိုးစားနေခြင်းပင်ဖြစ်သည်။ ဘဏ်အကောင့် ဥပမာအတွက်၊ ငွေလွှဲပြောင်းမှု တစ်ခုစီအတွင်း ဝယ်ယူသူ တစ်ဦးစီသည် အခြားဝယ်ယူသူများ မရှိသကဲ့သို့ လုပ်ဆောင်နိုင်သင့်သည်။ ဝယ်ယူသူတစ်ဦးသည် လက်ကျန်ငွေအပေါ် မူတည်၍ လက်ကျန်ငွေကို ပြောင်းလဲသောအခါ၊ ပြောင်းလဲသည့် အခိုက်အတန့်မတိုင်မီလေးတွင် လက်ကျန်ငွေသည် သူထင်ထားသည့်အတိုင်း ရှိနေဆဲဖြစ်သည်ဟု ၎င်းက ယူဆနိုင်ရမည်ဖြစ်သည်။
+</p>
+<a id="Correct-behavior-of-concurrent-programs"></a>
+<h5 class="subsubheading">ကွန်ကရန့်ပရိုဂရမ်များ၏ မှန်ကန်သော လုပ်ဆောင်ချက်</h5>
+
+<p>အထက်ပါ ဥပမာသည် ကွန်ကရန့်ပရိုဂရမ်များအတွင်း ခိုးဝင်လာနိုင်သည့် သိမ်မွေ့သော ဘာဂ် (bugs) များကို ဖော်ပြနေသည်။ ဤရှုပ်ထွေးမှု၏ အရင်းအမြစ်မှာ မတူညီသော လုပ်ငန်းစဉ်များအကြား မျှဝေသုံးစွဲထားသော variable များသို့ တန်ဖိုးသတ်မှတ်ခြင်းတွင် ရှိသည်။ <code>set!</code> ကို အသုံးပြုသော ပရိုဂရမ်များကို ရေးသားရာတွင် ဂရုစိုက်ရမည်ဖြစ်ကြောင်း ကျွန်ုပ်တို့ သိရှိပြီးသားဖြစ်သည်၊ အကြောင်းမှာ တွက်ချက်မှု၏ ရလဒ်များသည် တန်ဖိုးသတ်မှတ်ခြင်းများ ဖြစ်ပေါ်သည့် အစီအစဉ်အပေါ် မူတည်သောကြောင့် ဖြစ်သည်။<a class="footnote_link" id="DOCF165" href="#FOOT165"><sup>165</sup></a> ကွန်ကရန့်လုပ်ငန်းစဉ်များနှင့်ဆိုလျှင် တန်ဖိုးသတ်မှတ်ခြင်းများကို ပို၍ပင် ဂရုစိုက်ရမည်၊ အကြောင်းမှာ မတူညီသော လုပ်ငန်းစဉ်များမှ ပြုလုပ်သော တန်ဖိုးသတ်မှတ်မှု အစီအစဉ်ကို ကျွန်ုပ်တို့ ထိန်းချုပ်နိုင်မည် မဟုတ်သောကြောင့် ဖြစ်သည်။ အကယ်၍ ထိုကဲ့သို့သော ပြောင်းလဲမှုများစွာကို (ပူးတွဲအကောင့်ကို အသုံးပြုနေသော ငွေသွင်းသူနှစ်ဦးကဲ့သို့) တစ်ပြိုင်တည်း ပြုလုပ်နိုင်ပါက၊ ကျွန်ုပ်တို့၏ စနစ်သည် မှန်ကန်စွာ လုပ်ဆောင်ကြောင်း သေချာစေရန် နည်းလမ်းအချို့ လိုအပ်ပါသည်။ ဥပမာအားဖြင့်၊ ပူးတွဲဘဏ်အကောင့်မှ ငွေထုတ်ယူမှုကိစ္စတွင်၊ ငွေပမာဏမှာ မပြောင်းလဲဘဲ ကျန်ရှိနေရန် (conserved) ကျွန်ုပ်တို့ သေချာစေရမည်။ ကွန်ကရန့်ပရိုဂရမ်များ မှန်ကန်စွာ လုပ်ဆောင်စေရန်၊ တစ်ပြိုင်တည်း လုပ်ဆောင်ခြင်းအပေါ် ကန့်သတ်ချက်အချို့ ထားရှိရပေမည်။
+</p>
+<p>ကွန်ကရန့်စီအပေါ် ဖြစ်နိုင်ခြေရှိသော ကန့်သတ်ချက်တစ်ခုမှာ မျှဝေထားသော အခြေအနေ ပြောင်းလဲကိန်းများကို ပြောင်းလဲသည့် မည်သည့်လုပ်ဆောင်ချက် နှစ်ခုမဆို တစ်ချိန်တည်းတွင် မဖြစ်ပေါ်စေရန် သတ်မှတ်ခြင်း ဖြစ်သည်။ ဤသည်မှာ အလွန်တင်းကျပ်သော သတ်မှတ်ချက်ဖြစ်သည်။ ဖြန့်ကျက်ထားသော ဘဏ်လုပ်ငန်း (distributed banking) အတွက်ဆိုလျှင်၊ စနစ်ဒီဇိုင်းနာသည် တစ်ကြိမ်လျှင် ငွေလွှဲပြောင်းမှု တစ်ခုသာ လုပ်ဆောင်နိုင်ရန် သေချာအောင် ပြုလုပ်ရမည်ဖြစ်သည်။ ဤသည်မှာ ထိရောက်မှု မရှိသည့်အပြင် အလွန်အကျွံ ကန့်သတ်ထားသလို ဖြစ်နေမည်။ <a href="#Figure-3_002e30">ပုံ ၃.၃၀</a> တွင် Peter နှင့် Paul တို့ ပူးတွဲအကောင့်တစ်ခုကို မျှဝေသုံးစွဲနေပုံကို ပြထားပြီး၊ Paul တွင် ကိုယ်ပိုင်အကောင့် တစ်ခုလည်း ရှိသည်။ အဆိုပါပုံတွင် မျှဝေထားသော အကောင့်မှ ငွေထုတ်ယူမှု နှစ်ခု (Peter မှ တစ်ခုနှင့် Paul မှ တစ်ခု) နှင့် Paul ၏ ကိုယ်ပိုင်အကောင့်ထဲသို့ ငွေသွင်းမှုတစ်ခုကို ဖော်ပြထားသည်။<a class="footnote_link" id="DOCF166" href="#FOOT166"><sup>166</sup></a> မျှဝေထားသော အကောင့်မှ ငွေထုတ်ယူမှု နှစ်ခုသည် (နှစ်ခုလုံးက တူညီသော အကောင့်ကို ရယူအသုံးပြုပြီး ပြောင်းလဲသောကြောင့်) တစ်ပြိုင်တည်း မဖြစ်ရပါ၊ ထို့ပြင် Paul ၏ ငွေသွင်းမှုနှင့် ငွေထုတ်ယူမှုသည်လည်း (နှစ်ခုလုံးက Paul ၏ ပိုက်ဆံအိတ်အတွင်းရှိ ပမာဏကို ရယူအသုံးပြုပြီး ပြောင်းလဲသောကြောင့်) တစ်ပြိုင်တည်း မဖြစ်ရပါ။ သို့သော် Paul ၏ ကိုယ်ပိုင်အကောင့်ထဲသို့ ငွေသွင်းခြင်းကို Peter ၏ မျှဝေထားသော အကောင့်မှ ငွေထုတ်ယူခြင်းနှင့် တစ်ပြိုင်တည်း လုပ်ဆောင်ခွင့်ပေးခြင်းမှာ ပြဿနာ မရှိနိုင်ပါ။
+</p>
+<figure class="float">
+<a id="Figure-3_002e30"></a>
+<object style="width: 67.52ex; height: 52.84ex;" data="fig/chap3/Fig3.30c.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>ပုံ ၃.၃၀-</strong> Bank1 ရှိ ပူးတွဲအကောင့်တစ်ခုနှင့် Bank2 ရှိ ကိုယ်ပိုင်အကောင့်တစ်ခုတို့မှ တစ်ပြိုင်တည်း ငွေသွင်းခြင်းနှင့် ထုတ်ယူခြင်းများ။</p>
+</figcaption>
+</figure>
+
+<p>ကွန်ကရန့်စီအပေါ် ပိုမိုပေါ့လျော့သော ကန့်သတ်ချက်မှာ ကွန်ကရန့်စနစ်တစ်ခုသည် လုပ်ငန်းစဉ်များကို အစီအစဉ်တစ်ခုခုဖြင့် အစဉ်လိုက် လုပ်ဆောင်ခဲ့သကဲ့သို့ တူညီသော ရလဒ်ကို ထုတ်ပေးရန် သေချာစေခြင်း ဖြစ်သည်။ ဤသတ်မှတ်ချက်တွင် အရေးကြီးသော အချက်နှစ်ချက် ရှိသည်။ ပထမအချက်မှာ၊ ၎င်းသည် လုပ်ငန်းစဉ်များကို အမှန်တကယ် အစဉ်လိုက် လုပ်ဆောင်ရန် မလိုအပ်ဘဲ၊ အစဉ်လိုက် လုပ်ဆောင်ခဲ့သကဲ့သို့ တူညီသော ရလဒ်များ ထွက်ပေါ်လာရန်သာ လိုအပ်သည်။ <a href="#Figure-3_002e30">ပုံ ၃.၃၀</a> ရှိ ဥပမာအတွက်၊ ဘဏ်အကောင့်စနစ် ဒီဇိုင်းနာသည် Paul ၏ ငွေသွင်းမှုနှင့် Peter ၏ ငွေထုတ်ယူမှုကို တစ်ပြိုင်တည်း ဖြစ်ပေါ်ရန် စိတ်ချလက်ချ ခွင့်ပြုနိုင်သည်၊ အကြောင်းမှာ အသားတင် ရလဒ်သည် လုပ်ဆောင်ချက် နှစ်ခုလုံး အစဉ်လိုက် ဖြစ်ပေါ်ခဲ့သကဲ့သို့ တူညီနေမည် ဖြစ်သောကြောင့် ဖြစ်သည်။ ဒုတိယအချက်မှာ၊ ကွန်ကရန့်ပရိုဂရမ်တစ်ခုမှ ထွက်ပေါ်လာနိုင်သော "မှန်ကန်သော" ရလဒ်သည် တစ်ခုထက်မက ရှိနိုင်သည်၊ အကြောင်းမှာ ကျွန်ုပ်တို့သည် ရလဒ်ကို *တစ်စုံတစ်ခုသော* အစဉ်လိုက် အစီအစဉ်အတိုင်း ရလဒ်နှင့် တူညီရန်သာ လိုအပ်သောကြောင့် ဖြစ်သည်။ ဥပမာအားဖြင့်၊ Peter နှင့် Paul တို့၏ ပူးတွဲအကောင့်တွင် ဒေါ်လာ ၁၀၀ ဖြင့် စတင်ပြီး၊ Peter က ဒေါ်လာ ၄၀ သွင်းနေစဉ် Paul က အကောင့်ထဲရှိ ငွေတစ်ဝက်ကို တစ်ပြိုင်တည်း ထုတ်ယူသည်ဟု ဆိုကြပါစို့။ ထိုအခါ အစဉ်လိုက် လုပ်ဆောင်ခြင်းသည် အကောင့်လက်ကျန်ငွေကို ၇၀ သို့မဟုတ် ၉၀ ဖြစ်ပေါ်စေနိုင်သည် (<a href="#Exercise-3_002e38">လေ့ကျင့်ခန်း ၃.၃၈</a> ကိုကြည့်ပါ)။<a class="footnote_link" id="DOCF167" href="#FOOT167"><sup>167</sup></a>
+</p>
+<p>ကွန်ကရန့်ပရိုဂရမ်များ မှန်ကန်စွာ လုပ်ဆောင်ရန်အတွက် ဤထက် ပိုမိုပေါ့လျော့သော သတ်မှတ်ချက်များ ရှိပါသေးသည်။ ပျံ့နှံ့ခြင်း (diffusion) ကို (ဥပမာ- အရာဝတ္ထုတစ်ခုအတွင်း အပူစီးဆင်းမှု) ပုံဖော်မည့် ပရိုဂရမ်တစ်ခုတွင် ၎င်းတို့၏ တန်ဖိုးများကို တစ်ပြိုင်တည်း ပြောင်းလဲပေးသည့်၊ နေရာလပ်၏ ထုထည်အသေးစားလေးများကို ကိုယ်စားပြုသော လုပ်ငန်းစဉ် အမြောက်အမြား ပါဝင်ပေမည်။ လုပ်ငန်းစဉ် တစ်ခုစီသည် ၎င်း၏ ကိုယ်ပိုင်တန်ဖိုးနှင့် အိမ်နီးချင်း တန်ဖိုးများ၏ ပျမ်းမျှတန်ဖိုးသို့ ၎င်း၏ တန်ဖိုးကို ထပ်ခါတလဲလဲ ပြောင်းလဲသည်။ ဤအယ်လ်ဂိုရီသမ်သည် လုပ်ဆောင်ချက်များ ပြုလုပ်သည့် အစီအစဉ်အပေါ် မမူတည်ဘဲ မှန်ကန်သော အဖြေသို့ ရောက်ရှိသွားမည်ဖြစ်ရာ၊ မျှဝေထားသော တန်ဖိုးများကို တစ်ပြိုင်တည်း အသုံးပြုမှုအပေါ် မည်သည့် ကန့်သတ်ချက်မှ ထားရှိရန် မလိုအပ်ပါ။
+</p>
+<blockquote>
+<p><strong><a id="Exercise-3_002e38"></a>လေ့ကျင့်ခန်း ၃.၃၈-</strong> Peter၊ Paul နှင့် Mary တို့သည် မူလက ဒေါ်လာ ၁၀၀ ရှိသော ပူးတွဲဘဏ်အကောင့်တစ်ခုကို မျှဝေသုံးစွဲနေကြသည်ဟု ဆိုပါစို့။ အောက်ပါ ကွန်မန်းများကို လုပ်ဆောင်ခြင်းဖြင့် Peter က ဒေါ်လာ ၁၀ သွင်းသည်၊ Paul က ဒေါ်လာ ၂၀ ထုတ်ယူသည်၊ Mary က အကောင့်ထဲရှိ ငွေတစ်ဝက်ကို ထုတ်ယူသည်ကို တစ်ပြိုင်တည်း လုပ်ဆောင်ကြသည်-
+</p>
+<div class="example">
+<pre class="example">Peter: (set! balance (+ balance 10))
+Paul:  (set! balance (- balance 20))
+Mary:  (set! balance (- balance 
+                        (/ balance 2)))
+</pre></div>
+
+<ol>
+<li> ဘဏ်လုပ်ငန်းစနစ်က လုပ်ငန်းစဉ် သုံးခုကို အစီအစဉ်တစ်ခုခုဖြင့် အစဉ်လိုက် လုပ်ဆောင်ရန် ဖိအားပေးသည်ဟု ယူဆပြီး၊ ဤငွေလွှဲပြောင်းမှု သုံးခု ပြီးဆုံးပြီးနောက် <code>balance</code> အတွက် ဖြစ်နိုင်ခြေရှိသော မတူညီသည့် တန်ဖိုးအားလုံးကို စာရင်းပြုစုပါ။
+
+</li><li> အကယ်၍ စနစ်က လုပ်ငန်းစဉ်များကို ကြားဖြတ်ဝင်ရောက်ခြင်း (interleaved) ဖြစ်ခွင့်ပေးခဲ့လျှင် ထွက်ပေါ်လာနိုင်သည့် အခြားတန်ဖိုးအချို့မှာ အဘယ်နည်း။ ဤတန်ဖိုးများ မည်သို့ ဖြစ်ပေါ်လာနိုင်သည်ကို ရှင်းပြရန် <a href="#Figure-3_002e29">ပုံ ၃.၂၉</a> တွင် ပါရှိသော ပုံကဲ့သို့ အချိန်ကိုက်ပြပုံများကို ဆွဲပါ။
+
+</li></ol>
+</blockquote>
+
+<a id="g_t3_002e4_002e2"></a>
+<a id="Mechanisms-for-Controlling-Concurrency"></a>
+<h4 class="subsection"><span class="secnum">3.4.2</span><span class="sectitle">Mechanisms for Controlling Concurrency</span></h4>
+
+<p>အပြိုင်လုပ်ဆောင်နေသော process များ (concurrent processes) ကို ကိုင်တွယ်ရာတွင် ခက်ခဲရခြင်းမှာ ၎င်း process များ၏ လုပ်ဆောင်ချက် အစီအစဉ်များ တစ်ခုနှင့်တစ်ခု ကြားညှပ်ဝင်ရောက်မှု (interleaving) ကို ထည့်သွင်းစဉ်းစားရန် လိုအပ်သောကြောင့် ဖြစ်ကြောင်း ကျွန်ုပ်တို့ တွေ့ရှိခဲ့ပြီးဖြစ်သည်။ ဥပမာအားဖြင့်၊ အစီအစဉ်တကျဖြစ်သော လုပ်ဆောင်ချက် သုံးခု <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <mi>a</mi>
+    <mo>,</mo>
+    <mi>b</mi>
+    <mo>,</mo>
+    <mi>c</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ပါဝင်သော process တစ်ခုနှင့် အစီအစဉ်တကျဖြစ်သော လုပ်ဆောင်ချက် သုံးခု
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <mi>x</mi>
+    <mo>,</mo>
+    <mi>y</mi>
+    <mo>,</mo>
+    <mi>z</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ပါဝင်သော အခြား process တစ်ခု ရှိသည်ဆိုပါစို့။ အကယ်၍ ထို process နှစ်ခုသည် ၎င်းတို့၏ လုပ်ဆောင်ချက်များ မည်သို့ ကြားညှပ်မည်ကို ကန့်သတ်ချက်မရှိဘဲ အပြိုင်လုပ်ဆောင်ပါက၊ မူလ process တစ်ခုချင်းစီ၏ အစီအစဉ်ကို မပျက်စေဘဲ ဖြစ်နိုင်ခြေရှိသော အစီအစဉ် (ordering) ပေါင်း ၂၀ ရှိပါသည်-
+</p>
+<div class="example">
+<pre class="example">(a,b,c,x,y,z)  (a,x,b,y,c,z)  (x,a,b,c,y,z)  
+(x,a,y,z,b,c)  (a,b,x,c,y,z)  (a,x,b,y,z,c)  
+(x,a,b,y,c,z)  (x,y,a,b,c,z)  (a,b,x,y,c,z)  
+(a,x,y,b,c,z)  (x,a,b,y,z,c)  (x,y,a,b,z,c)
+(a,b,x,y,z,c)  (a,x,y,b,z,c)  (x,a,y,b,c,z)  
+(x,y,a,z,b,c)  (a,x,b,c,y,z)  (a,x,y,z,b,c)  
+(x,a,y,b,z,c)  (x,y,z,a,b,c)
+</pre></div>
+
+<p>ဤစနစ်ကို ဒီဇိုင်းဆွဲသော ပရိုဂရမ်မာများအနေဖြင့်၊ ကျွန်ုပ်တို့သည် ဤအစီအစဉ် ၂၀ ခုစီ၏ ရလဒ်များကို စဉ်းစားရမည်ဖြစ်ပြီး အပြုအမူတစ်ခုချင်းစီသည် လက်ခံနိုင်ဖွယ်ရှိမရှိ စစ်ဆေးရမည်ဖြစ်သည်။ process များနှင့် လုပ်ဆောင်ချက်များ အရေအတွက် များပြားလာသည်နှင့်အမျှ ဤကဲ့သို့သော ချဉ်းကပ်မှုသည် လျင်မြန်စွာပင် ကိုင်တွယ်ရခက်ခဲလာပါလိမ့်မည်။
+</p>
+<p>အပြိုင်လုပ်ဆောင်သော စနစ်များ (concurrent systems) ကို ဒီဇိုင်းဆွဲရာတွင် ပိုမိုလက်တွေ့ကျသော ချဉ်းကပ်မှုမှာ ပရိုဂရမ်၏ အပြုအမူ မှန်ကန်စေရန်အတွက် process များ၏ ကြားညှပ်ဝင်ရောက်မှုကို ကန့်သတ်နိုင်စေမည့် ယေဘုယျယန္တရားများကို ဖန်တီးရန်ဖြစ်သည်။ ဤရည်ရွယ်ချက်အတွက် ယန္တရားများစွာကို ဖော်ထုတ်ခဲ့ကြသည်။ ဤကဏ္ဍတွင်၊ ၎င်းတို့ထဲမှ တစ်ခုဖြစ်သော <a id="index-serializer"></a>
+<em>serializer</em> အကြောင်းကို ရှင်းပြပါမည်။
+</p>
+<a id="Serializing-access-to-shared-state"></a>
+<h5 class="subsubheading">Serializing access to shared state</h5>
+
+<p>Serialization သည် အောက်ပါစိတ်ကူးကို အကောင်အထည်ဖော်သည်- Process များသည် အပြိုင်လုပ်ဆောင်ကြမည် ဖြစ်သော်လည်း၊ အပြိုင်လုပ်ဆောင်၍မရသော procedure စုစည်းမှုအချို့ ရှိနေပါလိမ့်မည်။ ပိုမိုတိကျစွာပြောရလျှင်၊ serialization သည် procedure အစုအဝေးများကို သီးခြားသတ်မှတ်ပေးလိုက်ပြီး ထိုအစုအဝေးတစ်ခုစီရှိ procedure များထဲမှ တစ်ခုကိုသာ တစ်ကြိမ်လျှင် တစ်ခု လုပ်ဆောင်ခွင့်ပြုခြင်းဖြစ်သည်။ အကယ်၍ အစုအဝေးထဲရှိ procedure တစ်ခုကို လုပ်ဆောင်နေစဉ်အတွင်း၊ အခြား process တစ်ခုက ထိုအစုအဝေးထဲရှိ မည်သည့် procedure ကိုမဆို လုပ်ဆောင်ရန် ကြိုးပမ်းပါက ပထမလုပ်ဆောင်ချက် ပြီးဆုံးသည်အထိ စောင့်ဆိုင်းရမည်ဖြစ်သည်။
+</p>
+<p>ကျွန်ုပ်တို့သည် shared variables များထံ ဝင်ရောက်မှုကို ထိန်းချုပ်ရန် serialization ကို အသုံးပြုနိုင်သည်။ ဥပမာအားဖြင့်၊ shared variable တစ်ခုကို ၎င်း၏ ယခင်တန်ဖိုးပေါ် မူတည်၍ update လုပ်လိုပါက၊ ယခင်တန်ဖိုးကို ယူခြင်းနှင့် တန်ဖိုးအသစ်ကို သတ်မှတ်ခြင်းတို့ကို procedure တစ်ခုတည်းအတွင်း၌ ထည့်သွင်းရမည်။ ထို့နောက် ၎င်း variable ကို တန်ဖိုးအသစ်သတ်မှတ်သည့် အခြား procedure မည်သည့်ခုမျှ ဤ procedure နှင့် အပြိုင်မလုပ်ဆောင်နိုင်စေရန် ၎င်း procedure အားလုံးကို serializer တစ်ခုတည်းဖြင့် serialize လုပ်ရမည်။ ဤသို့ဖြင့် variable ၏ တန်ဖိုးသည် တန်ဖိုးကို ယူယူခြင်းနှင့် တန်ဖိုးအသစ် ပြန်လည်သတ်မှတ်ခြင်းတို့ကြားတွင် ပြောင်းလဲသွားခြင်း မရှိစေရန် အာမခံနိုင်ပါသည်။
+</p>
+<a id="Serializers-in-Scheme"></a>
+<h5 class="subsubheading">Serializers in Scheme</h5>
+
+<p>အထက်ပါယန္တရားကို ပိုမိုထင်ရှားစေရန်၊ ကျွန်ုပ်တို့သည် Scheme တွင် <code>parallel-execute</code> ဟုခေါ်သော procedure တစ်ခုကို ထပ်တိုးထားသည်ဟု ယူဆကြည့်ပါ-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">parallel-execute ⟨</span><var><span class="pln">p</span><span class="pun">₁</span></var><span class="pln">⟩ 
+                  ⟨</span><var><span class="pln">p</span><span class="pun">₂</span></var><span class="pln">⟩ 
+                  </span><span class="roman"><span class="pun">…</span></span><span class="pln"> 
+                  ⟨</span><var><span class="pln">p</span><span class="pun">ₖ</span></var><span class="pln">⟩</span><span class="clo">)</span></pre></div>
+
+<p><code>⟨</code><var>p</var><code>⟩</code> တစ်ခုချင်းစီသည် argument မပါသော procedure တစ်ခု ဖြစ်ရပါမည်။ <code>Parallel-execute</code> သည် <code>⟨</code><var>p</var><code>⟩</code> တစ်ခုစီအတွက် သီးခြား process တစ်ခုစီကို ဖန်တီးပေးပြီး ၎င်း process များသည် (argument မပါဘဲ) <code>⟨</code><var>p</var><code>⟩</code> ကို run စေသည်။ ဤ process များအားလုံးသည် အပြိုင်လုပ်ဆောင်ကြသည်။<a class="footnote_link" id="DOCF168" href="#FOOT168"><sup>168</sup></a>
+</p>
+<p>၎င်းကို အသုံးပြုပုံ ဥပမာအနေဖြင့်၊ အောက်ပါကုဒ်ကို ကြည့်ပါ-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> x </span><span class="lit">10</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">parallel-execute </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> x </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x x</span><span class="clo">)))</span><span class="pln">
+                  </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> x </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> x </span><span class="lit">1</span><span class="clo">))))</span></pre></div>
+
+<p>၎င်းသည် အပြိုင်လုပ်ဆောင်သော process နှစ်ခုကို ဖန်တီးသည်—<code>x</code> ကို <code>x</code> ၏ နှစ်ထပ်ကိန်းအဖြစ် သတ်မှတ်ပေးသော <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>P</mi>
+    <mn>1</mn>
+  </msub>
+</math> နှင့် <code>x</code> ကို တစ်တိုးပေးသော <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>P</mi>
+    <mn>2</mn>
+  </msub>
+</math> တို့ဖြစ်သည်။ လုပ်ဆောင်ချက်များ ပြီးဆုံးပြီးနောက်၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>P</mi>
+    <mn>1</mn>
+  </msub>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>P</mi>
+    <mn>2</mn>
+  </msub>
+</math> တို့၏ လုပ်ဆောင်ချက်များ ကြားညှပ်ဝင်ရောက်မှုအပေါ် မူတည်၍ <code>x</code> တွင် ဖြစ်နိုင်ခြေရှိသော တန်ဖိုးငါးခုအနက်မှ တစ်ခု ကျန်ရှိနေမည်ဖြစ်သည်-
+</p>
+<div class="example">
+<pre class="example">101: <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>P</mi>
+    <mn>1</mn>
+  </msub>
+</math> က <code>x</code> ကို 100 ဖြစ်အောင် သတ်မှတ်ပြီးနောက် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>P</mi>
+    <mn>2</mn>
+  </msub>
+</math> က
+     <code>x</code> ကို 101 ဖြစ်အောင် တစ်တိုးပေးသည်။
+121: <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>P</mi>
+    <mn>2</mn>
+  </msub>
+</math> က <code>x</code> ကို 11 ဖြစ်အောင် တစ်တိုးပြီးနောက် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>P</mi>
+    <mn>1</mn>
+  </msub>
+</math> က
+     <code>x</code> ကို <code>x</code> ၏ နှစ်ထပ်ကိန်းအဖြစ် သတ်မှတ်သည်။
+110: <code>(* x x)</code> ကို တွက်ချက်နေစဉ်အတွင်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>P</mi>
+    <mn>1</mn>
+  </msub>
+</math> မှ <code>x</code> ၏ တန်ဖိုးကို
+     နှစ်ကြိမ် ဝင်ရောက်ယူငင်သည့် ကြားကာလတွင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>P</mi>
+    <mn>2</mn>
+  </msub>
+</math> က <code>x</code> ကို 10 မှ 11 သို့ ပြောင်းလဲလိုက်သည်။
+ 11: <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>P</mi>
+    <mn>2</mn>
+  </msub>
+</math> က <code>x</code> ကို ယူပြီးနောက်၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>P</mi>
+    <mn>1</mn>
+  </msub>
+</math> က <code>x</code> ကို 100 ဖြစ်အောင် သတ်မှတ်သည်၊
+     ထို့နောက် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>P</mi>
+    <mn>2</mn>
+  </msub>
+</math> က <code>x</code> ကို သတ်မှတ်သည်။
+100: <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>P</mi>
+    <mn>1</mn>
+  </msub>
+</math> က <code>x</code> ကို (နှစ်ကြိမ်) ယူပြီးနောက်၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>P</mi>
+    <mn>2</mn>
+  </msub>
+</math> က
+     <code>x</code> ကို 11 ဖြစ်အောင် သတ်မှတ်သည်၊ ထို့နောက် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>P</mi>
+    <mn>1</mn>
+  </msub>
+</math> က <code>x</code> ကို သတ်မှတ်သည်။
+</pre></div>
+
+<p>ကျွန်ုပ်တို့သည် <a id="index-serializers"></a>
+<em>serializers</em> များမှ ဖန်တီးပေးသော serialized procedure များကို အသုံးပြု၍ အပြိုင်လုပ်ဆောင်မှုကို ကန့်သတ်နိုင်သည်။ Serializer များကို <code>make-serializer</code> ဖြင့် တည်ဆောက်ပြီး ၎င်း၏ အကောင်အထည်ဖော်မှုကို အောက်တွင် ဖော်ပြထားသည်။ Serializer တစ်ခုသည် procedure တစ်ခုကို argument အဖြစ်ယူပြီး မူလ procedure ကဲ့သို့ပင် လုပ်ဆောင်ပေးမည့် serialized procedure တစ်ခုကို ပြန်ပေးသည်။ ပေးထားသော serializer တစ်ခုထံမှ ခေါ်ဆိုမှုအားလုံးသည် တစ်ခုတည်းသော အစုအဝေးအတွင်းရှိ serialized procedure များကို ပြန်ပေးသည်။
+</p>
+<p>ထို့ကြောင့် အထက်ပါဥပမာနှင့် မတူဘဲ၊ အောက်ပါတို့ကို လုပ်ဆောင်ပါက-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> x </span><span class="lit">10</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> s </span><span class="opn">(</span><span class="pln">make-serializer</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">parallel-execute 
+ </span><span class="opn">(</span><span class="pln">s </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> x </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x x</span><span class="clo">))))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">s </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> x </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> x </span><span class="lit">1</span><span class="clo">)))))</span></pre></div>
+
+<p><code>x</code> အတွက် ဖြစ်နိုင်ခြေရှိသော တန်ဖိုးနှစ်ခုသာ (101 သို့မဟုတ် 121) ထွက်ပေါ်လာနိုင်သည်။ အခြားဖြစ်နိုင်ခြေများမှာ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>P</mi>
+    <mn>1</mn>
+  </msub>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>P</mi>
+    <mn>2</mn>
+  </msub>
+</math> တို့၏ လုပ်ဆောင်ချက်များသည် ကြားညှပ်ဝင်ရောက်နိုင်ခြင်း မရှိတော့သောကြောင့် ဖယ်ရှားခံလိုက်ရပြီ ဖြစ်သည်။
+</p>
+<p>ဤသည်မှာ ငွေသွင်းခြင်းနှင့် ငွေထုတ်ခြင်းများကို serialize လုပ်ထားသော <a href="3_002e1.xhtml#g_t3_002e1_002e1">3.1.1</a> မှ <code>make-account</code> procedure ၏ version တစ်ခုဖြစ်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-account balance</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">withdraw amount</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;=</span><span class="pln"> balance amount</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">begin</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> balance 
+                     </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> balance amount</span><span class="clo">))</span><span class="pln">
+               balance</span><span class="clo">)</span><span class="pln">
+        </span><span class="str">"Insufficient funds"</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">deposit amount</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> balance </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> balance amount</span><span class="clo">))</span><span class="pln">
+    balance</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">protected </span><span class="opn">(</span><span class="pln">make-serializer</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">dispatch m</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> m </span><span class="lit">'withdraw</span><span class="clo">)</span><span class="pln"> 
+             </span><span class="opn">(</span><span class="pln">protected withdraw</span><span class="clo">))</span><span class="pln">
+            </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> m </span><span class="lit">'deposit</span><span class="clo">)</span><span class="pln"> 
+             </span><span class="opn">(</span><span class="pln">protected deposit</span><span class="clo">))</span><span class="pln">
+            </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> m </span><span class="lit">'balance</span><span class="clo">)</span><span class="pln"> 
+             balance</span><span class="clo">)</span><span class="pln">
+            </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Unknown request: 
+                          MAKE-ACCOUNT"</span><span class="pln">
+                         m</span><span class="clo">))))</span><span class="pln">
+    dispatch</span><span class="clo">))</span></pre></div>
+
+<p>ဤအကောင်အထည်ဖော်မှုအရ၊ process နှစ်ခုသည် အကောင့်တစ်ခုတည်းမှ တစ်ပြိုင်နက် ငွေထုတ်ခြင်း သို့မဟုတ် ငွေသွင်းခြင်း မပြုလုပ်နိုင်ပါ။ ၎င်းသည် <a href="#Figure-3_002e29">Figure 3.29</a> တွင် ဖော်ပြထားသော အမှားအရင်းအမြစ်ကို ဖယ်ရှားပေးသည်၊ ထိုနေရာတွင် Peter သည် Paul မှ လက်ကျန်ငွေကို ယူငင်တွက်ချက်ခြင်းနှင့် လက်တွေ့တန်ဖိုးအသစ်သတ်မှတ်ခြင်းကြားတွင် အကောင့်လက်ကျန်ငွေကို ပြောင်းလဲလိုက်ခြင်းဖြစ်သည်။ အခြားတစ်ဖက်တွင်မူ၊ အကောင့်တစ်ခုစီတွင် ၎င်း၏ကိုယ်ပိုင် serializer ရှိသဖြင့် မတူညီသောအကောင့်များအတွက် ငွေသွင်းခြင်းနှင့် ငွေထုတ်ခြင်းများကိုမူ အပြိုင်လုပ်ဆောင်နိုင်ဆဲဖြစ်သည်။
+</p>
+<blockquote>
+<p><strong><a id="Exercise-3_002e39"></a>Exercise 3.39:</strong> အကယ်၍ ကျွန်ုပ်တို့သည် serialization ကို အောက်ပါအတိုင်း ပြောင်းလဲလိုက်ပါက၊ အထက်တွင်ပြထားသော အပြိုင်လုပ်ဆောင်မှုမှ ဖြစ်နိုင်ခြေရှိသော တန်ဖိုးငါးခုအနက် မည်သည့်တန်ဖိုးများ ကျန်ရှိနေမည်နည်း-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> x </span><span class="lit">10</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> s </span><span class="opn">(</span><span class="pln">make-serializer</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">parallel-execute 
+  </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln"> 
+    </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> x </span><span class="opn">((</span><span class="pln">s </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x x</span><span class="clo">))))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">s </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> x </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> x </span><span class="lit">1</span><span class="clo">)))))</span></pre></div>
+</blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-3_002e40"></a>Exercise 3.40:</strong> အောက်ပါတို့ကို လုပ်ဆောင်ခြင်းမှ ရရှိနိုင်သော <code>x</code> ၏ ဖြစ်နိုင်ခြေရှိသော တန်ဖိုးအားလုံးကို ဖော်ပြပါ-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> x </span><span class="lit">10</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">parallel-execute 
+ </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> x </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x x</span><span class="clo">)))</span><span class="pln">
+ </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> x </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x x x</span><span class="clo">))))</span></pre></div>
+
+<p>အကယ်၍ ကျွန်ုပ်တို့သည် ၎င်းအစား serialized procedure များကို အသုံးပြုခဲ့ပါက ထိုဖြစ်နိုင်ခြေများအနက် မည်သည့်အရာများ ကျန်ရှိနေမည်နည်း-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> x </span><span class="lit">10</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> s </span><span class="opn">(</span><span class="pln">make-serializer</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">parallel-execute 
+ </span><span class="opn">(</span><span class="pln">s </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> x </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x x</span><span class="clo">))))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">s </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> x </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x x x</span><span class="clo">)))))</span></pre></div>
+</blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-3_002e41"></a>Exercise 3.41:</strong> Ben Bitdiddle သည် ဘဏ်အကောင့်ကို အောက်ပါအတိုင်း (မှတ်ချက်ပေးထားသော စာကြောင်းကို ပြောင်းလဲ၍) အကောင်အထည်ဖော်ခြင်းက ပိုကောင်းလိမ့်မည်ဟု စိုးရိမ်နေသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-account balance</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">withdraw amount</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;=</span><span class="pln"> balance amount</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">begin</span><span class="pln"> 
+          </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> balance 
+                </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> balance amount</span><span class="clo">))</span><span class="pln">
+          balance</span><span class="clo">)</span><span class="pln">
+        </span><span class="str">"Insufficient funds"</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">deposit amount</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> balance </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> balance amount</span><span class="clo">))</span><span class="pln">
+    balance</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">protected </span><span class="opn">(</span><span class="pln">make-serializer</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">dispatch m</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> m </span><span class="lit">'withdraw</span><span class="clo">)</span><span class="pln"> 
+             </span><span class="opn">(</span><span class="pln">protected withdraw</span><span class="clo">))</span><span class="pln">
+            </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> m </span><span class="lit">'deposit</span><span class="clo">)</span><span class="pln"> 
+             </span><span class="opn">(</span><span class="pln">protected deposit</span><span class="clo">))</span><span class="pln">
+            </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> m </span><span class="lit">'balance</span><span class="clo">)</span><span class="pln">
+             </span><span class="opn">((</span><span class="pln">protected 
+                </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln"> 
+                  balance</span><span class="clo">))))</span><span class="pln"> </span><span class="roman"><span class="com">; serialized</span></span><span class="pln">
+            </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> 
+             </span><span class="opn">(</span><span class="err">error</span><span class="pln"> 
+              </span><span class="str">"Unknown request: 
+               MAKE-ACCOUNT"</span><span class="pln">
+              m</span><span class="clo">))))</span><span class="pln">
+    dispatch</span><span class="clo">))</pre></div>
+
+<p>ဘဏ်လက်ကျန်ငွေကို စီရီယယ်လ်မလုပ်ဘဲ (unserialized) ဝင်ရောက်ကြည့်ရှုခွင့်ပြုခြင်းသည် ပုံမှန်မဟုတ်သော အပြုအမူကို ဖြစ်ပေါ်စေနိုင်သောကြောင့်ဖြစ်သည်။ သင် သဘောတူပါသလား? Ben ၏ စိုးရိမ်မှုကို သက်သေပြနိုင်သော အခြေအနေမျိုး ရှိပါသလား?
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-3_002e42"></a>Exercise 3.42:</strong> Ben Bitdiddle က <code>withdraw</code> နှင့် <code>deposit</code> မက်ဆေ့ဂျ်တိုင်းအတွက် စီရီယယ်လ်လုပ်ထားသော လုပ်ထုံးလုပ်နည်း (serialized procedure) အသစ်တစ်ခုစီ ဖန်တီးနေခြင်းသည် အချိန်ဖြုန်းခြင်းဖြစ်သည်ဟု အကြံပြုထားသည်။ <code>make-account</code> ကို ခေါ်ယူခြင်းကို <code>protected</code> ကို ခေါ်ယူခြင်းကို <code>dispatch</code> လုပ်ထုံးလုပ်နည်း၏ အပြင်ဘက်တွင် လုပ်ဆောင်ရန် ပြောင်းလဲနိုင်သည်ဟု သူက ဆိုသည်။ ဆိုလိုသည်မှာ ငွေထုတ်ယူသည့် လုပ်ထုံးလုပ်နည်းကို တောင်းဆိုတိုင်း အကောင့်သည် (အကောင့်ဖန်တီးစဉ်ကတည်းက တစ်ပြိုင်နက်တည်း ဖန်တီးထားသော) တူညီသည့် စီရီယယ်လ်လုပ်ထားသော လုပ်ထုံးလုပ်နည်းကိုသာ ပြန်ပေးမည်ဖြစ်သည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-account balance</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">withdraw amount</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;=</span><span class="pln"> balance amount</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">begin</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> balance 
+                     </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> balance amount</span><span class="clo">))</span><span class="pln">
+               balance</span><span class="clo">)</span><span class="pln">
+        </span><span class="str">"Insufficient funds"</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">deposit amount</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> balance </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> balance amount</span><span class="clo">))</span><span class="pln">
+    balance</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">protected </span><span class="opn">(</span><span class="pln">make-serializer</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">protected-withdraw 
+           </span><span class="opn">(</span><span class="pln">protected withdraw</span><span class="clo">))</span><span class="pln">
+          </span><span class="opn">(</span><span class="pln">protected-deposit 
+           </span><span class="opn">(</span><span class="pln">protected deposit</span><span class="clo">)))</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">dispatch m</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> m </span><span class="lit">'withdraw</span><span class="clo">)</span><span class="pln"> 
+               protected-withdraw</span><span class="clo">)</span><span class="pln">
+              </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> m </span><span class="lit">'deposit</span><span class="clo">)</span><span class="pln"> 
+               protected-deposit</span><span class="clo">)</span><span class="pln">
+              </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> m </span><span class="lit">'balance</span><span class="clo">)</span><span class="pln"> 
+               balance</span><span class="clo">)</span><span class="pln">
+              </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> 
+               </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Unknown request: 
+                       MAKE-ACCOUNT"</span><span class="pln">
+                      m</span><span class="clo">))))</span><span class="pln">
+      dispatch</span><span class="clo">)))</pre></div>
+
+<p>ဤပြောင်းလဲမှုသည် ဘေးကင်းပါသလား? အထူးသဖြင့်၊ ဤ <code>make-account</code> ဗားရှင်းနှစ်ခုတွင် ခွင့်ပြုထားသော တစ်ပြိုင်နက်လုပ်ဆောင်ခြင်း (concurrency) တွင် ကွာခြားမှု တစ်စုံတစ်ရာ ရှိပါသလား?
+</p></blockquote>
+
+<a id="Complexity-of-using-multiple-shared-resources"></a>
+<h5 class="subsubheading">မျှဝေအသုံးပြုသော အရင်းအမြစ် (shared resources) အများအပြားကို အသုံးပြုခြင်း၏ ရှုပ်ထွေးမှု</h5>
+
+<p>Serializers များသည် တစ်ပြိုင်နက်လုပ်ဆောင်သော ပရိုဂရမ် (concurrent programs) များ၏ ရှုပ်ထွေးမှုများကို ခွဲထုတ်ပေးနိုင်သည့် အားကောင်းသော abstraction တစ်ခုကို ပေးစွမ်းပြီး ယင်းတို့ကို ဂရုတစိုက်နှင့် (မျှော်လင့်ချက်အတိုင်း) မှန်ကန်စွာ ကိုင်တွယ်နိုင်စေရန် ကူညီပေးသည်။ သို့သော်၊ မျှဝေအသုံးပြုသော အရင်းအမြစ် တစ်ခုတည်း (ဥပမာ ဘဏ်အကောင့်တစ်ခုတည်း ကဲ့သို့) ရှိချိန်တွင် serializers များကို အသုံးပြုခြင်းသည် ရိုးရှင်းသော်လည်း၊ မျှဝေအသုံးပြုသော အရင်းအမြစ် အများအပြား ရှိလာသောအခါတွင် တစ်ပြိုင်နက်လုပ်ဆောင်သော ပရိုဂရမ်ရေးသားခြင်း (concurrent programming) သည် အလွန်ခက်ခဲသွားနိုင်သည်။
+</p>
+<p>ဖြစ်ပေါ်လာနိုင်သော အခက်အခဲများထဲမှ တစ်ခုကို သရုပ်ဖော်ရန်၊ ဘဏ်အကောင့်နှစ်ခုရှိ လက်ကျန်ငွေများကို အပြန်အလှန်လဲလှယ် (swap) လိုသည်ဟု ဆိုကြပါစို့။ ကျွန်ုပ်တို့သည် အကောင့်တစ်ခုစီ၏ လက်ကျန်ငွေကို ရှာဖွေပြီး၊ လက်ကျန်ငွေများအကြား ခြားနားချက်ကို တွက်ချက်ကာ၊ ထိုခြားနားချက်ကို အကောင့်တစ်ခုမှ ထုတ်ယူပြီး အခြားအကောင့်တစ်ခုထဲသို့ ထည့်သွင်းမည်ဖြစ်သည်။ ၎င်းကို အောက်ပါအတိုင်း အကောင်အထည်ဖော်နိုင်သည်-<a class="footnote_link" id="DOCF169" href="#FOOT169"><sup>169</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">exchange account1 account2</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">difference </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="opn">(</span><span class="pln">account1 </span><span class="lit">'balance</span><span class="clo">)</span><span class="pln">
+                       </span><span class="opn">(</span><span class="pln">account2 </span><span class="lit">'balance</span><span class="clo">))))</span><span class="pln">
+    </span><span class="opn">((</span><span class="pln">account1 </span><span class="lit">'withdraw</span><span class="clo">)</span><span class="pln"> difference</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">((</span><span class="pln">account2 </span><span class="lit">'deposit</span><span class="clo">)</span><span class="pln"> difference</span><span class="clo">)))</span></pre></div>
+
+<p>ဤလုပ်ထုံးလုပ်နည်းသည် လုပ်ငန်းစဉ် (process) တစ်ခုတည်းကသာ အလဲအလှယ်လုပ်ရန် ကြိုးစားနေချိန်တွင် ကောင်းမွန်စွာ အလုပ်လုပ်သည်။ သို့သော်၊ Peter နှင့် Paul နှစ်ဦးစလုံးသည် အကောင့်
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow class="MJX-TeXAtom-ORD">
+  <mi>a</mi>
+  <mn>1</mn>
+</mrow>
+</math>, <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow class="MJX-TeXAtom-ORD">
+  <mi>a</mi>
+  <mn>2</mn>
+</mrow>
+</math>, နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow class="MJX-TeXAtom-ORD">
+  <mi>a</mi>
+  <mn>3</mn>
+</mrow>
+</math> တို့ကို အသုံးပြုနိုင်သည်ဟု ဆိုကြပါစို့။ Peter က <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow class="MJX-TeXAtom-ORD">
+  <mi>a</mi>
+  <mn>1</mn>
+</mrow>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow class="MJX-TeXAtom-ORD">
+  <mi>a</mi>
+  <mn>2</mn>
+</mrow>
+</math> ကို လဲလှယ်နေစဉ် Paul ကလည်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow class="MJX-TeXAtom-ORD">
+  <mi>a</mi>
+  <mn>1</mn>
+</mrow>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow class="MJX-TeXAtom-ORD">
+  <mi>a</mi>
+  <mn>3</mn>
+</mrow>
+</math> ကို တစ်ပြိုင်နက် လဲလှယ်နေသည်ဟု ဆိုကြပါစို့။ အကောင့်တစ်ခုချင်းစီအတွက် ငွေသွင်းငွေထုတ်များကို (ဤအပိုင်း၏ အပေါ်တွင် ပြထားသော <code>make-account</code>
+လုပ်ထုံးလုပ်နည်းတွင် ကဲ့သို့) စီရီယယ်လ်လုပ်ထားသော်လည်း <code>exchange</code> သည် မှားယွင်းသော ရလဒ်များကို ထွက်ပေါ်စေနိုင်သည်။ ဥပမာအားဖြင့်၊ Peter က <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow class="MJX-TeXAtom-ORD">
+  <mi>a</mi>
+  <mn>1</mn>
+</mrow>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow class="MJX-TeXAtom-ORD">
+  <mi>a</mi>
+  <mn>2</mn>
+</mrow>
+</math> ၏ လက်ကျန်ငွေ ခြားနားချက်ကို တွက်ချက်နိုင်သော်လည်း၊ Peter အလဲအလှယ် မပြီးဆုံးမီ Paul က <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow class="MJX-TeXAtom-ORD">
+  <mi>a</mi>
+  <mn>1</mn>
+</mrow>
+</math> ၏ လက်ကျန်ငွေကို ပြောင်းလဲပစ်နိုင်သည်။<a class="footnote_link" id="DOCF170" href="#FOOT170"><sup>170</sup></a>  မှန်ကန်သော အပြုအမူအတွက်၊ အလဲအလှယ်ပြုလုပ်နေစဉ် အချိန်တစ်လျှောက်လုံးတွင် အကောင့်များသို့ အခြား တစ်ပြိုင်နက် ဝင်ရောက်မှုများကို ပိတ်ဆို့ထားရန် <code>exchange</code> လုပ်ထုံးလုပ်နည်းကို စီစဉ်ရမည်ဖြစ်သည်။
+</p>
+<p>၎င်းကို လုပ်ဆောင်နိုင်သော နည်းလမ်းတစ်ခုမှာ အကောင့်နှစ်ခုလုံး၏ serializers များကို အသုံးပြု၍ <code>exchange</code> လုပ်ထုံးလုပ်နည်း တစ်ခုလုံးကို စီရီယယ်လ်လုပ်ခြင်းဖြစ်သည်။ ထိုသို့လုပ်ဆောင်ရန်အတွက် အကောင့်တစ်ခု၏ serializer ကို အသုံးပြုနိုင်ရန် စီစဉ်ပါမည်။ Serializer ကို ထုတ်ဖော်ပြသခြင်းဖြင့် ဘဏ်အကောင့် အရာဝတ္ထု (object) ၏ မော်ဂျူလာဖြစ်မှု (modularity) ကို တမင်တကာ ချိုးဖောက်နေခြင်း ဖြစ်သည်ကို သတိပြုပါ။ အောက်ပါ <code>make-account</code> ဗားရှင်းသည် <a href="3_002e1.xhtml#g_t3_002e1_002e1">3.1.1</a> တွင် ပေးထားသော မူလဗားရှင်းနှင့် ဆင်တူသော်လည်း၊ လက်ကျန်ငွေ ကိန်းရှင်ကို ကာကွယ်ရန် serializer တစ်ခု ထည့်သွင်းထားပြီး ထို serializer ကို မက်ဆေ့ဂျ်ပေးပို့ခြင်း (message passing) မှတစ်ဆင့် ထုတ်ပေးထားခြင်းသာ ကွာခြားပါသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-account-and-serializer balance</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">withdraw amount</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;=</span><span class="pln"> balance amount</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">begin</span><span class="pln"> 
+          </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> balance </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> balance amount</span><span class="clo">))</span><span class="pln">
+          balance</span><span class="clo">)</span><span class="pln">
+        </span><span class="str">"Insufficient funds"</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">deposit amount</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> balance </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> balance amount</span><span class="clo">))</span><span class="pln">
+    balance</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">balance-serializer 
+         </span><span class="opn">(</span><span class="pln">make-serializer</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">dispatch m</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> m </span><span class="lit">'withdraw</span><span class="clo">)</span><span class="pln"> withdraw</span><span class="clo">)</span><span class="pln">
+            </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> m </span><span class="lit">'deposit</span><span class="clo">)</span><span class="pln"> deposit</span><span class="clo">)</span><span class="pln">
+            </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> m </span><span class="lit">'balance</span><span class="clo">)</span><span class="pln"> balance</span><span class="clo">)</span><span class="pln">
+            </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> m </span><span class="lit">'serializer</span><span class="clo">)</span><span class="pln"> 
+             balance-serializer</span><span class="clo">)</span><span class="pln">
+            </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Unknown request: 
+                          MAKE-ACCOUNT"</span><span class="pln">
+                         m</span><span class="clo">))))</span><span class="pln">
+    dispatch</span><span class="clo">))</span></pre></div>
+
+<p>၎င်းကို အသုံးပြု၍ စီရီယယ်လ်လုပ်ထားသော ငွေသွင်းငွေထုတ်များကို လုပ်ဆောင်နိုင်သည်။ သို့သော်၊ ကျွန်ုပ်တို့၏ ယခင် စီရီယယ်လ်လုပ်ထားသော အကောင့်နှင့် မတူဘဲ၊ ယခုအခါ ဘဏ်အကောင့် အရာဝတ္ထုများကို အသုံးပြုသူတိုင်းသည် စီရီယယ်လ်လုပ်ခြင်းကို မိမိဘာသာ တိုက်ရိုက် စီမံခန့်ခွဲရမည်ဖြစ်သည်၊ ဥပမာအားဖြင့် အောက်ပါအတိုင်းဖြစ်သည်-<a class="footnote_link" id="DOCF171" href="#FOOT171"><sup>171</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">deposit account amount</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">s </span><span class="opn">(</span><span class="pln">account </span><span class="lit">'serializer</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">d </span><span class="opn">(</span><span class="pln">account </span><span class="lit">'deposit</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">((</span><span class="pln">s d</span><span class="clo">)</span><span class="pln"> amount</span><span class="clo">)))</span></pre></div>
+
+<p>Serializer ကို ဤနည်းဖြင့် ထုတ်ပေးခြင်းသည် စီရီယယ်လ်လုပ်ထားသော အလဲအလှယ် ပရိုဂရမ်တစ်ခုကို အကောင်အထည်ဖော်ရန် လုံလောက်သော ပြောင်းလွယ်ပြင်လွယ်မှုကို ပေးသည်။ ကျွန်ုပ်တို့သည် မူလ <code>exchange</code> လုပ်ထုံးလုပ်နည်းကို အကောင့်နှစ်ခုလုံးအတွက် serializers များဖြင့် စီရီယယ်လ်လုပ်လိုက်ရုံသာဖြစ်သည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">serialized-exchange account1 account2</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">serializer1 </span><span class="opn">(</span><span class="pln">account1 </span><span class="lit">'serializer</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">serializer2 </span><span class="opn">(</span><span class="pln">account2 </span><span class="lit">'serializer</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">((</span><span class="pln">serializer1 </span><span class="opn">(</span><span class="pln">serializer2 exchange</span><span class="clo">))</span><span class="pln">
+     account1
+     account2</span><span class="clo">)))</span></pre></div>
+
+<blockquote>
+<p><strong><a id="Exercise-3_002e43"></a>Exercise 3.43:</strong> အကောင့်သုံးခုရှိ လက်ကျန်ငွေများသည် $၁၀၊ $၂၀ နှင့် $၃၀ အသီးသီးဖြင့် စတင်သည်ဟု ယူဆပါ။ ထိုအကောင့်များရှိ လက်ကျန်ငွေများကို အပြန်အလှန် ဖလှယ်ပေးသည့် processes များစွာ တစ်ပြိုင်နက် အလုပ်လုပ်နေသည်ဟု ဆိုပါစို့။ အကယ်၍ ထို processes များကို sequentially အတိုင်း တစ်ခုပြီးမှတစ်ခု လုပ်ဆောင်ပါက၊ မည်မျှပင် တစ်ပြိုင်နက် ဖလှယ်မှုများ ပြုလုပ်စေကာမူ အကောင့်လက်ကျန်ငွေများသည် $၁၀၊ $၂၀ နှင့် $၃၀ စသည့် တန်ဖိုးများသာ တစ်လှည့်စီ ဖြစ်နေမည်ဖြစ်ကြောင်း အကျိုးအကြောင်းပြ ရှင်းပြပါ။ ဤကဏ္ဍတွင် ဖော်ပြထားသော account-exchange ပရိုဂရမ်၏ ပထမဆုံးဗားရှင်းကို အသုံးပြု၍ ဖလှယ်မှုများကို လုပ်ဆောင်ပါက ဤအခြေအနေ မည်သို့ ပျက်ပြားသွားနိုင်သည်ကို ပြသရန် <a href="#Figure-3_002e29">Figure 3.29</a> တွင် ပြထားသကဲ့သို့ timing diagram တစ်ခုကို ဆွဲပါ။ အခြားတစ်ဖက်တွင်မူ၊ ဤ <code>exchange</code> ပရိုဂရမ်ဖြင့်ပင် အကောင့်များရှိ လက်ကျန်ငွေများ၏ စုစုပေါင်းပမာဏသည် ပြောင်းလဲမှုမရှိဘဲ တည်မြဲနေမည်ဖြစ်ကြောင်း အကျိုးအကြောင်းပြ ရှင်းပြပါ။ အကယ်၍ ကျွန်ုပ်တို့သည် အကောင့်တစ်ခုချင်းစီရှိ လုပ်ဆောင်ချက်များကို serialize မပြုလုပ်ခဲ့ပါက ဤအခြေအနေပင် မည်သို့ ပျက်ပြားသွားနိုင်ကြောင်း ပြသရန် timing diagram တစ်ခုကို ဆွဲပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-3_002e44"></a>Exercise 3.44:</strong> အကောင့်တစ်ခုမှ အခြားတစ်ခုသို့ ငွေလွှဲပြောင်းသည့် ပြဿနာကို စဉ်းစားကြည့်ပါ။ Ben Bitdiddle က ငွေသွင်းငွေထုတ် လုပ်ဆောင်ချက်များကို serialize လုပ်ပေးသည့် မည်သည့် အကောင့်ယန္တရားကိုမဆို (ဥပမာ အထက်တွင် ဖော်ပြခဲ့သော <code>make-account</code> ဗားရှင်းကဲ့သို့) အသုံးပြုပါက၊ လူအများအပြားသည် အကောင့်များစွာအကြား ငွေများကို တစ်ပြိုင်နက် လွှဲပြောင်းနေကြသော်လည်း အောက်ပါ procedure ဖြင့် အောင်မြင်စွာ လုပ်ဆောင်နိုင်သည်ဟု ဆိုသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> 
+  </span><span class="opn">(</span><span class="pln">transfer from-account to-account amount</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">((</span><span class="pln">from-account </span><span class="lit">'withdraw</span><span class="clo">)</span><span class="pln"> amount</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">((</span><span class="pln">to-account </span><span class="lit">'deposit</span><span class="clo">)</span><span class="pln"> amount</span><span class="clo">))</span></pre></div>
+
+<p>Louis Reasoner ကမူ ဤနေရာတွင် ပြဿနာရှိနေပြီး exchange ပြဿနာကို ဖြေရှင်းရာတွင် လိုအပ်သကဲ့သို့ ပိုမိုရှုပ်ထွေးသော နည်းလမ်းကို အသုံးပြုရန် လိုအပ်သည်ဟု ဆိုသည်။ Louis ပြောသည်မှာ မှန်ပါသလား။ မမှန်ပါက transfer ပြဿနာနှင့် exchange ပြဿနာတို့အကြား အဓိက ကွာခြားချက်မှာ အဘယ်နည်း။ (<code>from-account</code> ရှိ လက်ကျန်ငွေသည် အနည်းဆုံး <code>amount</code> ပမာဏရှိသည်ဟု သင်ယူဆရမည်။)
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-3_002e45"></a>Exercise 3.45:</strong> ငွေသွင်းခြင်းနှင့် ငွေထုတ်ခြင်းများကို အလိုအလျောက် serialize မလုပ်ထားသည့်အတွက် ကျွန်ုပ်တို့၏ ဘဏ်အကောင့်စနစ်သည် မလိုအပ်ဘဲ ရှုပ်ထွေးနေပြီး အမှားအယွင်း ဖြစ်နိုင်ခြေများနေသည်ဟု Louis Reasoner က ထင်မြင်နေသည်။ သူက <code>make-account</code> တွင် လုပ်ဆောင်သကဲ့သို့ အကောင့်များနှင့် ငွေသွင်းခြင်းများကို serialize လုပ်ရန် serializer ကို အသုံးပြုမည့်အစား (သို့မဟုတ် အသုံးပြုသည့်အပြင်) <code>make-account-and-serializer</code> သည် ထို serializer ကို (<code>serialized-exchange</code> ကဲ့သို့သော procedure များတွင် အသုံးပြုနိုင်ရန်) အပြင်သို့ ထုတ်ပေးသင့်သည် (export လုပ်သင့်သည်) ဟု အကြံပြုသည်။ သူသည် အကောင့်များကို အောက်ပါအတိုင်း ပြန်လည်သတ်မှတ်ရန် အဆိုပြုသည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> 
+  </span><span class="opn">(</span><span class="pln">make-account-and-serializer balance</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">withdraw amount</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;=</span><span class="pln"> balance amount</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">begin</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> balance 
+                     </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> balance amount</span><span class="clo">))</span><span class="pln">
+               balance</span><span class="clo">)</span><span class="pln">
+        </span><span class="str">"Insufficient funds"</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">deposit amount</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> balance </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> balance amount</span><span class="clo">))</span><span class="pln">
+    balance</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">balance-serializer 
+         </span><span class="opn">(</span><span class="pln">make-serializer</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">dispatch m</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> m </span><span class="lit">'withdraw</span><span class="clo">)</span><span class="pln"> 
+             </span><span class="opn">(</span><span class="pln">balance-serializer withdraw</span><span class="clo">))</span><span class="pln">
+            </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> m </span><span class="lit">'deposit</span><span class="clo">)</span><span class="pln"> 
+             </span><span class="opn">(</span><span class="pln">balance-serializer deposit</span><span class="clo">))</span><span class="pln">
+            </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> m </span><span class="lit">'balance</span><span class="clo">)</span><span class="pln"> 
+             balance</span><span class="clo">)</span><span class="pln">
+            </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> m </span><span class="lit">'serializer</span><span class="clo">)</span><span class="pln"> 
+             balance-serializer</span><span class="clo">)</span><span class="pln">
+            </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Unknown request: 
+                          MAKE-ACCOUNT"</span><span class="pln">
+                         m</span><span class="clo">))))</span><span class="pln">
+    dispatch</span><span class="clo">))</span></pre></div>
+
+<p>ထို့နောက် ငွေသွင်းခြင်းများကို မူလ <code>make-account</code> ကဲ့သို့ပင် ကိုင်တွယ်ဆောင်ရွက်သည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">deposit account amount</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">((</span><span class="pln">account </span><span class="lit">'deposit</span><span class="clo">)</span><span class="pln"> amount</span><span class="clo">))</span></pre></div>
+
+<p>Louis ၏ တွေးခေါ်ပုံတွင် အဘယ်အရာ မှားယွင်းနေသည်ကို ရှင်းပြပါ။ အထူးသဖြင့် <code>serialized-exchange</code> ကို ခေါ်ဆိုသောအခါ မည်သို့ဖြစ်မည်ကို စဉ်းစားပါ။
+</p></blockquote>
+
+<a id="Implementing-serializers"></a>
+<h5 class="subsubheading">Serializers များအား အကောင်အထည်ဖော်ခြင်း</h5>
+
+<p>ကျွန်ုပ်တို့သည် <a id="index-mutex"></a>
+<em>mutex</em> ဟုခေါ်သော ပိုမိုအခြေခံကျသည့် synchronization mechanism တစ်ခုကို အသုံးပြု၍ serializers များကို အကောင်အထည်ဖော်ပါသည်။ mutex ဆိုသည်မှာ လုပ်ဆောင်ချက် နှစ်ခုကို ပံ့ပိုးပေးသည့် object တစ်ခု ဖြစ်သည်။ ၎င်းတို့မှာ mutex ကို <a id="index-acquired"></a>
+<em>acquire</em> လုပ်ခြင်း (ရယူခြင်း) နှင့် mutex ကို
+<a id="index-released"></a>
+<em>release</em> လုပ်ခြင်း (ပြန်လွှတ်ခြင်း) တို့ ဖြစ်သည်။ mutex တစ်ခုကို တစ်ကြိမ် acquire လုပ်ပြီးပါက၊ ထို mutex ကို ပြန်လွှတ် (release) မလုပ်မချင်း အခြားမည်သည့် acquire လုပ်ဆောင်ချက်မှ ဆက်လက်လုပ်ဆောင်နိုင်မည် မဟုတ်ပါ။<a class="footnote_link" id="DOCF172" href="#FOOT172"><sup>172</sup></a> ကျွန်ုပ်တို့၏ အကောင်အထည်ဖော်မှုတွင် serializer တစ်ခုစီ၌ ဆက်စပ်နေသော mutex တစ်ခုစီ ရှိသည်။ ပေးထားသော procedure <code>p</code> တစ်ခုအတွက်၊ serializer သည် mutex ကို acquire လုပ်၊ <code>p</code> ကို run၊ ပြီးနောက် mutex ကို release လုပ်သည့် procedure တစ်ခုကို ပြန်ပေးသည်။ ၎င်းသည် serializer မှ ထုတ်ပေးလိုက်သော procedure များအနက် တစ်ကြိမ်လျှင် တစ်ခုသာ run နိုင်ကြောင်း သေချာစေပြီး၊ ၎င်းမှာ ကျွန်ုပ်တို့ အာမခံချက်ပေးရန် လိုအပ်သော serialization ဂုဏ်သတ္တိပင် ဖြစ်သည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-serializer</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">mutex </span><span class="opn">(</span><span class="pln">make-mutex</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">p</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">serialized-p </span><span class="pun">.</span><span class="pln"> args</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">mutex </span><span class="lit">'acquire</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">val </span><span class="opn">(</span><span class="pln">apply p args</span><span class="clo">)))</span><span class="pln">
+          </span><span class="opn">(</span><span class="pln">mutex </span><span class="lit">'release</span><span class="clo">)</span><span class="pln">
+          val</span><span class="clo">))</span><span class="pln">
+      serialized-p</span><span class="clo">)))</span></pre></div>
+
+<p>mutex သည် true သို့မဟုတ် false တန်ဖိုးများကို ထိန်းသိမ်းထားနိုင်သော mutable object တစ်ခု (ဤနေရာတွင် <a id="index-cell"></a>
+<em>cell</em> ဟု ခေါ်ဆိုမည့် အစိတ်အပိုင်းတစ်ခုပါသော list ကို အသုံးပြုပါမည်) ဖြစ်သည်။ တန်ဖိုးသည် false ဖြစ်နေပါက mutex ကို acquire လုပ်ရန် အဆင်သင့်ရှိနေသည်။ တန်ဖိုးသည် true ဖြစ်နေပါက mutex ကို အသုံးပြု၍မရနိုင်ဘဲ၊ acquire လုပ်ရန် ကြိုးပမ်းသော မည်သည့် process မဆို စောင့်ဆိုင်းရမည်ဖြစ်သည်။
+</p>
+<p>ကျွန်ုပ်တို့၏ mutex constructor ဖြစ်သော <code>make-mutex</code> သည် cell အတွင်းရှိ အကြောင်းအရာကို false အဖြစ် အစပျိုးခြင်းဖြင့် စတင်သည်။ mutex ကို acquire လုပ်ရန်အတွက် cell ကို စစ်ဆေးရမည်။ အကယ်၍ mutex သည် အဆင်သင့်ဖြစ်နေပါက cell ၏ အကြောင်းအရာကို true အဖြစ် သတ်မှတ်ပြီး ဆက်လက်လုပ်ဆောင်သည်။ မဟုတ်ပါက၊ mutex အဆင်သင့်ဖြစ်သည်အထိ loop တစ်ခုအတွင်း အကြိမ်ကြိမ် ကြိုးစားရင်း စောင့်ဆိုင်းနေမည်ဖြစ်သည်။<a class="footnote_link" id="DOCF173" href="#FOOT173"><sup>173</sup></a>  mutex ကို release လုပ်ရန်အတွက် cell ၏ အကြောင်းအရာကို false အဖြစ် သတ်မှတ်သည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-mutex</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">cell </span><span class="opn">(</span><span class="pln">list false</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">the-mutex m</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> m </span><span class="lit">'acquire</span><span class="clo">)</span><span class="pln">
+             </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">test-and-set! cell</span><span class="clo">)</span><span class="pln">
+                 </span><span class="opn">(</span><span class="pln">the-mutex </span><span class="lit">'acquire</span><span class="clo">)))</span><span class="pln"> </span><span class="roman"><span class="com">; retry</span></span><span class="pln">
+            </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> m </span><span class="lit">'release</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">clear! cell</span><span class="clo">))))</span><span class="pln">
+    the-mutex</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">clear! cell</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">set-car! cell false</span><span class="clo">))</span></pre></div>
+
+<p><code>Test-and-set!</code> သည် cell ကို စစ်ဆေးပြီး စစ်ဆေးမှုရလဒ်ကို ပြန်ပေးသည်။ ထို့အပြင် အကယ်၍ စစ်ဆေးမှုရလဒ်သည် false ဖြစ်ခဲ့ပါက <code>test-and-set!</code> သည် false ကို မပြန်ပေးမီ cell ၏ အကြောင်းအရာကို true အဖြစ် သတ်မှတ်ပေးသည်။ ဤလုပ်ဆောင်ချက်ကို အောက်ပါ procedure အဖြစ် ဖော်ပြနိုင်သည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">test-and-set! cell</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> cell</span><span class="clo">)</span><span class="pln">
+      true
+      </span><span class="opn">(</span><span class="kwd">begin</span><span class="pln"> </span><span class="opn">(</span><span class="pln">set-car! cell true</span><span class="clo">)</span><span class="pln">
+             false</span><span class="clo">)))</span></pre></div>
+
+<p>သို့သော် ဤ <code>test-and-set!</code> အကောင်အထည်ဖော်မှုသည် လက်ရှိအတိုင်းဆိုလျှင် မလုံလောက်ပါ။ ဤနေရာတွင် အလွန်အရေးကြီးပြီး နူးညံ့သိမ်မွေ့သော အချက်တစ်ခုရှိသည်။ ၎င်းမှာ concurrency control ကို စနစ်အတွင်းသို့ ထည့်သွင်းရမည့် အဓိကနေရာ ဖြစ်သည် - <code>test-and-set!</code> လုပ်ဆောင်ချက်ကို <a id="index-atomically"></a>
+<em>atomically</em> (တစ်ဆက်တည်း မခွဲမခြားနိုင်ဘဲ) လုပ်ဆောင်ရမည်။ ဆိုလိုသည်မှာ process တစ်ခုက cell ကို စစ်ဆေးပြီး false ဖြစ်သည်ဟု တွေ့ရှိသည်နှင့် အခြားမည်သည့် process ကမျှ cell ကို မစစ်ဆေးနိုင်မီ cell ၏ အကြောင်းအရာကို true အဖြစ် သတ်မှတ်ပြီးဖြစ်ရမည်ဟု ကျွန်ုပ်တို့ အာမခံရပါမည်။ အကယ်၍ ဤအာမခံချက်ကို မပေးနိုင်ပါက <a href="#Figure-3_002e29">Figure 3.29</a> ပါ ဘဏ်အကောင့် အမှားအယွင်းမျိုးကဲ့သို့ပင် mutex အကောင်အထည်ဖော်မှုသည် ကျရှုံးသွားနိုင်သည်။ (<a href="#Exercise-3_002e46">Exercise 3.46</a> ကိုကြည့်ပါ။)
+</p>
+<p><code>test-and-set!</code> ၏ အမှန်တကယ် အကောင်အထည်ဖော်မှုသည် ကျွန်ုပ်တို့၏ စနစ်က concurrent processes များကို မည်သို့ run သည်ဆိုသည့် အချက်များပေါ်တွင် မူတည်သည်။ ဥပမာအားဖြင့်၊ ကျွန်ုပ်တို့သည် processes များကို တစ်ခုပြီးတစ်ခု အလှည့်ကျ run စေပြီး၊ process တစ်ခုစီကို ခေတ္တမျှ run ခွင့်ပေးကာ ရပ်တန့်စေပြီး နောက်တစ်ခုသို့ ကူးပြောင်းသည့် time-slicing mechanism ကို အသုံးပြုသော sequential processor ပေါ်တွင် concurrent processes များကို လုပ်ဆောင်နေခြင်း ဖြစ်နိုင်သည်။ ထိုသို့သော အခြေအနေမျိုးတွင် <code>test-and-set!</code> သည် စစ်ဆေးခြင်းနှင့် သတ်မှတ်ခြင်း ပြုလုပ်နေစဉ်အတွင်း time slicing ကို ပိတ်ထားခြင်းဖြင့် အလုပ်လုပ်နိုင်သည်။<a class="footnote_link" id="DOCF174" href="#FOOT174"><sup>174</sup></a> သို့မဟုတ်ပါက multiprocessing ကွန်ပျူတာများသည် atomic operations များကို hardware အဆင့်တွင် တိုက်ရိုက်ပံ့ပိုးပေးသည့် ညွှန်ကြားချက်များကို ပေးထားသည်။<a class="footnote_link" id="DOCF175" href="#FOOT175"><sup>175</sup></a>
+</p>
+<blockquote>
+<p><strong><a id="Exercise-3_002e46"></a>Exercise 3.46:</strong> <code>test-and-set!</code> ကို atomic ဖြစ်အောင် မကြိုးပမ်းဘဲ စာသားတွင် ဖော်ပြထားသည့်အတိုင်း သာမန် procedure တစ်ခုအဖြစ် အကောင်အထည်ဖော်သည်ဟု ယူဆပါ။ processes နှစ်ခုသည် mutex ကို တစ်ပြိုင်နက်တည်း acquire လုပ်နိုင်သွားခြင်းကြောင့် mutex အကောင်အထည်ဖော်မှု မည်သို့ ပျက်စီးနိုင်ကြောင်း ပြသရန် <a href="#Figure-3_002e29">Figure 3.29</a> ပါ ပုံစံမျိုးဖြင့် timing diagram တစ်ခုကို ဆွဲပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-3_002e47"></a>Exercise 3.47:</strong> semaphore (ဆိုဒ် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math>) ဆိုသည်မှာ mutex ကို ပိုမိုယေဘုယျပြုထားခြင်း ဖြစ်သည်။ mutex ကဲ့သို့ပင် semaphore သည် acquire နှင့် release လုပ်ဆောင်ချက်များကို ပံ့ပိုးသော်လည်း ၎င်းသည် processes <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ခုအထိ တစ်ပြိုင်နက် acquire လုပ်နိုင်သည့်အတွက် ပိုမိုယေဘုယျကျပါသည်။ semaphore ကို ထပ်မံ acquire လုပ်ရန် ကြိုးပမ်းသည့် processes များသည် release လုပ်ဆောင်ချက်များကို စောင့်ဆိုင်းရမည်ဖြစ်သည်။ အောက်ပါနည်းလမ်းများဖြင့် semaphores အကောင်အထည်ဖော်မှုများကို ရေးသားပါ -
+</p>
+<ol>
+<li> mutexes များကို အသုံးပြု၍
+
+</li><li> atomic ဖြစ်သော <code>test-and-set!</code> လုပ်ဆောင်ချက်များကို အသုံးပြု၍
+
+</li></ol>
+</blockquote>
+<a id="Deadlock"></a>
+<h5 class="subsubheading">Deadlock</h5>
+
+<p>ယခုအခါ serializer များကို မည်သို့အကောင်အထည်ဖော်ရမည်ကို ကျွန်ုပ်တို့ မြင်တွေ့ခဲ့ရပြီဖြစ်သဖြင့်၊ အထက်ပါ <code>serialized-exchange</code>
+procedure ရှိသော်ငြားလည်း account လဲလှယ်ခြင်းတွင် ပြဿနာရှိနေသေးသည်ကို တွေ့နိုင်ပါသည်။ Peter က <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow class="MJX-TeXAtom-ORD">
+  <mi>a</mi>
+  <mn>1</mn>
+</mrow>
+</math> ကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow class="MJX-TeXAtom-ORD">
+  <mi>a</mi>
+  <mn>2</mn>
+</mrow>
+</math>
+နှင့် လဲလှယ်ရန် ကြိုးပမ်းနေစဉ် Paul ကလည်း တစ်ပြိုင်နက်တည်းမှာပင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow class="MJX-TeXAtom-ORD">
+  <mi>a</mi>
+  <mn>2</mn>
+</mrow>
+</math> ကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow class="MJX-TeXAtom-ORD">
+  <mi>a</mi>
+  <mn>1</mn>
+</mrow>
+</math> နှင့် လဲလှယ်ရန် ကြိုးပမ်းနေသည်ဟု မြင်ယောင်ကြည့်ပါ။ Peter ၏ process သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow class="MJX-TeXAtom-ORD">
+  <mi>a</mi>
+  <mn>1</mn>
+</mrow>
+</math> ကို ကာကွယ်ပေးထားသော serialized procedure ထဲသို့ ရောက်ရှိသွားပြီး၊ ထိုနောက်တွင်ပင် Paul ၏ process သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow class="MJX-TeXAtom-ORD">
+  <mi>a</mi>
+  <mn>2</mn>
+</mrow>
+</math> ကို ကာကွယ်ပေးထားသော serialized procedure ထဲသို့ ဝင်ရောက်သွားသည်ဟု ဆိုကြပါစို့။ ယခုအခါ Peter သည် Paul က <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow class="MJX-TeXAtom-ORD">
+  <mi>a</mi>
+  <mn>2</mn>
+</mrow>
+</math> ကို ကာကွယ်ပေးထားသော serialized procedure မှ ထွက်မသွားမချင်း (<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow class="MJX-TeXAtom-ORD">
+  <mi>a</mi>
+  <mn>2</mn>
+</mrow>
+</math> ကို ကာကွယ်ပေးထားသော serialized procedure ထဲသို့ဝင်ရန်) ဆက်လက်လုပ်ဆောင်၍ မရနိုင်တော့ပါ။ ထို့အတူပင်၊ Paul သည် Peter က <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow class="MJX-TeXAtom-ORD">
+  <mi>a</mi>
+  <mn>1</mn>
+</mrow>
+</math> ကို ကာကွယ်ပေးထားသော serialized procedure မှ ထွက်မသွားမချင်း ဆက်လက်လုပ်ဆောင်၍ မရနိုင်ပါ။ process တစ်ခုချင်းစီသည် အခြားတစ်ခုကို စောင့်ဆိုင်းရင်း ထာဝရ ရပ်တန့်သွားပါသည်။ ဤအခြေအနေကို <a id="index-deadlock"></a>
+<em>deadlock</em> ဟု ခေါ်ဆိုသည်။
+Deadlock သည် မျှဝေသုံးစွဲထားသော အရင်းအမြစ် (shared resources) အများအပြားကို တစ်ပြိုင်နက် အသုံးပြုခွင့်ပေးထားသော စနစ်များတွင် အမြဲတမ်း အန္တရာယ်ရှိသော အခြေအနေတစ်ခုဖြစ်သည်။
+</p>
+<p>ဤအခြေအနေတွင် deadlock ကို ရှောင်ရှားရန် နည်းလမ်းတစ်ခုမှာ account တစ်ခုချင်းစီကို သီးခြားသတ်မှတ်နံပါတ် (unique identification number) တစ်ခုစီ ပေးထားပြီး <code>serialized-exchange</code> ကို ပြန်လည်ရေးသားရန်ဖြစ်သည်၊ ထို့ကြောင့် process တစ်ခုသည် နံပါတ်အငယ်ဆုံးဖြစ်သော account ကို ကာကွယ်ပေးသည့် procedure ထဲသို့ အမြဲတမ်း အရင်ဝင်ရန် ကြိုးပမ်းမည်ဖြစ်သည်။ ဤနည်းလမ်းသည် exchange ပြဿနာအတွက် ကောင်းမွန်စွာ အလုပ်လုပ်သော်လည်း၊ ပိုမိုရှုပ်ထွေးသော deadlock-avoidance နည်းပညာများ လိုအပ်သည့် အခြားအခြေအနေများ သို့မဟုတ် deadlock ကို လုံးဝရှောင်လွှဲ၍မရသော အခြေအနေများလည်း ရှိနိုင်ပါသည်။ (<a href="#Exercise-3_002e48">Exercise 3.48</a> 
+နှင့် <a href="#Exercise-3_002e49">Exercise 3.49</a> ကိုကြည့်ပါ။)<a class="footnote_link" id="DOCF176" href="#FOOT176"><sup>176</sup></a>
+</p>
+<blockquote>
+<p><strong><a id="Exercise-3_002e48"></a>Exercise 3.48:</strong> အထက်တွင် ဖော်ပြထားသော deadlock-avoidance နည်းလမ်း (ဆိုလိုသည်မှာ account များကို နံပါတ်စဉ်တပ်ထားပြီး၊ process တစ်ခုချင်းစီသည် နံပါတ်ငယ်သော account ကို အရင်ရယူရန် ကြိုးပမ်းခြင်း) သည် exchange ပြဿနာတွင် deadlock ကို အဘယ်ကြောင့် ရှောင်ရှားနိုင်သနည်းဆိုသည်ကို အသေးစိတ် ရှင်းပြပါ။ ဤစိတ်ကူးကို ထည့်သွင်းရန် <code>serialized-exchange</code> ကို ပြန်လည်ရေးသားပါ။ (account တစ်ခုချင်းစီကို နံပါတ်တစ်ခုဖြင့် တည်ဆောက်ရန်နှင့် သင့်လျော်သော message ပေးပို့ခြင်းဖြင့် ထိုနံပါတ်ကို ရယူနိုင်ရန် <code>make-account</code> ကိုလည်း ပြုပြင်ရန် လိုအပ်ပါလိမ့်မည်။)
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-3_002e49"></a>Exercise 3.49:</strong> အထက်တွင် ဖော်ပြထားသော deadlock-avoidance ယန္တရား အလုပ်မလုပ်သော အခြေအနေတစ်ခုကို ဖော်ပြပါ။ (အရိပ်အမြွက်- exchange ပြဿနာတွင် process တစ်ခုချင်းစီသည် မည်သည့် account များကို အသုံးပြုရန် လိုအပ်မည်ကို ကြိုတင်သိရှိပါသည်။ process တစ်ခုသည် မည်သည့် အပိုဆောင်း shared resources များ ထပ်မံလိုအပ်မည်ကို မသိရှိမီ အချို့သော shared resources များကို အရင်ရယူထားရမည့် အခြေအနေမျိုးကို စဉ်းစားပါ။)
+</p></blockquote>
+
+<a id="Concurrency_002c-time_002c-and-communication"></a>
+<h5 class="subsubheading">Concurrency, time, and communication</h5>
+
+<p>မတူညီသော process များက shared state ကို အသုံးပြုသည့်အခါ လုပ်ဆောင်ချက်များ၏ အစဉ်လိုက်ဖြစ်မှု (ordering of events) ကို ထိန်းချုပ်ရန် concurrent systems များ ရေးသားရာတွင် မည်သို့လိုအပ်ကြောင်းနှင့် serializers များကို သတိထားအသုံးပြုခြင်းဖြင့် ဤထိန်းချုပ်မှုကို မည်သို့ရယူနိုင်ကြောင်း ကျွန်ုပ်တို့ မြင်တွေ့ခဲ့ပြီးဖြစ်သည်။ သို့သော် concurrency ၏ ပြဿနာများသည် ဤသည်ထက် ပိုမိုနက်ရှိုင်းပါသည်၊ အကြောင်းမှာ အခြေခံကျသော ရှုထောင့်မှကြည့်လျှင် "shared state" ဟု ဆိုရာတွင် မည်သည်ကို ဆိုလိုခြင်းဖြစ်သည်မှာ အမြဲတမ်း ရှင်းလင်းမှုမရှိသောကြောင့် ဖြစ်သည်။
+</p>
+<p><code>test-and-set!</code> ကဲ့သို့သော ယန္တရားများသည် process များအနေဖြင့် global shared flag တစ်ခုကို အချိန်မရွေး စစ်ဆေးရန် လိုအပ်ပါသည်။ ၎င်းသည် pipelining နှင့် cached memory ကဲ့သို့သော optimization နည်းပညာများကြောင့် memory ၏ အကြောင်းအရာများသည် အချိန်တိုင်းတွင် တသမတ်တည်းဖြစ်နေ (consistent state) ရန် မဖြစ်နိုင်သော ခေတ်မီ မြန်နှုန်းမြင့် processor များတွင် အကောင်အထည်ဖော်ရန် ပြဿနာရှိပြီး ထိရောက်မှု မရှိပါ။ ထို့ကြောင့် ခေတ်သစ် multiprocessing စနစ်များတွင် serializer paradigm ကို concurrency control ဆိုင်ရာ ချဉ်းကပ်မှုအသစ်များဖြင့် အစားထိုးလာကြသည်။<a class="footnote_link" id="DOCF177" href="#FOOT177"><sup>177</sup></a>
+</p>
+<p>shared state ၏ ပြဿနာရှိသော အစိတ်အပိုင်းများသည် ကြီးမားသော distributed systems များတွင်လည်း ဖြစ်ပေါ်လေ့ရှိသည်။ ဥပမာအားဖြင့်၊ ဘဏ်ခွဲတစ်ခုချင်းစီက ဘဏ်လက်ကျန်ငွေများအတွက် local တန်ဖိုးများကို ထိန်းသိမ်းထားပြီး အခြားဘဏ်ခွဲများက ထိန်းသိမ်းထားသော တန်ဖိုးများနှင့် အခါအားလျော်စွာ နှိုင်းယှဉ်သည့် distributed banking system တစ်ခုကို မြင်ယောင်ကြည့်ပါ။ ထိုကဲ့သို့သော စနစ်မျိုးတွင် synchronization လုပ်ပြီးပြီးချင်းမှလွဲ၍ "account balance" ၏ တန်ဖိုးမှာ အတိအကျ သတ်မှတ်ထားခြင်း မရှိနိုင်ပါ။ Peter က Paul နှင့် ပူးတွဲဖွင့်လှစ်ထားသော အကောင့်တစ်ခုထဲသို့ ငွေသွင်းလျှင် account balance ပြောင်းလဲသွားပြီဟု မည်သည့်အချိန်တွင် ကျွန်ုပ်တို့ ပြောသင့်သနည်း—local ဘဏ်ခွဲရှိ လက်ကျန်ငွေ ပြောင်းလဲသွားသည့် အချိန်တွင်လား သို့မဟုတ် synchronization လုပ်ပြီးသည့် အချိန်အထိလား? အကယ်၍ Paul က အခြားဘဏ်ခွဲတစ်ခုမှ အကောင့်ကို အသုံးပြုခဲ့လျှင် လုပ်ဆောင်ချက် "မှန်ကန်" စေရန် ဘဏ်စနစ်ပေါ်တွင် မည်ကဲ့သို့သော သင့်လျော်သည့် ကန့်သတ်ချက်များ (constraints) ထားရှိသင့်သနည်း? မှန်ကန်မှုအတွက် အရေးကြီးနိုင်သည်မှာ Peter နှင့် Paul တို့ တစ်ဦးချင်းစီ မြင်တွေ့ရသော လုပ်ဆောင်ချက်နှင့် synchronization လုပ်ပြီးပြီးချင်းရှိ အကောင့်၏ "state" သာ ဖြစ်ပါသည်။ "အစစ်အမှန်" account balance သို့မဟုတ် synchronization များအကြား ဖြစ်ပေါ်သော လုပ်ဆောင်ချက်များ၏ အစီအစဉ်နှင့် ပတ်သက်သော မေးခွန်းများသည် ဆီလျော်မှုမရှိခြင်း သို့မဟုတ် အဓိပ္ပာယ်မဲ့ခြင်းတို့ ဖြစ်နိုင်ပါသည်။<a class="footnote_link" id="DOCF178" href="#FOOT178"><sup>178</sup></a>
+</p>
+<p>ဤနေရာမှ အခြေခံဖြစ်ရပ်မှာ မတူညီသော process များကို synchronization လုပ်ခြင်း၊ shared state တည်ဆောက်ခြင်း သို့မဟုတ် လုပ်ဆောင်ချက်များကို အစီအစဉ်တကျဖြစ်အောင် သတ်မှတ်ခြင်းတို့သည် process များအကြား ဆက်သွယ်မှု (communication) လိုအပ်ခြင်းပင် ဖြစ်သည်။ အနှစ်သာရအားဖြင့်၊ concurrency control ရှိ အချိန် (time) နှင့် ပတ်သက်သော မည်သည့် အယူအဆမဆို ဆက်သွယ်မှု (communication) နှင့် နီးကပ်စွာ ဆက်နွှယ်နေရမည်။<a class="footnote_link" id="DOCF179" href="#FOOT179"><sup>179</sup></a> အချိန်နှင့် ဆက်သွယ်မှုအကြား အလားတူ ဆက်နွှယ်မှုမျိုးသည် Theory of Relativity တွင်လည်း ပေါ်ပေါက်လာသည်မှာ စိတ်ဝင်စားစရာ ကောင်းလှသည်၊ ထိုသီအိုရီတွင် အလင်း၏အလျင် (လုပ်ဆောင်ချက်များကို synchronization လုပ်ရန် အသုံးပြုနိုင်သော အမြန်ဆုံး signal) သည် အချိန်နှင့် ဟင်းလင်းပြင် (space) ကို ဆက်နွှယ်ပေးသည့် အခြေခံ ကိန်းသေ (constant) တစ်ခုဖြစ်သည်။ ကျွန်ုပ်တို့၏ computational models များတွင် အချိန်နှင့် state တို့ကို ကိုင်တွယ်ရာ၌ တွေ့ကြုံရသော ရှုပ်ထွေးမှုများသည် အမှန်တကယ်တွင် ရုပ်ပိုင်းဆိုင်ရာ စကြဝဠာ၏ အခြေခံကျသော ရှုပ်ထွေးမှုကို ထင်ဟပ်နေခြင်း ဖြစ်နိုင်ပါသည်။
+</p>
+<div class="footnote">
+<h4 class="footnotes-heading">အောက်ခြေမှတ်စုများ</h4>
+
+<div id="FOOT162"><p><a class="footnote_backlink" href="#DOCF162"><sup>162</sup></a>
+အမှန်တကယ် ပရိုဆက်ဆာ အများစုသည် <a id="index-pipelining"></a>
+<em>pipelining</em> ဟုခေါ်သော ဗျူဟာကို အသုံးပြု၍ လုပ်ဆောင်ချက် အနည်းငယ်ကို တစ်ပြိုင်နက်တည်း လုပ်ဆောင်ကြသည်။ ဤနည်းပညာသည် ဟာ့ဒ်ဝဲကို ထိရောက်စွာ အသုံးပြုနိုင်မှုကို များစွာ တိုးတက်စေသော်လည်း၊ ၎င်းကို အစဉ်လိုက် ညွှန်ကြားချက် စီးဆင်းမှု၏ လုပ်ဆောင်ချက်ကို မြန်ဆန်စေရန်အတွက်သာ အသုံးပြုပြီး အစဉ်လိုက် ပရိုဂရမ်၏ လုပ်ဆောင်ပုံကိုမူ မပြောင်းလဲဘဲ ထိန်းသိမ်းထားသည်။</p>
+</div>
+<div id="FOOT163"><p><a class="footnote_backlink" href="#DOCF163"><sup>163</sup></a>
+Cambridge အဆောက်အအုံ နံရံတစ်ခုပေါ်တွင် တွေ့ရသော စာသားတစ်ခုကို ကိုးကားရလျှင်- “အချိန် ဆိုသည်မှာ အရာအားလုံး တစ်ပြိုင်နက်တည်း မဖြစ်ပေါ်စေရန် တီထွင်ထားသော ကိရိယာတစ်ခု ဖြစ်သည်။”</p>
+</div>
+<div id="FOOT164"><p><a class="footnote_backlink" href="#DOCF164"><sup>164</sup></a>
+အကယ်၍ <code>set!</code> လုပ်ဆောင်ချက် နှစ်ခုစလုံးသည် လက်ကျန်ငွေကို တစ်ပြိုင်နက်တည်း ပြောင်းလဲရန် ကြိုးပမ်းပါက ဤစနစ်အတွက် ပိုမိုဆိုးရွားသော ချို့ယွင်းချက် ဖြစ်ပေါ်နိုင်သည်။ ထိုသို့ဖြစ်ပါက မန်မိုရီတွင် ပေါ်လာသော အချက်အလက်အစစ်အမှန်သည် ပရိုဆက် နှစ်ခုမှ ရေးသားနေသော အချက်အလက်များ၏ ကျပန်းပေါင်းစပ်မှု ဖြစ်သွားနိုင်သည်။ ကွန်ပျူတာ အများစုတွင် ထိုသို့သော တစ်ပြိုင်နက် ဝင်ရောက်ကြည့်ရှုမှုမှ ကာကွယ်ရန် အခြေခံ မန်မိုရီ-ရေးသားခြင်း လုပ်ဆောင်ချက်များပေါ်တွင် interlocks များ ပါရှိသည်။ သို့သော် ရိုးရှင်းပုံရသော ဤကာကွယ်မှုမျိုးသည်ပင်လျှင် multiprocessing ကွန်ပျူတာများ၏ ဒီဇိုင်းတွင် အကောင်အထည်ဖော်ရန် စိန်ခေါ်မှုများ ဖြစ်ပေါ်စေသည်။ ထိုကွန်ပျူတာများတွင် အသေးစိတ်ကျသော <a id="index-cache_002dcoherence"></a>
+<em>cache-coherence</em> ပရိုတိုကောများသည် ပရိုဆက်ဆာ အမျိုးမျိုးကြားတွင် အချက်အလက်များ ပုံတူကူးယူ (“cached”) ထားသော်လည်း မန်မိုရီ ပါဝင်မှုများကို တညီတညွတ်တည်း မြင်တွေ့နိုင်စေရန် လိုအပ်ပါသည်။</p>
+</div>
+<div id="FOOT165"><p><a class="footnote_backlink" href="#DOCF165"><sup>165</sup></a>
+<a href="3_002e1.xhtml#g_t3_002e1_002e3">3.1.3</a> ရှိ factorial ပရိုဂရမ်သည် အစဉ်လိုက် ပရိုဆက် တစ်ခုတည်းအတွက် ၎င်းကို သရုပ်ဖော်ပြထားသည်။</p>
+</div>
+<div id="FOOT166"><p><a class="footnote_backlink" href="#DOCF166"><sup>166</sup></a>
+ကော်လံများသည် ငွေထုတ်ယူခြင်း (W) နှင့် ငွေသွင်းခြင်း (D) တစ်ခုစီ၏ အရှေ့နှင့် အနောက်တွင် ရှိသော Peter ၏ ပိုက်ဆံအိတ်၊ (Bank1 ရှိ) ပူးတွဲအကောင့်၊ Paul ၏ ပိုက်ဆံအိတ်နှင့် (Bank2 ရှိ) Paul ၏ ကိုယ်ပိုင်အကောင့်တို့ရှိ ပါဝင်မှုများကို ပြသထားသည်။ Peter က Bank1 မှ $10 ထုတ်ယူသည်၊ Paul က Bank2 တွင် $5 သွင်းပြီး Bank1 မှ $25 ထုတ်ယူသည်။</p>
+</div>
+<div id="FOOT167"><p><a class="footnote_backlink" href="#DOCF167"><sup>167</sup></a>
+<a id="Footnote-167"></a>ဤအယူအဆကို ပိုမို တရားဝင်သော နည်းလမ်းဖြင့် ဖော်ပြရလျှင် concurrent ပရိုဂရမ်များသည် ပင်ကိုယ်အားဖြင့် <a id="index-nondeterministic"></a>
+<em>nondeterministic</em> ဖြစ်သည်ဟု ဆိုနိုင်သည်။ ဆိုလိုသည်မှာ ၎င်းတို့ကို တန်ဖိုးတစ်ခုတည်း ထွက်သော ဖန်ရှင်များဖြင့် ဖော်ပြခြင်း မဟုတ်ဘဲ ဖြစ်နိုင်ခြေရှိသော တန်ဖိုးများ အစုအဝေးများ ထွက်သော ဖန်ရှင်များဖြင့် ဖော်ပြခြင်း ဖြစ်သည်။ <a href="4_002e3.xhtml#g_t4_002e3">4.3</a> တွင် ကျွန်ုပ်တို့သည် nondeterministic တွက်ချက်မှုများကို ဖော်ပြရန်အတွက် ဘာသာစကားတစ်ခုကို လေ့လာပါမည်။</p>
+</div>
+<div id="FOOT168"><p><a class="footnote_backlink" href="#DOCF168"><sup>168</sup></a>
+<code>Parallel-execute</code> သည် standard Scheme ၏ အစိတ်အပိုင်း မဟုတ်သော်လည်း ၎င်းကို MIT Scheme တွင် အကောင်အထည်ဖော်နိုင်သည်။ ကျွန်ုပ်တို့၏ အကောင်အထည်ဖော်မှုတွင်၊ အသစ်ပြုလုပ်ထားသော concurrent ပရိုဆက်များသည် မူရင်း Scheme ပရိုဆက်နှင့်အတူ တစ်ပြိုင်နက်တည်း အလုပ်လုပ်ကြသည်။ ထို့အပြင် ကျွန်ုပ်တို့၏ အကောင်အထည်ဖော်မှုတွင် <code>parallel-execute</code> မှ ပြန်ပေးသော တန်ဖိုးမှာ အသစ်ဖန်တီးထားသော ပရိုဆက်များကို ရပ်တန့်ရန် အသုံးပြုနိုင်သည့် အထူး ထိန်းချုပ်အရာဝတ္ထု (control object) တစ်ခု ဖြစ်သည်။</p>
+</div>
+<div id="FOOT169"><p><a class="footnote_backlink" href="#DOCF169"><sup>169</sup></a>
+ကျွန်ုပ်တို့၏ <code>deposit</code> မက်ဆေ့ဂျ်သည် အနှုတ်ကိန်းများကို လက်ခံသည်ဟူသော အချက်ကို အသုံးပြု၍ <code>exchange</code> ကို ရိုးရှင်းအောင် ပြုလုပ်ထားသည်။ (ဒါဟာ ကျွန်ုပ်တို့ရဲ့ ဘဏ်လုပ်ငန်းစနစ်ထဲက ကြီးမားတဲ့ bug တစ်ခုပါပဲ။)</p>
+</div>
+<div id="FOOT170"><p><a class="footnote_backlink" href="#DOCF170"><sup>170</sup></a>
+အကယ်၍ အကောင့်လက်ကျန်များသည် $10, $20 နှင့် $30 အဖြစ် စတင်ခဲ့လျှင်၊ မည်သည့် concurrent exchange အရေအတွက်ပင် ပြုလုပ်သည်ဖြစ်စေ လက်ကျန်များသည် တစ်မျိုးမဟုတ်တစ်မျိုး $10, $20 နှင့် $30 ဖြစ်နေသင့်ဆဲ ဖြစ်သည်။ အကောင့်တစ်ခုချင်းစီသို့ ငွေသွင်းခြင်းများကို serialize လုပ်ရုံမျှဖြင့် ၎င်းကို အာမမခံနိုင်ပါ။ <a href="#Exercise-3_002e43">Exercise 3.43</a> ကို ကြည့်ပါ။</p>
+</div>
+<div id="FOOT171"><p><a class="footnote_backlink" href="#DOCF171"><sup>171</sup></a>
+<a href="#Exercise-3_002e45">Exercise 3.45</a> တွင် ငွေသွင်းခြင်းနှင့် ငွေထုတ်ခြင်းများကို အကောင့်မှ အလိုအလျောက် serialize မလုပ်တော့ခြင်း အကြောင်းရင်းကို စူးစမ်းထားသည်။</p>
+</div>
+<div id="FOOT172"><p><a class="footnote_backlink" href="#DOCF172"><sup>172</sup></a>
+“mutex” ဆိုသည်မှာ <a id="index-mutual-exclusion"></a>
+<em>mutual exclusion</em> ၏ အတိုကောက်ဖြစ်သည်။ concurrent ပရိုဆက်များကို အရင်းအမြစ်များ ဘေးကင်းစွာ မျှဝေသုံးစွဲခွင့်ပြုသည့် ယန္တရားတစ်ခုကို စီစဉ်ခြင်းဆိုင်ရာ ယေဘုယျပြဿနာကို mutual exclusion ပြဿနာဟု ခေါ်သည်။ ကျွန်ုပ်တို့၏ mutex သည် Technological University of Eindhoven တွင် တီထွင်ခဲ့သော “THE” Multiprogramming System တွင် စတင်မိတ်ဆက်ခဲ့ပြီး ဒတ်ခ်ျဘာသာဖြင့် တက္ကသိုလ်၏ အတိုကောက်စာလုံးများကို အမည်ပေးထားသော <a id="index-semaphore"></a>
+<em>semaphore</em> ယန္တရား၏ ရိုးရှင်းသော မူကွဲတစ်ခု ဖြစ်သည် (<a href="#Exercise-3_002e47">Exercise 3.47</a> ကို ကြည့်ပါ) (<a href="References.xhtml#Dijkstra-1968a">Dijkstra 1968a</a>)။ acquire နှင့် release လုပ်ဆောင်ချက်များကို မူလက မီးရထားစနစ်များတွင် အသုံးပြုသော semaphore များကို ရည်ညွှန်း၍ ဒတ်ခ်ျစကားလုံးများဖြစ်သော <em>passeren</em> (ဖြတ်သန်းရန်) နှင့် <em>vrijgeven</em> (လွှတ်ပေးရန်) တို့မှ P နှင့် V ဟု ခေါ်ဝေါ်ခဲ့ကြသည်။ Dijkstra ၏ ဂန္ထဝင်ရှင်းလင်းချက် (<a href="References.xhtml#g_t1968b">1968b</a>) သည် concurrency control ဆိုင်ရာ ပြဿနာများကို ပထမဆုံး ရှင်းလင်းစွာ တင်ပြခဲ့သည့် စာတမ်းများထဲမှ တစ်ခုဖြစ်ပြီး semaphore များကို အသုံးပြု၍ concurrency ပြဿနာ အမျိုးမျိုးကို မည်သို့ကိုင်တွယ်ရမည်ကို ပြသခဲ့သည်။</p>
+</div>
+<div id="FOOT173"><p><a class="footnote_backlink" href="#DOCF173"><sup>173</sup></a>
+time-shared operating system အများစုတွင် mutex ကြောင့် ပိတ်ဆို့ခံထားရသော ပရိုဆက်များသည် အထက်ပါအတိုင်း “busy-waiting” လုပ်ခြင်းဖြင့် အချိန်မဖြုန်းကြပါ။ ထိုအစား ပထမပရိုဆက်က စောင့်ဆိုင်းနေစဉ်အတွင်း စနစ်က အခြားပရိုဆက်တစ်ခုကို အလုပ်လုပ်ရန် စီစဉ်ပေးပြီး၊ mutex ရရှိနိုင်သောအခါ ပိတ်ဆို့ထားသော ပရိုဆက်ကို ပြန်လည် နိုးကြားစေသည်။</p>
+</div>
+<div id="FOOT174"><p><a class="footnote_backlink" href="#DOCF174"><sup>174</sup></a>
+time-slicing မော်ဒယ်ကို အသုံးပြုသော single processor အတွက် MIT Scheme တွင် <code>test-and-set!</code> ကို အောက်ပါအတိုင်း အကောင်အထည်ဖော်နိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">test-and-set! cell</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">without-interrupts
+   </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln">
+     </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> cell</span><span class="clo">)</span><span class="pln">
+         true
+         </span><span class="opn">(</span><span class="kwd">begin</span><span class="pln"> </span><span class="opn">(</span><span class="pln">set-car! cell true</span><span class="clo">)</span><span class="pln">
+                false</span><span class="clo">)))))</span></pre></div>
+
+<p><code>Without-interrupts</code> သည် ၎င်း၏ ပရိုစီဂျာ အာဂူမင့်ကို လုပ်ဆောင်နေစဉ်အတွင်း time-slicing interrupt များကို ပိတ်ထားသည်။</p>
+</div>
+<div id="FOOT175"><p><a class="footnote_backlink" href="#DOCF175"><sup>175</sup></a>
+စက်၏ ပရိုဆက်ဆာ-မန်မိုရီ အင်တာဖေ့စ်နှင့် ဂရုတစိုက် ကိုက်ညီအောင် ဒီဇိုင်းထုတ်ရသည့် test-and-set၊ test-and-clear၊ swap၊ compare-and-exchange၊ load-reserve နှင့် store-conditional အစရှိသော ထိုသို့သော ညွှန်ကြားချက် အမျိုးမျိုး ရှိပါသည်။ ဤနေရာတွင် ပေါ်ပေါက်လာသော ပြဿနာတစ်ခုမှာ ထိုသို့သော ညွှန်ကြားချက်ကို အသုံးပြု၍ ပရိုဆက်နှစ်ခုက အရင်းအမြစ် တစ်ခုတည်းကို တစ်ချိန်တည်းတွင် ရယူရန် ကြိုးပမ်းပါက ဘာဖြစ်မည်နည်း ဟူသည်ကို ဆုံးဖြတ်ရန်ဖြစ်သည်။ ၎င်းအတွက် မည်သည့်ပရိုဆက်က ထိန်းချုပ်ခွင့် ရမည်ကို ဆုံးဖြတ်ပေးမည့် ယန္တရားတစ်ခု လိုအပ်သည်။ ထိုသို့သော ယန္တရားကို <a id="index-arbiter"></a>
+<em>arbiter</em> ဟု ခေါ်သည်။ Arbiter များသည် များသောအားဖြင့် ဟာ့ဒ်ဝဲ ကိရိယာ အမျိုးအစားတစ်ခု ဖြစ်သည်။ ကံမကောင်းစွာဖြင့်၊ arbiter တစ်ခုအား ဆုံးဖြတ်ချက်ချရန် အကန့်အသတ်မရှိ အချိန်ပေးထားခြင်း မရှိပါက ၁၀၀% တိကျသော မျှတသည့် arbiter တစ်ခုကို ရုပ်ပိုင်းဆိုင်ရာအရ တည်ဆောက်၍ မရနိုင်ကြောင်း သက်သေပြနိုင်သည်။ ဤအခြေခံ ဖြစ်စဉ်ကို ၁၄ ရာစု ပြင်သစ် ဒဿနပညာရှင် Jean Buridan က Aristotle ၏ <i>De caelo</i> အပေါ် သူ၏ ဝေဖန်ချက်တွင် မူလက သတိပြုမိခဲ့သည်။ Buridan က တူညီသော ဆွဲဆောင်မှုရှိသည့် အစားအစာ ရင်းမြစ်နှစ်ခု ကြားတွင် ရှိနေသော အလွန်အမင်း ဆင်ခြင်တုံတရားရှိသည့် ခွေးတစ်ကောင်သည် မည်သည့်အရာကို အရင်သွားရမည်ကို မဆုံးဖြတ်နိုင်သောကြောင့် ငတ်မွတ်ကာ သေဆုံးသွားလိမ့်မည်ဟု ငြင်းခုံခဲ့သည်။</p>
+</div>
+<div id="FOOT176"><p><a class="footnote_backlink" href="#DOCF176"><sup>176</sup></a>
+မျှဝေသုံးစွဲသော အရင်းအမြစ်များကို နံပါတ်စဉ်တပ်ပြီး အစဉ်လိုက် ရယူခြင်းဖြင့် deadlock ကို ရှောင်ရှားသည့် ယေဘုယျ နည်းလမ်းမှာ <a href="References.xhtml#Havender-_00281968_0029">Havender (1968)</a> ကြောင့် ဖြစ်သည်။ deadlock ကို ရှောင်ရှား၍ မရသော အခြေအနေများတွင် <a id="index-deadlock_002drecovery"></a>
+<em>deadlock-recovery</em> နည်းလမ်းများ လိုအပ်ပြီး၊ ၎င်းသည် ပရိုဆက်များကို deadlock အခြေအနေမှ “ပြန်ဆုတ်ခွာ” စေကာ ပြန်လည် ကြိုးစားစေရန် လိုအပ်သည်။ Deadlock-recovery ယန္တရားများကို <a href="References.xhtml#Gray-and-Reuter-1993">Gray and Reuter 1993</a> တွင် အသေးစိတ် ဖော်ပြထားသော ဒေတာဘေ့စ် စီမံခန့်ခွဲမှု စနစ်များတွင် ကျယ်ကျယ်ပြန့်ပြန့် အသုံးပြုကြသည်။</p>
+</div>
+<div id="FOOT177"><p><a class="footnote_backlink" href="#DOCF177"><sup>177</sup></a>
+serialization အတွက် အခြားရွေးချယ်စရာ နည်းလမ်းတစ်ခုကို <a id="index-barrier-synchronization"></a>
+<em>barrier synchronization</em> ဟု ခေါ်သည်။ ပရိုဂရမ်မာသည် concurrent ပရိုဆက်များကို ၎င်းတို့ စိတ်ကြိုက် လုပ်ဆောင်ခွင့်ပြုသော်လည်း၊ ပရိုဆက် အားလုံး barrier သို့ မရောက်မချင်း မည်သည့် ပရိုဆက်မှ ဆက်လက် မလုပ်ဆောင်နိုင်သော အချို့သော synchronization points (“barriers”) များကို သတ်မှတ်ပေးသည်။ ခေတ်မီ ပရိုဆက်ဆာများသည် ကိုက်ညီမှု (consistency) လိုအပ်သော နေရာများတွင် ပရိုဂရမ်မာများက synchronization points များ သတ်မှတ်နိုင်ရန် စက်ညွှန်ကြားချက်များကို ပံ့ပိုးပေးသည်။ <abbr>PowerPC</abbr> တွင် ဥပမာအားဖြင့် ဤရည်ရွယ်ချက်အတွက် <abbr>SYNC</abbr> နှင့် <abbr>EIEIO</abbr> (Enforced In-order Execution of Input/Output) ဟုခေါ်သော ညွှန်ကြားချက် နှစ်ခု ပါဝင်သည်။</p>
+</div>
+<div id="FOOT178"><p><a class="footnote_backlink" href="#DOCF178"><sup>178</sup></a>
+ဒါဟာ ထူးဆန်းတဲ့ အမြင်တစ်ခုလို့ ထင်ရနိုင်ပေမယ့် ဒီလိုပုံစံနဲ့ အလုပ်လုပ်တဲ့ စနစ်တွေ ရှိပါတယ်။ ဥပမာအားဖြင့် ခရက်ဒစ်ကတ် အကောင့်များအတွက် နိုင်ငံတကာ ကျသင့်ငွေများကို ပုံမှန်အားဖြင့် နိုင်ငံအလိုက် ရှင်းလင်းကြပြီး၊ နိုင်ငံအသီးသီးတွင် ပြုလုပ်ခဲ့သော ကျသင့်ငွေများကို အခါအားလျော်စွာ ပြန်လည် ညှိနှိုင်းကြသည်။ ထို့ကြောင့် အကောင့်လက်ကျန်သည် နိုင်ငံအသီးသီးတွင် ကွဲပြားနေနိုင်ပါသည်။</p>
+</div>
+<div id="FOOT179"><p><a class="footnote_backlink" href="#DOCF179"><sup>179</sup></a>
+distributed စနစ်များအတွက် ဤရှုထောင့်ကို <a href="References.xhtml#Lamport-_00281978_0029">Lamport (1978)</a> က ဖော်ထုတ်ခဲ့ပြီး၊ သူသည် distributed စနစ်များရှိ ဖြစ်ရပ်များ၏ အစီအစဉ်များကို သတ်မှတ်ရန် အသုံးပြုနိုင်သည့် “global clocks” များ တည်ဆောက်ရန် ဆက်သွယ်ရေးကို မည်သို့ အသုံးပြုရမည်ကို ပြသခဲ့သည်။</p>
+</div>
+</div>
+<nav class="header">
+<p>
+Next: <a href="3_002e5.xhtml#g_t3_002e5" accesskey="n" rel="next">3.5</a>, Prev: <a href="3_002e3.xhtml#g_t3_002e3" accesskey="p" rel="prev">3.3</a>, Up: <a href="#g_t3_002e4" accesskey="u" rel="prev">3.4</a>   [<a href="index.xhtml#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+
+
+</section><span class="bottom jump" title="Jump to bottom"><a href="#pagebottom" accesskey="b">⇣</a></span><a id="pagebottom"></a>
+</body>
+</html>
