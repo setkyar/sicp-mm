@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="my" lang="my">
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>Structure and Interpretation of Computer Programs, 2e: 5.1</title>
+
+<meta name="description" content="Structure and Interpretation of Computer Programs, 2e: 5.1" />
+<meta name="keywords" content="Structure and Interpretation of Computer Programs, 2e: 5.1" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="Generator" content="texi2any" />
+<meta charset="utf-8" />
+<link href="index.html#Top" rel="start" title="Top" />
+<link href="Term-Index.html#Term-Index" rel="index" title="Term Index" />
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents" />
+<link href="Chapter-5.html#Chapter-5" rel="prev" title="Chapter 5" />
+<link href="5_002e2.html#g_t5_002e2" rel="next" title="5.2" />
+<link href="Chapter-5.html#Chapter-5" rel="prev" title="Chapter 5" />
+
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/prettify.css" rel="stylesheet" type="text/css" />
+
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/footnotes.js" type="text/javascript"></script>
+<script src="js/browsertest.js" type="text/javascript"></script>
+</head>
+
+<body>
+<section><span class="top jump" title="Jump to top"><a href="#pagetop" accesskey="t">⇡</a></span><a id="pagetop"></a><a id="g_t5_002e1"></a>
+<nav class="header">
+<p>
+Next: <a href="5_002e2.html#g_t5_002e2" accesskey="n" rel="next">5.2</a>, Prev: <a href="Chapter-5.html#Chapter-5" accesskey="p" rel="prev">Chapter 5</a>, Up: <a href="Chapter-5.html#Chapter-5" accesskey="u" rel="prev">Chapter 5</a>   [<a href="index.html#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+<a id="Designing-Register-Machines"></a>
+<h3 class="section"><span class="secnum">5.1</span><span class="sectitle">Designing Register Machines</span></h3>
+
+<p>Register machine တစ်ခုကို ပုံစံထုတ်ရန်အတွက်၊ ၎င်း၏ <a id="index-data-paths"></a>
+<em>data paths</em>
+(registers နှင့် operations များ) နှင့် ၎င်း operations များ၏ အစီအစဉ်ကို ထိန်းချုပ်ပေးသော <a id="index-controller"></a>
+<em>controller</em> တို့ကို ပုံစံထုတ်ရမည်ဖြစ်သည်။ ရိုးရှင်းသော register machine တစ်ခု၏ ပုံစံထုတ်ပုံကို သရုပ်ဖော်ရန်၊ ကိန်းပြည့်နှစ်ခု၏ အကြီးဆုံးဘုံဆားကိန်း (<abbr>GCD</abbr>) ကို ရှာဖွေရာတွင် အသုံးပြုသော Euclid’s Algorithm ကို လေ့လာကြည့်ကြပါစို့။ <a href="1_002e2.html#g_t1_002e2_002e5">1.2.5</a> တွင် ကျွန်ုပ်တို့ မြင်ခဲ့သည့်အတိုင်း၊ Euclid’s Algorithm ကို အောက်ပါ procedure တွင် သတ်မှတ်ထားသည့်အတိုင်း iterative process တစ်ခုဖြင့် လုပ်ဆောင်နိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">gcd a b</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> b </span><span class="lit">0</span><span class="clo">)</span><span class="pln">
+      a
+      </span><span class="opn">(</span><span class="pln">gcd b </span><span class="opn">(</span><span class="pln">remainder a b</span><span class="clo">))))</span></pre></div>
+
+<p>ဤ algorithm ကို လုပ်ဆောင်မည့် machine တစ်ခုသည် ကိန်းဂဏန်းနှစ်ခုဖြစ်သော <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> နှင့်
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>b</mi>
+</math> ကို မှတ်သားထားရမည်ဖြစ်သဖြင့်၊ ထိုကိန်းဂဏန်းများကို ၎င်းအမည်များပေးထားသော register နှစ်ခုတွင် သိမ်းဆည်းထားသည်ဟု ယူဆကြပါစို့။ လိုအပ်သော အခြေခံ operations များမှာ register <code>b</code> ၏ တန်ဖိုးသည် သုည ဟုတ်မဟုတ် စစ်ဆေးခြင်းနှင့် register <code>a</code> ၏ တန်ဖိုးကို register <code>b</code> ၏ တန်ဖိုးနှင့် စား၍ အကြွင်း (remainder) ကို တွက်ချက်ခြင်းတို့ ဖြစ်သည်။ အကြွင်းရှာခြင်း operation သည် ရှုပ်ထွေးသော လုပ်ငန်းစဉ်တစ်ခု ဖြစ်သော်လည်း၊ လောလောဆယ်တွင် အကြွင်းကို တွက်ချက်ပေးနိုင်သော အခြေခံ device တစ်ခု ရှိသည်ဟု ယူဆပါ။ <abbr>GCD</abbr> algorithm ၏ အကြိမ်တိုင်းတွင် register <code>a</code> ၏ တန်ဖိုးကို register <code>b</code> ၏ တန်ဖိုးနှင့် အစားထိုးရမည်ဖြစ်ပြီး၊ <code>b</code> ၏ တန်ဖိုးကိုမူ <code>a</code> ၏ တန်ဖိုးဟောင်းကို <code>b</code> ၏ တန်ဖိုးဟောင်းနှင့် စား၍ ရသော အကြွင်းဖြင့် အစားထိုးရမည်ဖြစ်သည်။ ဤအစားထိုးမှုများကို တစ်ပြိုင်နက်တည်း ပြုလုပ်နိုင်လျှင် အဆင်ပြေမည် ဖြစ်သော်လည်း၊ ကျွန်ုပ်တို့၏ register machine model တွင် အဆင့်တစ်ခုချင်းစီ၌ register တစ်ခုကိုသာ တန်ဖိုးအသစ် သတ်မှတ်နိုင်သည်ဟု ယူဆပါမည်။ ဤအစားထိုးမှုများကို ပြီးမြောက်အောင် ဆောင်ရွက်ရန်၊ ကျွန်ုပ်တို့၏ machine သည် <code>t</code> ဟု ခေါ်သော တတိယ "temporary" register တစ်ခုကို အသုံးပြုပါမည်။ (ပထမဦးစွာ အကြွင်းကို <code>t</code> ထဲသို့ ထည့်မည်၊ ထို့နောက် <code>b</code> ၏ တန်ဖိုးကို <code>a</code> ထဲသို့ ထည့်မည်၊ နောက်ဆုံးတွင် <code>t</code> ၌ သိမ်းထားသော အကြွင်းကို <code>b</code> ထဲသို့ ထည့်မည် ဖြစ်သည်။)
+</p>
+<p>ဤ machine အတွက် လိုအပ်သော registers နှင့် operations များကို <a href="#Figure-5_002e1">Figure 5.1</a> တွင် ပြထားသော data-path diagram ကို အသုံးပြု၍ သရုပ်ဖော်နိုင်သည်။ ဤ diagram တွင် registers (<code>a</code>, <code>b</code>, နှင့် <code>t</code>) များကို စတုဂံပုံများဖြင့် ဖော်ပြထားသည်။ register တစ်ခုသို့ တန်ဖိုးတစ်ခု သတ်မှတ်ပေးသည့် နည်းလမ်းတစ်ခုချင်းစီကို အရင်းအမြစ်မှ register ဆီသို့ ဦးတည်နေပြီး ခေါင်းပိုင်းနောက်တွင် <code>X</code> ပါသော မြှားတစ်ခုဖြင့် ပြထားသည်။ <code>X</code> ကို ခလုတ်တစ်ခုကဲ့သို့ မှတ်ယူနိုင်ပြီး၊ ၎င်းကို နှိပ်လိုက်သောအခါ အရင်းအမြစ်ရှိ တန်ဖိုးကို သတ်မှတ်ထားသော register ထဲသို့ "စီးဝင်" ခွင့်ပြုသည်။ ခလုတ်တစ်ခုချင်းစီ၏ ဘေးတွင် ရှိသော label မှာ ထိုခလုတ်ကို ရည်ညွှန်းရန် ကျွန်ုပ်တို့ အသုံးပြုမည့် အမည်ဖြစ်သည်။ အမည်များကို စိတ်ကြိုက်ပေးနိုင်ပြီး မှတ်မိလွယ်သော တန်ဖိုးများ ဖြစ်စေရန် ရွေးချယ်နိုင်သည် (ဥပမာ၊ <code>a&lt;-b</code> သည် register <code>b</code> ၏ တန်ဖိုးကို register <code>a</code> သို့ သတ်မှတ်ပေးသော ခလုတ်ကို နှိပ်ခြင်းကို ဆိုလိုသည်)။ register တစ်ခုအတွက် data အရင်းအမြစ်သည် အခြား register တစ်ခု (<code>a&lt;-b</code> သတ်မှတ်ချက်ကဲ့သို့)၊ operation တစ်ခု၏ ရလဒ် (<code>t&lt;-r</code> သတ်မှတ်ချက်ကဲ့သို့)၊ သို့မဟုတ် constant (ပြောင်းလဲ၍မရသော ပုံသေတန်ဖိုး၊ data-path diagram တွင် ထိုတန်ဖိုးပါရှိသော တြိဂံပုံဖြင့် ဖော်ပြသည်) တို့ ဖြစ်နိုင်သည်။
+</p>
+<figure class="float">
+<a id="Figure-5_002e1"></a>
+<object style="width: 37.90ex; height: 26.07ex;" data="fig/chap5/Fig5.1a.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>Figure 5.1:</strong> <abbr>GCD</abbr> machine တစ်ခုအတွက် data paths များ။</p>
+</figcaption>
+</figure>
+
+<p>Constants နှင့် registers များ၏ တန်ဖိုးများမှ တန်ဖိုးတစ်ခုကို တွက်ချက်ပေးသော operation ကို data-path diagram တွင် operation အမည် ပါဝင်သော တြိဂံစောင်း (trapezoid) ပုံဖြင့် ဖော်ပြသည်။ ဥပမာအားဖြင့်၊ <a href="#Figure-5_002e1">Figure 5.1</a> ရှိ <code>rem</code> ဟု မှတ်သားထားသော box သည် ၎င်းနှင့် ချိတ်ဆက်ထားသော registers <code>a</code> နှင့် <code>b</code> တို့၏ တန်ဖိုးများမှ အကြွင်းကို တွက်ချက်ပေးသော operation ကို ကိုယ်စားပြုသည်။ input registers နှင့် constants များမှ box ဆီသို့ (ခလုတ်မပါသော) မြှားများ ဦးတည်နေပြီး၊ operation ၏ output တန်ဖိုးကို registers များသို့ မြှားများဖြင့် ချိတ်ဆက်ထားသည်။ Test တစ်ခုကို test အမည် ပါဝင်သော စက်ဝိုင်းတစ်ခုဖြင့် ဖော်ပြသည်။ ဥပမာအားဖြင့်၊ ကျွန်ုပ်တို့၏ <abbr>GCD</abbr> machine တွင် register <code>b</code> ၏ တန်ဖိုးသည် သုည ဟုတ်မဟုတ် စစ်ဆေးသော operation တစ်ခု ပါရှိသည်။ Test တစ်ခုတွင်လည်း ၎င်း၏ input registers နှင့် constants များမှ မြှားများ ရှိသော်လည်း၊ output မြှားများ မရှိပါ။ ၎င်း၏ တန်ဖိုးကို data paths များက အသုံးပြုခြင်း မဟုတ်ဘဲ controller က အသုံးပြုခြင်း ဖြစ်သည်။ ခြုံငုံကြည့်လျှင် data-path diagram သည် machine အတွက် လိုအပ်သော registers နှင့် operations များ၊ ၎င်းတို့ကို မည်သို့ ချိတ်ဆက်ထားရမည်ကို ပြသသည်။ မြှားများကို ဝိုင်ယာကြိုးများအဖြစ် လည်းကောင်း၊ <code>X</code> ခလုတ်များကို ခလုတ်များ (switches) အဖြစ် လည်းကောင်း ရှုမြင်ပါက၊ data-path diagram သည် လျှပ်စစ်ပစ္စည်းများဖြင့် တည်ဆောက်နိုင်သော machine တစ်ခု၏ wiring diagram နှင့် အလွန်တူပါသည်။
+</p>
+<p>Data paths များက <abbr>GCD</abbr> များကို အမှန်တကယ် တွက်ချက်နိုင်ရန်အတွက်၊ ခလုတ်များကို မှန်ကန်သော အစီအစဉ်အတိုင်း နှိပ်ရပါမည်။ ဤအစီအစဉ်ကို <a href="#Figure-5_002e2">Figure 5.2</a> တွင် သရုပ်ဖော်ထားသည့်အတိုင်း controller diagram ဖြင့် ဖော်ပြပါမည်။ controller diagram ၏ အစိတ်အပိုင်းများသည် data-path အစိတ်အပိုင်းများကို မည်သို့ အသုံးပြုရမည်ကို ဖော်ပြသည်။ controller diagram ရှိ စတုဂံပုံ box များသည် နှိပ်ရမည့် data-path ခလုတ်များကို ဖော်ပြပြီး၊ မြှားများသည် အဆင့်တစ်ခုမှ တစ်ခုသို့ လုပ်ဆောင်ရမည့် အစီအစဉ်ကို ဖော်ပြသည်။ diagram ရှိ စိန်ပွင့်ပုံ (diamond) သည် ဆုံးဖြတ်ချက်တစ်ခုကို ကိုယ်စားပြုသည်။ စိန်ပွင့်ပုံတွင် ဖော်ပြထားသော data-path test ၏ ရလဒ်အပေါ် မူတည်၍ sequencing arrows နှစ်ခုအနက် တစ်ခုကို လိုက်နာဆောင်ရွက်မည်ဖြစ်သည်။ Controller ကို ရုပ်ပိုင်းဆိုင်ရာ ပုံပမာတစ်ခုဖြင့် အဓိပ္ပာယ်ဖွင့်ဆိုနိုင်သည်- diagram ကို စကျင်ကျောက်လုံးလေးတစ်ခု လိမ့်နေသည့်ဝင်္ကပါတစ်ခုအဖြစ် စဉ်းစားကြည့်ပါ။ စကျင်ကျောက်လုံးသည် box တစ်ခုထဲသို့ လိမ့်ဝင်သွားသောအခါ၊ ထို box တွင် အမည်ပေးထားသော data-path ခလုတ်ကို နှိပ်လိုက်သည်။ စကျင်ကျောက်လုံးသည် ဆုံးဖြတ်ချက် node (ဥပမာ <code>b</code> = 0 ဟုတ်မဟုတ် စစ်ဆေးခြင်း) သို့ လိမ့်ဝင်သောအခါ၊ သတ်မှတ်ထားသော test ၏ ရလဒ်ပေါ် မူတည်၍ လမ်းကြောင်းမှ ထွက်ခွာသည်။ data paths နှင့် controller တို့ကို ပေါင်းလိုက်ပါက <abbr>GCD</abbr> များ တွက်ချက်ရန် machine တစ်ခုကို အပြည့်အစုံ ဖော်ပြပြီးသား ဖြစ်သွားသည်။ ကျွန်ုပ်တို့သည် registers <code>a</code> နှင့် <code>b</code> တွင် ကိန်းဂဏန်းများ ထည့်ပြီးနောက်၊ <code>start</code> ဟု မှတ်သားထားသော နေရာမှ controller (လိမ့်နေသော စကျင်ကျောက်လုံး) ကို စတင်စေသည်။ Controller သည် <code>done</code> သို့ ရောက်ရှိသောအခါ၊ register <code>a</code> တွင် <abbr>GCD</abbr> တန်ဖိုးကို တွေ့ရှိရမည်ဖြစ်သည်။
+</p>
+<figure class="float">
+<a id="Figure-5_002e2"></a>
+<object style="width: 27.46ex; height: 30.74ex;" data="fig/chap5/Fig5.2.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>Figure 5.2:</strong> <abbr>GCD</abbr> machine တစ်ခုအတွက် Controller။</p>
+</figcaption>
+</figure>
+
+<blockquote>
+<p><strong><a id="Exercise-5_002e1"></a>Exercise 5.1:</strong> အောက်ပါ procedure တွင် သတ်မှတ်ထားသော iterative algorithm ကို အသုံးပြု၍ factorial တွက်ချက်ရန် register machine တစ်ခုကို ပုံစံထုတ်ပါ။ ဤ machine အတွက် data-path နှင့် controller diagram များကို ဆွဲပါ။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">factorial n</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">iter product counter</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;</span><span class="pln"> counter n</span><span class="clo">)</span><span class="pln">
+        product
+        </span><span class="opn">(</span><span class="pln">iter </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> counter product</span><span class="clo">)</span><span class="pln">
+              </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> counter </span><span class="lit">1</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">iter </span><span class="lit">1</span><span class="pln"> </span><span class="lit">1</span><span class="clo">))</span></pre></div>
+</blockquote>
+
+
+<a id="g_t5_002e1_002e1"></a>
+<a id="A-Language-for-Describing-Register-Machines"></a>
+<h4 class="subsection"><span class="secnum">5.1.1</span><span class="sectitle">A Language for Describing Register Machines</span></h4>
+
+<p>Data-path နှင့် controller ပုံကြမ်းများသည် <abbr>GCD</abbr> ကဲ့သို့ ရိုးရှင်းသော စက်များကို ဖော်ပြရန် လုံလောက်သော်လည်း Lisp interpreter ကဲ့သို့သော စက်ကြီးများကို ဖော်ပြရန်အတွက်မူ ကိုင်တွယ်ရခက်ခဲပါသည်။ ရှုပ်ထွေးသော စက်များကို ကိုင်တွယ်ဖြေရှင်းနိုင်စေရန်အတွက် ကျွန်ုပ်တို့သည် data-path နှင့် controller ပုံကြမ်းများမှ ပေးထားသော အချက်အလက်အားလုံးကို စာသားပုံစံဖြင့် တင်ပြသည့် ဘာသာစကားတစ်ခုကို ဖန်တီးပါမည်။ ပုံကြမ်းများကို တိုက်ရိုက်ထဟပ်စေသော သင်္ကေတစနစ် (notation) တစ်ခုဖြင့် ကျွန်ုပ်တို့ စတင်ပါမည်။
+</p>
+<p>ကျွန်ုပ်တို့သည် register များနှင့် operation များကို ဖော်ပြခြင်းဖြင့် စက်တစ်ခု၏ data path များကို သတ်မှတ်ပါသည်။ register တစ်ခုကို ဖော်ပြရန်အတွက် ၎င်းကို အမည်တစ်ခုပေးပြီး ၎င်းထဲသို့ တန်ဖိုးသတ်မှတ်ခြင်း (assignment) ကို ထိန်းချုပ်သည့် ခလုတ်များကို သတ်မှတ်ပေးရပါမည်။ ဤခလုတ်တစ်ခုချင်းစီကို အမည်ပေးရပြီး ခလုတ်၏ထိန်းချုပ်မှုအောက်တွင် register ထဲသို့ဝင်ရောက်မည့် အချက်အလက်များ၏ အရင်းအမြစ် (source) ကို သတ်မှတ်ပေးရပါမည်။ (အရင်းအမြစ်သည် register တစ်ခု၊ ကိန်းသေ (constant) တစ်ခု သို့မဟုတ် operation တစ်ခု ဖြစ်နိုင်ပါသည်။) operation တစ်ခုကို ဖော်ပြရန်အတွက် ၎င်းကို အမည်ပေးပြီး ၎င်း၏ input များ (register များ သို့မဟုတ် ကိန်းသေများ) ကို သတ်မှတ်ပေးရပါမည်။
+</p>
+<p>ကျွန်ုပ်တို့သည် စက်တစ်ခု၏ controller ကို အစီအစဉ်အတွင်းရှိ <em>entry points</em> များကို ခွဲခြားသတ်မှတ်ပေးသော <a id="index-labels"></a><em>labels</em> များနှင့်အတူ <a id="index-instructions-1"></a><em>instructions</em> အစီအစဉ်တစ်ခုအဖြစ် သတ်မှတ်ပါသည်။ instruction တစ်ခုသည် အောက်ပါတို့အနက်မှ တစ်ခုဖြစ်သည်-
+</p>
+<ul>
+<li> register တစ်ခုသို့ တန်ဖိုးတစ်ခု သတ်မှတ်ရန် နှိပ်ရမည့် data-path ခလုတ်၏ အမည်။ (ဒါဟာ controller ပုံကြမ်းထဲက လေးထောင့်ကွက်နဲ့ ကိုက်ညီပါတယ်။)
+
+</li><li> သတ်မှတ်ထားသော စမ်းသပ်မှုတစ်ခုကို လုပ်ဆောင်သည့် <code>test</code> instruction တစ်ခု။
+
+</li><li> ရှေ့ကပြုလုပ်ခဲ့သော စမ်းသပ်မှု၏ ရလဒ်အပေါ် အခြေခံ၍ controller label တစ်ခုဖြင့် ညွှန်ပြထားသော တည်နေရာတစ်ခုသို့ ကူးပြောင်းခြင်း (<code>branch</code> instruction)။ (စမ်းသပ်မှုနှင့် branch တို့ ပေါင်းလိုက်ပါက controller ပုံကြမ်းရှိ စိန်ပုံစံ (diamond) နှင့် ကိုက်ညီပါသည်။) အကယ်၍ စမ်းသပ်မှုသည် မှားယွင်းနေပါက controller သည် အစီအစဉ်ရှိ နောက်ထပ် instruction ဖြင့် ဆက်လက်လုပ်ဆောင်သင့်သည်။ သို့မဟုတ်ပါက controller သည် label ၏ နောက်တွင်ရှိသော instruction ဖြင့် ဆက်လက်လုပ်ဆောင်သင့်သည်။
+
+</li><li> လုပ်ဆောင်ချက်ကို ဆက်လက်လုပ်ဆောင်ရမည့် controller label ကို အမည်တပ်ထားသော အကန့်အသတ်မရှိ ကူးပြောင်းခြင်း (<code>goto</code> instruction)။
+
+</li></ul>
+
+<p>စက်သည် controller instruction အစီအစဉ်၏ အစတွင် စတင်ပြီး လုပ်ဆောင်ချက်သည် အစီအစဉ်၏ အဆုံးသို့ ရောက်သောအခါ ရပ်တန့်သွားသည်။ branch တစ်ခုက ထိန်းချုပ်မှုစီးဆင်းမှုကို ပြောင်းလဲခြင်းမှအပ instruction များကို ၎င်းတို့စာရင်းသွင်းထားသည့် အစီအစဉ်အတိုင်း လုပ်ဆောင်ပါသည်။
+</p>
+<p><a href="#Figure-5_002e3">Figure 5.3</a> တွင် ဤနည်းဖြင့် ဖော်ပြထားသော <abbr>GCD</abbr> စက်ကို ပြသထားသည်။ ဤဥပမာသည် ဤဖော်ပြချက်များ၏ ယေဘုယျကျမှုကို အနည်းငယ်သာ အရိပ်အမြွက်ပြနိုင်ပါသည်၊ အကြောင်းမှာ <abbr>GCD</abbr> စက်သည် အလွန်ရိုးရှင်းသော ကိစ္စဖြစ်သောကြောင့် ဖြစ်သည်- register တစ်ခုစီတွင် ခလုတ်တစ်ခုစီသာရှိပြီး ခလုတ်နှင့် စမ်းသပ်မှုတစ်ခုစီကို controller တွင် တစ်ကြိမ်သာ အသုံးပြုပါသည်။
+</p>
+<blockquote>
+<p><strong><a id="Figure-5_002e3"></a>Figure 5.3:</strong> <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mo stretchy="false">↓<!-- ↓ --></mo>
+</math> <abbr>GCD</abbr> စက်၏ သတ်မှတ်ချက် (specification) တစ်ခု။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">data-paths
+ </span><span class="opn">(</span><span class="pln">registers
+  </span><span class="opn">((</span><span class="pln">name a</span><span class="clo">)</span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">buttons </span><span class="opn">((</span><span class="pln">name a</span><span class="pun">&lt;-</span><span class="pln">b</span><span class="clo">)</span><span class="pln"> 
+             </span><span class="opn">(</span><span class="pln">source </span><span class="opn">(</span><span class="pln">register b</span><span class="clo">)))))</span><span class="pln">
+  </span><span class="opn">((</span><span class="pln">name b</span><span class="clo">)</span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">buttons </span><span class="opn">((</span><span class="pln">name b</span><span class="pun">&lt;-</span><span class="pln">t</span><span class="clo">)</span><span class="pln">
+             </span><span class="opn">(</span><span class="pln">source </span><span class="opn">(</span><span class="pln">register t</span><span class="clo">)))))</span><span class="pln">
+  </span><span class="opn">((</span><span class="pln">name t</span><span class="clo">)</span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">buttons </span><span class="opn">((</span><span class="pln">name t</span><span class="pun">&lt;-</span><span class="pln">r</span><span class="clo">)</span><span class="pln">
+             </span><span class="opn">(</span><span class="pln">source </span><span class="opn">(</span><span class="pln">operation rem</span><span class="clo">))))))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">operations
+  </span><span class="opn">((</span><span class="pln">name rem</span><span class="clo">)</span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">inputs </span><span class="opn">(</span><span class="pln">register a</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">register b</span><span class="clo">)))</span><span class="pln">
+  </span><span class="opn">((</span><span class="pln">name </span><span class="pun">=</span><span class="clo">)</span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">inputs </span><span class="opn">(</span><span class="pln">register b</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">constant </span><span class="lit">0</span><span class="clo">)))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">controller
+ test-b                </span><span class="roman"><span class="com">; label</span></span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">test </span><span class="pun">=</span><span class="clo">)</span><span class="pln">            </span><span class="roman"><span class="com">; test</span></span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">branch 
+    </span><span class="opn">(</span><span class="pln">label gcd-done</span><span class="clo">))</span><span class="pln">  </span><span class="roman"><span class="com">; conditional branch</span></span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">t</span><span class="pun">&lt;-</span><span class="pln">r</span><span class="clo">)</span><span class="pln">              </span><span class="roman"><span class="com">; button push</span></span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">a</span><span class="pun">&lt;-</span><span class="pln">b</span><span class="clo">)</span><span class="pln">              </span><span class="roman"><span class="com">; button push</span></span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">b</span><span class="pun">&lt;-</span><span class="pln">t</span><span class="clo">)</span><span class="pln">              </span><span class="roman"><span class="com">; button push</span></span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">goto 
+    </span><span class="opn">(</span><span class="pln">label test-b</span><span class="clo">))</span><span class="pln">    </span><span class="roman"><span class="com">; unconditional branch</span></span><span class="pln">
+ gcd-done</span><span class="clo">)</span>             </span><span class="roman"><span class="com">; label</span></span>
+</pre></div>
+
+</blockquote>
+
+<p>ကံမကောင်းစွာဖြင့်၊ ထိုကဲ့သို့သော ဖော်ပြချက်ကို ဖတ်ရန် ခက်ခဲပါသည်။ controller instruction များကို နားလည်နိုင်ရန် ကျွန်ုပ်တို့သည် ခလုတ်အမည်များနှင့် operation အမည်များ၏ အဓိပ္ပာယ်ဖွင့်ဆိုချက်များကို အမြဲတစေ ပြန်လည်ကိုးကားရမည်ဖြစ်ပြီး၊ ခလုတ်များက ဘာလုပ်သလဲဆိုသည်ကို နားလည်ရန် operation အမည်များ၏ အဓိပ္ပာယ်ဖွင့်ဆိုချက်များကိုလည်း ပြန်လည်ကိုးကားရနိုင်ပါသည်။ ထို့ကြောင့် ကျွန်ုပ်တို့သည် data-path နှင့် controller ဖော်ပြချက်များမှ အချက်အလက်များကို ပေါင်းစပ်ပြီး အားလုံးကို တစ်နေရာတည်းတွင် မြင်တွေ့နိုင်စေရန် ကျွန်ုပ်တို့၏ သင်္ကေတစနစ်ကို ပြောင်းလဲပါမည်။
+</p>
+<p>ဤကဲ့သို့သော ဖော်ပြချက်ပုံစံကို ရရှိရန်အတွက် ကျွန်ုပ်တို့သည် စိတ်ကြိုက်ပေးထားသော ခလုတ်နှင့် operation အမည်များကို ၎င်းတို့၏ လုပ်ဆောင်ပုံ အဓိပ္ပာယ်ဖွင့်ဆိုချက်များဖြင့် အစားထိုးပါမည်။ ဆိုလိုသည်မှာ (controller တွင်) “Push button <code>t&lt;-r</code>” ဟု ပြောမည့်အစား နှင့် သီးခြားစီ (data path များတွင်) “Button <code>t&lt;-r</code> assigns the value of the <code>rem</code> operation to register <code>t</code>” နှင့် “The <code>rem</code> operation’s inputs are the contents of registers <code>a</code> and <code>b</code>” ဟု ပြောမည့်အစား၊ (controller တွင်) “Push the button that assigns to register <code>t</code> the value of the <code>rem</code> operation on the contents of registers <code>a</code> and <code>b</code>” ဟု ကျွန်ုပ်တို့ ပြောပါမည်။ ထိုနည်းတူစွာ (controller တွင်) “Perform the <code>=</code> test” ဟု ပြောမည့်အစား နှင့် သီးခြားစီ (data path များတွင်) “The <code>=</code> test operates on the contents of register <code>b</code> and the constant 0” ဟု ပြောမည့်အစား “Perform the <code>=</code> test on the contents of register <code>b</code> and the constant 0” ဟု ကျွန်ုပ်တို့ ပြောပါမည်။ ကျွန်ုပ်တို့သည် data-path ဖော်ပြချက်ကို ချန်လှပ်ထားခဲ့ပြီး controller အစီအစဉ်ကိုသာ ထားရှိပါမည်။ ထို့ကြောင့် <abbr>GCD</abbr> စက်ကို အောက်ပါအတိုင်း ဖော်ပြပါသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">controller
+ test-b
+   </span><span class="opn">(</span><span class="pln">test </span><span class="opn">(</span><span class="pln">op </span><span class="pun">=</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg b</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">const </span><span class="lit">0</span><span class="clo">))</span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">branch </span><span class="opn">(</span><span class="pln">label gcd-done</span><span class="clo">))</span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">assign t </span><span class="opn">(</span><span class="pln">op rem</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg a</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg b</span><span class="clo">))</span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">assign a </span><span class="opn">(</span><span class="pln">reg b</span><span class="clo">))</span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">assign b </span><span class="opn">(</span><span class="pln">reg t</span><span class="clo">))</span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">goto </span><span class="opn">(</span><span class="pln">label test-b</span><span class="clo">))</span><span class="pln">
+ gcd-done</span><span class="clo">)</span></pre></div>
+
+<p>ဤဖော်ပြချက်ပုံစံသည် <a href="#Figure-5_002e3">Figure 5.3</a> တွင် ပြထားသောပုံစံထက် ဖတ်ရန် ပိုမိုလွယ်ကူသော်လည်း အားနည်းချက်များလည်း ရှိပါသည်-
+</p>
+<ul>
+<li> စက်ကြီးများအတွက် ဖော်ပြချက်မှာ ပိုမိုရှည်လျားပါသည်၊ အကြောင်းမှာ data-path အစိတ်အပိုင်းများ၏ အပြည့်အစုံဖော်ပြချက်များကို controller instruction အစီအစဉ်တွင် ၎င်းတို့ကို ဖော်ပြသည့်အခါတိုင်း ထပ်ခါတလဲလဲ ဖော်ပြရသောကြောင့် ဖြစ်သည်။ (၎င်းသည် <abbr>GCD</abbr> ဥပမာတွင် ပြဿနာမဟုတ်ပါ၊ အကြောင်းမှာ operation နှင့် ခလုတ်တစ်ခုစီကို တစ်ကြိမ်သာ အသုံးပြုသောကြောင့် ဖြစ်သည်။) ထို့အပြင်၊ data-path ဖော်ပြချက်များကို ထပ်ခါတလဲလဲ ဖော်ပြခြင်းသည် စက်၏ အမှန်တကယ် data-path တည်ဆောက်ပုံကို ဖုံးကွယ်သွားစေသည်၊ စက်ကြီးတစ်ခုအတွက် register၊ operation နှင့် ခလုတ် မည်မျှရှိသည်နှင့် ၎င်းတို့ကို မည်သို့ချိတ်ဆက်ထားသည်ကို သိသာထင်ရှားမှုမရှိစေပါ။
+
+</li><li> စက်သတ်မှတ်ချက်တစ်ခုရှိ controller instruction များသည် Lisp expression များနှင့် ဆင်တူသောကြောင့် ၎င်းတို့သည် စိတ်ကြိုက် Lisp expression များမဟုတ်ကြောင်း မေ့လျော့ရန် လွယ်ကူပါသည်။ ၎င်းတို့သည် ခွင့်ပြုထားသော စက်လုပ်ဆောင်ချက်များကိုသာ ဖော်ပြနိုင်ပါသည်။ ဥပမာအားဖြင့်၊ operation များသည် ကိန်းသေများနှင့် register များရှိ တန်ဖိုးများကိုသာ တိုက်ရိုက်လုပ်ဆောင်နိုင်ပြီး အခြား operation များ၏ ရလဒ်များကိုမူ တိုက်ရိုက်မလုပ်ဆောင်နိုင်ပါ။
+
+</li></ul>
+
+<p>ဤအားနည်းချက်များရှိသော်လည်း၊ ကျွန်ုပ်တို့သည် data path များရှိ အစိတ်အပိုင်းများနှင့် ချိတ်ဆက်မှုများကို နားလည်ခြင်းထက် controller များကို နားလည်ရန် ပိုမိုစိတ်ဝင်စားသောကြောင့် ဤအခန်းတစ်လျှောက်လုံးတွင် ဤ register-machine language ကို အသုံးပြုပါမည်။ သို့သော် အမှန်တကယ် စက်များကို ဒီဇိုင်းထုတ်ရာတွင် data-path ဒီဇိုင်းသည် အရေးကြီးကြောင်းကိုမူ ကျွန်ုပ်တို့ သတိပြုသင့်ပါသည်။
+</p>
+<blockquote>
+<p><strong><a id="Exercise-5_002e2"></a>Exercise 5.2:</strong> <a href="#Exercise-5_002e1">Exercise 5.1</a> ရှိ iterative factorial machine ကို ဖော်ပြရန် register-machine language ကို အသုံးပြုပါ။
+</p></blockquote>
+
+<a id="Actions"></a>
+<h5 class="subsubheading">Actions</h5>
+
+<p>ကျွန်ုပ်တို့သည် <abbr>GCD</abbr> လိုချင်သော ကိန်းဂဏန်းများကို ရိုက်ထည့်နိုင်ပြီး အဖြေကို ကျွန်ုပ်တို့၏ terminal တွင် ရရှိနိုင်ရန် <abbr>GCD</abbr> စက်ကို ပြုပြင်ကြပါစို့။ ဖတ်ခြင်း (read) နှင့် ရိုက်ထုတ်ခြင်း (print) ကို လုပ်ဆောင်နိုင်သော စက်တစ်ခုအား မည်သို့ပြုလုပ်ရမည်ကို ကျွန်ုပ်တို့ ဆွေးနွေးမည်မဟုတ်သော်လည်း (Scheme တွင် <code>read</code> နှင့် <code>display</code> ကို အသုံးပြုသကဲ့သို့) ၎င်းတို့ကို အခြေခံ operation (primitive operations) များအဖြစ် ရနိုင်သည်ဟု ယူဆပါမည်။<a class="footnote_link" id="DOCF286" href="#FOOT286"><sup>286</sup></a>
+</p>
+<p><code>Read</code> သည် ကျွန်ုပ်တို့ အသုံးပြုခဲ့သော operation များနှင့် ဆင်တူပါသည်၊ ၎င်းသည် register တစ်ခုတွင် သိမ်းဆည်းနိုင်သော တန်ဖိုးတစ်ခုကို ထုတ်ပေးပါသည်။ သို့သော် <code>read</code> သည် မည်သည့် register မှမဆို input များကို မယူပါ၊ ၎င်း၏ တန်ဖိုးသည် ကျွန်ုပ်တို့ ဒီဇိုင်းထုတ်နေသော စက်၏ အစိတ်အပိုင်းများ၏ အပြင်ဘက်တွင် ဖြစ်ပျက်သော အရာတစ်ခုအပေါ် မူတည်ပါသည်။ ကျွန်ုပ်တို့၏ စက်၏ operation များကို ထိုကဲ့သို့သော လုပ်ဆောင်ပုံမျိုး ရှိရန် ခွင့်ပြုမည်ဖြစ်ပြီး၊ ထို့ကြောင့် <code>read</code> ကို အသုံးပြုခြင်းကို တန်ဖိုးတစ်ခုတွက်ချက်သော အခြား operation များကဲ့သို့ပင် ရေးဆွဲဖော်ပြပါမည်။
+</p>
+<p>အခြားတစ်ဖက်တွင်မူ <code>Print</code> သည် ကျွန်ုပ်တို့ အသုံးပြုခဲ့သော operation များနှင့် အခြေခံကျကျ ကွာခြားပါသည်- ၎င်းသည် register တစ်ခုတွင် သိမ်းဆည်းရန် output တန်ဖိုးတစ်ခုကို ထုတ်မပေးပါ။ ၎င်းတွင် အကျိုးသက်ရောက်မှုတစ်ခု ရှိသော်လည်း၊ ဤအကျိုးသက်ရောက်မှုသည် ကျွန်ုပ်တို့ ဒီဇိုင်းထုတ်နေသော စက်၏ အစိတ်အပိုင်းတစ်ခုအပေါ်တွင် မဟုတ်ပါ။ ကျွန်ုပ်တို့သည် ဤကဲ့သို့သော operation မျိုးကို <a id="index-action"></a><em>action</em> တစ်ခုအဖြစ် ရည်ညွှန်းပါမည်။ ကျွန်ုပ်တို့သည် action တစ်ခုကို data-path ပုံကြမ်းတွင် တန်ဖိုးတစ်ခုတွက်ချက်သော operation တစ်ခုကဲ့သို့ပင်—action အမည်ပါရှိသော တြာပီဇီယမ် (trapezoid) ပုံစံဖြင့် ကိုယ်စားပြုပါမည်။ input များ (register များ သို့မဟုတ် ကိန်းသေများ) မှ action box ဆီသို့ မြှားများ ညွှန်ပြပါမည်။ action နှင့်အတူ ခလုတ်တစ်ခုကိုလည်း ကျွန်ုပ်တို့ ဆက်စပ်ပေးပါသည်။ ခလုတ်ကို နှိပ်လိုက်ပါက action ဖြစ်ပေါ်လာစေသည်။ controller ကို action ခလုတ်တစ်ခု နှိပ်စေရန်အတွက် <code>perform</code> ဟုခေါ်သော instruction အမျိုးအစားသစ်တစ်ခုကို ကျွန်ုပ်တို့ အသုံးပြုပါသည်။ ထို့ကြောင့် register <code>a</code> ၏ ပါဝင်မှုကို ရိုက်ထုတ်ခြင်း (print) ဟူသော action ကို controller အစီအစဉ်တွင် အောက်ပါ instruction ဖြင့် ကိုယ်စားပြုပါသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">perform </span><span class="opn">(</span><span class="pln">op print</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg a</span><span class="clo">))</span></pre></div>
+
+<p><a href="#Figure-5_002e4">Figure 5.4</a> တွင် <abbr>GCD</abbr> စက်အသစ်အတွက် data path များနှင့် controller ကို ပြသထားသည်။ အဖြေကို ရိုက်ထုတ်ပြီးနောက် စက်ကို ရပ်တန့်စေမည့်အစား၊ ၎င်းသည် ကိန်းဂဏန်းတစ်စုံကို အကြိမ်ကြိမ်ဖတ်ခြင်း၊ ၎င်းတို့၏ <abbr>GCD</abbr> ကို တွက်ချက်ခြင်းနှင့် ရလဒ်ကို ရိုက်ထုတ်ခြင်းတို့ ပြုလုပ်နိုင်ရန် အစမှ ပြန်လည်စတင်စေခဲ့သည်။ ဤတည်ဆောက်ပုံသည် <a href="Chapter-4.html#Chapter-4">Chapter 4</a> ၏ interpreter များတွင် ကျွန်ုပ်တို့ အသုံးပြုခဲ့သော driver loop များနှင့် ဆင်တူပါသည်။
+</p>
+<figure class="float">
+<a id="Figure-5_002e4"></a>
+<object style="width: 59.92ex; height: 69.76ex;" data="fig/chap5/Fig5.4c.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>Figure 5.4:</strong> Input များကို ဖတ်ပြီး ရလဒ်များကို ရိုက်ထုတ်သော <abbr>GCD</abbr> စက်တစ်ခု။</p>
+</figcaption>
+</figure>
+
+<a id="g_t5_002e1_002e2"></a>
+<a id="Abstraction-in-Machine-Design"></a>
+<h4 class="subsection"><span class="secnum">5.1.2</span><span class="sectitle">စက်ဒီဇိုင်းတွင် အဆင့်ဆင့် ခွဲထုတ်ခြင်း (Abstraction in Machine Design)</span></h4>
+
+<p>ကျွန်ုပ်တို့သည် အမှန်တကယ်တွင် အလွန်ရှုပ်ထွေးသော လုပ်ဆောင်ချက်များကို "အခြေခံ" (primitive) လုပ်ဆောင်ချက်များအဖြစ် သတ်မှတ်၍ စက်တစ်ခုကို တည်ဆောက်လေ့ရှိသည်။ ဥပမာအားဖြင့် <a href="5_002e4.html#g_t5_002e4">5.4</a> နှင့် <a href="5_002e5.html#g_t5_002e5">5.5</a> တို့တွင် Scheme ၏ environment manipulations များကို အခြေခံလုပ်ဆောင်ချက်များအဖြစ် ကျွန်ုပ်တို့ ယူဆပါမည်။ ဤကဲ့သို့သော abstraction ပြုလုပ်ခြင်းသည် စက်၏ အစိတ်အပိုင်းအချို့၏ အသေးစိတ်အချက်အလက်များကို လျစ်လျူရှုထားနိုင်ပြီး ဒီဇိုင်း၏ အခြားကဏ္ဍများကိုသာ အာရုံစိုက်နိုင်စေသောကြောင့် တန်ဖိုးရှိလှသည်။ သို့သော် ရှုပ်ထွေးမှုအများအပြားကို ဖုံးကွယ်ထားခြင်းကြောင့် စက်ဒီဇိုင်းတစ်ခုသည် လက်တွေ့မကျဟု မဆိုလိုပါ။ ကျွန်ုပ်တို့သည် ရှုပ်ထွေးသော "အခြေခံ" လုပ်ဆောင်ချက်များကို ပိုမိုရိုးရှင်းသော အခြေခံလုပ်ဆောင်ချက်များဖြင့် အမြဲတမ်း အစားထိုးနိုင်သည်။
+</p>
+<p><abbr>GCD</abbr> စက်ကို လေ့လာကြည့်ကြပါစို့။ ထိုစက်တွင် register <code>a</code> နှင့် <code>b</code> တို့၏ ပါဝင်သောအချက်အလက်များကို စား၍ အကြွင်း (remainder) ကို တွက်ချက်ပြီး ရလဒ်ကို register <code>t</code> ထဲသို့ ထည့်သွင်းပေးသော ညွှန်ကြားချက်တစ်ခု ရှိသည်။ အကယ်၍ ကျွန်ုပ်တို့သည် အခြေခံ remainder လုပ်ဆောင်ချက်ကို အသုံးမပြုဘဲ <abbr>GCD</abbr> စက်ကို တည်ဆောက်လိုပါက၊ အနှုတ် (subtraction) ကဲ့သို့သော ပိုမိုရိုးရှင်းသော လုပ်ဆောင်ချက်များကို အသုံးပြု၍ remainder ကို မည်သို့တွက်ချက်ရမည်ကို သတ်မှတ်ပေးရမည်ဖြစ်သည်။ အမှန်စင်စစ်၊ ကျွန်ုပ်တို့သည် ဤနည်းလမ်းအတိုင်း remainder ကို ရှာဖွေပေးသော Scheme procedure တစ်ခုကို ရေးသားနိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">remainder n d</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&lt;</span><span class="pln"> n d</span><span class="clo">)</span><span class="pln"> n </span><span class="opn">(</span><span class="pln">remainder </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> n d</span><span class="clo">)</span><span class="pln"> d</span><span class="clo">)))</span></pre></div>
+
+<p>ထို့ကြောင့် ကျွန်ုပ်တို့သည် <abbr>GCD</abbr> စက်၏ data paths များရှိ remainder လုပ်ဆောင်ချက်ကို အနှုတ်လုပ်ဆောင်ချက်တစ်ခုနှင့် နှိုင်းယှဉ်စစ်ဆေးမှု (comparison test) တစ်ခုတို့ဖြင့် အစားထိုးနိုင်သည်။ <a href="#Figure-5_002e5">ပုံ ၅.၅</a> တွင် ပိုမိုအသေးစိတ်ဖော်ပြထားသော စက်အတွက် data paths နှင့် controller တို့ကို ပြသထားသည်။ ညွှန်ကြားချက်
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">assign t </span><span class="opn">(</span><span class="pln">op rem</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg a</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg b</span><span class="clo">))</span></pre></div>
+
+<p><abbr>GCD</abbr> controller သတ်မှတ်ချက်ရှိ ဤညွှန်ကြားချက်ကို <a href="#Figure-5_002e6">ပုံ ၅.၆</a> တွင် ပြထားသည့်အတိုင်း ပတ်လမ်း (loop) တစ်ခုပါဝင်သော ညွှန်ကြားချက်အစဉ်ဖြင့် အစားထိုးလိုက်သည်။
+</p>
+<figure class="float">
+<a id="Figure-5_002e5"></a>
+<object style="width: 44.03ex; height: 70.71ex;" data="fig/chap5/Fig5.5b.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>ပုံ ၅.၅-</strong> ပိုမိုအသေးစိတ်ဖော်ပြထားသော <abbr>GCD</abbr> စက်အတွက် Data paths နှင့် controller။</p>
+</figcaption>
+</figure>
+
+<blockquote>
+<p><strong><a id="Figure-5_002e6"></a>ပုံ ၅.၆-</strong> <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mo stretchy="false">↓<!-- ↓ --></mo>
+</math> <a href="#Figure-5_002e5">ပုံ ၅.၅</a> ရှိ <abbr>GCD</abbr> စက်အတွက် Controller ညွှန်ကြားချက်အစဉ်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">controller
+ test-b
+   </span><span class="opn">(</span><span class="pln">test </span><span class="opn">(</span><span class="pln">op </span><span class="pun">=</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg b</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="const">const </span><span class="lit">0</span><span class="clo">))</span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">branch </span><span class="opn">(</span><span class="pln">label gcd-done</span><span class="clo">))</span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">assign t </span><span class="opn">(</span><span class="pln">reg a</span><span class="clo">))</span><span class="pln">
+ rem-loop
+   </span><span class="opn">(</span><span class="pln">test </span><span class="opn">(</span><span class="pln">op </span><span class="pun">&lt;</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg t</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg b</span><span class="clo">))</span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">branch </span><span class="opn">(</span><span class="pln">label rem-done</span><span class="clo">))</span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">assign t </span><span class="opn">(</span><span class="pln">op </span><span class="pun">-</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln) (reg t</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln) (reg b</span><span class="clo">))</span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">goto </span><span class="opn">(</span><span class="pln">label rem-loop</span><span class="clo">))</span><span class="pln">
+ rem-done
+   </span><span class="opn">(</span><span class="pln">assign a </span><span class="opn">(</span><span class="pln">reg b</span><span class="clo">))</span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">assign b </span><span class="opn">(</span><span class="pln">reg t</span><span class="clo">))</span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">goto </span><span class="opn">(</span><span class="pln">label test-b</span><span class="clo">))</span><span class="pln">
+ gcd-done</span><span class="clo">)</span></pre></div>
+
+</blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-5_002e3"></a>လေ့ကျင့်ခန်း ၅.၃-</strong> <a href="1_002e1.html#Sec_002e1_002e1_002e7">1.1.7</a> တွင် ဖော်ပြထားသည့်အတိုင်း Newton’s method ကို အသုံးပြု၍ square roots တွက်ချက်မည့် စက်တစ်ခုကို ဒီဇိုင်းဆွဲပါ-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sqrt x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">good-enough? guess</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pun">&lt;</span><span class="pln"> </span><span class="opn">(</span><span class="pln">abs </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square guess</span><span class="clo">)</span><span class="pln"> x</span><span class="clo">))</span><span class="pln"> </span><span class="lit">0.001</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">improve guess</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">average guess </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> x guess</span><span class="clo">)))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sqrt-iter guess</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">good-enough? guess</span><span class="clo">)</span><span class="pln">
+        guess
+        </span><span class="opn">(</span><span class="pln">sqrt-iter </span><span class="opn">(</span><span class="pln">improve guess</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">sqrt-iter </span><span class="lit">1.0</span><span class="clo">))</span></pre></div>
+
+<p>ပထမဦးစွာ <code>good-enough?</code> နှင့် <code>improve</code> လုပ်ဆောင်ချက်များကို အခြေခံ (primitives) များအဖြစ် ရရှိနိုင်သည်ဟု ယူဆပါ။ ထို့နောက် ၎င်းတို့ကို သင်္ချာဆိုင်ရာ လုပ်ဆောင်ချက်များ (arithmetic operations) အဖြစ် မည်သို့ချဲ့ထွင်ရမည်ကို ပြသပါ။ data-path diagram တစ်ခုဆွဲခြင်းနှင့် register-machine language ဖြင့် controller သတ်မှတ်ချက်တစ်ခုကို ရေးသားခြင်းတို့ဖြင့် <code>sqrt</code> စက်ဒီဇိုင်း၏ ဗားရှင်းတစ်ခုစီကို ဖော်ပြပါ။
+</p></blockquote>
+
+<a id="g_t5_002e1_002e3"></a>
+<a id="Subroutines"></a>
+<h4 class="subsection"><span class="secnum">5.1.3</span><span class="sectitle">Subroutines</span></h4>
+
+<p>တွက်ချက်မှုတစ်ခုကို လုပ်ဆောင်ရန် စက်တစ်ခုကို ပုံစံထုတ်ရာတွင်၊ အစိတ်အပိုင်းများကို ထပ်ခါတလဲလဲ အသုံးပြုမည့်အစား တွက်ချက်မှု၏ မတူညီသော အစိတ်အပိုင်းများတွင် အစိတ်အပိုင်းများကို မျှဝေသုံးစွဲနိုင်ရန် စီစဉ်ခြင်းကို ပိုမိုနှစ်သက်လေ့ရှိသည်။ register <code>a</code> နှင့် <code>b</code> တို့ရှိ အကြောင်းအရာများ၏ <abbr>GCD</abbr> ကို ရှာဖွေပေးသည့် တွက်ချက်မှုတစ်ခုနှင့် register <code>c</code> နှင့် <code>d</code> တို့ရှိ အကြောင်းအရာများ၏ <abbr>GCD</abbr> ကို ရှာဖွေပေးသည့် တွက်ချက်မှုတစ်ခု — စုစုပေါင်း <abbr>GCD</abbr> တွက်ချက်မှု နှစ်ခု ပါဝင်သော စက်တစ်ခုကို စဉ်းစားကြည့်ပါ။ ကျွန်ုပ်တို့တွင် အခြေခံကျသော <code>gcd</code> operation တစ်ခု ရှိသည်ဟု ယူဆခြင်းဖြင့် စတင်နိုင်ပြီး၊ ထို့နောက် <code>gcd</code> ဖြစ်ရပ်နှစ်ခုကို ပိုမိုအခြေခံကျသော operation များဖြင့် ချဲ့ထွင်နိုင်သည်။ <a href="#Figure-5_002e7">Figure 5.7</a> တွင် ရလဒ်အနေဖြင့် ရရှိလာသော စက်၏ data paths များမှ <abbr>GCD</abbr> အစိတ်အပိုင်းများကိုသာ ဖော်ပြထားပြီး၊ ၎င်းတို့ကို စက်၏ ကျန်ရှိသော အစိတ်အပိုင်းများနှင့် မည်သို့ ချိတ်ဆက်ထားသည်ကိုမူ ဖော်ပြထားခြင်း မရှိပါ။ ထိုပုံတွင် စက်၏ controller sequence နှင့် သက်ဆိုင်သော အစိတ်အပိုင်းများကိုလည်း ဖော်ပြထားသည်။
+</p>
+<figure class="float">
+<a id="Figure-5_002e7"></a>
+<object style="width: 56.64ex; height: 63.20ex;" data="fig/chap5/Fig5.7b.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>Figure 5.7:</strong> <abbr>GCD</abbr> တွက်ချက်မှု နှစ်ခု ပါဝင်သော စက်တစ်ခုအတွက် data paths နှင့် controller sequence ၏ အစိတ်အပိုင်းများ။</p>
+</figcaption>
+</figure>
+
+<p>ဤစက်တွင် remainder operation box နှစ်ခုနှင့် ညီမျှမှုကို စစ်ဆေးရန် box နှစ်ခု ပါဝင်သည်။ အကယ်၍ ထပ်ခါတလဲလဲ ပါဝင်နေသော အစိတ်အပိုင်းများသည် remainder box ကဲ့သို့ပင် ရှုပ်ထွေးပါက၊ ဤနည်းလမ်းသည် စက်တည်ဆောက်ရန်အတွက် စရိတ်သက်သာသော နည်းလမ်း ဖြစ်လိမ့်မည် မဟုတ်ပါ။ အကယ်၍ ထိုသို့ပြုလုပ်ခြင်းက ပိုမိုကြီးမားသော စက်၏ ကျန်ရှိသော တွက်ချက်မှုများကို မထိခိုက်စေနိုင်ပါက၊ <abbr>GCD</abbr> တွက်ချက်မှု နှစ်ခုစလုံးအတွက် တူညီသော အစိတ်အပိုင်းများကို အသုံးပြုခြင်းဖြင့် data-path အစိတ်အပိုင်းများ ထပ်ခါတလဲလဲ ဖြစ်ခြင်းကို ရှောင်ရှားနိုင်သည်။ အကယ်၍ controller သည် <code>gcd-2</code> သို့ ရောက်ရှိချိန်တွင် register <code>a</code> နှင့် <code>b</code> တို့ရှိ တန်ဖိုးများကို မလိုအပ်တော့ပါက (သို့မဟုတ် ထိုတန်ဖိုးများကို လုံခြုံစေရန် အခြား register များသို့ ရွှေ့ပြောင်းထားနိုင်ပါက)၊ ဒုတိယ <abbr>GCD</abbr> ကို တွက်ချက်ရာတွင်လည်း register <code>c</code> နှင့် <code>d</code> အစား register <code>a</code> နှင့် <code>b</code> ကိုသာ အသုံးပြုစေရန် စက်ကို ပြောင်းလဲနိုင်သည်။ ဤသို့ ပြုလုပ်ပါက <a href="#Figure-5_002e8">Figure 5.8</a> တွင် ပြထားသော controller sequence ကို ရရှိမည်ဖြစ်သည်။
+</p>
+<blockquote>
+<p><strong><a id="Figure-5_002e8"></a>Figure 5.8:</strong> <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mo stretchy="false">↓<!-- ↓ --></mo>
+</math> မတူညီသော <abbr>GCD</abbr> တွက်ချက်မှု နှစ်ခုအတွက် တူညီသော data-path အစိတ်အပိုင်းများကို အသုံးပြုသည့် စက်တစ်ခုအတွက် controller sequence ၏ အစိတ်အပိုင်းများ။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="pln">gcd-1
+ </span><span class="opn">(</span><span class="pln">test </span><span class="opn">(</span><span class="pln">op </span><span class="pun">=</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg b</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">const </span><span class="lit">0</span><span class="clo">))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">branch </span><span class="opn">(</span><span class="pln">label after-gcd-1</span><span class="clo">))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">assign t </span><span class="opn">(</span><span class="pln">op rem</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg a</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg b</span><span class="clo">))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">assign a </span><span class="opn">(</span><span class="pln">reg b</span><span class="clo">))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">assign b </span><span class="opn">(</span><span class="pln">reg t</span><span class="clo">))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">goto </span><span class="opn">(</span><span class="pln">label gcd-1</span><span class="clo">))</span><span class="pln">
+after-gcd-1
+  </span><span class="roman"><span class="pun">…</span></span><span class="pln">
+gcd-2
+ </span><span class="opn">(</span><span class="pln">test </span><span class="opn">(</span><span class="pln">op </span><span class="pun">=</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg b</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">const </span><span class="lit">0</span><span class="clo">))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">branch </span><span class="opn">(</span><span class="pln">label after-gcd-2</span><span class="clo">))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">assign t </span><span class="opn">(</span><span class="pln">op rem</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg a</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg b</span><span class="clo">))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">assign a </span><span class="opn">(</span><span class="pln">reg b</span><span class="clo">))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">assign b </span><span class="opn">(</span><span class="pln">reg t</span><span class="clo">))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">goto </span><span class="opn">(</span><span class="pln">label gcd-2</span><span class="clo">))</span><span class="pln">
+after-gcd-2</span></pre></div>
+
+</blockquote>
+
+<p>ကျွန်ုပ်တို့သည် ထပ်ခါတလဲလဲ ဖြစ်နေသော data-path အစိတ်အပိုင်းများကို ဖယ်ရှားလိုက်ပြီ ဖြစ်သဖြင့် (ထို့ကြောင့် data paths များသည် <a href="#Figure-5_002e1">Figure 5.1</a> တွင်ကဲ့သို့ ပြန်ဖြစ်သွားသည်)၊ သို့သော် controller တွင်မူ ဝင်ရောက်ရာနေရာ entry-point labels များသာ ကွဲပြားသည့် <abbr>GCD</abbr> sequence နှစ်ခု ရှိနေဆဲဖြစ်သည်။ ဤ sequence နှစ်ခုအစား <code>gcd</code> <a id="index-subroutine"></a><em>subroutine</em> ဟုခေါ်သော sequence တစ်ခုတည်းသို့ branch များဖြင့် အစားထိုးပြီး၊ ထို subroutine အဆုံးတွင် ပင်မ instruction sequence ရှိ မှန်ကန်သော နေရာသို့ ပြန်လည် branch လုပ်ခြင်းက ပိုမိုကောင်းမွန်ပေမည်။ ယင်းကို အောက်ပါအတိုင်း ဆောင်ရွက်နိုင်သည်- <code>gcd</code> သို့ branch မလုပ်မီ၊ ခွဲခြားနိုင်သော တန်ဖိုးတစ်ခု (ဥပမာ 0 သို့မဟုတ် 1) ကို <code>continue</code> ဟုခေါ်သော အထူး register တစ်ခုထဲသို့ ထည့်သွင်းရမည်။ <code>gcd</code> subroutine အဆုံးတွင် <code>continue</code> register ၏ တန်ဖိုးပေါ် မူတည်၍ <code>after-gcd-1</code> သို့မဟုတ် <code>after-gcd-2</code> သို့ ပြန်သွားမည် ဖြစ်သည်။ <a href="#Figure-5_002e9">Figure 5.9</a> တွင် <code>gcd</code> instruction များ တစ်စုံသာ ပါဝင်သော ရလဒ်ထွက် controller sequence ၏ သက်ဆိုင်ရာ အစိတ်အပိုင်းကို ပြသထားသည်။
+</p>
+<blockquote>
+<p><strong><a id="Figure-5_002e9"></a>Figure 5.9:</strong> <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mo stretchy="false">↓<!-- ↓ --></mo>
+</math> <a href="#Figure-5_002e8">Figure 5.8</a> ရှိ ထပ်ခါတလဲလဲ ဖြစ်နေသော controller sequence ကို ရှောင်ရှားရန် <code>continue</code> register ကို အသုံးပြုခြင်း။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="pln">gcd
+ </span><span class="opn">(</span><span class="pln">test </span><span class="opn">(</span><span class="pln">op </span><span class="pun">=</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg b</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">const </span><span class="lit">0</span><span class="clo">))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">branch </span><span class="opn">(</span><span class="pln">label gcd-done</span><span class="clo">))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">assign t </span><span class="opn">(</span><span class="pln">op rem</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg a</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg b</span><span class="clo">))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">assign a </span><span class="opn">(</span><span class="pln">reg b</span><span class="clo">))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">assign b </span><span class="opn">(</span><span class="pln">reg t</span><span class="clo">))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">goto </span><span class="opn">(</span><span class="pln">label gcd</span><span class="clo">))</span><span class="pln">
+gcd-done
+ </span><span class="opn">(</span><span class="pln">test </span><span class="opn">(</span><span class="pln">op </span><span class="pun">=</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg continue</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">const </span><span class="lit">0</span><span class="clo">))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">branch </span><span class="opn">(</span><span class="pln">label after-gcd-1</span><span class="clo">))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">goto </span><span class="opn">(</span><span class="pln">label after-gcd-2</span><span class="clo">))</span><span class="pln">
+  </span><span class="roman"><span class="pun">…</span></span><span class="pln">
+</span><span class="roman"><span class="com">;; လိုအပ်သော ပထမနေရာမှ </span><code><span class="com">gcd</span></code><span class="com"> သို့</span></span><span class="pln">
+</span><span class="roman"><span class="com">;; branch မလုပ်မီ၊</span></span><span class="pln">
+</span><span class="roman"><span class="com">;; </span><code><span class="com">continue</span></code><span class="com"> register ထဲသို့ 0 ကို ထည့်သွင်းသည်</span></span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">assign continue </span><span class="opn">(</span><span class="pln">const </span><span class="lit">0</span><span class="clo">))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">goto </span><span class="opn">(</span><span class="pln">label gcd</span><span class="clo">))</span><span class="pln">
+after-gcd-1
+  </span><span class="roman"><span class="pun">…</span></span><span class="pln">
+</span><span class="roman"><span class="com">;; </span><code><span class="com">gcd</span></code><span class="com"> ကို ဒုတိယအကြိမ် မအသုံးပြုမီ၊</span></span><span class="com"> </span><span class="pln">
+</span><span class="roman"><span class="com">;; </span><code><span class="com">continue</span></code><span class="com"> register ထဲသို့ 1 ကို ထည့်သွင်းသည်</span></span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">assign continue </span><span class="opn">(</span><span class="pln">const </span><span class="lit">1</span><span class="clo">))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">goto </span><span class="opn">(</span><span class="pln">label gcd</span><span class="clo">))</span><span class="pln">
+after-gcd-2</span></pre></div>
+
+</blockquote>
+
+<p>ဤနည်းလမ်းသည် သေးငယ်သော ပြဿနာများကို ကိုင်တွယ်ရန် သင့်လျော်သော ချဉ်းကပ်မှုဖြစ်သော်လည်း၊ controller sequence ထဲတွင် <abbr>GCD</abbr> တွက်ချက်မှုပေါင်း များစွာရှိနေပါက အဆင်မပြေ ဖြစ်လာနိုင်သည်။ <code>gcd</code> subroutine ပြီးနောက် မည်သည့်နေရာမှ ဆက်လက် လုပ်ဆောင်ရမည်ကို ဆုံးဖြတ်ရန်အတွက်၊ <code>gcd</code> ကို အသုံးပြုသော နေရာအားလုံးအတွက် data paths များတွင် test များ လုပ်ဆောင်ရန်နှင့် controller တွင် branch instruction များ လိုအပ်မည် ဖြစ်သည်။ subroutine များကို အကောင်အထည်ဖော်ရန် ပိုမိုထိရောက်သော နည်းလမ်းမှာ subroutine ပြီးဆုံးသောအခါ ဆက်လက်လုပ်ဆောင်ရမည့် controller sequence ရှိ entry point ၏ label ကို <code>continue</code> register တွင် သိမ်းဆည်းထားခြင်း ဖြစ်သည်။ ဤမဟာဗျူဟာကို အကောင်အထည်ဖော်ရန် register machine ၏ data paths နှင့် controller ကြားတွင် ချိတ်ဆက်မှု ပုံစံအသစ်တစ်ခု လိုအပ်သည်- register တစ်ခုထဲသို့ controller sequence ရှိ label တစ်ခုကို တန်ဖိုးအဖြစ် သတ်မှတ်ပေးနိုင်ရန်နှင့် ထိုတန်ဖိုးကို register ထဲမှ ပြန်ထုတ်ယူ၍ သတ်မှတ်ထားသော entry point ၌ ဆက်လက် လုပ်ဆောင်နိုင်ရန် နည်းလမ်းရှိရမည်။
+</p>
+<p>ဤစွမ်းဆောင်ရည်ကို ထင်ဟပ်စေရန်၊ register-machine ဘာသာစကား၏ <code>assign</code> instruction ကို controller sequence မှ label တစ်ခုအား (အထူးကိန်းသေ ပုံစံတစ်ခုအဖြစ်) register ထဲသို့ တန်ဖိုးအဖြစ် သတ်မှတ်နိုင်ရန် ချဲ့ထွင်ပါမည်။ ထို့အပြင် <code>goto</code> instruction ကိုလည်း ကိန်းသေ label တစ်ခုဖြင့် ဖော်ပြထားသော entry point သာမက register တစ်ခု၏ အကြောင်းအရာများဖြင့် ဖော်ပြထားသော entry point မှလည်း ဆက်လက်လုပ်ဆောင်နိုင်ရန် ချဲ့ထွင်ပါမည်။ ဤတည်ဆောက်ပုံအသစ်များကို အသုံးပြု၍ <code>gcd</code> subroutine ကို <code>continue</code> register တွင် သိမ်းဆည်းထားသော နေရာသို့ branch လုပ်ခြင်းဖြင့် အဆုံးသတ်နိုင်သည်။ ယင်းသည် <a href="#Figure-5_002e10">Figure 5.10</a> တွင် ပြထားသော controller sequence သို့ ဦးတည်စေသည်။
+</p>
+<blockquote>
+<p><strong><a id="Figure-5_002e10"></a>Figure 5.10:</strong> <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mo stretchy="false">↓<!-- ↓ --></mo>
+</math> <code>continue</code> register ထဲသို့ label များ သတ်မှတ်ပေးခြင်းသည် <a href="#Figure-5_002e9">Figure 5.9</a> တွင် ပြထားသော မဟာဗျူဟာကို ပိုမိုရိုးရှင်းစေပြီး ယေဘုယျကျစေသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="pln">gcd
+ </span><span class="opn">(</span><span class="pln">test </span><span class="opn">(</span><span class="pln">op </span><span class="pun">=</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg b</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">const </span><span class="lit">0</span><span class="clo">))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">branch </span><span class="opn">(</span><span class="pln">label gcd-done</span><span class="clo">))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">assign t </span><span class="opn">(</span><span class="pln">op rem</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg a</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg b</span><span class="clo">))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">assign a </span><span class="opn">(</span><span class="pln">reg b</span><span class="clo">))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">assign b </span><span class="opn">(</span><span class="pln">reg t</span><span class="clo">))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">goto </span><span class="opn">(</span><span class="pln">label gcd</span><span class="clo">))</span><span class="pln">
+gcd-done
+ </span><span class="opn">(</span><span class="pln">goto </span><span class="opn">(</span><span class="pln">reg continue</span><span class="clo">))</span><span class="pln">
+  </span><span class="roman"><span class="pun">…</span></span><span class="pln">
+</span><span class="roman"><span class="com">;; </span><code><span class="com">gcd</span></code><span class="com"> ကို မခေါ်ဆိုမီ၊</span></span><span class="com"> </span><span class="pln">
+</span><span class="roman"><span class="com">;; </span><code><span class="com">gcd</span></code><span class="com"> ပြန်သွားရမည့် label ကို</span></span><span class="pln">
+</span><span class="roman"><span class="com">;; </span><code><span class="com">continue</span></code><span class="com"> ထဲသို့ သတ်မှတ်ပေးသည်</span></span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">assign continue </span><span class="opn">(</span><span class="pln">label after-gcd-1</span><span class="clo">))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">goto </span><span class="opn">(</span><span class="pln">label gcd</span><span class="clo">))</span><span class="pln">
+after-gcd-1
+  </span><span class="roman"><span class="pun">…</span></span><span class="pln">
+</span><span class="roman"><span class="com">;; ဤနေရာတွင် </span><code><span class="com">gcd</span></code><span class="com"> ကို ဒုတိယအကြိမ် ခေါ်ဆိုခြင်း ဖြစ်ပြီး၊</span></span><span class="pln">
+</span><span class="roman"><span class="com">;; မတူညီသော continuation တစ်ခု ပါဝင်သည်</span></span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">assign continue </span><span class="opn">(</span><span class="pln">label after-gcd-2</span><span class="clo">))</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">goto </span><span class="opn">(</span><span class="pln">label gcd</span><span class="clo">))</span><span class="pln">
+after-gcd-2</span></pre></div>
+
+</blockquote>
+
+<p>subroutine တစ်ခုထက်ပိုသော စက်တစ်ခုတွင် continuation register အများအပြား (ဥပမာ <code>gcd-continue</code>၊ <code>factorial-continue</code>) ကို အသုံးပြုနိုင်သည်၊ သို့မဟုတ် subroutine အားလုံးကို <code>continue</code> register တစ်ခုတည်းကို မျှဝေသုံးစွဲစေနိုင်သည်။ မျှဝေသုံးစွဲခြင်းက ပိုမိုစရိတ်သက်သာသော်လည်း၊ အခြား subroutine (<code>sub2</code>) ကို ခေါ်ဆိုသည့် subroutine (<code>sub1</code>) ရှိနေပါက သတိပြုရမည်။ <code>sub1</code> သည် <code>sub2</code> ကို မခေါ်ဆိုမီ <code>continue</code> register ကို မပြင်ဆင်ခင်၊ ၎င်း၏ လက်ရှိ <code>continue</code> အကြောင်းအရာကို အခြား register တစ်ခုတွင် သိမ်းဆည်းမထားပါက၊ <code>sub1</code> ပြီးဆုံးသောအခါ မည်သည့်နေရာသို့ ပြန်သွားရမည်ကို သိရှိမည်မဟုတ်ပေ။ နောက်အပိုင်းတွင် recursion ကို ကိုင်တွယ်ရန် တီထွင်ထားသော ယန္တရားသည် ဤ nested subroutine call များ၏ ပြဿနာအတွက် ပိုမိုကောင်းမွန်သော ဖြေရှင်းချက်ကို ပေးစွမ်းနိုင်သည်။
+</p>
+<a id="g_t5_002e1_002e4"></a>
+<a id="Using-a-Stack-to-Implement-Recursion"></a>
+<h4 class="subsection"><span class="secnum">5.1.4</span><span class="sectitle">Recursion ကို အကောင်အထည်ဖော်ရန် Stack အား အသုံးပြုခြင်း</span></h4>
+
+<p>ယခုအချိန်အထိ ဖော်ပြခဲ့သော အယူအဆများဖြင့်၊ ပရိုဆက်စ်၏ state variable တစ်ခုစီအတွက် သက်ဆိုင်ရာ register တစ်ခုစီရှိသော register machine တစ်ခုကို သတ်မှတ်ခြင်းဖြင့် မည်သည့် iterative process ကိုမဆို ကျွန်ုပ်တို့ အကောင်အထည်ဖော်နိုင်သည်။ ထိုစက်သည် ရပ်တန့်ရန် အခြေအနေ (termination condition) တစ်ခု ပြည့်စုံသည်အထိ register များ၏ ပါဝင်အကြောင်းအရာများကို ပြောင်းလဲရင်း controller loop တစ်ခုကို ထပ်ခါတလဲလဲ လုပ်ဆောင်သည်။ Controller sequence ၏ အချက်တိုင်းတွင်၊ စက်၏ အခြေအနေ (iterative process ၏ အခြေအနေကို ကိုယ်စားပြုသော) ကို register များ၏ ပါဝင်အကြောင်းအရာများ (state variable များ၏ တန်ဖိုးများ) ဖြင့် အပြည့်အဝ ဆုံးဖြတ်သည်။
+</p>
+<p>သို့သော်လည်း၊ recursive process များကို အကောင်အထည်ဖော်ရန်အတွက် ထပ်ဆောင်း ယန္တရားတစ်ခု လိုအပ်သည်။ ၁.၂.၁ တွင် ကျွန်ုပ်တို့ ပထမဆုံး လေ့လာခဲ့သော factorial များကို တွက်ချက်ရန်အတွက် အောက်ပါ recursive method ကို သုံးသပ်ကြည့်ပါ။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">factorial n</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> n </span><span class="lit">1</span><span class="clo">)</span><span class="pln"> 
+      </span><span class="lit">1</span><span class="pln">
+      </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">factorial </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> n </span><span class="lit">1</span><span class="clo">))</span><span class="pln"> n</span><span class="clo">)))</span></pre></div>
+
+<p>ပရိုစီဂျာမှ ကျွန်ုပ်တို့ မြင်တွေ့ရသည့်အတိုင်း၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <mo>!</mo>
+  </mrow>
+</math> ကို တွက်ချက်ရန် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo>−<!-- − --></mo>
+    <mn>1</mn>
+    <mo stretchy="false">)</mo>
+    <mo>!</mo>
+  </mrow>
+</math> ကို တွက်ချက်ရန် လိုအပ်သည်။ အောက်ပါ ပရိုစီဂျာပေါ်တွင် အခြေခံထားသော ကျွန်ုပ်တို့၏ <abbr>GCD</abbr> စက်သည်လည်း
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">gcd a b</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> b </span><span class="lit">0</span><span class="clo">)</span><span class="pln"> 
+      a
+      </span><span class="opn">(</span><span class="pln">gcd b </span><span class="opn">(</span><span class="pln">remainder a b</span><span class="clo">))))</span></pre></div>
+
+<p>အလားတူပင် အခြားသော <abbr>GCD</abbr> တစ်ခုကို တွက်ချက်ရမည် ဖြစ်သည်။ သို့သော် မူလတွက်ချက်မှုကို <abbr>GCD</abbr> တွက်ချက်မှုအသစ်တစ်ခုသို့ လျှော့ချပေးသော <code>gcd</code> ပရိုစီဂျာနှင့်၊ အခြား factorial တစ်ခုကို subproblem တစ်ခုအနေဖြင့် တွက်ချက်ရန် လိုအပ်သော <code>factorial</code> ကြားတွင် အရေးကြီးသော ကွာခြားချက်တစ်ခု ရှိသည်။ <abbr>GCD</abbr> တွင်၊ <abbr>GCD</abbr> တွက်ချက်မှုအသစ်၏ အဖြေသည် မူလပုစ္ဆာ၏ အဖြေပင် ဖြစ်သည်။ နောက်ထပ် <abbr>GCD</abbr> တစ်ခုကို တွက်ချက်ရန်အတွက်၊ argument အသစ်များကို <abbr>GCD</abbr> စက်၏ input register များတွင် ထည့်သွင်းပြီး အလားတူ controller sequence ကိုပင် လုပ်ဆောင်ကာ စက်၏ data path များကို ပြန်လည်အသုံးပြုလိုက်ရုံသာ ဖြစ်သည်။ စက်သည် နောက်ဆုံး <abbr>GCD</abbr> ပုစ္ဆာကို ဖြေရှင်းပြီးသောအခါ၊ ၎င်းသည် တွက်ချက်မှုတစ်ခုလုံးကို ပြီးမြောက်သွားမည် ဖြစ်သည်။
+</p>
+<p>factorial (သို့မဟုတ် မည်သည့် recursive process တွင်မဆို) ပုစ္ဆာတွင်မူ၊ factorial subproblem အသစ်၏ အဖြေသည် မူလပုစ္ဆာ၏ အဖြေမဟုတ်ပါ။ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo>−<!-- − --></mo>
+    <mn>1</mn>
+    <mo stretchy="false">)</mo>
+    <mo>!</mo>
+  </mrow>
+</math> အတွက် ရရှိသော တန်ဖိုးကို နောက်ဆုံးအဖြေ ရရှိရန်အတွက် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> နှင့် မြှောက်ရမည် ဖြစ်သည်။ အကယ်၍ ကျွန်ုပ်တို့သည် <abbr>GCD</abbr> ဒီဇိုင်းကို အတုယူရန် ကြိုးစားပြီး factorial subproblem ကို <code>n</code> register ကို လျှော့ချကာ factorial စက်ကို ပြန်လည်ပတ်ခြင်းဖြင့် ဖြေရှင်းရန် ကြိုးစားပါက၊ ရလဒ်ကို မြှောက်ရန်အတွက် လိုအပ်သော <code>n</code> ၏ တန်ဖိုးဟောင်းကို ကျွန်ုပ်တို့ ရရှိနိုင်တော့မည် မဟုတ်ပါ။ ထို့ကြောင့် subproblem ကို လုပ်ဆောင်ရန်အတွက် ဒုတိယ factorial စက်တစ်ခု လိုအပ်မည် ဖြစ်သည်။ ဤဒုတိယ factorial တွက်ချက်မှုတွင်လည်း ၎င်းကိုယ်တိုင် factorial subproblem တစ်ခု ရှိနေပြီး ၎င်းအတွက် တတိယ factorial စက်တစ်ခု လိုအပ်သည်၊ ဤသို့ဖြင့် ဆက်သွားနေမည် ဖြစ်သည်။ Factorial စက်တစ်ခုစီတွင် ၎င်း၏အတွင်း၌ အခြား factorial စက်တစ်ခု ပါဝင်နေသောကြောင့်၊ စက်တစ်ခုလုံးတွင် ဆင်တူသော စက်များ၏ အကန့်အသတ်မရှိသော အဆင့်ဆင့်ထပ်ခြင်း (nesting) ပါဝင်နေမည်ဖြစ်ပြီး ထို့ကြောင့် ပုံသေဖြစ်သော အကန့်အသတ်ရှိသော အစိတ်အပိုင်းများ အရေအတွက်ဖြင့် တည်ဆောက်၍ မရနိုင်ပါ။
+</p>
+<p>မည်သို့ပင်ဆိုစေကာမူ၊ စက်၏ nested instance တစ်ခုစီအတွက် တူညီသော အစိတ်အပိုင်းများကို အသုံးပြုရန် စီစဉ်နိုင်ပါက factorial process ကို register machine တစ်ခုအနေဖြင့် ကျွန်ုပ်တို့ အကောင်အထည်ဖော်နိုင်သည်။ အထူးသဖြင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <mo>!</mo>
+  </mrow>
+</math> ကို တွက်ချက်သော စက်သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo>−<!-- − --></mo>
+    <mn>1</mn>
+    <mo stretchy="false">)</mo>
+    <mo>!</mo>
+  </mrow>
+</math> ကို တွက်ချက်သော subproblem၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo>−<!-- − --></mo>
+    <mn>2</mn>
+    <mo stretchy="false">)</mo>
+    <mo>!</mo>
+  </mrow>
+</math> ကို တွက်ချက်သော subproblem စသည်တို့တွင် တူညီသော အစိတ်အပိုင်းများကို အသုံးပြုသင့်သည်။ factorial process သည် တွက်ချက်မှုတစ်ခု ပြုလုပ်ရန် တူညီသော စက်များ၏ အကန့်အသတ်မရှိသော မိတ္တူများ လိုအပ်သည်ဟု သတ်မှတ်ထားသော်လည်း၊ ပေးထားသော အချိန်တစ်ခုတွင် ဤမိတ္တူများအနက် တစ်ခုတည်းသာ အသက်ဝင်ရန် လိုအပ်သောကြောင့် ဤအချက်သည် ဖြစ်နိုင်ခြေရှိသည်။ စက်သည် recursive subproblem တစ်ခုကို ကြုံတွေ့ရသောအခါ၊ ၎င်းသည် မူလပုစ္ဆာပေါ်တွင် လုပ်ဆောင်နေမှုကို ခေတ္တရပ်ဆိုင်းထားနိုင်ပြီး၊ subproblem ကို လုပ်ဆောင်ရန် တူညီသော ရုပ်ပိုင်းဆိုင်ရာ အစိတ်အပိုင်းများကို ပြန်လည်အသုံးပြုကာ၊ ထို့နောက် ရပ်ဆိုင်းထားသော တွက်ချက်မှုကို ပြန်လည်လုပ်ဆောင်နိုင်သည်။
+</p>
+<p>Subproblem တွင် register များ၏ ပါဝင်အကြောင်းအရာများသည် မူလပုစ္ဆာတွင် ရှိခဲ့သည်နှင့် ကွာခြားလိမ့်မည်။ (ဤကိစ္စတွင် <code>n</code> register သည် လျော့နည်းသွားသည်။) ရပ်ဆိုင်းထားသော တွက်ချက်မှုကို ဆက်လက်လုပ်ဆောင်နိုင်ရန်အတွက်၊ subproblem ကို ဖြေရှင်းပြီးနောက် လိုအပ်မည့် မည်သည့် register များ၏ ပါဝင်အကြောင်းအရာများကိုမဆို စက်မှ သိမ်းဆည်းထားရမည် ဖြစ်ပြီး၊ ထို့မှသာ ရပ်ဆိုင်းထားသော တွက်ချက်မှုကို ဆက်လက်လုပ်ဆောင်ရန် ၎င်းတို့ကို ပြန်လည်ဖော်ယူ (restore) နိုင်မည် ဖြစ်သည်။ Factorial ကိစ္စတွင်၊ လျှော့ချထားသော <code>n</code> register ၏ factorial ကို တွက်ချက်ပြီးသောအခါ ပြန်လည်ဖော်ယူရန်အတွက် <code>n</code> ၏ တန်ဖိုးဟောင်းကို သိမ်းဆည်းထားမည် ဖြစ်သည်။<a class="footnote_link" id="DOCF287" href="#FOOT287"><sup>287</sup></a>
+</p>
+<p>Nested recursive call များ၏ အနက် (depth) ပေါ်တွင် ကြိုတင်သတ်မှတ်ထားသော ကန့်သတ်ချက်မရှိသောကြောင့်၊ ကျွန်ုပ်တို့သည် စိတ်ကြိုက်အရေအတွက်ရှိသော register တန်ဖိုးများကို သိမ်းဆည်းရန် လိုအပ်နိုင်သည်။ Recursion များ၏ nesting တွင် နောက်ဆုံးဝင်သော subproblem သည် ပထမဆုံး ပြီးဆုံးရမည် ဖြစ်သောကြောင့်၊ ဤတန်ဖိုးများကို သိမ်းဆည်းခဲ့သော အစီအစဉ်၏ ပြောင်းပြန်အတိုင်း ပြန်လည်ဖော်ယူရမည် ဖြစ်သည်။ ဤအချက်သည် register တန်ဖိုးများကို သိမ်းဆည်းရန်အတွက် <a id="index-stack-1"></a>
+<em>stack</em> သို့မဟုတ် “နောက်ဆုံးဝင်၊ ပထမထွက်” (last in, first out) data structure တစ်ခုကို အသုံးပြုရန် လိုအပ်စေသည်။ instruction အမျိုးအစား နှစ်မျိုးကို ပေါင်းထည့်ခြင်းဖြင့် register-machine language ကို stack တစ်ခု ပါဝင်အောင် တိုးချဲ့နိုင်သည်။ တန်ဖိုးများကို <code>save</code> instruction ကို အသုံးပြု၍ stack ပေါ်သို့ တင်နိုင်ပြီး <code>restore</code> instruction ကို အသုံးပြု၍ stack မှ ပြန်လည်ဖော်ယူနိုင်သည်။ stack ပေါ်တွင် တန်ဖိုးများ အစီအစဉ်လိုက် <code>save</code> လုပ်ပြီးနောက်၊ <code>restore</code> များကို အစီအစဉ်လိုက် လုပ်ဆောင်ခြင်းဖြင့် ထိုတန်ဖိုးများကို ပြောင်းပြန်အစီအစဉ်အတိုင်း ပြန်လည်ရရှိမည် ဖြစ်သည်။<a class="footnote_link" id="DOCF288" href="#FOOT288"><sup>288</sup></a>
+</p>
+<p>Stack ၏ အကူအညီဖြင့်၊ factorial subproblem တစ်ခုစီအတွက် factorial စက်၏ data path မိတ္တူတစ်ခုတည်းကိုပင် ပြန်လည်အသုံးပြုနိုင်သည်။ Data path များကို လည်ပတ်စေသော controller sequence ကို ပြန်လည်အသုံးပြုရာတွင်လည်း အလားတူ ဒီဇိုင်းပြဿနာရှိသည်။ Factorial တွက်ချက်မှုကို ပြန်လည်လုပ်ဆောင်ရန်အတွက်၊ iterative process တစ်ခုကဲ့သို့ပင် controller သည် အစသို့ ရိုးရှင်းစွာ loop ပြန်ပတ်၍ မရနိုင်ပါ၊ အကြောင်းမှာ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo>−<!-- − --></mo>
+    <mn>1</mn>
+    <mo stretchy="false">)</mo>
+    <mo>!</mo>
+  </mrow>
+</math> subproblem ကို ဖြေရှင်းပြီးနောက် စက်သည် ရလဒ်ကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> နှင့် မြှောက်ရန် လိုအပ်နေသေးသောကြောင့် ဖြစ်သည်။ Controller သည် ၎င်း၏ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <mo>!</mo>
+  </mrow>
+</math> တွက်ချက်မှုကို ခေတ္တရပ်ဆိုင်းထားရမည်၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo>−<!-- − --></mo>
+    <mn>1</mn>
+    <mo stretchy="false">)</mo>
+    <mo>!</mo>
+  </mrow>
+</math>
+subproblem ကို ဖြေရှင်းရမည်၊ ထို့နောက် ၎င်း၏ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <mo>!</mo>
+  </mrow>
+</math> တွက်ချက်မှုကို ဆက်လက်လုပ်ဆောင်ရမည်။ Factorial တွက်ချက်မှုအပေါ် ဤအမြင်သည် <a href="#g_t5_002e1_002e3">5.1.3</a> တွင် ဖော်ပြထားသော subroutine ယန္တရားကို အသုံးပြုရန် အကြံပြုထားပြီး၊ ၎င်းတွင် controller သည် subproblem တစ်ခုကို ဖြေရှင်းသော sequence ၏ အစိတ်အပိုင်းသို့ ကူးပြောင်းရန်နှင့် မူလပုစ္ဆာတွင် ရပ်နားခဲ့သော နေရာမှ ပြန်လည်စတင်ရန်အတွက် <code>continue</code> register ကို အသုံးပြုသည်။ ထို့ကြောင့် <code>continue</code> register တွင် သိမ်းဆည်းထားသော entry point သို့ ပြန်သွားသည့် factorial subroutine တစ်ခုကို ကျွန်ုပ်တို့ ပြုလုပ်နိုင်သည်။ Subroutine call တစ်ခုစီ၏ ပတ်လည်တွင်၊ factorial တွက်ချက်မှု၏ “level” တစ်ခုစီသည် တူညီသော <code>continue</code> register ကို အသုံးပြုမည်ဖြစ်သောကြောင့် <code>n</code> register ကဲ့သို့ပင် <code>continue</code> ကို save နှင့် restore လုပ်ရမည်။ ဆိုလိုသည်မှာ factorial subroutine သည် subproblem တစ်ခုအတွက် ၎င်းကိုယ်တိုင် ပြန်လည်ခေါ်ဆိုသောအခါ <code>continue</code> တွင် တန်ဖိုးအသစ်တစ်ခု ထည့်ရမည် ဖြစ်သော်လည်း၊ subproblem ကို ဖြေရှင်းရန် ၎င်းအား ခေါ်ဆိုခဲ့သည့် နေရာသို့ ပြန်သွားနိုင်ရန်အတွက် တန်ဖိုးဟောင်းကို လိုအပ်မည် ဖြစ်သည်။
+</p>
+<p><a href="#Figure-5_002e11">ပုံ ၅.၁၁</a> တွင် recursive <code>factorial</code> ပရိုစီဂျာကို အကောင်အထည်ဖော်သော စက်တစ်ခုအတွက် data path များနှင့် controller ကို ပြသထားသည်။ ထိုစက်တွင် stack တစ်ခုနှင့် <code>n</code>၊ <code>val</code> နှင့် <code>continue</code> ဟုခေါ်သော register သုံးခု ရှိသည်။ Data-path ပုံကြမ်းကို ရိုးရှင်းစေရန်၊ ကျွန်ုပ်တို့သည် register-assignment ခလုတ်များကို အမည်မပေးထားဘဲ၊ stack-operation ခလုတ်များ (register များကို သိမ်းဆည်းရန် <code>sc</code> နှင့် <code>sn</code>၊ register များကို ပြန်လည်ဖော်ယူရန် <code>rc</code> နှင့် <code>rn</code>) ကိုသာ အမည်ပေးထားသည်။ စက်ကို လည်ပတ်စေရန်၊ ကျွန်ုပ်တို့သည် factorial တွက်ချက်လိုသော ကိန်းဂဏန်းကို <code>n</code> register ထဲသို့ ထည့်ပြီး စက်ကို စတင်သည်။ စက်သည် <code>fact-done</code> သို့ ရောက်ရှိသောအခါ၊ တွက်ချက်မှု ပြီးမြောက်သွားပြီး အဖြေကို <code>val</code> register တွင် တွေ့ရှိရမည် ဖြစ်သည်။ Controller sequence တွင်၊ <code>n</code> နှင့် <code>continue</code> တို့ကို recursive call တစ်ခုစီ၏ ရှေ့တွင် သိမ်းဆည်းထားပြီး call မှ ပြန်လာသောအခါ ပြန်လည်ဖော်ယူသည်။ call တစ်ခုမှ ပြန်လာခြင်းကို <code>continue</code> တွင် သိမ်းဆည်းထားသော တည်နေရာသို့ branch လုပ်ခြင်းဖြင့် လုပ်ဆောင်သည်။ နောက်ဆုံးပြန်လာမှုသည် <code>fact-done</code> သို့ သွားစေရန်အတွက် စက်စတင်ချိန်တွင် <code>continue</code> ကို initialize လုပ်ထားသည်။ Factorial တွက်ချက်မှု၏ ရလဒ်ကို သိမ်းဆည်းထားသော <code>val</code> register ကိုမူ recursive call မတိုင်မီ သိမ်းဆည်းမထားပါ၊ အကြောင်းမှာ subroutine မှ ပြန်လာပြီးနောက် <code>val</code> ၏ ပါဝင်အကြောင်းအရာဟောင်းသည် အသုံးမဝင်တော့သောကြောင့် ဖြစ်သည်။ subcomputation မှ ထွက်ပေါ်လာသော တန်ဖိုးအသစ်ကိုသာ လိုအပ်ပါသည်။
+</p>
+<figure class="float">
+<a id="Figure-5_002e11"></a>
+<object style="width: 66.14ex; height: 73.13ex;" data="fig/chap5/Fig5.11b.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>ပုံ ၅.၁၁-</strong> recursive factorial စက်တစ်ခု။</p>
+</figcaption>
+</figure>
+
+<p>မူအားဖြင့် factorial တွက်ချက်မှုသည် အကန့်အသတ်မရှိသော စက်တစ်ခု လိုအပ်သော်လည်း၊ <a href="#Figure-5_002e11">ပုံ ၅.၁၁</a> ရှိ စက်သည် အကန့်အသတ်မရှိနိုင်သော stack မှလွဲ၍ အမှန်တကယ်တွင် အကန့်အသတ်ရှိသော စက်တစ်ခုဖြစ်သည်။ သို့သော်လည်း stack ၏ မည်သည့် ရုပ်ပိုင်းဆိုင်ရာ အကောင်အထည်ဖော်မှုမဆို အကန့်အသတ်ရှိသော အရွယ်အစားသာ ရှိမည်ဖြစ်ပြီး၊ ၎င်းသည် စက်မှ ကိုင်တွယ်နိုင်သော recursive call များ၏ အနက်ကို ကန့်သတ်ပေးမည် ဖြစ်သည်။ Factorial ၏ ဤအကောင်အထည်ဖော်မှုသည် recursive algorithm များကို stack များပေါင်းထည့်ထားသော သာမန် register machine များအဖြစ် ဖော်ဆောင်ရန်အတွက် ယေဘုယျ မဟာဗျူဟာကို သရုပ်ဖော်သည်။ Recursive subproblem တစ်ခုကို ကြုံတွေ့ရသောအခါ၊ subproblem ကို ဖြေရှင်းပြီးနောက် လက်ရှိတန်ဖိုးများ လိုအပ်မည့် register များကို stack ပေါ်တွင် သိမ်းဆည်းထားပြီး၊ recursive subproblem ကို ဖြေရှင်းကာ၊ ထို့နောက် သိမ်းဆည်းထားသော register များကို ပြန်လည်ဖော်ယူပြီး မူလပုစ္ဆာပေါ်တွင် ဆက်လက်လုပ်ဆောင်သည်။ <code>continue</code> register ကို အမြဲတမ်း သိမ်းဆည်းထားရမည်။ သိမ်းဆည်းရန် လိုအပ်သော အခြား register များ ရှိမရှိမှာ သက်ဆိုင်ရာ စက်ပေါ်တွင် မူတည်သည်၊ အကြောင်းမှာ recursive တွက်ချက်မှု အားလုံးသည် subproblem ကို ဖြေရှင်းနေစဉ်အတွင်း ပြောင်းလဲသွားသော register များ၏ မူလတန်ဖိုးများကို မလိုအပ်သောကြောင့် ဖြစ်သည် (<a href="#Exercise-5_002e4">လေ့ကျင့်ခန်း ၅.၄</a> ကို ကြည့်ပါ)။
+</p>
+<a id="A-double-recursion"></a>
+<h5 class="subsubheading">Double recursion တစ်ခု</h5>
+
+<p>၁.၂.၂ တွင် ကျွန်ုပ်တို့ မိတ်ဆက်ခဲ့သော Fibonacci ကိန်းဂဏန်းများကို tree-recursive နည်းဖြင့် တွက်ချက်ခြင်းဖြစ်သည့် ပိုမိုရှုပ်ထွေးသော recursive process တစ်ခုကို လေ့လာကြည့်ကြပါစို့။
+<a href="1_002e2.html#g_t1_002e2_002e2">1.2.2</a>:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">fib n</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&lt;</span><span class="pln"> n </span><span class="lit">2</span><span class="clo">)</span><span class="pln"> 
+      n 
+      </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">fib </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> n </span><span class="lit">1</span><span class="clo">))</span><span class="pln"> </span><span class="opn">(</span><span class="pln">fib </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> n </span><span class="lit">2</span><span class="clo">)))))</span></pre></div>
+
+<p>Factorial ကဲ့သို့ပင်၊ recursive Fibonacci တွက်ချက်မှုကို <code>n</code>၊ <code>val</code> နှင့် <code>continue</code> register များပါရှိသော register machine တစ်ခုအနေဖြင့် အကောင်အထည်ဖော်နိုင်သည်။ ထိုစက်သည် factorial အတွက် စက်ထက် ပိုမိုရှုပ်ထွေးသည်၊ အကြောင်းမှာ controller sequence တွင် recursive call များ လုပ်ဆောင်ရန် လိုအပ်သော နေရာနှစ်ခု — Fib(n - 1) ကို တွက်ချက်ရန် တစ်ကြိမ်နှင့် Fib(n - 2) ကို တွက်ချက်ရန် တစ်ကြိမ် — ရှိသောကြောင့် ဖြစ်သည်။ ဤ call တစ်ခုစီအတွက် ပြင်ဆင်ရန်၊ နောက်ပိုင်းတွင် လိုအပ်မည့် တန်ဖိုးများရှိသော register များကို ကျွန်ုပ်တို့ သိမ်းဆည်းထားပြီး၊ <code>n</code> register ကို recursively တွက်ချက်ရန် လိုအပ်သော ကိန်းဂဏန်း (<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <mo>−<!-- − --></mo>
+    <mn>1</mn>
+  </mrow>
+</math> သို့မဟုတ် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <mo>−<!-- − --></mo>
+    <mn>2</mn>
+  </mrow>
+</math>) သို့ သတ်မှတ်ကာ၊ ပြန်လာရမည့် main sequence ရှိ entry point (အသီးသီး <code>afterfib-n-1</code> သို့မဟုတ် <code>afterfib-n-2</code>) ကို <code>continue</code> သို့ သတ်မှတ်ပေးသည်။ ထို့နောက် <code>fib-loop</code> သို့ သွားသည်။ recursive call မှ ပြန်လာသောအခါ အဖြေသည် <code>val</code> တွင် ရှိနေမည် ဖြစ်သည်။ <a href="#Figure-5_002e12">ပုံ ၅.၁၂</a> တွင် ဤစက်အတွက် controller sequence ကို ပြသထားသည်။
+</p>
+<blockquote>
+<p><strong><a id="Figure-5_002e12"></a>ပုံ ၅.၁၂-</strong> <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mo stretchy="false">↓<!-- ↓ --></mo>
+</math> Fibonacci ကိန်းဂဏန်းများကို တွက်ချက်ရန် စက်တစ်ခုအတွက် Controller။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">controller
+   </span><span class="opn">(</span><span class="pln">assign continue </span><span class="opn">(</span><span class="pln">label fib-done</span><span class="clo">))</span><span class="pln">
+ fib-loop
+   </span><span class="opn">(</span><span class="pln">test </span><span class="opn">(</span><span class="pln">op </span><span class="pun">&lt;</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg n</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">const </span><span class="lit">2</span><span class="clo">))</span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">branch </span><span class="opn">(</span><span class="pln">label immediate-answer</span><span class="clo">))</span><span class="pln">
+   </span><span class="roman"><span class="com">;; set up to compute Fib(</span><em><span class="com">n</span></em><span class="com"> − 1)</span></span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">save continue</span><span class="clo">)</span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">assign continue </span><span class="opn">(</span><span class="pln">label afterfib-n-1</span><span class="clo">))</span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">save n</span><span class="clo">)</span><span class="pln">           </span><span class="roman"><span class="com">; save old value of </span><code><span class="com">n</span></code></span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">assign n 
+           </span><span class="opn">(</span><span class="pln">op </span><span class="pun">-</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">reg n</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">const </span><span class="lit">1</span><span class="clo">))</span><span class="pln"> </span><span class="roman"><span class="com">; clobber </span><code><span class="com">n</span></code><span class="com"> to </span><code><span class="com">n-1</span></code></span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">goto 
+    </span><span class="opn">(</span><span class="pln">label fib-loop</span><span class="clo">))</span><span class="pln"> </span><span class="roman"><span class="com">; perform recursive call</span></span><span class="pln">
+ afterfib-n-1 </span><span class="roman"><span class="com">; upon return, </span><code><span class="com">val</span></code><span class="com"> contains Fib(</span><em><span class="com">n</span></em><span class="com"> − 1)</span></span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">restore n</span><span class="clo">)</span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">restore continue</span><span class="clo">)</span><span class="pln">
+   </span><span class="roman"><span class="com">;; set up to compute Fib(</span><em><span class="com">n</span></em><span class="com"> − 2)</span></span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">assign n </span><span class="opn">(</span><span class="pln">op </span><span class="pun">-</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg n</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">const </span><span class="lit">2</span><span class="clo">))</span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">save continue</span><span class="clo">)</span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">assign continue </span><span class="opn">(</span><span class="pln">label afterfib-n-2</span><span class="clo">))</span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">save val</span><span class="clo">)</span><span class="pln">         </span><span class="roman"><span class="com">; save Fib(</span><em><span class="com">n</span></em><span class="com"> − 1)</span></span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">goto </span><span class="opn">(</span><span class="pln">label fib-loop</span><span class="clo">))</span><span class="pln">
+ afterfib-n-2 </span><span class="roman"><span class="com">; upon return, </span><code><span class="com">val</span></code><span class="com"> contains Fib(</span><em><span class="com">n</span></em><span class="com"> − 2)</span></span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">assign n 
+           </span><span class="opn">(</span><span class="pln">reg val</span><span class="clo">))</span><span class="pln"> </span><span class="roman"><span class="com">; </span><code><span class="com">n</span></code><span class="com"> now contains Fib(</span><em><span class="com">n</span></em><span class="com"> − 2)</span></span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">restore val</span><span class="clo">)</span><span class="pln">      </span><span class="roman"><span class="com">; </span><code><span class="com">val</span></code><span class="com"> now contains Fib(</span><em><span class="com">n</span></em><span class="com"> − 1)</span></span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">restore continue</span><span class="clo">)</span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">assign val        </span><span class="roman"><span class="com">; Fib(</span><em><span class="com">n</span></em><span class="com"> − 1) + Fib(</span><em><span class="com">n</span></em><span class="com"> − 2)</span></span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">op </span><span class="pun">+</span><span class="clo">)</span><span class="pln"> 
+           </span><span class="opn">(</span><span class="pln">reg val</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">reg n</span><span class="clo">))</span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">goto              </span><span class="roman"><span class="com">; return to caller,</span></span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">reg continue</span><span class="clo">))</span><span class="pln">   </span><span class="roman"><span class="com">; answer is in </span><code><span class="com">val</span></code></span><span class="pln">
+ immediate-answer
+   </span><span class="opn">(</span><span class="pln">assign val 
+           </span><span class="opn">(</span><span class="pln">reg n</span><span class="clo">))</span><span class="pln">   </span><span class="roman"><span class="com">; base case: Fib(</span><em><span class="com">n</span></em><span class="com">) = </span><em><span class="com">n</span></em></span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">goto </span><span class="opn">(</span><span class="pln">reg continue</span><span class="clo">))</span><span class="pln">
+ fib-done</span><span class="clo">)</span></pre></div>
+
+</blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-5_002e4"></a>လေ့ကျင့်ခန်း ၅.၄-</strong> အောက်ပါ ပရိုစီဂျာ တစ်ခုစီကို အကောင်အထည်ဖော်သော register machine များကို သတ်မှတ်ပါ။ စက်တစ်ခုစီအတွက် controller instruction sequence တစ်ခုကို ရေးသားပြီး data path များကို ပြသသည့် ပုံကြမ်းတစ်ခုကို ဆွဲပါ။
+</p>
+<ol>
+<li> ၁။ Recursive exponentiation:
+
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">expt b n</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> n </span><span class="lit">0</span><span class="clo">)</span><span class="pln">
+      </span><span class="lit">1</span><span class="pln">
+      </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> b </span><span class="opn">(</span><span class="pln">expt b </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> n </span><span class="lit">1</span><span class="clo">)))))</span></pre></div>
+
+</li><li> ၂။ Iterative exponentiation:
+
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">expt b n</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">expt-iter counter product</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> counter </span><span class="lit">0</span><span class="clo">)</span><span class="pln">
+        product
+        </span><span class="opn">(</span><span class="pln">expt-iter </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> counter </span><span class="lit">1</span><span class="clo">)</span><span class="pln">
+                   </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> b product</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">expt-iter n </span><span class="lit">1</span><span class="clo">))</span></pre></div>
+
+</li></ol>
+</blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-5_002e5"></a>လေ့ကျင့်ခန်း ၅.၅-</strong> factorial နှင့် Fibonacci စက်များကို (အနည်းဆုံး recursive call တစ်ခု လုပ်ဆောင်ရန် လိုအပ်သော) nontrivial input အချို့ကို အသုံးပြု၍ ကိုယ်တိုင် လက်ဖြင့် စမ်းသပ်မောင်းနှင် (hand-simulate) ကြည့်ပါ။ လုပ်ဆောင်မှု၏ အရေးကြီးသော အချက်တိုင်းတွင် stack ၏ ပါဝင်အကြောင်းအရာများကို ပြသပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-5_002e6"></a>လေ့ကျင့်ခန်း ၅.၆-</strong> Fibonacci စက်၏ controller sequence တွင် ပိုမိုမြန်ဆန်သော စက်တစ်ခု ဖြစ်လာစေရန် ဖယ်ရှားနိုင်သည့် ပိုနေသော <code>save</code> တစ်ခုနှင့် <code>restore</code> တစ်ခု ရှိနေကြောင်း Ben Bitdiddle က သတိပြုမိသည်။ ထို instruction များသည် မမည်သည့်နေရာတွင် ရှိသနည်း။
+</p></blockquote>
+
+<a id="g_t5_002e1_002e5"></a>
+<a id="Instruction-Summary"></a>
+<h4 class="subsection"><span class="secnum">5.1.5</span><span class="sectitle">ညွှန်ကြားချက်များ အကျဉ်းချုပ်</span></h4>
+
+<p>ကျွန်ုပ်တို့၏ register-machine language ရှိ controller ညွှန်ကြားချက်တစ်ခုတွင် အောက်ပါပုံစံများထဲမှ တစ်ခုရှိပြီး၊ တစ်ခုစီသော <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">⟨</mo>
+    <mspace width="0.06em"/>
+    <mi>i</mi>
+    <mi>n</mi>
+    <mi>p</mi>
+    <mi>u</mi>
+    <msub>
+      <mi>t</mi>
+      <mi>i</mi>
+    </msub>
+    <mo stretchy="false">⟩</mo>
+  </mrow>
+</math> သည် 
+<code>(reg ⟨<var>register-name</var>⟩)</code> သို့မဟုတ် <code>(const ⟨<var>constant-value</var>⟩)</code> ဖြစ်သည်။
+ဤညွှန်ကြားချက်များကို <a href="#g_t5_002e1_002e1">5.1.1</a> တွင် မိတ်ဆက်ခဲ့သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">assign ⟨</span><var><span class="pln">register-name</span></var><span class="pln">⟩ </span><span class="opn">(</span><span class="pln">reg ⟨</span><var><span class="pln">register-name</span></var><span class="pln">⟩</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">assign ⟨</span><var><span class="pln">register-name</span></var><span class="pln">⟩ 
+        </span><span class="opn">(</span><span class="pln">const ⟨</span><var><span class="pln">constant-value</span></var><span class="pln">⟩</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">assign ⟨</span><var><span class="pln">register-name</span></var><span class="pln">⟩ 
+        </span><span class="opn">(</span><span class="pln">op ⟨</span><var><span class="pln">operation-name</span></var><span class="pln">⟩</span><span class="clo">)</span><span class="pln"> 
+        ⟨</span><var><span class="pln">input</span><span class="pun">₁</span></var><span class="pln">⟩ </span><span class="roman"><span class="pun">…</span></span><span class="pln"> ⟨</span><var><span class="pln">input</span><span class="pun">ₙ</span></var><span class="pln">⟩</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">perform </span><span class="opn">(</span><span class="pln">op ⟨</span><var><span class="pln">operation-name</span></var><span class="pln">⟩</span><span class="clo">)</span><span class="pln"> 
+         ⟨</span><var><span class="pln">input</span><span class="pun">₁</span></var><span class="pln">⟩ 
+         </span><span class="roman"><span class="pun">…</span></span><span class="pln"> 
+         ⟨</span><var><span class="pln">input</span><span class="pun">ₙ</span></var><span class="pln">⟩</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">test </span><span class="opn">(</span><span class="pln">op ⟨</span><var><span class="pln">operation-name</span></var><span class="pln">⟩</span><span class="clo">)</span><span class="pln"> 
+      ⟨</span><var><span class="pln">input</span><span class="pun">₁</span></var><span class="pln">⟩ 
+      </span><span class="roman"><span class="pun">…</span></span><span class="pln"> 
+      ⟨</span><var><span class="pln">input</span><span class="pun">ₙ</span></var><span class="pln">⟩</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">branch </span><span class="opn">(</span><span class="pln">label ⟨</span><var><span class="pln">label-name</span></var><span class="pln">⟩</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">goto </span><span class="opn">(</span><span class="pln">label ⟨</span><var><span class="pln">label-name</span></var><span class="pln">⟩</span><span class="clo">))</span></pre></div>
+
+<p>label များကို သိမ်းဆည်းရန် register များကို အသုံးပြုခြင်းကို <a href="#g_t5_002e1_002e3">5.1.3</a> တွင် မိတ်ဆက်ခဲ့သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">assign ⟨</span><var><span class="pln">register-name</span></var><span class="pln">⟩ </span><span class="opn">(</span><span class="pln">label ⟨</span><var><span class="pln">label-name</span></var><span class="pln">⟩</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">goto </span><span class="opn">(</span><span class="pln">reg ⟨</span><var><span class="pln">register-name</span></var><span class="pln">⟩</span><span class="clo">))</span></pre></div>
+
+<p>stack ကို အသုံးပြုရန် ညွှန်ကြားချက်များကို <a href="#g_t5_002e1_002e4">5.1.4</a> တွင် မိတ်ဆက်ခဲ့သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">save ⟨</span><var><span class="pln">register-name</span></var><span class="pln">⟩</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">restore ⟨</span><var><span class="pln">register-name</span></var><span class="pln">⟩</span><span class="clo">)</span></pre></div>
+
+<p>ယခုအချိန်အထိ ကျွန်ုပ်တို့တွေ့ခဲ့ရသော တစ်ခုတည်းသော <code>⟨</code><var>constant-value</var><code>⟩</code> အမျိုးအစားမှာ ကိန်းဂဏန်း (number) ဖြစ်သော်လည်း၊ နောက်ပိုင်းတွင် string များ၊ symbol များနှင့် list များကို အသုံးပြုမည်ဖြစ်သည်။
+ဥပမာအားဖြင့်၊<br />
+<code>(const "abc")</code> သည် string <code>"abc"</code> ဖြစ်သည်၊<br />
+<code>(const abc)</code> သည် symbol <code>abc</code> ဖြစ်သည်၊<br />
+<code>(const (a b c))</code> သည် list <code>(a b c)</code> ဖြစ်သည်၊<br />
+နှင့် <code>(const ())</code> သည် empty list ဖြစ်သည်။
+</p>
+<div class="footnote">
+<h4 class="footnotes-heading">အောက်ခြေမှတ်စုများ</h4>
+
+<div id="FOOT286"><p><a class="footnote_backlink" href="#DOCF286"><sup>286</sup></a>
+ဤယူဆချက်သည် အလွန်တရာ ရှုပ်ထွေးသော အချက်များကို လျစ်လျူရှုထားသည်။ ပုံမှန်အားဖြင့် Lisp system တစ်ခု၏ အကောင်အထည်ဖော်မှု၏ အစိတ်အပိုင်းအတော်များများကို ဖတ်ရှုခြင်း (reading) နှင့် ရိုက်နှိပ်ခြင်း (printing) များ အဆင်ပြေစေရန်အတွက် ရည်ရွယ်ထားခြင်းဖြစ်သည်။</p>
+</div>
+<div id="FOOT287"><p><a class="footnote_backlink" href="#DOCF287"><sup>287</sup></a>
+တစ်စုံတစ်ယောက်က <code>n</code> အဟောင်းကို သိမ်းဆည်းရန် မလိုဟု ငြင်းခုံနိုင်သည်၊ အဘယ်ကြောင့်ဆိုသော် ၎င်းကို လျှော့ချ (decrement) ပြီး ပုစ္ဆာခွဲ (subproblem) ကို ဖြေရှင်းပြီးနောက်၊ တန်ဖိုးအဟောင်းကို ပြန်လည်ရရှိရန် ၎င်းကို ပြန်လည်တိုးမြှင့် (increment) ရုံသာ ဖြစ်သောကြောင့်ဖြစ်သည်။ ဤဗျူဟာသည် factorial အတွက် အလုပ်ဖြစ်သော်လည်း၊ ယေဘုယျအားဖြင့် အလုပ်မဖြစ်နိုင်ပါ၊ အကြောင်းမှာ register တစ်ခု၏ တန်ဖိုးအဟောင်းကို တန်ဖိုးအသစ်မှ အမြဲတမ်း တွက်ချက်၍ မရနိုင်သောကြောင့်ဖြစ်သည်။</p>
+</div>
+<div id="FOOT288"><p><a class="footnote_backlink" href="#DOCF288"><sup>288</sup></a>
+<a href="5_002e3.html#g_t5_002e3">5.3</a> တွင် stack တစ်ခုကို ပိုမိုအခြေခံကျသော (primitive) လုပ်ဆောင်ချက်များဖြင့် မည်သို့ အကောင်အထည်ဖော်ရမည်ကို တွေ့ရမည်ဖြစ်သည်။</p>
+</div>
+</div>
+<nav class="header">
+<p>
+Next: <a href="5_002e2.html#g_t5_002e2" accesskey="n" rel="next">5.2</a>, Prev: <a href="Chapter-5.html#Chapter-5" accesskey="p" rel="prev">Chapter 5</a>, Up: <a href="#g_t5_002e1" accesskey="u" rel="prev">5.1</a>   [<a href="index.html#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+
+
+</section><span class="bottom jump" title="Jump to bottom"><a href="#pagebottom" accesskey="b">⇣</a></span><a id="pagebottom"></a>
+</body>
+</html>

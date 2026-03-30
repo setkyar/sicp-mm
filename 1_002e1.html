@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="my" lang="my">
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>Structure and Interpretation of Computer Programs, 2e: 1.1</title>
+
+<meta name="description" content="Structure and Interpretation of Computer Programs, 2e: 1.1" />
+<meta name="keywords" content="Structure and Interpretation of Computer Programs, 2e: 1.1" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="Generator" content="texi2any" />
+<meta charset="utf-8" />
+<link href="index.html#Top" rel="start" title="Top" />
+<link href="Term-Index.html#Term-Index" rel="index" title="Term Index" />
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents" />
+<link href="Chapter-1.html#Chapter-1" rel="prev" title="Chapter 1" />
+<link href="1_002e2.html#g_t1_002e2" rel="next" title="1.2" />
+<link href="Chapter-1.html#Chapter-1" rel="prev" title="Chapter 1" />
+
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/prettify.css" rel="stylesheet" type="text/css" />
+
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/footnotes.js" type="text/javascript"></script>
+<script src="js/browsertest.js" type="text/javascript"></script>
+</head>
+
+<body>
+<section><span class="top jump" title="Jump to top"><a href="#pagetop" accesskey="t">⇡</a></span><a id="pagetop"></a><a id="g_t1_002e1"></a>
+<nav class="header">
+<p>
+Next: <a href="1_002e2.html#g_t1_002e2" accesskey="n" rel="next">1.2</a>, Prev: <a href="Chapter-1.html#Chapter-1" accesskey="p" rel="prev">Chapter 1</a>, Up: <a href="Chapter-1.html#Chapter-1" accesskey="u" rel="prev">Chapter 1</a>   [<a href="index.html#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+<a id="The-Elements-of-Programming"></a>
+<h3 class="section"><span class="secnum">1.1</span><span class="sectitle">The Elements of Programming</span></h3>
+
+<p>စွမ်းအားထက်မြက်သော ပရိုဂရမ်မင်းဘာသာစကားတစ်ခုသည် ကွန်ပျူတာကို လုပ်ငန်းဆောင်တာများ လုပ်ဆောင်ရန် ညွှန်ကြားရုံမျှသာ မဟုတ်ပါ။ ဤဘာသာစကားသည် လုပ်ငန်းစဉ်များ (processes) နှင့်ပတ်သက်သော ကျွန်ုပ်တို့၏ အတွေးအခေါ်များကို စုစည်းပေးသည့် မူဘောင် (framework) တစ်ခုအဖြစ်လည်း အသုံးတော်ခံပါသည်။ ထို့ကြောင့် ဘာသာစကားတစ်ခုအကြောင်း ဖော်ပြသည့်အခါ၊ ရိုးရှင်းသော အတွေးအခေါ်များကို ပေါင်းစပ်ပြီး ပိုမိုရှုပ်ထွေးသော အတွေးအခေါ်များ ဖြစ်လာစေရန် ထိုဘာသာစကားက ပံ့ပိုးပေးထားသော နည်းလမ်းများကို အထူးဂရုပြုသင့်ပါသည်။ စွမ်းအားထက်မြက်သော ဘာသာစကားတိုင်းတွင် ယင်းကို လုပ်ဆောင်ရန် နည်းလမ်း (mechanisms) သုံးမျိုးရှိသည်:
+</p>
+<ul>
+<li> <b>primitive expressions</b>၊
+၎င်းတို့သည် ဘာသာစကားတွင် အခြေခံအကျဆုံး အရာဝတ္ထုများကို ကိုယ်စားပြုသည်၊
+
+</li><li> <b>means of combination</b>၊
+၎င်းတို့ဖြင့် ရိုးရှင်းသော အစိတ်အပိုင်းများမှ ပေါင်းစပ်အစိတ်အပိုင်းများ (compound elements) ကို တည်ဆောက်သည်၊ နှင့်
+
+</li><li> <b>means of abstraction</b>၊
+၎င်းတို့ဖြင့် ပေါင်းစပ်အစိတ်အပိုင်းများကို အမည်ပေးနိုင်ပြီး တစ်ခုချင်းစီအလိုက် ကိုင်တွယ်အသုံးပြုနိုင်ပါသည်။
+
+</li></ul>
+
+<p>ပရိုဂရမ်ရေးဆွဲခြင်းတွင် ကျွန်ုပ်တို့သည် အစိတ်အပိုင်း နှစ်မျိုးနှင့် လုပ်ဆောင်ကြရသည်- ၎င်းတို့မှာ လုပ်ထုံးလုပ်နည်းများ (procedures) နှင့် ဒေတာ (data) တို့ ဖြစ်သည်။ (နောက်ပိုင်းတွင် ၎င်းတို့သည် အမှန်တကယ်တွင် ထိုမျှလောက် ကွဲပြားမှုမရှိကြောင်း တွေ့ရှိရပါလိမ့်မည်။) အလွတ်သဘောအရမူ ဒေတာ (data) ဆိုသည်မှာ ကျွန်ုပ်တို့ ကိုင်တွယ်အသုံးပြုလိုသော "အရာဝတ္ထုများ" ဖြစ်ပြီး၊ လုပ်ထုံးလုပ်နည်းများ (procedures) ဆိုသည်မှာ ထိုဒေတာများကို ကိုင်တွယ်အသုံးပြုရန် စည်းမျဉ်းများ၏ ဖော်ပြချက်များ ဖြစ်သည်။ ထို့ကြောင့် မည်သည့် စွမ်းအားထက်မြက်သော ပရိုဂရမ်မင်းဘာသာစကားမဆို အခြေခံဒေတာ (primitive data) နှင့် အခြေခံလုပ်ထုံးလုပ်နည်း (primitive procedures) များကို ဖော်ပြနိုင်ရမည်ဖြစ်ပြီး၊ လုပ်ထုံးလုပ်နည်းများနှင့် ဒေတာများကို ပေါင်းစပ်ရန်နှင့် စိတ္တဇပြုရန် နည်းလမ်းများလည်း ရှိသင့်ပါသည်။
+</p>
+<p>ဤအခန်းတွင် ကျွန်ုပ်တို့သည် လုပ်ထုံးလုပ်နည်းများ တည်ဆောက်ခြင်းဆိုင်ရာ စည်းမျဉ်းများကိုသာ အဓိကအာရုံစိုက်နိုင်ရန် ရိုးရှင်းသော ကိန်းဂဏန်းဒေတာ (numerical data) များနှင့်သာ လုပ်ဆောင်သွားပါမည်။<a class="footnote_link" id="DOCF4" href="#FOOT4"><sup>4</sup></a> နောင်အခန်းများတွင် ဤစည်းမျဉ်းများကပင် ပေါင်းစပ်ဒေတာ (compound data) များကို ကိုင်တွယ်အသုံးပြုရန် လုပ်ထုံးလုပ်နည်းများကို တည်ဆောက်နိုင်စေကြောင်း တွေ့မြင်ရပါလိမ့်မည်။
+</p>
+
+<a id="g_t1_002e1_002e1"></a>
+<a id="Expressions"></a>
+<h4 class="subsection"><span class="secnum">1.1.1</span><span class="sectitle">Expressions</span></h4>
+
+<p>ပရိုဂရမ်ရေးဆွဲခြင်းကို စတင်ရန် လွယ်ကူသောနည်းလမ်းတစ်ခုမှာ Lisp ၏ မျိုးကွဲတစ်ခုဖြစ်သော Scheme အတွက် interpreter တစ်ခုနှင့် ပုံမှန် အပြန်အလှန်လုပ်ဆောင်မှုအချို့ကို လေ့လာကြည့်ခြင်းပင် ဖြစ်သည်။ သင်သည် ကွန်ပျူတာ တာမီနယ် (terminal) တစ်ခုရှေ့တွင် ထိုင်နေသည်ဟု မြင်ယောင်ကြည့်ပါ။ သင်သည် <a id="index-expression"></a>
+<em>expression</em> တစ်ခုကို ရိုက်ထည့်လိုက်လျှင် interpreter က ထို expression ကို <a id="index-evaluating"></a>
+<em>evaluating</em> (တွက်ချက်ခြင်း) ပြုလုပ်ပြီး ရရှိလာသော ရလဒ်ကို ပြသပေးမည် ဖြစ်သည်။
+</p>
+<p>သင် ရိုက်ထည့်နိုင်သော အခြေခံ expression တစ်မျိုးမှာ ကိန်းဂဏန်း (number) တစ်ခု ဖြစ်သည်။ (ပိုမို တိကျစွာပြောရလျှင် သင်ရိုက်ထည့်လိုက်သော expression သည် ဆယ်လီစိတ်စနစ် (base 10) ဖြင့် ကိန်းဂဏန်းကို ကိုယ်စားပြုသော ဂဏန်းများ ဖြစ်သည်။) အကယ်၍ သင်သည် Lisp သို့ ကိန်းဂဏန်းတစ်ခု ပေးလိုက်လျှင်
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="lit">486</span></pre></div>
+
+<p>interpreter က အောက်ပါအတိုင်း ပရင့်ထုတ်ပြီး ပြန်လည် တုံ့ပြန်ပါလိမ့်မည်<a class="footnote_link" id="DOCF5" href="#FOOT5"><sup>5</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><i><span class="lit">486</span></i>
+</pre></div>
+
+<p>ကိန်းဂဏန်းများကို ကိုယ်စားပြုသော expression များကို အခြေခံလုပ်ထုံးလုပ်နည်း (ဥပမာ <code>+</code> သို့မဟုတ် <code>*</code>) ကို ကိုယ်စားပြုသော expression တစ်ခုနှင့် ပေါင်းစပ်ကာ ထိုကိန်းဂဏန်းများအပေါ် လုပ်ထုံးလုပ်နည်းကို အသုံးချခြင်းကို ကိုယ်စားပြုသော ပေါင်းစပ် expression တစ်ခုအဖြစ် ဖွဲ့စည်းနိုင်သည်။ ဥပမာအားဖြင့်<!-- /@w -->:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="lit">137</span><span class="pln"> </span><span class="lit">349</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">486</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="lit">1000</span><span class="pln"> </span><span class="lit">334</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">666</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="lit">5</span><span class="pln"> </span><span class="lit">99</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">495</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pun">/</span><span class="pln"> </span><span class="lit">10</span><span class="pln"> </span><span class="lit">5</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">2</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="lit">2.7</span><span class="pln"> </span><span class="lit">10</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">12.7</span></i>
+</pre></div>
+
+<p>လုပ်ထုံးလုပ်နည်း အသုံးချမှုကို ဖော်ပြရန်အတွက် expression စာရင်းတစ်ခုကို လက်သည်းကွင်းများအတွင်း ကန့်သတ်ဖွဲ့စည်းထားသော ဤကဲ့သို့သော expression များကို
+<a id="index-combinations"></a>
+<em>combinations</em> ဟု ခေါ်သည်။ စာရင်း၏ ဘယ်ဘက်အစွန်းဆုံး အစိတ်အပိုင်းကို
+<a id="index-operator"></a>
+<em>operator</em> ဟု ခေါ်ပြီး၊ ကျန်ရှိသော အစိတ်အပိုင်းများကိုမူ <a id="index-operands"></a>
+<em>operands</em> ဟု ခေါ်သည်။ Combination တစ်ခု၏ တန်ဖိုးကို operator က သတ်မှတ်ပေးထားသော လုပ်ထုံးလုပ်နည်းကို <a id="index-arguments"></a>
+<em>arguments</em> များဖြစ်သည့် operands များ၏ တန်ဖိုးများအပေါ် အသုံးချခြင်းဖြင့် ရရှိသည်။
+</p>
+<p>Operator ကို operands များ၏ ဘယ်ဘက်တွင် ထားရှိသည့် အစဉ်အလာကို
+<a id="index-prefix-notation"></a>
+<em>prefix notation</em> ဟု သိကြပြီး၊ ၎င်းသည် ထုံးစံအတိုင်း သင်္ချာဆိုင်ရာ အစဉ်အလာများနှင့် သိသိသာသာ ကွဲပြားသောကြောင့် အစပိုင်းတွင် အနည်းငယ် ရှုပ်ထွေးနိုင်ပါသည်။ သို့သော်လည်း Prefix notation တွင် အားသာချက်များစွာ ရှိပါသည်။ ၎င်းတို့ထဲမှ တစ်ခုမှာ အောက်ပါဥပမာများတွင် တွေ့ရသည့်အတိုင်း argument အရေအတွက် အကန့်အသတ်မရှိ လက်ခံနိုင်သော လုပ်ထုံးလုပ်နည်းများအတွက် အဆင်ပြေစေခြင်းပင် ဖြစ်သည်:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="lit">21</span><span class="pln"> </span><span class="lit">35</span><span class="pln"> </span><span class="lit">12</span><span class="pln"> </span><span class="lit">7</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">75</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="lit">25</span><span class="pln"> </span><span class="lit">4</span><span class="pln"> </span><span class="lit">12</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">1200</span></i>
+</pre></div>
+
+<p>Operator သည် အမြဲတမ်း ဘယ်ဘက်အစွန်းဆုံး အစိတ်အပိုင်း ဖြစ်နေခြင်းနှင့် combination တစ်ခုလုံးကို လက်သည်းကွင်းများဖြင့် ကန့်သတ်ထားခြင်းကြောင့် မရေမရာ ဖြစ်စရာ အကြောင်းမရှိပါ။
+</p>
+<p>Prefix notation ၏ ဒုတိယ အားသာချက်မှာ ၎င်းသည် combination များကို <i>nested</i> ဖြစ်စေရန် (သို့မဟုတ်) combination များ၏ အစိတ်အပိုင်းများ ကိုယ်တိုင်က combination များ ဖြစ်လာစေရန် ရိုးရှင်းစွာ တိုးချဲ့နိုင်ခြင်းပင် ဖြစ်သည်:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="lit">5</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="lit">10</span><span class="pln"> </span><span class="lit">6</span><span class="clo">))</span><span class="pln">
+</span><i><span class="lit">19</span></i>
+</pre></div>
+
+<p>ထိုကဲ့သို့ ထပ်ဆင့်ခြင်း (nesting) ၏ အနက်နှင့် Lisp interpreter က တွက်ချက်နိုင်သော expression များ၏ အလုံးစုံ ရှုပ်ထွေးမှုအတွက် (မူအားဖြင့်) အကန့်အသတ် မရှိပါ။ အောက်ပါကဲ့သို့သော အတော်အတန် ရိုးရှင်းနေသေးသည့် expression များကြောင့်ပင် လူသားများဖြစ်သည့် ကျွန်ုပ်တို့မှာ ရှုပ်ထွေးသွားရခြင်း ဖြစ်သည်:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="lit">2</span><span class="pln"> </span><span class="lit">4</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="lit">5</span><span class="clo">)))</span><span class="pln"> </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="lit">10</span><span class="pln"> </span><span class="lit">7</span><span class="clo">)</span><span class="pln"> </span><span class="lit">6</span><span class="clo">))</span></pre></div>
+
+<p>၎င်းကို interpreter က ၅၇ ဟု အလွယ်တကူ တွက်ချက်ပေးပါလိမ့်မည်။ ကျွန်ုပ်တို့အနေဖြင့် ထိုကဲ့သို့သော expression များကို အောက်ပါပုံစံဖြင့် ရေးသားခြင်းဖြင့် အထောက်အကူ ရနိုင်ပါသည်
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="lit">3</span><span class="pln">
+      </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="lit">2</span><span class="pln"> </span><span class="lit">4</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="lit">5</span><span class="clo">)))</span><span class="pln">
+   </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="lit">10</span><span class="pln"> </span><span class="lit">7</span><span class="clo">)</span><span class="pln">
+      </span><span class="lit">6</span><span class="clo">))</span></pre></div>
+
+<p>၎င်းသည် <a id="index-pretty_002dprinting"></a>
+<em>pretty-printing</em> ဟုခေါ်သော ဖောမတ်ချခြင်း အစဉ်အလာကို လိုက်နာခြင်းဖြစ်ပြီး၊ ရှည်လျားသော combination တစ်ခုစီတွင် operand များကို ဒေါင်လိုက် ညီနေအောင် ရေးသားခြင်း ဖြစ်သည်။ ရရှိလာသော အကွာအဝေး (indentations) များသည် expression ၏ တည်ဆောက်ပုံကို ရှင်းလင်းစွာ ဖော်ပြပေးသည်။<a class="footnote_link" id="DOCF6" href="#FOOT6"><sup>6</sup></a>
+</p>
+<p>ရှုပ်ထွေးသော expression များ ဖြစ်နေသည့်တိုင် interpreter သည် အမြဲတမ်း တူညီသော အခြေခံ စက်ဝန်းအတိုင်း အလုပ်လုပ်သည်- ၎င်းသည် တာမီနယ်မှ expression တစ်ခုကို ဖတ်သည်၊ expression ကို တွက်ချက်သည်၊ ထို့နောက် ရလဒ်ကို ပရင့်ထုတ်သည်။ ဤလုပ်ဆောင်ပုံစနစ်ကို interpreter သည် <a id="index-read_002deval_002dprint-loop"></a>
+<em>read-eval-print loop</em> ဖြင့် အလုပ်လုပ်သည်ဟု ဆိုလေ့ရှိသည်။ အထူးသဖြင့် expression ၏ တန်ဖိုးကို ပရင့်ထုတ်ရန် interpreter အား တကူးတက ညွှန်ကြားရန် မလိုအပ်သည်ကို သတိပြုပါ။<a class="footnote_link" id="DOCF7" href="#FOOT7"><sup>7</sup></a>
+</p>
+<a id="g_t1_002e1_002e2"></a>
+<a id="Naming-and-the-Environment"></a>
+<h4 class="subsection"><span class="secnum">1.1.2</span><span class="sectitle">Naming and the Environment</span></h4>
+
+<p>ပရိုဂရမ်မင်းဘာသာစကားတစ်ခု၏ အရေးကြီးသော ကဏ္ဍတစ်ခုမှာ တွက်ချက်မှုဆိုင်ရာ အရာဝတ္ထု (computational objects) များကို ရည်ညွှန်းရန် အမည်များကို အသုံးပြုနိုင်အောင် ပံ့ပိုးပေးခြင်းပင် ဖြစ်သည်။ ထိုအမည်သည် ၎င်း၏ တန်ဖိုး (value) မှာ အရာဝတ္ထုဖြစ်သော <a id="index-variable"></a>
+<em>variable</em> တစ်ခုကို သတ်မှတ်ပေးသည်ဟု ဆိုကြသည်။
+</p>
+<p>Lisp ၏ Scheme မျိုးကွဲတွင် အရာဝတ္ထုများကို <code>define</code> ဖြင့် အမည်ပေးသည်။ အောက်ပါအတိုင်း ရိုက်ထည့်ခြင်းသည်
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> size </span><span class="lit">2</span><span class="clo">)</span></pre></div>
+
+<p>interpreter အား <code>size</code> ဆိုသော အမည်တွင် တန်ဖိုး ၂ ကို တွဲဖက်သတ်မှတ်ရန် ဖြစ်စေသည်။<a class="footnote_link" id="DOCF8" href="#FOOT8"><sup>8</sup></a> <code>size</code> ဆိုသော အမည်ကို ကိန်းဂဏန်း ၂ နှင့် တွဲဖက်ပြီးသည်နှင့်၊ ကျွန်ုပ်တို့သည် တန်ဖိုး ၂ ကို အမည်ဖြင့် ရည်ညွှန်းနိုင်ပြီ ဖြစ်သည်:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="pln">size
+</span><i><span class="lit">2</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="lit">5</span><span class="pln"> size</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">10</span></i>
+</pre></div>
+
+<p><code>define</code> အသုံးပြုခြင်း၏ နောက်ထပ် ဥပမာများမှာ အောက်ပါအတိုင်း ဖြစ်သည်:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> pi </span><span class="lit">3.14159</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> radius </span><span class="lit">10</span><span class="clo">)</span><span class="pln">
+
+</span><span class="opn">(</span><span class="pun">*</span><span class="pln"> pi </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> radius radius</span><span class="clo">))</span><span class="pln">
+</span><i><span class="lit">314.159</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> circumference </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="lit">2</span><span class="pln"> pi radius</span><span class="clo">))</span><span class="pln">
+
+circumference
+</span><i><span class="lit">62.8318</span></i>
+</pre></div>
+
+<p><code>Define</code> သည် ကျွန်ုပ်တို့ ဘာသာစကား၏ အခြေခံအကျဆုံး စိတ္တဇပြုခြင်း (abstraction) နည်းလမ်း ဖြစ်သည်၊ အကြောင်းမှာ ၎င်းသည် အထက်တွင် တွက်ချက်ခဲ့သော <code>circumference</code> ကဲ့သို့သော ပေါင်းစပ်လုပ်ဆောင်မှုများ၏ ရလဒ်များကို ရိုးရှင်းသော အမည်များဖြင့် ရည်ညွှန်းနိုင်ရန် ခွင့်ပြုသောကြောင့် ဖြစ်သည်။ ယေဘုယျအားဖြင့် တွက်ချက်မှုဆိုင်ရာ အရာဝတ္ထုများသည် အလွန်ရှုပ်ထွေးသော တည်ဆောက်ပုံများ ရှိနိုင်ပြီး၊ ၎င်းတို့ကို အသုံးပြုလိုသည့် အခါတိုင်းတွင် အသေးစိတ်အချက်အလက်များကို မှတ်သားရန်နှင့် ထပ်ခါတလဲလဲ ရေးသားရန်မှာ အလွန်ပင် အဆင်မပြေနိုင်ပါ။ အမှန်စင်စစ်၊ ရှုပ်ထွေးသော ပရိုဂရမ်များကို ပိုမိုရှုပ်ထွေးလာသော တွက်ချက်မှုဆိုင်ရာ အရာဝတ္ထုများကို တစ်ဆင့်ချင်း တည်ဆောက်ခြင်းဖြင့် ဖန်တီးထားခြင်း ဖြစ်သည်။ interpreter သည် ဤကဲ့သို့ တစ်ဆင့်ချင်း ပရိုဂရမ် တည်ဆောက်ခြင်းကို အထူးပင် အဆင်ပြေစေသည်၊ အကြောင်းမှာ အမည်နှင့် အရာဝတ္ထု တွဲဖက်မှုများကို ဆက်တိုက်လုပ်ဆောင်မှုများတွင် တိုးပွားတည်ဆောက်နိုင်သောကြောင့် ဖြစ်သည်။ ဤအင်္ဂါရပ်သည် ပရိုဂရမ်များကို တဖြည်းဖြည်းချင်း တိုးမြှင့်ဖန်တီးခြင်းနှင့် စမ်းသပ်ခြင်းကို အားပေးပြီး၊ Lisp ပရိုဂရမ်တစ်ခုတွင် များသောအားဖြင့် ရိုးရှင်းသော လုပ်ထုံးလုပ်နည်း အမြောက်အမြား ပါဝင်နေရခြင်း၏ အဓိက အကြောင်းရင်းလည်း ဖြစ်သည်။
+</p>
+<p>သင်္ကေတ (symbols) များကို တန်ဖိုးများနှင့် တွဲဖက်နိုင်ခြင်းနှင့် နောက်ပိုင်းတွင် ၎င်းတို့ကို ပြန်လည် ထုတ်ယူနိုင်ခြင်းတို့သည် interpreter အနေဖြင့် အမည်-အရာဝတ္ထု တွဲများကို မှတ်သားထားရန် မှတ်ဉာဏ် (memory) တစ်မျိုး ထိန်းသိမ်းထားရမည်ကို ရှင်းလင်းစေသည်။ ဤမှတ်ဉာဏ်ကို
+<a id="index-environment"></a>
+<em>environment</em> (ပတ်ဝန်းကျင်) ဟု ခေါ်သည် (တွက်ချက်မှုတစ်ခုတွင် မတူညီသော ပတ်ဝန်းကျင် အမြောက်အမြား ပါဝင်နိုင်သည်ကို နောက်ပိုင်းတွင် တွေ့ရမည် ဖြစ်သောကြောင့်၊ ပိုမို တိကျစွာပြောရလျှင် <a id="index-global-environment"></a>
+<em>global environment</em> ဖြစ်သည်)။<a class="footnote_link" id="DOCF9" href="#FOOT9"><sup>9</sup></a>
+</p>
+<a id="g_t1_002e1_002e3"></a>
+<a id="Evaluating-Combinations"></a>
+<h4 class="subsection"><span class="secnum">1.1.3</span><span class="sectitle">Evaluating Combinations</span></h4>
+
+<p>ဤအခန်း၏ ကျွန်ုပ်တို့၏ ရည်မှန်းချက်တစ်ခုမှာ လုပ်ထုံးလုပ်နည်းအရ စဥ်းစားတွေးခေါ်မှု (thinking procedurally) ဆိုင်ရာ ကိစ္စရပ်များကို သီးခြားခွဲထုတ်ရန်ဖြစ်သည်။ သာဓကတစ်ခုအနေဖြင့် combination များကို တွက်ချက်ရာတွင် (evaluating combinations) interpreter ကိုယ်တိုင်သည် လုပ်ထုံးလုပ်နည်း (procedure) တစ်ခုကို လိုက်နာနေခြင်းဖြစ်သည်ကို သုံးသပ်ကြည့်ကြပါစို့။
+</p>
+<blockquote>
+<p>Combination တစ်ခုကို တွက်ချက်ရန်အတွက် အောက်ပါအတိုင်း လုပ်ဆောင်ပါ-
+</p>
+<ol>
+<li> Combination ၏ subexpression များကို တွက်ချက်ပါ။
+
+</li><li> လက်ဝဲဘက်အကျဆုံး subexpression ၏ တန်ဖိုးဖြစ်သော procedure (operator) ကို အခြား subexpression များ၏ တန်ဖိုးများဖြစ်သော argument များ (operands) အပေါ်တွင် သက်ရောက်စေပါ။ (Apply လုပ်ပါ)။
+
+</li></ol>
+</blockquote>
+
+<p>ဤရိုးရှင်းသော စည်းမျဥ်းသည်ပင် ယေဘုယျအားဖြင့် process များအကြောင်း အရေးကြီးသော အချက်အချို့ကို ဖော်ပြနေသည်။ ပထမဦးစွာ၊ combination တစ်ခုအတွက် evaluation process ပြီးမြောက်စေရန် combination ၏ အစိတ်အပိုင်းတစ်ခုချင်းစီအပေါ် evaluation process ကို အရင်လုပ်ဆောင်ရမည်ဟု ပထမအဆင့်က ပြဌာန်းထားသည်ကို သတိပြုပါ။ ထို့ကြောင့် evaluation rule သည် သဘာဝအရ <a id="index-recursive"></a>
+<em>recursive</em> ဖြစ်သည်။ ဆိုလိုသည်မှာ ၎င်း၏ အဆင့်များထဲမှ တစ်ခုအနေဖြင့် ၎င်းစည်းမျဥ်းကိုယ်တိုင်ကို ပြန်လည်ခေါ်ယူရန် (invoke) လိုအပ်ချက် ပါဝင်နေသည်။<a class="footnote_link" id="DOCF10" href="#FOOT10"><sup>10</sup></a>
+</p>
+<p>ဆင့်ကဲဆင့်ကဲ ပါဝင်နေသော (deeply nested) combination များတွင် အလွန်ရှုပ်ထွေးသော process အဖြစ် မြင်တွေ့ရမည့်အရာကို ဖော်ပြရန် recursion စိတ်ကူးကို မည်မျှကျစ်လျစ်စွာ အသုံးပြုနိုင်သည်ကို သတိပြုပါ။ ဥပမာအားဖြင့်၊
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="lit">2</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="lit">4</span><span class="pln"> </span><span class="lit">6</span><span class="clo">))</span><span class="pln"> </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="lit">5</span><span class="pln"> </span><span class="lit">7</span><span class="clo">))</span></pre></div>
+
+<p>ကို တွက်ချက်ရန်အတွက် evaluation rule ကို မတူညီသော combination လေးခုတွင် သက်ရောက်စေရန် လိုအပ်သည်။ ဤဖြစ်စဥ်၏ ပုံရိပ်ကို <a href="#Figure-1_002e1">Figure 1.1</a> တွင် ပြထားသည့်အတိုင်း combination ကို သစ်ပင် (tree) ပုံစံဖြင့် ကိုယ်စားပြုခြင်းအားဖြင့် ရရှိနိုင်သည်။ Combination တစ်ခုစီကို node တစ်ခုဖြင့် ကိုယ်စားပြုပြီး ၎င်းမှ ထွက်ပေါ်လာသော operator နှင့် operands တို့သည် အကိုင်းအခက် (branches) များ ဖြစ်ကြသည်။ Terminal node များ (ဆိုလိုသည်မှာ ၎င်းတို့မှ အကိုင်းအခက်များ ထပ်မထွက်သော node များ) သည် operator များ သို့မဟုတ် ကိန်းဂဏန်းများကို ကိုယ်စားပြုသည်။ Evaluation ကို သစ်ပင်ပုံစံဖြင့် ကြည့်မည်ဆိုလျှင်၊ operands များ၏ တန်ဖိုးများသည် terminal node များမှ စတင်ကာ အထက်သို့ စီးဆင်းသွားပြီး (percolate upward) ပိုမိုမြင့်မားသော အဆင့်များတွင် ပေါင်းစပ်သွားသည်ဟု စိတ်ကူးကြည့်နိုင်သည်။ ယေဘုယျအားဖြင့် recursion သည် အထပ်ထပ် အဆင့်ဆင့်ရှိသော (hierarchical)၊ သစ်ပင်ကဲ့သို့သော အရာဝတ္ထုများကို ကိုင်တွယ်ရာတွင် အလွန်ထိရောက်သော နည်းစနစ်တစ်ခုဖြစ်သည်ကို ကျွန်ုပ်တို့ မြင်တွေ့ရမည်ဖြစ်သည်။ အမှန်စင်စစ်၊ evaluation rule ၏ “တန်ဖိုးများ အထက်သို့ စီးဆင်းခြင်း” ပုံစံသည် <a id="index-tree-accumulation"></a>
+<em>tree accumulation</em> ဟု လူသိများသော ယေဘုယျ process အမျိုးအစား၏ ဥပမာတစ်ခု ဖြစ်သည်။
+</p>
+<figure class="float">
+<a id="Figure-1_002e1"></a>
+<object style="width: 20.38ex; height: 20.46ex;" data="fig/chap1/Fig1.1g.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>Figure 1.1:</strong> Subcombination တစ်ခုချင်းစီ၏ တန်ဖိုးကို ပြသထားသော Tree representation။</p>
+</figcaption>
+</figure>
+
+<p>နောက်တစ်ချက်အနေဖြင့်၊ ပထမအဆင့်ကို ထပ်ခါတလဲလဲ အသုံးချခြင်းက ကျွန်ုပ်တို့ကို combination များမဟုတ်ဘဲ numeral များ၊ built-in operator များ သို့မဟုတ် အခြားသော အမည်များကဲ့သို့သော primitive expression များကို တွက်ချက်ရန် လိုအပ်သည့် အချက်သို့ ရောက်ရှိစေသည်။ Primitive အခြေအနေများကို အောက်ပါအတိုင်း သတ်မှတ်ခြင်းဖြင့် ဖြေရှင်းသည်-
+</p>
+<ul>
+<li> Numeral များ၏ တန်ဖိုးများသည် ၎င်းတို့ အမည်ပေးထားသော ကိန်းဂဏန်းများ ဖြစ်သည်။
+
+</li><li> Built-in operator များ၏ တန်ဖိုးများသည် သက်ဆိုင်ရာ operation များကို လုပ်ဆောင်ပေးသည့် machine instruction sequence များ ဖြစ်သည်။
+
+</li><li> အခြားသော အမည်များ၏ တန်ဖိုးများသည် environment အတွင်းရှိ ထိုအမည်များနှင့် ဆက်စပ်နေသော object များ ဖြစ်သည်။
+
+</li></ul>
+
+<p>ဒုတိယစည်းမျဥ်းကို တတိယစည်းမျဥ်း၏ အထူးအခြေအနေတစ်ခုအဖြစ် ယူဆနိုင်သည်။ <code>+</code> နှင့် <code>*</code> ကဲ့သို့သော သင်္ကေတ (symbol) များသည်လည်း global environment တွင် ပါဝင်ပြီး ၎င်းတို့၏ “တန်ဖိုးများ” ဖြစ်သော machine instruction sequence များနှင့် ဆက်စပ်နေသည်ဟု သတ်မှတ်နိုင်သောကြောင့် ဖြစ်သည်။ သတိပြုရန် အဓိကအချက်မှာ expression များရှိ symbol များ၏ အဓိပ္ပာယ်ကို သတ်မှတ်ရာတွင် environment ၏ အခန်းကဏ္ဍဖြစ်သည်။ Lisp ကဲ့သို့သော interactive language တွင် symbol <code>x</code> (သို့မဟုတ် symbol <code>+</code> ပင်လျှင်) အတွက် အဓိပ္ပာယ်ပေးမည့် environment နှင့် ပတ်သက်သော မည်သည့်အချက်အလက်ကိုမျှ မဖော်ပြဘဲ <code>(+ x 1)</code> ကဲ့သို့သော expression တစ်ခု၏ တန်ဖိုးအကြောင်း ပြောဆိုခြင်းသည် အဓိပ္ပာယ်မရှိပေ။ <a href="Chapter-3.html#Chapter-3">Chapter 3</a> တွင် ကျွန်ုပ်တို့ မြင်တွေ့ရမည့်အတိုင်း၊ evaluation ပြုလုပ်မည့် context တစ်ခုကို ပံ့ပိုးပေးသော environment ဟူသည့် ယေဘုယျ အယူအဆသည် program execution ကို နားလည်သဘောပေါက်ရန်အတွက် အရေးကြီးသော အခန်းကဏ္ဍမှ ပါဝင်မည်ဖြစ်သည်။
+</p>
+<p>အထက်တွင် ဖော်ပြထားသော evaluation rule သည် definition များကို မကိုင်တွယ်နိုင်သည်ကို သတိပြုပါ။ ဥပမာအားဖြင့် <code>(define x 3)</code> ကို တွက်ချက်ခြင်းသည် <code>define</code> ကို argument နှစ်ခုအပေါ်တွင် သက်ရောက်ခြင်း မဟုတ်ပါ။ အကြောင်းမှာ ထို argument များထဲမှ တစ်ခုသည် symbol <code>x</code> ၏ တန်ဖိုး ဖြစ်ပြီး အခြားတစ်ခုမှာ 3 ဖြစ်နေသောကြောင့် ဖြစ်သည်။ အမှန်တကယ်တွင် <code>define</code> ၏ ရည်ရွယ်ချက်မှာ <code>x</code> ကို တန်ဖိုးတစ်ခုနှင့် ဆက်စပ်ပေးရန် ဖြစ်သည်။ (ဆိုလိုသည်မှာ <code>(define x 3)</code> သည် combination တစ်ခု မဟုတ်ပါ။)
+</p>
+<p>ယေဘုယျ evaluation rule မှ ထိုကဲ့သို့သော ကင်းလွတ်ခွင့်များကို <a id="index-special-forms"></a>
+<em>special forms</em> ဟု ခေါ်သည်။
+<code>Define</code> သည် ကျွန်ုပ်တို့ ယခုအချိန်အထိ တွေ့မြင်ခဲ့ရသော special form ၏ တစ်ခုတည်းသော ဥပမာဖြစ်သော်လည်း မကြာမီ အခြားအရာများကို တွေ့ရပါမည်။ Special form တစ်ခုစီတွင် ကိုယ်ပိုင် evaluation rule ရှိသည်။ အမျိုးမျိုးသော expression များ (၎င်းတို့နှင့် သက်ဆိုင်ရာ evaluation rule များ အသီးသီးရှိကြသည်) သည် programming language ၏ syntax ကို ဖွဲ့စည်းသည်။ အခြား programming language အများစုနှင့် နှိုင်းယှဥ်ပါက Lisp တွင် အလွန်ရိုးရှင်းသော syntax ရှိသည်။ ဆိုလိုသည်မှာ expression များအတွက် evaluation rule ကို ရိုးရှင်းသော ယေဘုယျ စည်းမျဥ်းတစ်ခုနှင့် special form အနည်းငယ်အတွက် သီးခြား စည်းမျဥ်းများဖြင့် ဖော်ပြနိုင်သည်။<a class="footnote_link" id="DOCF11" href="#FOOT11"><sup>11</sup></a>
+</p>
+<a id="g_t1_002e1_002e4"></a>
+<a id="Compound-Procedures"></a>
+<h4 class="subsection"><span class="secnum">1.1.4</span><span class="sectitle">Compound Procedures</span></h4>
+
+<p>စွမ်းအားထက်မြက်သော မည်သည့် programming language တွင်မဆို ပါဝင်ရမည့် အစိတ်အပိုင်းအချို့ကို Lisp တွင် ကျွန်ုပ်တို့ တွေ့ရှိခဲ့ပြီး ဖြစ်သည်-
+</p>
+<ul>
+<li> ကိန်းဂဏန်းများနှင့် ဂဏန်းသင်္ချာ လုပ်ဆောင်ချက်များသည် primitive data နှင့် procedures များ ဖြစ်ကြသည်။
+
+</li><li> Combination များကို တစ်ခုအတွင်းတစ်ခု ထည့်သွင်းခြင်း (Nesting) သည် operation များကို ပေါင်းစပ်ရန် နည်းလမ်းတစ်ခု ဖြစ်စေသည်။
+
+</li><li> အမည်များကို တန်ဖိုးများနှင့် ဆက်စပ်ပေးသော Definition များသည် အကန့်အသတ်ရှိသော abstraction နည်းလမ်းကို ပေးစွမ်းသည်။
+
+</li></ul>
+
+<p>ယခုအခါ ကျွန်ုပ်တို့သည် <a id="index-procedure-definitions"></a>
+<em>procedure definitions</em> အကြောင်းကို လေ့လာပါမည်။ ၎င်းသည် ပေါင်းစပ်လုပ်ဆောင်ချက် (compound operation) တစ်ခုကို အမည်တစ်ခု ပေးနိုင်ပြီး ၎င်းကို ယူနစ်တစ်ခုအနေဖြင့် ပြန်လည်ညွှန်းဆိုနိုင်သော ပိုမိုစွမ်းအားထက်မြက်သည့် abstraction နည်းစနစ်တစ်ခုဖြစ်သည်။
+</p>
+<p>“Square လုပ်ခြင်း” (ကိန်းထပ်ကိန်းရှာခြင်း) ဟူသော စိတ်ကူးကို မည်သို့ဖော်ပြရမည်ကို လေ့လာခြင်းဖြင့် စတင်ကြပါစို့။ “အရာတစ်ခုကို square လုပ်ရန် ၎င်းကို ၎င်းကိုယ်တိုင်နှင့် မြှောက်ပါ” ဟု ကျွန်ုပ်တို့ ပြောနိုင်သည်။ ၎င်းကို ကျွန်ုပ်တို့၏ language တွင် အောက်ပါအတိုင်း ဖော်ပြသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x x</span><span class="clo">))</span></pre></div>
+
+<p>၎င်းကို အောက်ပါအတိုင်း နားလည်နိုင်သည်-
+</p>
+<div class="example">
+<pre class="example">(define (square x)    (*       x       x))
+  |      |      |      |       |       |
+ To square something, multiply it by itself.
+</pre></div>
+
+<p>ဤနေရာတွင် ကျွန်ုပ်တို့၌ <code>square</code> ဟု အမည်ပေးထားသော <a id="index-compound-procedure"></a>
+<em>compound procedure</em> တစ်ခု ရှိသည်။ ဤ procedure သည် အရာတစ်ခုကို ၎င်းကိုယ်တိုင်နှင့် မြှောက်ခြင်းလုပ်ဆောင်ချက်ကို ကိုယ်စားပြုသည်။ မြှောက်ရမည့် အရာကို local name ဖြစ်သော <code>x</code> ဟု ပေးထားပြီး ၎င်းသည် သဘာဝဘာသာစကားရှိ နာမ်စား (pronoun) တစ်ခုကဲ့သို့ အခန်းကဏ္ဍမှ ပါဝင်သည်။ ဤ definition ကို တွက်ချက်ခြင်းသည် ဤ compound procedure ကို ဖန်တီးပြီး ၎င်းကို <code>square</code> ဟူသော အမည်နှင့် ဆက်စပ်ပေးသည်။<a class="footnote_link" id="DOCF12" href="#FOOT12"><sup>12</sup></a>
+</p>
+<p>Procedure definition ၏ ယေဘုယျပုံစံမှာ-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">⟨</span><var><span class="pln">name</span></var><span class="pln">⟩ ⟨</span><var><span class="pln">formal parameters</span></var><span class="pln">⟩</span><span class="clo">)</span><span class="pln"> ⟨</span><var><span class="pln">body</span></var><span class="pln">⟩</span><span class="clo">)</span></pre></div>
+
+<p><code>⟨</code><var>name</var><code>⟩</code> သည် environment တွင် procedure definition နှင့် ဆက်စပ်ရမည့် symbol ဖြစ်သည်။<a class="footnote_link" id="DOCF13" href="#FOOT13"><sup>13</sup></a> <code>⟨</code><var>formal parameters</var><code>⟩</code> များသည် procedure ၏ သက်ဆိုင်ရာ argument များကို ညွှန်းဆိုရန်အတွက် procedure ၏ body အတွင်းတွင် အသုံးပြုသော အမည်များဖြစ်သည်။ <code>⟨</code><var>body</var><code>⟩</code> သည် formal parameter များကို procedure အသုံးချမည့် actual argument များနှင့် အစားထိုးလိုက်သောအခါ procedure application ၏ တန်ဖိုးကို ထုတ်ပေးမည့် expression ဖြစ်သည်။<a class="footnote_link" id="DOCF14" href="#FOOT14"><sup>14</sup></a> <code>⟨</code><var>name</var><code>⟩</code> နှင့် <code>⟨</code><var>formal parameters</var><code>⟩</code> တို့ကို သတ်မှတ်နေသော procedure ကို အမှန်တကယ် ခေါ်ယူရာတွင် အသုံးပြုမည့် ပုံစံအတိုင်းပင် လက်သည်းကွင်းများအတွင်း စုစည်းထားသည်။
+</p>
+<p><code>square</code> ကို define လုပ်ပြီးပါက ၎င်းကို အသုံးပြုနိုင်ပြီဖြစ်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">square </span><span class="lit">21</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">441</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">square </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="lit">2</span><span class="pln"> </span><span class="lit">5</span><span class="clo">))</span><span class="pln">
+</span><i><span class="lit">49</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">square </span><span class="opn">(</span><span class="pln">square </span><span class="lit">3</span><span class="clo">))</span><span class="pln">
+</span><i><span class="lit">81</span></i>
+</pre></div>
+
+<p>အခြား procedure များကို define လုပ်ရာတွင်လည်း <code>square</code> ကို အခြေခံအဆောက်အအုံ (building block) တစ်ခုအနေဖြင့် အသုံးပြုနိုင်သည်။ ဥပမာအားဖြင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mi>x</mi>
+    <mn>2</mn>
+  </msup>
+  <mo>+</mo>
+  <msup>
+    <mi>y</mi>
+    <mn>2</mn>
+  </msup>
+</math> ကို အောက်ပါအတိုင်း ဖော်ပြနိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square y</span><span class="clo">))</span></pre></div>
+
+<p>မည်သည့် ကိန်းနှစ်ခုကိုမဆို argument အဖြစ်ပေးလျှင် ၎င်းတို့၏ square များ ပေါင်းလဒ်ကို ထုတ်ပေးသည့် <code>sum-of-squares</code> procedure ကို အလွယ်တကူ define လုပ်နိုင်သည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sum-of-squares x y</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square y</span><span class="clo">)))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">sum-of-squares </span><span class="lit">3</span><span class="pln"> </span><span class="lit">4</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">25</span></i>
+</pre></div>
+
+<p>ယခုအခါ နောက်ထပ် procedure များ တည်ဆောက်ရန်အတွက် <code>sum-of-squares</code> ကို building block တစ်ခုအနေဖြင့် အသုံးပြုနိုင်ပြီဖြစ်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">f a</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">sum-of-squares </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> a </span><span class="lit">1</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> a </span><span class="lit">2</span><span class="clo">)))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">f </span><span class="lit">5</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">136</span></i>
+</pre></div>
+
+<p>Compound procedure များကို primitive procedure များအတိုင်း ပုံစံတူ အသုံးပြုသည်။ အမှန်စင်စစ်၊ အထက်တွင် ပေးထားသော <code>sum-of-squares</code> ၏ definition ကို ကြည့်ရုံမျှဖြင့် <code>square</code> သည် <code>+</code> နှင့် <code>*</code> တို့ကဲ့သို့ interpreter တွင် built-in ပါဝင်ခြင်းလော သို့မဟုတ် compound procedure အဖြစ် define လုပ်ထားခြင်းလော ဆိုသည်ကို မသိနိုင်ပေ။
+</p>
+<a id="g_t1_002e1_002e5"></a>
+<a id="The-Substitution-Model-for-Procedure-Application"></a>
+<h4 class="subsection"><span class="secnum">1.1.5</span><span class="sectitle">Procedure Application အတွက် Substitution Model</span></h4>
+
+<p>Compound procedure တစ်ခုကို အမည်ပေးထားတဲ့ operator ပါဝင်တဲ့ combination တစ်ခုကို evaluate လုပ်ဖို့အတွက်၊ interpreter ဟာ <a href="#g_t1_002e1_002e3">1.1.3</a> မှာ ဖော်ပြခဲ့တဲ့ primitive procedures တွေကို အမည်ပေးထားတဲ့ operator တွေပါတဲ့ combinations တွေအတွက် လုပ်ဆောင်တဲ့ လုပ်ငန်းစဉ်အတိုင်းပဲ လုပ်ဆောင်ပါတယ်။ အဲဒါကတော့၊ interpreter ဟာ combination ရဲ့ အစိတ်အပိုင်းတွေကို evaluate လုပ်ပြီး၊ ရရှိလာတဲ့ procedure (combination ရဲ့ operator ရဲ့ တန်ဖိုး) ကို arguments တွေ (combination ရဲ့ operands တွေရဲ့ တန်ဖိုးများ) နဲ့ apply လုပ်တာပဲ ဖြစ်ပါတယ်။
+</p>
+<p>Primitive procedures တွေကို arguments တွေနဲ့ apply လုပ်တဲ့ နည်းလမ်း (mechanism) ကိုတော့ interpreter ထဲမှာတင် တစ်ပါတည်း ထည့်သွင်းတည်ဆောက်ထားတယ်လို့ ယူဆနိုင်ပါတယ်။ Compound procedures တွေအတွက်တော့ application process ဟာ အောက်ပါအတိုင်း ဖြစ်ပါတယ် -
+</p>
+<blockquote>
+<p>Compound procedure တစ်ခုကို arguments တွေနဲ့ apply လုပ်ဖို့အတွက်၊ procedure ရဲ့ formal parameter တစ်ခုချင်းစီကို သက်ဆိုင်ရာ argument နဲ့ အစားထိုးပြီး procedure ရဲ့ body ကို evaluate လုပ်ပါ။
+</p></blockquote>
+
+<p>ဒီလုပ်ငန်းစဉ်ကို ရှင်းလင်းစေဖို့အတွက်၊ အောက်ပါ combination ကို evaluate လုပ်ကြည့်ကြစို့ -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">f </span><span class="lit">5</span><span class="clo">)</span></pre></div>
+
+<p>ဒီနေရာမှာ <code>f</code> ဆိုတာက <a href="#g_t1_002e1_002e4">1.1.4</a> မှာ သတ်မှတ်ခဲ့တဲ့ procedure ဖြစ်ပါတယ်။ ကျွန်ုပ်တို့ဟာ <code>f</code> ရဲ့ body ကို အရင်ဆုံး ရယူပါမယ် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">sum-of-squares </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> a </span><span class="lit">1</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> a </span><span class="lit">2</span><span class="clo">))</span></pre></div>
+
+<p>ပြီးနောက် formal parameter <code>a</code> ကို argument 5 နဲ့ အစားထိုးပါမယ် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">sum-of-squares </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="lit">5</span><span class="pln"> </span><span class="lit">1</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="lit">5</span><span class="pln"> </span><span class="lit">2</span><span class="clo">))</span></pre></div>
+
+<p>ဒါကြောင့် ဒီပုစ္ဆာဟာ operands နှစ်ခုနဲ့ <code>sum-of-squares</code> ဆိုတဲ့ operator ပါဝင်တဲ့ combination တစ်ခုကို evaluate လုပ်ခြင်းအဖြစ် လျော့ကျသွားပါတယ်။ ဒီ combination ကို evaluate လုပ်ဖို့အတွက် subproblems သုံးခု ရှိပါတယ်။ apply လုပ်မယ့် procedure ကို ရဖို့အတွက် operator ကို evaluate လုပ်ရပါမယ်၊ ပြီးတော့ arguments တွေရဖို့အတွက် operands တွေကို evaluate လုပ်ရပါမယ်။ အခု <code>(+ 5 1)</code> ကနေ 6 ရရှိပြီး <code>(* 5 2)</code> ကနေ 10 ရရှိတဲ့အတွက်၊ ကျွန်ုပ်တို့ဟာ <code>sum-of-squares</code> procedure ကို 6 နဲ့ 10 နဲ့ apply လုပ်ရမှာ ဖြစ်ပါတယ်။ ဒီတန်ဖိုးတွေကို <code>sum-of-squares</code> ရဲ့ body ထဲမှာရှိတဲ့ formal parameters <code>x</code> နဲ့ <code>y</code> တွေနေရာမှာ အစားထိုး (substitute) လိုက်တဲ့အခါ expression ဟာ အောက်ပါအတိုင်း ဖြစ်သွားပါတယ် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square </span><span class="lit">6</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square </span><span class="lit">10</span><span class="clo">))</span></pre></div>
+
+<p>အကယ်၍ <code>square</code> ရဲ့ သတ်မှတ်ချက်ကို အသုံးပြုမယ်ဆိုရင်၊ ဒါဟာ အောက်ပါအတိုင်း လျော့ကျသွားပါမယ် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="lit">6</span><span class="pln"> </span><span class="lit">6</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="lit">10</span><span class="pln"> </span><span class="lit">10</span><span class="clo">))</span></pre></div>
+
+<p>မြှောက်ခြင်းဖြင့် အောက်ပါအတိုင်း ဖြစ်သွားပြီး -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="lit">36</span><span class="pln"> </span><span class="lit">100</span><span class="clo">)</span></pre></div>
+
+<p>နောက်ဆုံးမှာတော့ -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="lit">136</span></pre></div>
+
+<p>အခုလေးတင် ဖော်ပြခဲ့တဲ့ လုပ်ငန်းစဉ်ကို procedure application အတွက် <a id="index-substitution-model"></a>
+<em>substitution model</em>
+လို့ ခေါ်ပါတယ်။ ဒီအခန်းမှာ ဖော်ပြထားတဲ့ procedures တွေနဲ့ ပတ်သက်သရွေ့တော့ ဒါကို procedure application ရဲ့ "အဓိပ္ပာယ်" ကို ဆုံးဖြတ်ပေးတဲ့ model တစ်ခုအဖြစ် ယူဆနိုင်ပါတယ်။ ဒါပေမယ့် အလေးထားသင့်တဲ့ အချက်နှစ်ချက် ရှိပါတယ် -
+</p>
+<ul>
+<li> Substitution ရဲ့ ရည်ရွယ်ချက်ဟာ procedure application အကြောင်းကို ကျွန်ုပ်တို့ စဉ်းစားရာမှာ အထောက်အကူဖြစ်ဖို့ပဲ ဖြစ်ပြီး၊ interpreter တကယ်တမ်း ဘယ်လို အလုပ်လုပ်တယ်ဆိုတာကို ဖော်ပြဖို့ မဟုတ်ပါဘူး။ ယေဘုယျအားဖြင့် interpreter တွေဟာ formal parameters တွေအတွက် တန်ဖိုးတွေကို အစားထိုးဖို့ procedure ရဲ့ စာသား (text) ကို ပြုပြင်ခြင်းအားဖြင့် procedure applications တွေကို evaluate မလုပ်ကြပါဘူး။ လက်တွေ့မှာတော့၊ "substitution" ကို formal parameters တွေအတွက် local environment တစ်ခု အသုံးပြုခြင်းအားဖြင့် လုပ်ဆောင်ပါတယ်။ ဒါကို interpreter တစ်ခုရဲ့ အကောင်အထည်ဖော်မှုအကြောင်း အသေးစိတ် လေ့လာမယ့် <a href="Chapter-3.html#Chapter-3">Chapter 3</a> နဲ့ <a href="Chapter-4.html#Chapter-4">Chapter 4</a> တွေမှာ ပိုမိုပြည့်စုံစွာ ဆွေးနွေးသွားပါမယ်။
+
+</li><li> ဒီစာအုပ်တစ်လျှောက်မှာ၊ interpreter တွေ ဘယ်လို အလုပ်လုပ်သလဲဆိုတာကို ပိုမို အသေးစိတ်ကျတဲ့ model တွေနဲ့ အဆင့်ဆင့် တင်ပြသွားမှာဖြစ်ပြီး၊ <a href="Chapter-5.html#Chapter-5">Chapter 5</a> မှာတော့ interpreter နဲ့ compiler တစ်ခုလုံးကို အပြီးသတ် အကောင်အထည်ဖော်မှုနဲ့ အဆုံးသတ်မှာ ဖြစ်ပါတယ်။ Substitution model ဟာ ဒီ model တွေထဲက ပထမဆုံး model သာ ဖြစ်ပါတယ် — evaluation process အကြောင်းကို စနစ်တကျ စတင်စဉ်းစားဖို့ နည်းလမ်းတစ်ခု ဖြစ်ပါတယ်။ ယေဘုယျအားဖြင့် သိပ္ပံနဲ့ အင်ဂျင်နီယာဘာသာရပ်တွေမှာ ဖြစ်စဉ်တွေကို model ပြုလုပ်တဲ့အခါ၊ ရိုးရှင်းပြီး မပြည့်စုံသေးတဲ့ model တွေနဲ့ အရင်စတင်လေ့ရှိပါတယ်။ အရာရာကို အသေးစိတ် ပိုမို လေ့လာလာတဲ့အခါမှာတော့၊ ဒီရိုးရှင်းတဲ့ model တွေဟာ မလုံလောက်တော့ဘဲ ပိုမိုကောင်းမွန်တဲ့ model တွေနဲ့ အစားထိုးရပါတယ်။ Substitution model ဟာလည်း ထိုနည်းတူပါပဲ။ အထူးသဖြင့်၊ <a href="Chapter-3.html#Chapter-3">Chapter 3</a> မှာ "mutable data" နဲ့ procedures တွေကို အသုံးပြုပုံအကြောင်း ဆွေးနွေးတဲ့အခါ၊ substitution model ဟာ အလုပ်မဖြစ်တော့ဘဲ ပိုမိုရှုပ်ထွေးတဲ့ procedure application model နဲ့ အစားထိုးရမှာကို တွေ့ရပါလိမ့်မယ်။<a class="footnote_link" id="DOCF15" href="#FOOT15"><sup>15</sup></a>
+
+</li></ul>
+
+<a id="Applicative-order-versus-normal-order"></a>
+<h5 class="subsubheading">Applicative order နှင့် normal order</h5>
+
+<p><a href="#g_t1_002e1_002e3">1.1.3</a> မှာ ပေးထားတဲ့ evaluation ဖော်ပြချက်အရ၊ interpreter ဟာ အရင်ဆုံး operator နဲ့ operands တွေကို evaluate လုပ်ပြီး၊ ရရှိလာတဲ့ procedure ကို arguments တွေနဲ့ apply လုပ်ပါတယ်။ ဒါဟာ evaluation ပြုလုပ်ဖို့ တစ်ခုတည်းသော နည်းလမ်း မဟုတ်ပါဘူး။ အခြား evaluation model တစ်ခုကတော့ operands တွေရဲ့ တန်ဖိုးတွေ တကယ်လိုအပ်တဲ့အချိန်အထိ evaluate မလုပ်ဘဲ နေမှာ ဖြစ်ပါတယ်။ အဲဒီအစား primitive operators တွေပဲ ပါဝင်တဲ့ expression တစ်ခု ရရှိတဲ့အထိ operand expressions တွေကို parameters တွေနေရာမှာ အရင်ဆုံး အစားထိုးမှာဖြစ်ပြီး၊ အဲဒီနောက်မှ evaluate လုပ်မှာ ဖြစ်ပါတယ်။ အကယ်၍ ဒီနည်းလမ်းကို အသုံးပြုမယ်ဆိုရင်၊ <code>(f 5)</code> ရဲ့ evaluation ဟာ အောက်ပါအတိုင်း ချဲ့ထွင်ခြင်း (expansions) အစီအစဉ်အတိုင်း သွားပါလိမ့်မယ် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">sum-of-squares </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="lit">5</span><span class="pln"> </span><span class="lit">1</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="lit">5</span><span class="pln"> </span><span class="lit">2</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="lit">5</span><span class="pln"> </span><span class="lit">1</span><span class="clo">))</span><span class="pln"> 
+   </span><span class="opn">(</span><span class="pln">square </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="lit">5</span><span class="pln"> </span><span class="lit">2</span><span class="clo">)))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="lit">5</span><span class="pln"> </span><span class="lit">1</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="lit">5</span><span class="pln"> </span><span class="lit">1</span><span class="clo">))</span><span class="pln"> 
+   </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="lit">5</span><span class="pln"> </span><span class="lit">2</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="lit">5</span><span class="pln"> </span><span class="lit">2</span><span class="clo">)))</span></pre></div>
+
+<p>ပြီးနောက် အောက်ပါအတိုင်း လျော့ချခြင်း (reductions) များ ဖြစ်လာပါမယ် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="lit">6</span><span class="pln"> </span><span class="lit">6</span><span class="clo">)</span><span class="pln"> 
+   </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="lit">10</span><span class="pln"> </span><span class="lit">10</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="lit">36</span><span class="pln"> </span><span class="lit">100</span><span class="clo">)</span><span class="pln">
+
+</span><span class="lit">136</span></pre></div>
+
+<p>ဒါဟာ ကျွန်ုပ်တို့ရဲ့ ယခင် evaluation model အတိုင်း အဖြေတူရရှိပေမယ့်၊ လုပ်ငန်းစဉ်ကတော့ ကွဲပြားပါတယ်။ အထူးသဖြင့် <code>(+ 5 1)</code> နဲ့ <code>(* 5 2)</code> တို့ကို evaluate လုပ်ခြင်းဟာ ဒီနေရာမှာ နှစ်ကြိမ်စီ ပြုလုပ်ရပါတယ်။ ဒါဟာ <code>(* x x)</code> expression ထဲက <code>x</code> နေရာမှာ <code>(+ 5 1)</code> နဲ့ <code>(* 5 2)</code> တို့ကို အသီးသီး အစားထိုးပြီး လျော့ချတာနဲ့ သက်ဆိုင်ပါတယ်။
+</p>
+<p>ဒီအခြားနည်းလမ်းဖြစ်တဲ့ "အကုန်ချဲ့ထွင်ပြီးမှ လျော့ချခြင်း" (fully expand and then reduce) evaluation နည်းလမ်းကို
+<a id="index-normal_002dorder-evaluation"></a>
+<em>normal-order evaluation</em> လို့ ခေါ်ပါတယ်။ interpreter တကယ်တမ်း အသုံးပြုတဲ့ "arguments တွေကို evaluate လုပ်ပြီးမှ apply လုပ်ခြင်း" နည်းလမ်းကိုတော့
+<a id="index-applicative_002dorder-evaluation"></a>
+<em>applicative-order evaluation</em> လို့ ခေါ်ပါတယ်။ substitution ကို အသုံးပြုပြီး model လုပ်နိုင်တဲ့ procedure applications တွေအတွက် (ဒီစာအုပ်ရဲ့ ပထမအခန်းနှစ်ခန်းမှာပါတဲ့ procedures အားလုံး ပါဝင်ပါတယ်) နဲ့ မှန်ကန်တဲ့ တန်ဖိုးတွေ ထွက်ရှိလာတဲ့အခါမှာ normal-order နဲ့ applicative-order evaluation တို့ဟာ တူညီတဲ့ တန်ဖိုးကို ထုတ်ပေးတယ်ဆိုတာ ပြသနိုင်ပါတယ်။ (normal-order နဲ့ applicative-order evaluation တို့ တူညီတဲ့ ရလဒ်မပေးတဲ့ "မမှန်ကန်သော" တန်ဖိုး နမူနာတစ်ခုအတွက် <a href="#Exercise-1_002e5">Exercise 1.5</a> ကို ကြည့်ပါ။)
+</p>
+<p>Lisp ဟာ applicative-order evaluation ကို အသုံးပြုပါတယ်။ အကြောင်းရင်း တစ်စိတ်တစ်ပိုင်းကတော့ အထက်မှာ ဖော်ပြခဲ့တဲ့ <code>(+ 5 1)</code> နဲ့ <code>(* 5 2)</code> ကဲ့သို့သော expression တွေကို အကြိမ်ကြိမ် evaluate လုပ်ရတာကို ရှောင်ရှားနိုင်တဲ့အတွက် ပိုမိုထိရောက်မှု (efficiency) ရှိလို့ဖြစ်ပြီး၊ ပိုပြီး အရေးကြီးတာကတော့ substitution နဲ့ model လုပ်နိုင်တဲ့ procedures နယ်ပယ်ကနေ ကျော်လွန်သွားတဲ့အခါ normal-order evaluation ဟာ ကိုင်တွယ်ဖြေရှင်းဖို့ အလွန်ပိုပြီး ရှုပ်ထွေးလာလို့ ဖြစ်ပါတယ်။ အခြားတစ်ဖက်မှာတော့ normal-order evaluation ဟာ အလွန်တန်ဖိုးရှိတဲ့ ကိရိယာတစ်ခု ဖြစ်နိုင်ပြီး၊ <a href="Chapter-3.html#Chapter-3">Chapter 3</a> နဲ့ <a href="Chapter-4.html#Chapter-4">Chapter 4</a> တွေမှာ ၎င်းရဲ့ အကျိုးသက်ရောက်မှုအချို့ကို လေ့လာသွားပါမယ်။<a class="footnote_link" id="DOCF16" href="#FOOT16"><sup>16</sup></a>
+</p>
+<a id="g_t1_002e1_002e6"></a>
+<a id="Conditional-Expressions-and-Predicates"></a>
+<h4 class="subsection"><span class="secnum">1.1.6</span><span class="sectitle">အခြေအနေပေါ်မူတည်သော ဖော်ပြချက်များနှင့် Predicates (Conditional Expressions and Predicates)</span></h4>
+
+<p>ယခုအချိန်အထိ ကျွန်ုပ်တို့ အဓိပ္ပာယ်ဖွင့်ဆိုနိုင်သော procedure အမျိုးအစားများ၏ ဖော်ပြနိုင်စွမ်းမှာ အလွန်ကန့်သတ်ချက်ရှိနေသေးသည်၊ အကြောင်းမှာ ကျွန်ုပ်တို့တွင် စမ်းသပ်မှုများပြုလုပ်ရန်နှင့် စမ်းသပ်မှုရလဒ်အပေါ် မူတည်၍ မတူညီသော လုပ်ဆောင်ချက်များကို လုပ်ဆောင်ရန် နည်းလမ်းမရှိသေးသောကြောင့်ဖြစ်သည်။ ဥပမာအားဖြင့်၊ ကိန်းဂဏန်းတစ်ခုသည် အပေါင်းကိန်း၊ အနှုတ်ကိန်း သို့မဟုတ် သုညဖြစ်မဖြစ်ကို စမ်းသပ်ပြီး အောက်ပါစည်းမျဉ်းအတိုင်း မတူညီသော အခြေအနေများတွင် မတူညီသော လုပ်ဆောင်ချက်များကို လုပ်ဆောင်ခြင်းဖြင့် ကိန်းဂဏန်းတစ်ခု၏ ပကတိတန်ဖိုး (absolute value) ကို တွက်ချက်သည့် procedure တစ်ခုကို ကျွန်ုပ်တို့ မသတ်မှတ်နိုင်သေးပါ။
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mrow>
+    <mo>|</mo>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mi>x</mi>
+    </mrow>
+    <mo>|</mo>
+  </mrow>
+  <mspace width="thickmathspace"/>
+  <mo>=</mo>
+  <mspace width="thickmathspace"/>
+  <mrow>
+    <mo>{</mo>
+    <mtable columnalign="right left left" rowspacing="4pt" columnspacing="1em">
+      <mtr>
+        <mtd>
+          <mi>x</mi>
+        </mtd>
+        <mtd>
+          <mspace width="thickmathspace"/>
+          <mtext>လျှင်</mtext>
+        </mtd>
+        <mtd>
+          <mi>x</mi>
+          <mo>&gt;<!-- > --></mo>
+          <mn>0</mn>
+          <mo>,</mo>
+        </mtd>
+      </mtr>
+      <mtr>
+        <mtd>
+          <mn>0</mn>
+        </mtd>
+        <mtd>
+          <mspace width="thickmathspace"/>
+          <mtext>လျှင်</mtext>
+        </mtd>
+        <mtd>
+          <mi>x</mi>
+          <mo>=</mo>
+          <mn>0</mn>
+          <mo>,</mo>
+        </mtd>
+      </mtr>
+      <mtr>
+        <mtd>
+          <mo>−<!-- − --></mo>
+          <mi>x</mi>
+        </mtd>
+        <mtd>
+          <mspace width="thickmathspace"/>
+          <mtext>လျှင်</mtext>
+        </mtd>
+        <mtd>
+          <mi>x</mi>
+          <mo>&lt;<!-- < --></mo>
+          <mn>0.</mn>
+        </mtd>
+      </mtr>
+    </mtable>
+  </mrow>
+</math>
+
+ဤတည်ဆောက်ပုံကို <a id="index-case-analysis"></a>
+<em>case analysis</em> ဟုခေါ်ပြီး Lisp တွင် ထိုကဲ့သို့သော case analysis ကို ဖော်ပြရန် အထူးပုံစံ (special form) တစ်ခုရှိသည်။ ၎င်းကို <code>cond</code> ("conditional" ကို ကိုယ်စားပြုသည်) ဟု ခေါ်ပြီး အောက်ပါအတိုင်း အသုံးပြုသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">abs x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pun">&gt;</span><span class="pln"> x </span><span class="lit">0</span><span class="clo">)</span><span class="pln"> x</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="pun">=</span><span class="pln"> x </span><span class="lit">0</span><span class="clo">)</span><span class="pln"> </span><span class="lit">0</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="pun">&lt;</span><span class="pln"> x </span><span class="lit">0</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> x</span><span class="clo">))))</span></pre></div>
+
+<p>Conditional expression တစ်ခု၏ ယေဘုယျပုံစံမှာ
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">(</span><span class="pln">⟨</span><var><span class="pln">p</span><span class="pun">₁</span></var><span class="pln">⟩ ⟨</span><var><span class="pln">e</span><span class="pun">₁</span></var><span class="pln">⟩</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">⟨</span><var><span class="pln">p</span><span class="pun">₂</span></var><span class="pln">⟩ ⟨</span><var><span class="pln">e</span><span class="pun">₂</span></var><span class="pln">⟩</span><span class="clo">)</span><span class="pln">
+      </span><span class="roman"><span class="pun">…</span></span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">⟨</span><var><span class="pln">p</span><span class="pun">ₙ</span></var><span class="pln">⟩ ⟨</span><var><span class="pln">e</span><span class="pun">ₙ</span></var><span class="pln">⟩</span><span class="clo">))</span></pre></div>
+
+<p>၎င်းတွင် <code>cond</code> သင်္ကေတနှင့် ၎င်းနောက်တွင် လက်သည်းကွင်းအတွင်းရှိ စုံတွဲလိုက်ဖော်ပြချက်များ ပါဝင်သည်
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">⟨</span><var><span class="pln">p</span></var><span class="pln">⟩ ⟨</span><var><span class="pln">e</span></var><span class="pln">⟩</span><span class="clo">)</span></pre></div>
+
+<p>၎င်းတို့ကို <a id="index-clauses"></a>
+<em>clauses</em> ဟု ခေါ်သည်။ စုံတွဲတစ်ခုစီ၏ ပထမဆုံး ဖော်ပြချက်မှာ
+<a id="index-predicate"></a>
+<em>predicate</em> တစ်ခုဖြစ်သည်—ဆိုလိုသည်မှာ ၎င်း၏တန်ဖိုးကို true သို့မဟုတ် false အဖြစ် အဓိပ္ပာယ်ဖွင့်ဆိုနိုင်သော ဖော်ပြချက်တစ်ခု ဖြစ်သည်။<a class="footnote_link" id="DOCF17" href="#FOOT17"><sup>17</sup></a>
+</p>
+<p>Conditional expressions များကို အောက်ပါအတိုင်း တွက်ချက်သည်။ ပထမဦးစွာ predicate <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">⟨</mo>
+    <msub>
+      <mi>p</mi>
+      <mn>1</mn>
+    </msub>
+    <mo stretchy="false">⟩</mo>
+  </mrow>
+</math> ကို
+တွက်ချက်သည်။ အကယ်၍ ၎င်း၏တန်ဖိုးသည် false ဖြစ်ပါက <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">⟨</mo>
+    <msub>
+      <mi>p</mi>
+      <mn>2</mn>
+    </msub>
+    <mo stretchy="false">⟩</mo>
+  </mrow>
+</math> ကို ဆက်လက်တွက်ချက်သည်။ အကယ်၍
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">⟨</mo>
+    <msub>
+      <mi>p</mi>
+      <mn>2</mn>
+    </msub>
+    <mo stretchy="false">⟩</mo>
+  </mrow>
+</math> ၏ တန်ဖိုးသည်လည်း false ဖြစ်နေပါက <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">⟨</mo>
+    <msub>
+      <mi>p</mi>
+      <mn>3</mn>
+    </msub>
+    <mo stretchy="false">⟩</mo>
+  </mrow>
+</math> ကို ထပ်မံတွက်ချက်သည်။ ဤလုပ်ငန်းစဉ်သည် တန်ဖိုး true ဖြစ်သော predicate တစ်ခုကို တွေ့ရှိသည်အထိ ဆက်လက်လုပ်ဆောင်ပြီး၊ ထိုသို့တွေ့ရှိပါက interpreter သည် ထို clause ၏ သက်ဆိုင်ရာ <a id="index-consequent-expression"></a>
+<em>အကျိုးဆက်ဖော်ပြချက် (consequent expression)</em> 
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">⟨</mo>
+    <mi>e</mi>
+    <mo stretchy="false">⟩</mo>
+  </mrow>
+</math> ၏ တန်ဖိုးကို conditional expression ၏ ရလဒ်အဖြစ် ပြန်ပေးသည်။
+အကယ်၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">⟨</mo>
+    <mi>p</mi>
+    <mo stretchy="false">⟩</mo>
+  </mrow>
+</math> များထဲမှ တစ်ခုမျှ true မဖြစ်ပါက <code>cond</code> ၏ တန်ဖိုးကို သတ်မှတ်ထားခြင်းမရှိပါ။
+</p>
+<p><em>Predicate</em> ဟူသော စကားလုံးကို true သို့မဟုတ် false ပြန်ပေးသော procedures များအတွက်သာမက true သို့မဟုတ် false အဖြစ် ထွက်ပေါ်လာသော ဖော်ပြချက်များအတွက်ပါ အသုံးပြုသည်။ <a id="index-predicate-1"></a> ပကတိတန်ဖိုးတွက်ချက်သည့် procedure <code>abs</code> သည် အခြေခံ predicates များဖြစ်သော <code>&gt;</code>၊ <code>&lt;</code> နှင့် <code>=</code> တို့ကို အသုံးပြုထားသည်။<a class="footnote_link" id="DOCF18" href="#FOOT18"><sup>18</sup></a> ၎င်းတို့သည် ကိန်းဂဏန်းနှစ်ခုကို arguments အဖြစ် လက်ခံပြီး ပထမကိန်းဂဏန်းသည် ဒုတိယကိန်းဂဏန်းထက် ကြီးခြင်း၊ ငယ်ခြင်း သို့မဟုတ် ညီခြင်း ရှိမရှိကို စစ်ဆေးကာ လျော်ညီစွာ true သို့မဟုတ် false ပြန်ပေးသည်။
+</p>
+<p>ပကတိတန်ဖိုးတွက်ချက်သည့် procedure ကို ရေးသားနိုင်သော အခြားနည်းလမ်းတစ်ခုမှာ
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">abs x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pun">&lt;</span><span class="pln"> x </span><span class="lit">0</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> x</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> x</span><span class="clo">)))</span></pre></div>
+
+<p>၎င်းကို "အကယ်၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> သည် သုညထက်ငယ်ပါက 
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo>−<!-- − --></mo>
+    <mi>x</mi>
+  </mrow>
+</math> ကိုပြန်ပေးပါ၊ သို့မဟုတ်ပါက <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> ကိုပြန်ပေးပါ" ဟု ဖော်ပြနိုင်သည်။ <code>Else</code> သည် <code>cond</code> ၏ နောက်ဆုံး clause ရှိ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">⟨</mo>
+    <mi>p</mi>
+    <mo stretchy="false">⟩</mo>
+  </mrow>
+</math> နေရာတွင် အသုံးပြုနိုင်သော အထူးသင်္ကေတဖြစ်သည်။ ယခင် clause များအားလုံး ကျော်လွန်သွားသည့်အခါတိုင်း ဤ <code>cond</code> သည် ၎င်းနှင့်သက်ဆိုင်သော <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">⟨</mo>
+    <mi>e</mi>
+    <mo stretchy="false">⟩</mo>
+  </mrow>
+</math> ၏ တန်ဖိုးကို ရလဒ်အဖြစ် ပြန်ပေးစေသည်။ အမှန်စင်စစ်၊ အမြဲတမ်း true တန်ဖိုးရရှိစေသော မည်သည့်ဖော်ပြချက်ကိုမဆို ဤနေရာတွင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">⟨</mo>
+    <mi>p</mi>
+    <mo stretchy="false">⟩</mo>
+  </mrow>
+</math>
+အဖြစ် အသုံးပြုနိုင်သည်။
+</p>
+<p>ပကတိတန်ဖိုးတွက်ချက်သည့် procedure ကို ရေးသားနိုင်သော နောက်ထပ်နည်းလမ်းတစ်ခုမှာ-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">abs x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&lt;</span><span class="pln"> x </span><span class="lit">0</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> x</span><span class="clo">)</span><span class="pln">
+      x</span><span class="clo">))</span></pre></div>
+
+<p>၎င်းသည် case analysis တွင် အခြေအနေ နှစ်ခုတိတိရှိသည့်အခါ အသုံးပြုနိုင်သော ကန့်သတ်ချက်ရှိသည့် conditional အမျိုးအစားဖြစ်သော <code>if</code> အထူးပုံစံကို အသုံးပြုထားသည်။ <code>if</code> ဖော်ပြချက်တစ်ခု၏ ယေဘုယျပုံစံမှာ
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">if</span><span class="pln"> ⟨</span><var><span class="pln">predicate</span></var><span class="pln">⟩ ⟨</span><var><span class="pln">consequent</span></var><span class="pln">⟩ ⟨</span><var><span class="pln">alternative</span></var><span class="pln">⟩</span><span class="clo">)</span></pre></div>
+
+<p><code>if</code> ဖော်ပြချက်တစ်ခုကို တွက်ချက်ရန်အတွက် interpreter သည် ဖော်ပြချက်၏ <code>⟨</code><var>predicate</var><code>⟩</code> အပိုင်းကို စတင်တွက်ချက်သည်။ အကယ်၍ <code>⟨</code><var>predicate</var><code>⟩</code> သည် true တန်ဖိုး ထွက်ပေါ်လာပါက interpreter သည် <code>⟨</code><var>consequent</var><code>⟩</code> ကို ဆက်လက်တွက်ချက်ပြီး ၎င်း၏တန်ဖိုးကို ပြန်ပေးသည်။ သို့မဟုတ်ပါက <code>⟨</code><var>alternative</var><code>⟩</code> ကို တွက်ချက်ပြီး ၎င်း၏တန်ဖိုးကို ပြန်ပေးသည်။<a class="footnote_link" id="DOCF19" href="#FOOT19"><sup>19</sup></a>
+</p>
+<p><code>&lt;</code>၊ <code>=</code> နှင့် <code>&gt;</code> ကဲ့သို့သော အခြေခံ predicates များအပြင်၊ compound predicates များ တည်ဆောက်နိုင်စေရန် ယုတ္တိဗေဒဆိုင်ရာ ပေါင်းစပ်လုပ်ဆောင်ချက်များ (logical composition operations) လည်း ရှိသည်။ အသုံးအများဆုံး သုံးခုမှာ အောက်ပါအတိုင်းဖြစ်သည်-
+</p>
+<ul>
+<li> <code>(and ⟨<var>e₁</var>⟩ <span class="roman">…</span> ⟨<var>eₙ</var>⟩)</code>
+
+<p>Interpreter သည် ဖော်ပြချက် <code>⟨</code><var>e</var><code>⟩</code> များကို ဘယ်မှညာသို့ တစ်ခုချင်းစီ တွက်ချက်သည်။ အကယ်၍ မည်သည့် <code>⟨</code><var>e</var><code>⟩</code> မဆို false ဖြစ်ပါက <code>and</code> ဖော်ပြချက်၏ တန်ဖိုးသည် false ဖြစ်ပြီး ကျန်ရှိသော <code>⟨</code><var>e</var><code>⟩</code> များကို တွက်ချက်တော့မည်မဟုတ်ပါ။ အကယ်၍ <code>⟨</code><var>e</var><code>⟩</code> အားလုံးသည် true တန်ဖိုးများ ထွက်ပေါ်လာပါက <code>and</code> ဖော်ပြချက်၏ တန်ဖိုးသည် နောက်ဆုံးတစ်ခု၏ တန်ဖိုးဖြစ်လိမ့်မည်။
+</p>
+</li><li> <code>(or ⟨<var>e₁</var>⟩ <span class="roman">…</span> ⟨<var>eₙ</var>⟩)</code>
+
+<p>Interpreter သည် ဖော်ပြချက် <code>⟨</code><var>e</var><code>⟩</code> များကို ဘယ်မှညာသို့ တစ်ခုချင်းစီ တွက်ချက်သည်။ အကယ်၍ မည်သည့် <code>⟨</code><var>e</var><code>⟩</code> မဆို true တန်ဖိုး ထွက်ပေါ်လာပါက ထိုတန်ဖိုးကို <code>or</code> ဖော်ပြချက်၏ ရလဒ်အဖြစ် ပြန်ပေးမည်ဖြစ်ပြီး ကျန်ရှိသော <code>⟨</code><var>e</var><code>⟩</code> များကို တွက်ချက်တော့မည်မဟုတ်ပါ။ အကယ်၍ <code>⟨</code><var>e</var><code>⟩</code> အားလုံးသည် false ဖြစ်ပါက <code>or</code> ဖော်ပြချက်၏ တန်ဖိုးသည် false ဖြစ်သည်။
+</p>
+</li><li> <code>(not ⟨<var>e</var>⟩)</code>
+
+<p><code>not</code> ဖော်ပြချက်တစ်ခု၏ တန်ဖိုးသည် ဖော်ပြချက် <code>⟨</code><var>e</var><code>⟩</code> ၏ တန်ဖိုး false ဖြစ်လျှင် true ဖြစ်ပြီး၊ သို့မဟုတ်ပါက false ဖြစ်သည်။
+</p>
+</li></ul>
+
+<p><code>and</code> နှင့် <code>or</code> တို့သည် procedures များမဟုတ်ဘဲ အထူးပုံစံ (special forms) များဖြစ်ကြောင်း သတိပြုပါ၊ အကြောင်းမှာ subexpressions အားလုံးကို တွက်ချက်ရန် မလိုအပ်သောကြောင့်ဖြစ်သည်။ <code>Not</code> မှာမူ သာမန် procedure တစ်ခုသာ ဖြစ်သည်။
+</p>
+<p>၎င်းတို့ကို မည်သို့အသုံးပြုသည်ဟူသော ဥပမာတစ်ခုအနေဖြင့်၊ ကိန်းဂဏန်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mn>5</mn>
+  <mo>&lt;</mo>
+  <mi>x</mi>
+  <mo>&lt;</mo>
+  <mn>10</mn>
+</math> အတွင်းရှိရမည်ဟူသော အခြေအနေကို အောက်ပါအတိုင်း ဖော်ပြနိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">and</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;</span><span class="pln"> x </span><span class="lit">5</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&lt;</span><span class="pln"> x </span><span class="lit">10</span><span class="clo">))</span></pre></div>
+
+<p>အခြားဥပမာတစ်ခုအနေဖြင့်၊ ကိန်းဂဏန်းတစ်ခုသည် အခြားတစ်ခုထက် ကြီးခြင်း သို့မဟုတ် ညီခြင်း ရှိမရှိ စစ်ဆေးရန် predicate တစ်ခုကို အောက်ပါအတိုင်း သတ်မှတ်နိုင်သည်- 
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;=</span><span class="pln"> x y</span><span class="clo">)</span><span class="pln"> 
+  </span><span class="opn">(</span><span class="kwd">or</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;</span><span class="pln"> x y</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> x y</span><span class="clo">)))</span></pre></div>
+
+<p>သို့မဟုတ် အခြားနည်းလမ်းတစ်ခုအနေဖြင့်- 
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;=</span><span class="pln"> x y</span><span class="clo">)</span><span class="pln"> 
+  </span><span class="opn">(</span><span class="pln">not </span><span class="opn">(</span><span class="pun">&lt;</span><span class="pln"> x y</span><span class="clo">)))</span></pre></div>
+
+<blockquote>
+<p><strong><a id="Exercise-1_002e1"></a>လေ့ကျင့်ခန်း ၁.၁:</strong> အောက်တွင် ဖော်ပြချက်များ အစီအစဉ်လိုက် ရှိပါသည်။ ဖော်ပြချက်တစ်ခုစီအတွက် interpreter က မည်သည့်ရလဒ်ကို ထုတ်ပေးမည်နည်း? အဆိုပါ ဖော်ပြချက်များကို ဖော်ပြထားသော အစီအစဉ်အတိုင်း တွက်ချက်မည်ဟု ယူဆပါ။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="lit">10</span><span class="pln">
+</span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="lit">5</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="lit">4</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="lit">9</span><span class="pln"> </span><span class="lit">1</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="pun">/</span><span class="pln"> </span><span class="lit">6</span><span class="pln"> </span><span class="lit">2</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="lit">2</span><span class="pln"> </span><span class="lit">4</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="lit">4</span><span class="pln"> </span><span class="lit">6</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> a </span><span class="lit">3</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> b </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> a </span><span class="lit">1</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="pun">+</span><span class="pln"> a b </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> a b</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="pun">=</span><span class="pln"> a b</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">and</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;</span><span class="pln"> b a</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&lt;</span><span class="pln"> b </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> a b</span><span class="clo">)))</span><span class="pln">
+    b
+    a</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pun">=</span><span class="pln"> a </span><span class="lit">4</span><span class="clo">)</span><span class="pln"> </span><span class="lit">6</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">((</span><span class="pun">=</span><span class="pln"> b </span><span class="lit">4</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="lit">6</span><span class="pln"> </span><span class="lit">7</span><span class="pln"> a</span><span class="clo">))</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> </span><span class="lit">25</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="lit">2</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;</span><span class="pln"> b a</span><span class="clo">)</span><span class="pln"> b a</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pun">&gt;</span><span class="pln"> a b</span><span class="clo">)</span><span class="pln"> a</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">((</span><span class="pun">&lt;</span><span class="pln"> a b</span><span class="clo">)</span><span class="pln"> b</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> </span><span class="lit">-1</span><span class="clo">))</span><span class="pln">
+   </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> a </span><span class="lit">1</span><span class="clo">))</span></pre></div>
+</blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-1_002e2"></a>လေ့ကျင့်ခန်း ၁.၂:</strong> အောက်ပါ ဖော်ပြချက်ကို prefix ပုံစံသို့ ပြောင်းလဲပါ-
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mfrac>
+      <mrow>
+        <mn>5</mn>
+        <mo>+</mo>
+        <mn>4</mn>
+        <mo>+</mo>
+        <mo stretchy="false">(</mo>
+        <mn>2</mn>
+        <mo>−<!-- − --></mo>
+        <mo stretchy="false">(</mo>
+        <mn>3</mn>
+        <mo>−<!-- − --></mo>
+        <mo stretchy="false">(</mo>
+        <mn>6</mn>
+        <mo>+</mo>
+        <mfrac>
+          <mn>4</mn>
+          <mn>5</mn>
+        </mfrac>
+        <mo stretchy="false">)</mo>
+        <mo stretchy="false">)</mo>
+        <mo stretchy="false">)</mo>
+      </mrow>
+      <mrow>
+        <mn>3</mn>
+        <mo stretchy="false">(</mo>
+        <mn>6</mn>
+        <mo>−<!-- − --></mo>
+        <mn>2</mn>
+        <mo stretchy="false">)</mo>
+        <mo stretchy="false">(</mo>
+        <mn>2</mn>
+        <mo>−<!-- − --></mo>
+        <mn>7</mn>
+        <mo stretchy="false">)</mo>
+      </mrow>
+    </mfrac>
+    <mo>.</mo>
+  </mrow>
+</math>
+
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-1_002e3"></a>လေ့ကျင့်ခန်း ၁.၃:</strong> ကိန်းဂဏန်း သုံးခုကို arguments အဖြစ်လက်ခံပြီး ၎င်းတို့အနက် အကြီးဆုံးကိန်းနှစ်ခု၏ နှစ်ထပ်ကိန်းများ ပေါင်းလဒ် (sum of the squares) ကို ပြန်ပေးသော procedure တစ်ခုကို အဓိပ္ပာယ်ဖွင့်ဆိုပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-1_002e4"></a>လေ့ကျင့်ခန်း ၁.၄:</strong> ကျွန်ုပ်တို့၏ evaluation model သည် operator များကိုယ်တိုင် compound expressions များဖြစ်နေသော combinations များကို ခွင့်ပြုထားသည်ကို သတိပြုပါ။ ဤလေ့လာတွေ့ရှိချက်ကို အသုံးပြု၍ အောက်ပါ procedure ၏ လုပ်ဆောင်ပုံကို ရှင်းပြပါ-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">a-plus-abs-b a b</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">((</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;</span><span class="pln"> b </span><span class="lit">0</span><span class="clo">)</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> </span><span class="pun">-</span><span class="clo">)</span><span class="pln"> a b</span><span class="clo">))</span></pre></div>
+</blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-1_002e5"></a>လေ့ကျင့်ခန်း ၁.၅:</strong> Ben Bitdiddle သည် သူအသုံးပြုနေသော interpreter သည် applicative-order evaluation ကို အသုံးပြုသလား သို့မဟုတ် normal-order evaluation ကို အသုံးပြုသလားဆိုသည်ကို ဆုံးဖြတ်ရန် စမ်းသပ်ချက်တစ်ခုကို တီထွင်ခဲ့သည်။ သူသည် အောက်ပါ procedures နှစ်ခုကို အဓိပ္ပာယ်ဖွင့်ဆိုခဲ့သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">p</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">p</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">test x y</span><span class="clo">)</span><span class="pln"> 
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> x </span><span class="lit">0</span><span class="clo">)</span><span class="pln"> 
+      </span><span class="lit">0</span><span class="pln"> 
+      y</span><span class="clo">))</span></pre></div>
+
+<p>ထို့နောက် သူသည် ဤဖော်ပြချက်ကို တွက်ချက်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">test </span><span class="lit">0</span><span class="pln"> </span><span class="opn">(</span><span class="pln">p</span><span class="clo">))</span></pre></div>
+
+<p>Applicative-order evaluation ကို အသုံးပြုသော interpreter တွင် Ben မည်သို့သော လုပ်ဆောင်ချက်ကို တွေ့ရှိရမည်နည်း? Normal-order evaluation ကို အသုံးပြုသော interpreter တွင်မူ မည်သို့သော လုပ်ဆောင်ချက်ကို တွေ့ရှိရမည်နည်း? သင်၏အဖြေကို ရှင်းပြပါ။ (<code>if</code> အထူးပုံစံအတွက် evaluation စည်းမျဉ်းသည် interpreter က normal order သို့မဟုတ် applicative order မည်သည်ကို အသုံးပြုသည်ဖြစ်စေ အတူတူပင်ဖြစ်သည်ဟု ယူဆပါ- ပထမဦးစွာ predicate expression ကို တွက်ချက်ပြီး ရရှိလာသော ရလဒ်အပေါ်မူတည်၍ consequent သို့မဟုတ် alternative expression ကို တွက်ချက်ရမည်ဖြစ်သည်။)
+</p></blockquote>
+
+<a id="Sec_002e1_002e1_002e7"></a><a id="g_t1_002e1_002e7"></a>
+<a id="Example_003a-Square-Roots-by-Newton_0027s-Method"></a>
+<h4 class="subsection"><span class="secnum">1.1.7</span><span class="sectitle">ဥပမာ- Newton’s Method ဖြင့် နှစ်ထပ်ကိန်းရင်းများ ရှာဖွေခြင်း</span></h4>
+
+<p>အထက်တွင် မိတ်ဆက်ခဲ့သော လုပ်ထုံးလုပ်နည်းများ (Procedures) သည် သာမန် သင်္ချာဖန်ရှင်များနှင့် များစွာ တူညီပါသည်။ ၎င်းတို့သည် parameter တစ်ခု သို့မဟုတ် တစ်ခုထက်ပိုသော parameter များအပေါ် မူတည်၍ တန်ဖိုးတစ်ခုကို သတ်မှတ်ပေးသည်။ သို့သော် သင်္ချာဖန်ရှင်များနှင့် ကွန်ပျူတာ လုပ်ထုံးလုပ်နည်းများအကြား အရေးကြီးသော ကွဲပြားချက်တစ်ခု ရှိသည်။ လုပ်ထုံးလုပ်နည်းများသည် ထိရောက်မှု (effective) ရှိရမည် ဖြစ်သည်။
+</p>
+<p>ဥပမာတစ်ခုအနေဖြင့် နှစ်ထပ်ကိန်းရင်းများ (square roots) ကို တွက်ချက်သည့် ပြဿနာကို စဉ်းစားကြည့်ပါ။ ကျွန်ုပ်တို့သည် square-root ဖန်ရှင်ကို အောက်ပါအတိုင်း အဓိပ္ပာယ်ဖွင့်ဆိုနိုင်သည် -
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <msqrt>
+    <mi>x</mi>
+  </msqrt>
+  <mspace width="thickmathspace"/>
+  <mspace width="thickmathspace"/>
+  <mo>=</mo>
+  <mspace width="thickmathspace"/>
+  <mspace width="thickmathspace"/>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mtext>၎င်း</mtext>
+    <mspace width="thickmathspace"/>
+    <mspace width="thickmathspace"/>
+    <mi>y</mi>
+  </mrow>
+  <mspace width="thickmathspace"/>
+  <mspace width="thickmathspace"/>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mtext>ဖြစ်သော</mtext>
+  </mrow>
+  <mspace width="thickmathspace"/>
+  <mspace width="thickmathspace"/>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>y</mi>
+    <mo>≥<!-- ≥ --></mo>
+    <mn>0</mn>
+  </mrow>
+  <mspace width="thickmathspace"/>
+  <mspace width="thickmathspace"/>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mtext>နှင့်</mtext>
+    <mspace width="thickmathspace"/>
+    <mspace width="thickmathspace"/>
+    <msup>
+      <mi>y</mi>
+      <mn>2</mn>
+    </msup>
+    <mo>=</mo>
+    <mi>x</mi>
+    <mo>.</mo>
+  </mrow>
+</math>
+
+ဤအချက်သည် ခိုင်လုံပြည့်စုံသော သင်္ချာဖန်ရှင်တစ်ခုကို ဖော်ပြခြင်း ဖြစ်သည်။ ၎င်းကို အသုံးပြု၍ ကိန်းတစ်ခုသည် အခြားကိန်းတစ်ခု၏ နှစ်ထပ်ကိန်းရင်း ဟုတ်မဟုတ် စစ်ဆေးရန် သို့မဟုတ် ယေဘုယျအားဖြင့် နှစ်ထပ်ကိန်းရင်းများအကြောင်း အချက်အလက်များကို ထုတ်ယူရန် အသုံးပြုနိုင်သည်။ အခြားတစ်ဖက်တွင်မူ၊ ဤအဓိပ္ပာယ်ဖွင့်ဆိုချက်သည် လုပ်ထုံးလုပ်နည်း (procedure) တစ်ခုကို ဖော်ပြခြင်း မဟုတ်ပါ။ အမှန်စင်စစ်၊ ၎င်းသည် ပေးထားသော ကိန်းတစ်ခု၏ နှစ်ထပ်ကိန်းရင်းကို လက်တွေ့တွင် မည်သို့ရှာဖွေရမည်ကို ကျွန်ုပ်တို့အား တစ်စုံတစ်ရာမျှ ပြောပြထားခြင်း မရှိပေ။ ဤအဓိပ္ပာယ်ဖွင့်ဆိုချက်ကို pseudo-Lisp ဖြင့် ပြန်လည်ရေးသားခြင်းကလည်း အကူအညီဖြစ်လိမ့်မည် မဟုတ်ပါ -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sqrt x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">the y </span><span class="opn">(</span><span class="kwd">and</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;=</span><span class="pln"> y </span><span class="lit">0</span><span class="clo">)</span><span class="pln"> 
+              </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square y</span><span class="clo">)</span><span class="pln"> x</span><span class="clo">))))</span></pre></div>
+
+<p>၎င်းသည် လိုရင်းသို့ မရောက်ဘဲ မူလမေးခွန်းကိုသာ ပြန်လည်မေးမြန်းနေသကဲ့သို့ ဖြစ်သည်။
+</p>
+<p>ဖန်ရှင်နှင့် လုပ်ထုံးလုပ်နည်းအကြား ခြားနားချက်မှာ အရာဝတ္ထုများ၏ ဂုဏ်သတ္တိများကို ဖော်ပြခြင်းနှင့် အရာများကို မည်သို့လုပ်ဆောင်ရမည်ကို ဖော်ပြခြင်းတို့အကြား ယေဘုယျ ကွဲပြားမှုကို ရောင်ပြန်ဟပ်ခြင်း ဖြစ်သည်၊ သို့မဟုတ် တစ်ခါတစ်ရံတွင် declarative knowledge နှင့် imperative knowledge အကြား ကွဲပြားမှုဟုလည်း ခေါ်ဆိုကြသည်။ သင်္ချာတွင် ကျွန်ုပ်တို့သည် များသောအားဖြင့် declarative (မည်သို့ဖြစ်သည် - what is) ဖော်ပြချက်များကိုသာ စိတ်ဝင်စားကြသော်လည်း၊ ကွန်ပျူတာသိပ္ပံတွင်မူ ကျွန်ုပ်တို့သည် များသောအားဖြင့် imperative (မည်သို့လုပ်ဆောင်ရမည် - how to) ဖော်ပြချက်များကိုသာ အလေးထားကြသည်။<a class="footnote_link" id="DOCF20" href="#FOOT20"><sup>20</sup></a>
+</p>
+<p>နှစ်ထပ်ကိန်းရင်းကို မည်သို့ တွက်ချက်သနည်း။ အသုံးအများဆုံး နည်းလမ်းမှာ Newton’s method of successive approximations ကို အသုံးပြုခြင်း ဖြစ်သည်။ ၎င်းက ကိန်း x ၏ နှစ်ထပ်ကိန်းရင်း တန်ဖိုးအတွက် ခန့်မှန်းခြေ y တစ်ခုရှိလျှင်၊ y ကို x/y နှင့် ပျမ်းမျှရှာခြင်း (averaging) အားဖြင့် ပိုမိုကောင်းမွန်သော (အစစ်အမှန် နှစ်ထပ်ကိန်းရင်းနှင့် ပိုမိုနီးစပ်သော) ခန့်မှန်းခြေတစ်ခု ရရှိရန် ရိုးရှင်းသော ကိုင်တွယ်တွက်ချက်မှုတစ်ခု ပြုလုပ်နိုင်သည်ဟု ဆိုသည်။<a class="footnote_link" id="DOCF21" href="#FOOT21"><sup>21</sup></a> 
+ဥပမာအားဖြင့်၊ ၂ ၏ နှစ်ထပ်ကိန်းရင်းကို အောက်ပါအတိုင်း တွက်ချက်နိုင်သည်။ ကျွန်ုပ်တို့၏ ကနဦးခန့်မှန်းခြေမှာ ၁ ဖြစ်သည်ဟု ယူဆပါစို့ -
+</p>
+<div class="example">
+<pre class="example">Guess     Quotient      Average
+
+1         (2/1)  = 2    ((2 + 1)/2)  = 1.5
+
+1.5       (2/1.5)       ((1.3333 + 1.5)/2)
+            = 1.3333      = 1.4167
+
+1.4167    (2/1.4167)    ((1.4167 + 1.4118)/2) 
+            = 1.4118      = 1.4142  
+
+1.4142    ...           ...
+</pre></div>
+
+<p>ဤလုပ်ငန်းစဉ်ကို ဆက်လက်လုပ်ဆောင်ခြင်းဖြင့်၊ နှစ်ထပ်ကိန်းရင်းနှင့် တစ်ဆင့်ထက်တစ်ဆင့် ပိုမိုနီးစပ်သော ခန့်မှန်းခြေများကို ရရှိမည်ဖြစ်သည်။
+</p>
+<p>ယခု ဤလုပ်ငန်းစဉ်ကို လုပ်ထုံးလုပ်နည်းများ (procedures) အဖြစ် ပုံစံချကြည့်ရအောင်။ ကျွန်ုပ်တို့သည် radicand (နှစ်ထပ်ကိန်းရင်း ရှာလိုသောကိန်း) တန်ဖိုးတစ်ခုနှင့် ခန့်မှန်းခြေ (guess) တန်ဖိုးတစ်ခုတို့ဖြင့် စတင်မည်။ အကယ်၍ ခန့်မှန်းခြေသည် ကျွန်ုပ်တို့၏ ရည်ရွယ်ချက်အတွက် လုံလောက်စွာ ကောင်းမွန်ပါက ပြီးဆုံးပြီ ဖြစ်သည်၊ မဟုတ်ပါက ပိုမိုကောင်းမွန်အောင် ပြုပြင်ထားသော ခန့်မှန်းခြေဖြင့် ဤလုပ်ငန်းစဉ်ကို ထပ်မံလုပ်ဆောင်ရမည်။ ဤအခြေခံ မဟာဗျူဟာကို လုပ်ထုံးလုပ်နည်းတစ်ခုအဖြစ် အောက်ပါအတိုင်း ရေးသားနိုင်သည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sqrt-iter guess x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">good-enough? guess x</span><span class="clo">)</span><span class="pln">
+      guess
+      </span><span class="opn">(</span><span class="pln">sqrt-iter </span><span class="opn">(</span><span class="pln">improve guess x</span><span class="clo">)</span><span class="pln"> x</span><span class="clo">)))</span></pre></div>
+
+<p>ခန့်မှန်းခြေတစ်ခုကို radicand နှင့် ယခင်ခန့်မှန်းခြေတို့၏ စားလဒ် (quotient) ကို ပျမ်းမျှရှာခြင်းဖြင့် ပိုမိုကောင်းမွန်အောင် ပြုပြင်နိုင်သည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">improve guess x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">average guess </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> x guess</span><span class="clo">)))</span></pre></div>
+
+<p>ဤနေရာတွင် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">average x y</span><span class="clo">)</span><span class="pln"> 
+  </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> x y</span><span class="clo">)</span><span class="pln"> </span><span class="lit">2</span><span class="clo">))</span></pre></div>
+
+<p>“လုံလောက်စွာ ကောင်းမွန်သည် (good enough)” ဆိုသည်မှာ အဘယ်နည်း။ အောက်ပါဖော်ပြချက်သည် ဥပမာပြရန်အတွက် အဆင်ပြေစေသော်လည်း၊ အမှန်တကယ်တွင်မူ အလွန်ကောင်းမွန်သော စမ်းသပ်ချက်တစ်ခု မဟုတ်ပါ။ (လေ့ကျင့်ခန်း ၁.၇ ကို ကြည့်ပါ။) အခြေခံ စိတ်ကူးမှာ ရလဒ်၏ နှစ်ထပ်ကိန်းနှင့် radicand တို့၏ ခြားနားချက်သည် သတ်မှတ်ထားသော သည်းခံနိုင်စွမ်း (tolerance) တန်ဖိုး (ဤနေရာတွင် ၀.၀၀၁) ထက် ငယ်သွားသည်အထိ အဖြေကို ပိုမိုကောင်းမွန်အောင် ပြုပြင်သွားရန် ဖြစ်သည် -<a class="footnote_link" id="DOCF22" href="#FOOT22"><sup>22</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">good-enough? guess x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pun">&lt;</span><span class="pln"> </span><span class="opn">(</span><span class="pln">abs </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square guess</span><span class="clo">)</span><span class="pln"> x</span><span class="clo">))</span><span class="pln"> </span><span class="lit">0.001</span><span class="clo">))</span></pre></div>
+
+<p>နောက်ဆုံးတွင်၊ ကျွန်ုပ်တို့ စတင်ရန် နည်းလမ်းတစ်ခု လိုအပ်သည်။ ဥပမာအားဖြင့်၊ မည်သည့်ကိန်း၏ နှစ်ထပ်ကိန်းရင်းကိုမဆို ၁ ဟု အမြဲတမ်း ခန့်မှန်းနိုင်သည် -<a class="footnote_link" id="DOCF23" href="#FOOT23"><sup>23</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sqrt x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">sqrt-iter </span><span class="lit">1.0</span><span class="pln"> x</span><span class="clo">))</span></pre></div>
+
+<p>အကယ်၍ ဤအဓိပ္ပာယ်ဖွင့်ဆိုချက်များကို interpreter ထဲသို့ ရိုက်ထည့်ပါက၊ ကျွန်ုပ်တို့သည် <code>sqrt</code> ကို အခြားမည်သည့် လုပ်ထုံးလုပ်နည်း (procedure) ကဲ့သို့မဆို အသုံးပြုနိုင်သည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">sqrt </span><span class="lit">9</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">3.00009155413138</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">sqrt </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="lit">100</span><span class="pln"> </span><span class="lit">37</span><span class="clo">))</span><span class="pln">
+</span><i><span class="lit">11.704699917758145</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">sqrt </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sqrt </span><span class="lit">2</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sqrt </span><span class="lit">3</span><span class="clo">)))</span><span class="pln">
+</span><i><span class="lit">1.7739279023207892</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">square </span><span class="opn">(</span><span class="pln">sqrt </span><span class="lit">1000</span><span class="clo">))</span><span class="pln">
+</span><i><span class="lit">1000.000369924366</span></i>
+</pre></div>
+
+<p><code>sqrt</code> ပရိုဂရမ်သည် ကျွန်ုပ်တို့ ယခုအချိန်အထိ မိတ်ဆက်ခဲ့သော ရိုးရှင်းသော procedural language သည် C သို့မဟုတ် Pascal ကဲ့သို့သော ဘာသာစကားများဖြင့် ရေးသားနိုင်သည့် မည်သည့် ကိန်းဂဏန်းဆိုင်ရာ ပရိုဂရမ်ကိုမဆို ရေးသားရန် လုံလောက်ကြောင်း ဖော်ပြနေသည်။ ကျွန်ုပ်တို့၏ ဘာသာစကားတွင် ကွန်ပျူတာကို တစ်ခုခုကို ထပ်ခါတလဲလဲ လုပ်ဆောင်ရန် ညွှန်ကြားသည့် မည်သည့် iterative (looping) constructs များကိုမျှ ထည့်သွင်းထားခြင်း မရှိသောကြောင့် ဤအချက်မှာ အံ့အားသင့်စရာ ဖြစ်နိုင်ပါသည်။ အခြားတစ်ဖက်တွင်မူ <code>sqrt-iter</code> သည် လုပ်ထုံးလုပ်နည်းတစ်ခုကို ခေါ်ဆိုနိုင်သည့် သာမန်စွမ်းရည်မှလွဲ၍ အခြားအထူးဖွဲ့စည်းပုံများ မလိုအပ်ဘဲ iteration ကို မည်သို့လုပ်ဆောင်နိုင်သည်ကို သက်သေပြနေသည်။<a class="footnote_link" id="DOCF24" href="#FOOT24"><sup>24</sup></a>
+</p>
+<blockquote>
+<p><strong><a id="Exercise-1_002e6"></a>လေ့ကျင့်ခန်း ၁.၆:</strong> Alyssa P. Hacker သည် <code>if</code> ကို special form အဖြစ် အဘယ်ကြောင့် သတ်မှတ်ပေးရန် လိုအပ်သည်ကို နားမလည်ပါ။ “<code>cond</code> ကို အသုံးပြုပြီး သာမန် လုပ်ထုံးလုပ်နည်းတစ်ခုအနေနဲ့ ကျွန်မ ဘာလို့ အဓိပ္ပာယ်မဖွင့်နိုင်ရတာလဲ” ဟု သူမက မေးမြန်းသည်။ Alyssa ၏ သူငယ်ချင်း Eva Lu Ator က ၎င်းကို အမှန်တကယ် လုပ်ဆောင်နိုင်သည်ဟု ဆိုကာ <code>if</code> ၏ ဗားရှင်းအသစ်တစ်ခုကို အောက်ပါအတိုင်း အဓိပ္ပာယ်ဖွင့်ဆိုခဲ့သည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">new-if predicate 
+                then-clause 
+                else-clause</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">(</span><span class="pln">predicate then-clause</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> else-clause</span><span class="clo">)))</span></pre></div>
+
+<p>Eva က Alyssa အတွက် ပရိုဂရမ်ကို စမ်းသပ်ပြသသည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">new-if </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> </span><span class="lit">2</span><span class="pln"> </span><span class="lit">3</span><span class="clo">)</span><span class="pln"> </span><span class="lit">0</span><span class="pln"> </span><span class="lit">5</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">5</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">new-if </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> </span><span class="lit">1</span><span class="clo">)</span><span class="pln"> </span><span class="lit">0</span><span class="pln"> </span><span class="lit">5</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">0</span></i>
+</pre></div>
+
+<p>Alyssa သည် ဝမ်းမြောက်ဝမ်းသာဖြင့် <code>new-if</code> ကို အသုံးပြု၍ နှစ်ထပ်ကိန်းရင်း ပရိုဂရမ်ကို ပြန်လည်ရေးသားခဲ့သည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sqrt-iter guess x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">new-if </span><span class="opn">(</span><span class="pln">good-enough? guess x</span><span class="clo">)</span><span class="pln">
+          guess
+          </span><span class="opn">(</span><span class="pln">sqrt-iter </span><span class="opn">(</span><span class="pln">improve guess x</span><span class="clo">)</span><span class="pln"> x</span><span class="clo">)))</span></pre></div>
+
+<p>Alyssa သည် ၎င်းကို အသုံးပြု၍ နှစ်ထပ်ကိန်းရင်းများ တွက်ချက်ရန် ကြိုးစားသောအခါ ဘာဖြစ်လာသနည်း။ ရှင်းပြပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-1_002e7"></a>လေ့ကျင့်ခန်း ၁.၇:</strong> နှစ်ထပ်ကိန်းရင်းများ တွက်ချက်ရာတွင် အသုံးပြုသည့် <code>good-enough?</code> စမ်းသပ်ချက်သည် အလွန်ငယ်သော ကိန်းများအတွက် ထိရောက်မှု ရှိမည်မဟုတ်ပါ။ ထို့အပြင်၊ လက်တွေ့ကမ္ဘာမှ ကွန်ပျူတာများတွင် သင်္ချာဆိုင်ရာ လုပ်ဆောင်ချက်များကို များသောအားဖြင့် ကန့်သတ်ထားသော တိကျမှု (limited precision) ဖြင့်သာ လုပ်ဆောင်ကြသည်။ ဤအချက်ကြောင့် ကျွန်ုပ်တို့၏ စမ်းသပ်ချက်သည် အလွန်ကြီးမားသော ကိန်းများအတွက် မလုံလောက်မှုများ ဖြစ်ပေါ်စေသည်။ အဆိုပါ ပြောကြားချက်များကို အလွန်ငယ်သောကိန်းများနှင့် အလွန်ကြီးသောကိန်းများအတွက် စမ်းသပ်ချက် မည်သို့ ပျက်ကွက်သည်ကို ဥပမာများဖြင့် ရှင်းပြပါ။ <code>good-enough?</code> ကို အကောင်အထည်ဖော်ရန် အခြားနည်းလမ်းတစ်ခုမှာ iteration တစ်ခုမှ တစ်ခုသို့ <code>guess</code> မည်သို့ပြောင်းလဲသွားသည်ကို စောင့်ကြည့်ရန်နှင့် ပြောင်းလဲမှုသည် ခန့်မှန်းခြေ၏ အလွန်သေးငယ်သော အစိတ်အပိုင်းတစ်ခု ဖြစ်သွားသောအခါတွင် ရပ်တန့်ရန် ဖြစ်သည်။ ဤကဲ့သို့သော အဆုံးသတ်စမ်းသပ်ချက်ကို အသုံးပြုသည့် square-root လုပ်ထုံးလုပ်နည်းတစ်ခုကို ဒီဇိုင်းဆွဲပါ။ ၎င်းသည် အလွန်ငယ်သောကိန်းများနှင့် အလွန်ကြီးသောကိန်းများအတွက် ပိုမိုကောင်းမွန်ပါသလား။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-1_002e8"></a>လေ့ကျင့်ခန်း ၁.၈:</strong> သုံးထပ်ကိန်းရင်း (cube roots) များအတွက် Newton’s method သည် အကယ်၍ y သည် x ၏ သုံးထပ်ကိန်းရင်းအတွက် ခန့်မှန်းခြေတစ်ခု ဖြစ်ပါက၊ ပိုမိုကောင်းမွန်သော ခန့်မှန်းခြေကို အောက်ပါတန်ဖိုးဖြင့် ရရှိနိုင်သည်ဟူသော အချက်ပေါ်တွင် အခြေခံသည် -
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mfrac>
+      <mrow>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mo>/</mo>
+          </mrow>
+          <msup>
+            <mi>y</mi>
+            <mn>2</mn>
+          </msup>
+        </mrow>
+        <mo>+</mo>
+        <mn>2</mn>
+        <mi>y</mi>
+      </mrow>
+      <mn>3</mn>
+    </mfrac>
+    <mo>.</mo>
+  </mrow>
+</math>
+
+ဤပုံသေနည်းကို အသုံးပြု၍ နှစ်ထပ်ကိန်းရင်း လုပ်ထုံးလုပ်နည်းနှင့် ဆင်တူသော သုံးထပ်ကိန်းရင်း (cube-root) လုပ်ထုံးလုပ်နည်းတစ်ခုကို အကောင်အထည်ဖော်ပါ။ (၁.၃.၄ တွင် Newton’s method ကို ယေဘုယျအားဖြင့် ဤနှစ်ထပ်ကိန်းရင်းနှင့် သုံးထပ်ကိန်းရင်း လုပ်ထုံးလုပ်နည်းများ၏ abstract ပုံစံအဖြစ် မည်သို့ အကောင်အထည်ဖော်ရမည်ကို တွေ့ရမည် ဖြစ်သည်။)
+</p></blockquote>
+
+<a id="g_t1_002e1_002e8"></a>
+<a id="Procedures-as-Black_002dBox-Abstractions"></a>
+<h4 class="subsection"><span class="secnum">1.1.8</span><span class="sectitle">Procedures as Black-Box Abstractions</span></h4>
+
+<p><code>Sqrt</code> သည် အပြန်အလှန် အဓိပ္ပာယ်ဖွင့်ဆိုထားသော procedure များဖြင့် ဖွဲ့စည်းထားသည့် process တစ်ခု၏ ပထမဆုံး ဥပမာဖြစ်သည်။ <code>sqrt-iter</code> ၏ အဓိပ္ပာယ်ဖွင့်ဆိုချက်သည်
+<a id="index-recursive-1"></a>
+<em>recursive</em> ဖြစ်သည်ကို သတိပြုပါ၊ ဆိုလိုသည်မှာ ၎င်း procedure ကို ၎င်း၏ ကိုယ်ပိုင်အမည်ဖြင့်ပင် ပြန်လည် အဓိပ္ပာယ်ဖွင့်ဆိုထားခြင်း ဖြစ်သည်။ procedure တစ်ခုကို ၎င်း၏ ကိုယ်ပိုင်အမည်ဖြင့် ပြန်လည် အဓိပ္ပာယ်ဖွင့်ဆိုနိုင်သည်ဟူသော အယူအဆသည် စိတ်ရှုပ်ထွေးဖွယ် ဖြစ်နိုင်သည်፤ ထိုကဲ့သို့သော "circular" ဖြစ်နေသည့် အဓိပ္ပာယ်ဖွင့်ဆိုချက်မျိုးသည် ကွန်ပျူတာဖြင့် လုပ်ဆောင်ရမည့် ကောင်းမွန်စွာ သတ်မှတ်ထားသော process တစ်ခုအဖြစ် မည်သို့ အဓိပ္ပာယ်ရှိနိုင်မည်နည်းဟု မရှင်းမလင်း ဖြစ်နိုင်ပါသည်။ ဤအကြောင်းအရာကို <a href="1_002e2.html#g_t1_002e2">1.2</a> တွင် ပိုမိုဂရုတစိုက် ဆွေးနွေးသွားမည် ဖြစ်သည်။ သို့သော် ပထမဦးစွာ <code>sqrt</code> ဥပမာမှတစ်ဆင့် ဖော်ပြထားသော အခြား အရေးကြီးသည့် အချက်အချို့ကို စဉ်းစားကြည့်ကြပါစို့။
+</p>
+<p>square roots ရှာဖွေခြင်း ပြဿနာကို သဘာဝအလျောက် ပြဿနာခွဲများစွာအဖြစ် ခွဲထုတ်နိုင်သည်ကို လေ့လာကြည့်ပါ- guess တစ်ခုသည် လုံလောက်မှု ရှိမရှိ မည်သို့သိနိုင်မည်နည်း၊ guess ကို မည်သို့ ပိုမိုကောင်းမွန်အောင် ပြုလုပ်မည်နည်း စသည်တို့ဖြစ်သည်။ ဤလုပ်ဆောင်ချက် တစ်ခုချင်းစီကို သီးခြား procedure တစ်ခုစီဖြင့် လုပ်ဆောင်ပါသည်။ <code>sqrt</code> ပရိုဂရမ်တစ်ခုလုံးကို ပြဿနာကို ပြဿနာခွဲများအဖြစ် ခွဲထုတ်ထားခြင်းကို ထင်ဟပ်စေသော procedure များ စုစည်းမှုတစ်ခု ( <a href="#Figure-1_002e2">Figure 1.2</a> တွင် ပြသထားသည့်အတိုင်း) အဖြစ် ရှုမြင်နိုင်ပါသည်။
+</p>
+<figure class="float">
+<a id="Figure-1_002e2"></a>
+<object style="width: 34.97ex; height: 15.63ex;" data="fig/chap1/Fig1.2.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>Figure 1.2:</strong> <code>sqrt</code> ပရိုဂရမ်၏ Procedural decomposition။</p>
+</figcaption>
+</figure>
+
+<p>ဤကဲ့သို့ ခွဲထုတ်သည့် မဟာဗျူဟာ၏ အရေးကြီးပုံသည် ပရိုဂရမ်ကို အစိတ်အပိုင်းများအဖြစ် ခွဲဝေလိုက်ခြင်းသက်သက် မဟုတ်ပါ။ အမှန်စင်စစ် ကျွန်ုပ်တို့သည် မည်သည့် ပရိုဂရမ်ကြီးကိုမဆို အစိတ်အပိုင်းများအဖြစ် ခွဲခြားနိုင်ပါသည်—ပထမဆုံး ဆယ်ကြောင်း၊ နောက်ထပ် ဆယ်ကြောင်း၊ နောက်ထပ် ဆယ်ကြောင်း စသည်ဖြင့်ပေါ့။ ထိုသို့မဟုတ်ဘဲ၊ procedure တစ်ခုချင်းစီသည် အခြား procedure များကို အဓိပ္ပာယ်ဖွင့်ဆိုရာတွင် module တစ်ခုအဖြစ် အသုံးပြုနိုင်သည့် ခွဲခြားသိမြင်နိုင်သော လုပ်ဆောင်ချက်တစ်ခုကို ပြီးမြောက်အောင် ဆောင်ရွက်နိုင်ရန်မှာ အလွန်အရေးကြီးပါသည်။ ဥပမာအားဖြင့်၊ ကျွန်ုပ်တို့သည် <code>good-enough?</code> procedure ကို <code>square</code> ဖြင့် အဓိပ္ပာယ်ဖွင့်ဆိုသောအခါ၊ <code>square</code> procedure ကို "black box" တစ်ခုအဖြစ် သဘောထားနိုင်ပါသည်။ ထိုအချိန်တွင် အဆိုပါ procedure က ရလဒ်ကို <em>မည်သို့</em> တွက်ချက်သည်ဆိုသည်ကို ကျွန်ုပ်တို့ ဂရုမစိုက်ဘဲ၊ ၎င်းသည် square ကို တွက်ချက်ပေးသည်ဟူသော အချက်ကိုသာ အလေးထားပါသည်။ square ကို မည်သို့တွက်ချက်သည်ဟူသော အသေးစိတ်အချက်အလက်များကို ခေတ္တဖယ်ထားပြီး နောက်မှသာ စဉ်းစားနိုင်ပါသည်။ အမှန်စင်စစ်၊ <code>good-enough?</code> procedure နှင့် ပတ်သက်သမျှ ကာလပတ်လုံး <code>square</code> သည် procedure တစ်ခုသက်သက် မဟုတ်ဘဲ procedure တစ်ခု၏ abstraction တစ်ခု၊ ဆိုလိုသည်မှာ <a id="index-procedural-abstraction"></a>
+<em>procedural abstraction</em> တစ်ခု ဖြစ်ပါသည်။ ဤ abstraction အဆင့်တွင်၊ square ကို တွက်ချက်ပေးသည့် မည်သည့် procedure မဆို တူညီစွာပင် ကောင်းမွန်ပါသည်။
+</p>
+<p>ထို့ကြောင့် ၎င်းတို့ ပြန်ပေးသည့် တန်ဖိုးများကိုသာ စဉ်းစားမည်ဆိုပါက၊ ကိန်းဂဏန်းတစ်ခုကို square ရှာရန် အောက်ပါ procedure နှစ်ခုသည် ခွဲခြား၍မရနိုင်လောက်အောင် တူညီသင့်ပါသည်။ တစ်ခုချင်းစီသည် ကိန်းဂဏန်း argument တစ်ခုကို ယူပြီး ထိုကိန်းဂဏန်း၏ square ကို တန်ဖိုးအဖြစ် ထုတ်ပေးပါသည်။<a class="footnote_link" id="DOCF25" href="#FOOT25"><sup>25</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x x</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square x</span><span class="clo">)</span><span class="pln"> 
+  </span><span class="opn">(</span><span class="pln">exp </span><span class="opn">(</span><span class="pln">double </span><span class="opn">(</span><span class="pln">log x</span><span class="clo">))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">double x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> x x</span><span class="clo">))</span></pre></div>
+
+<p>ထို့ကြောင့် procedure အဓိပ္ပာယ်ဖွင့်ဆိုချက်တစ်ခုသည် အသေးစိတ်အချက်အလက်များကို ဖုံးကွယ်ထားနိုင်သင့်ပါသည်။ procedure ကို အသုံးပြုသူများသည် procedure ကို ၎င်းတို့ကိုယ်တိုင် ရေးသားထားခြင်း မဟုတ်ဘဲ အခြား ပရိုဂရမ်မာတစ်ဦးထံမှ black box တစ်ခုအဖြစ် ရရှိထားခြင်း ဖြစ်နိုင်ပါသည်။ အသုံးပြုသူတစ်ဦးအနေဖြင့် procedure ကို အသုံးပြုရန်အတွက် ၎င်းကို မည်သို့ implement လုပ်ထားသည်ကို သိရန် မလိုသင့်ပါ။
+</p>
+<a id="Local-names"></a>
+<h5 class="subsubheading">Local names</h5>
+
+<p>procedure ကို အသုံးပြုသူအတွက် အရေးမကြီးသင့်သော implementation ၏ အသေးစိတ် အချက်အလက်တစ်ခုမှာ implementer က procedure ၏ formal parameters များအတွက် ရွေးချယ်ထားသော အမည်များ ဖြစ်သည်။ ထို့ကြောင့် အောက်ပါ procedure များသည် ခွဲခြား၍မရနိုင်သင့်ပါ-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x x</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square y</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> y y</span><span class="clo">))</span></pre></div>
+
+<p>procedure တစ်ခု၏ အဓိပ္ပာယ်သည် ၎င်းကို ရေးသားသူ အသုံးပြုထားသည့် parameter အမည်များအပေါ် မမှီခိုသင့်ဘူးဟူသော ဤမူဝါဒသည် အပေါ်ယံအားဖြင့် ထင်ရှားလှသော်လည်း၊ ၎င်း၏ နောက်ဆက်တွဲ ရလဒ်များသည် နက်ရှိုင်းလှပါသည်။ အရှင်းလင်းဆုံး နောက်ဆက်တွဲ ရလဒ်မှာ procedure တစ်ခု၏ parameter အမည်များသည် procedure ၏ body အတွင်း၌သာ local ဖြစ်ရပါမည်။ ဥပမာအားဖြင့်၊ ကျွန်ုပ်တို့၏ square-root procedure တွင် <code>good-enough?</code> ကို အဓိပ္ပာယ်ဖွင့်ဆိုရာ၌ <code>square</code> ကို အသုံးပြုခဲ့သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">good-enough? guess x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pun">&lt;</span><span class="pln"> </span><span class="opn">(</span><span class="pln">abs </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square guess</span><span class="clo">)</span><span class="pln"> x</span><span class="clo">))</span><span class="pln"> </span><span class="lit">0.001</span><span class="clo">))</span></pre></div>
+
+<p><code>good-enough?</code> ကို ရေးသားသူ၏ ရည်ရွယ်ချက်မှာ ပထမဆုံး argument ၏ square သည် ဒုတိယ argument နှင့် သတ်မှတ်ထားသော tolerance အတွင်း ရှိမရှိကို ဆုံးဖြတ်ရန် ဖြစ်ပါသည်။ <code>good-enough?</code> ကို ရေးသားသူသည် ပထမဆုံး argument အတွက် <code>guess</code> ဟူသော အမည်ကိုလည်းကောင်း၊ ဒုတိယ argument အတွက် <code>x</code> ဟူသော အမည်ကိုလည်းကောင်း အသုံးပြုထားသည်ကို တွေ့ရပါသည်။ <code>square</code> ၏ argument မှာ <code>guess</code> ဖြစ်ပါသည်။ အကယ်၍ <code>square</code> ကို ရေးသားသူက ထို argument ကို ရည်ညွှန်းရန် (အထက်တွင် ဖော်ပြခဲ့သည့်အတိုင်း) <code>x</code> ကို အသုံးပြုခဲ့လျှင်၊ <code>good-enough?</code> ထဲမှ <code>x</code> သည် <code>square</code> ထဲမှ <code>x</code> နှင့် မတူညီသော <code>x</code> ဖြစ်ရမည်ကို ကျွန်ုပ်တို့ တွေ့နိုင်ပါသည်။ <code>square</code> procedure ကို run ခြင်းသည် <code>good-enough?</code> က အသုံးပြုနေသော <code>x</code> ၏ တန်ဖိုးကို မထိခိုက်စေရပါ၊ အဘယ်ကြောင့်ဆိုသော် ထို <code>x</code> ၏ တန်ဖိုးကို <code>square</code> တွက်ချက်ပြီးနောက် <code>good-enough?</code> က ဆက်လက်အသုံးပြုရန် လိုအပ်နိုင်သောကြောင့် ဖြစ်ပါသည်။
+</p>
+<p>အကယ်၍ parameter များသည် ၎င်းတို့နှင့် သက်ဆိုင်ရာ procedure body များတွင် local မဖြစ်ခဲ့လျှင်၊ <code>square</code> မှ parameter <code>x</code> သည် <code>good-enough?</code> မှ parameter <code>x</code> နှင့် မှားယွင်းသွားနိုင်ပြီး၊ <code>good-enough?</code> ၏ လုပ်ဆောင်ချက်သည် ကျွန်ုပ်တို့ မည်သည့် <code>square</code> ဗားရှင်းကို အသုံးပြုသလဲ ဆိုသည့်အပေါ် မူတည်သွားပါလိမ့်မည်။ ထိုသို့ဆိုလျှင် <code>square</code> သည် ကျွန်ုပ်တို့ အလိုရှိသော black box ဖြစ်လာတော့မည် မဟုတ်ပါ။
+</p>
+<p>procedure တစ်ခု၏ formal parameter သည် procedure အဓိပ္ပာယ်ဖွင့်ဆိုချက်တွင် အလွန်ထူးခြားသော အခန်းကဏ္ဍမှ ပါဝင်ပါသည်။ ၎င်း formal parameter တွင် မည်သည့်အမည် ရှိသည်ဆိုသည်မှာ အရေးမကြီးပါ။ ထိုကဲ့သို့သော အမည်ကို <a id="index-bound-variable"></a>
+<em>bound variable</em> ဟု ခေါ်ဆိုပြီး procedure အဓိပ္ပာယ်ဖွင့်ဆိုချက်သည် ၎င်း၏ formal parameters များကို <a id="index-binds"></a>
+<em>binds</em> လုပ်သည်ဟု ကျွန်ုပ်တို့ ပြောဆိုကြပါသည်။ အကယ်၍ bound variable တစ်ခုကို အဓိပ္ပာယ်ဖွင့်ဆိုချက် တစ်ခုလုံးတွင် တစ်သမတ်တည်း အမည်ပြောင်းလဲလိုက်လျှင် procedure အဓိပ္ပာယ်ဖွင့်ဆိုချက်သည် ပြောင်းလဲမှု မရှိပါ။<a class="footnote_link" id="DOCF26" href="#FOOT26"><sup>26</sup></a> အကယ်၍ variable တစ်ခုသည် bound မဖြစ်နေလျှင် ၎င်းကို <a id="index-free"></a>
+<em>free</em> ဖြစ်သည်ဟု ကျွန်ုပ်တို့ ပြောဆိုကြပါသည်။
+binding တစ်ခုက အမည်တစ်ခုကို သတ်မှတ်ပေးလိုက်သော expression များ အစုအဝေးကို ထိုအမည်၏ <a id="index-scope"></a>
+<em>scope</em> ဟု ခေါ်ဆိုပါသည်။ procedure အဓိပ္ပာယ်ဖွင့်ဆိုချက်တစ်ခုတွင် procedure ၏ formal parameters များအဖြစ် ကြေညာထားသော bound variables များသည် ၎င်းတို့၏ scope အဖြစ် procedure ၏ body တစ်ခုလုံးကို ပိုင်ဆိုင်ကြပါသည်။
+</p>
+<p>အထက်ပါ <code>good-enough?</code> ၏ အဓိပ္ပာယ်ဖွင့်ဆိုချက်တွင် <code>guess</code> နှင့် <code>x</code> တို့သည် bound variables များ ဖြစ်ကြသော်လည်း <code>&lt;</code>, <code>-</code>, <code>abs</code>, နှင့် <code>square</code> တို့သည် free ဖြစ်ကြသည်။ <code>good-enough?</code> ၏ အဓိပ္ပာယ်သည် <code>guess</code> နှင့် <code>x</code> အတွက် ကျွန်ုပ်တို့ ရွေးချယ်ထားသော အမည်များအပေါ် (၎င်းတို့သည် တစ်ခုနှင့်တစ်ခု ကွဲပြားပြီး <code>&lt;</code>, <code>-</code>, <code>abs</code>, နှင့် <code>square</code> တို့နှင့်လည်း မတူသရွေ့) မမှီခိုသင့်ပါ။ (အကယ်၍ ကျွန်ုပ်တို့သည် <code>guess</code> ကို <code>abs</code> ဟု အမည်ပြောင်းလိုက်လျှင် variable <code>abs</code> ကို <a id="index-capturing"></a>
+<em>capturing</em> လုပ်လိုက်ခြင်းဖြင့် bug တစ်ခုကို ဖန်တီးလိုက်သလို ဖြစ်သွားပါလိမ့်မည်။ ၎င်းသည် free မှ bound သို့ ပြောင်းလဲသွားပါလိမ့်မည်။) သို့သော် <code>good-enough?</code> ၏ အဓိပ္ပာယ်သည် ၎င်း၏ free variables များ၏ အမည်များအပေါ် မူတည်ပါသည်။ ၎င်းသည် <code>abs</code> ဟူသော သင်္ကေတသည် ကိန်းဂဏန်းတစ်ခု၏ absolute value ကို တွက်ချက်ရန် procedure တစ်ခု၏ အမည်ဖြစ်သည်ဟူသော (ဤအဓိပ္ပာယ်ဖွင့်ဆိုချက်၏ ပြင်ပရှိ) အချက်အပေါ်တွင် အမှန်တကယ် မူတည်နေပါသည်။ အကယ်၍ ကျွန်ုပ်တို့သည် <code>good-enough?</code> ၏ အဓိပ္ပာယ်ဖွင့်ဆိုချက်တွင် <code>abs</code> အစား <code>cos</code> ကို အစားထိုးလိုက်လျှင် ၎င်းသည် ကွဲပြားသော function တစ်ခုကို တွက်ချက်ပေးပါလိမ့်မည်။
+</p>
+<a id="Internal-definitions-and-block-structure"></a>
+<h5 class="subsubheading">Internal definitions and block structure</h5>
+
+<p>ကျွန်ုပ်တို့တွင် ယခုအချိန်အထိ အမည်များကို သီးခြားခွဲထုတ်နိုင်သည့် နည်းလမ်းတစ်ခု ရှိနေပါပြီ- procedure တစ်ခု၏ formal parameters များသည် procedure ၏ body အတွက် local ဖြစ်ကြပါသည်။ square-root ပရိုဂရမ်သည် အမည်များ အသုံးပြုမှုကို ထိန်းချုပ်လိုသည့် အခြားနည်းလမ်းတစ်ခုကိုလည်း သရုပ်ဖော်ထားပါသည်။ လက်ရှိ ပရိုဂရမ်တွင် သီးခြား procedure များ ပါဝင်နေပါသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sqrt x</span><span class="clo">)</span><span class="pln"> 
+  </span><span class="opn">(</span><span class="pln">sqrt-iter </span><span class="lit">1.0</span><span class="pln"> x</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sqrt-iter guess x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">good-enough? guess x</span><span class="clo">)</span><span class="pln">
+      guess
+      </span><span class="opn">(</span><span class="pln">sqrt-iter </span><span class="opn">(</span><span class="pln">improve guess x</span><span class="clo">)</span><span class="pln"> x</span><span class="clo">)))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">good-enough? guess x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pun">&lt;</span><span class="pln"> </span><span class="opn">(</span><span class="pln">abs </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square guess</span><span class="clo">)</span><span class="pln"> x</span><span class="clo">))</span><span class="pln"> </span><span class="lit">0.001</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">improve guess x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">average guess </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> x guess</span><span class="clo">)))</span></pre></div>
+
+<p>ဤပရိုဂရမ်၏ အခက်အခဲမှာ <code>sqrt</code> ကို အသုံးပြုသူများအတွက် အရေးကြီးသော တစ်ခုတည်းသော procedure မှာ <code>sqrt</code> သာ ဖြစ်ခြင်းဖြစ်သည်။ အခြား procedure များ (<code>sqrt-iter</code>, <code>good-enough?</code>, နှင့် <code>improve</code>) တို့သည် အသုံးပြုသူများအတွက် စိတ်ရှုပ်စရာသာ ဖြစ်စေပါသည်။ ၎င်းတို့သည် square-root ပရိုဂရမ်နှင့်အတူ တွဲဖက်လုပ်ဆောင်မည့် အခြားပရိုဂရမ်၏ အစိတ်အပိုင်းအဖြစ် <code>good-enough?</code> ဟု အမည်ပေးထားသော အခြား မည်သည့် procedure ကိုမျှ အဓိပ္ပာယ်ဖွင့်ဆိုနိုင်မည် မဟုတ်ပါ၊ အဘယ်ကြောင့်ဆိုသော် <code>sqrt</code> က ထိုအမည်ကို လိုအပ်နေသောကြောင့် ဖြစ်သည်။ ဤပြဿနာသည် ပရိုဂရမ်မာ အများအပြားက စနစ်ကြီးများ တည်ဆောက်ရာတွင် ပိုမိုဆိုးရွားပါသည်။ ဥပမာအားဖြင့်၊ ကိန်းဂဏန်းဆိုင်ရာ procedure များပါဝင်သည့် library အကြီးစားတစ်ခု တည်ဆောက်ရာတွင်၊ များစွာသော numerical functions များကို successive approximations နည်းလမ်းဖြင့် တွက်ချက်ကြသောကြောင့် <code>good-enough?</code> နှင့် <code>improve</code> ဟု အမည်ပေးထားသော အထောက်အကူပြု procedure များ ပါဝင်လာနိုင်ပါသည်။ ကျွန်ုပ်တို့သည် subprocedures များကို <code>sqrt</code> အတွင်း၌သာ ဝှက်ထားပြီး local ဖြစ်စေချင်ပါသည်၊ သို့မှသာ <code>sqrt</code> သည် ၎င်း၏ ကိုယ်ပိုင် <code>good-enough?</code> procedure ဖြင့် အခြား successive approximations နည်းလမ်းများနှင့်အတူ ယှဉ်တွဲ တည်ရှိနိုင်မည် ဖြစ်သည်။ ဤသို့ ဖြစ်နိုင်စေရန်၊ ကျွန်ုပ်တို့သည် procedure တစ်ခုအတွင်း၌ ထို procedure အတွက် local ဖြစ်စေမည့် internal definitions များ ထည့်သွင်းရန် ခွင့်ပြုပါသည်။ ဥပမာအားဖြင့်၊ square-root ပြဿနာတွင် အောက်ပါအတိုင်း ရေးသားနိုင်ပါသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sqrt x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">good-enough? guess x</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pun">&lt;</span><span class="pln"> </span><span class="opn">(</span><span class="pln">abs </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square guess</span><span class="clo">)</span><span class="pln"> x</span><span class="clo">))</span><span class="pln"> </span><span class="lit">0.001</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">improve guess x</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">average guess </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> x guess</span><span class="clo">)))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sqrt-iter guess x</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">good-enough? guess x</span><span class="clo">)</span><span class="pln">
+        guess
+        </span><span class="opn">(</span><span class="pln">sqrt-iter </span><span class="opn">(</span><span class="pln">improve guess x</span><span class="clo">)</span><span class="pln"> x</span><span class="clo">)))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">sqrt-iter </span><span class="lit">1.0</span><span class="pln"> x</span><span class="clo">))</span></pre></div>
+
+<p>ဤကဲ့သို့ အဓိပ္ပာယ်ဖွင့်ဆိုချက်များကို တစ်ခုအတွင်းတစ်ခု ထည့်သွင်းခြင်းကို <a id="index-block-structure"></a>
+<em>block structure</em> ဟု ခေါ်ဆိုပြီး၊ ၎င်းသည် အမည်များကို စုစည်းရာတွင် အရှင်းလင်းဆုံးသော ဖြေရှင်းချက် ဖြစ်ပါသည်။ သို့သော် ဤနေရာတွင် ပိုမိုကောင်းမွန်သော အယူအဆတစ်ခု ရှိပါသေးသည်။ အထောက်အကူပြု procedure များ၏ အဓိပ္ပာယ်ဖွင့်ဆိုချက်များကို internalizing လုပ်သည့်အပြင်၊ ၎င်းတို့ကို ပိုမိုရိုးရှင်းအောင်လည်း ပြုလုပ်နိုင်ပါသည်။ <code>x</code> သည် <code>sqrt</code> ၏ အဓိပ္ပာယ်ဖွင့်ဆိုချက်တွင် bound ဖြစ်နေသောကြောင့်၊ <code>sqrt</code> ၏ အတွင်း၌ အဓိပ္ပာယ်ဖွင့်ဆိုထားသော <code>good-enough?</code>, <code>improve</code>, နှင့် <code>sqrt-iter</code> procedure များသည် <code>x</code> ၏ scope အတွင်း၌ ရှိနေပါသည်။ ထို့ကြောင့် ဤ procedure တစ်ခုချင်းစီသို့ <code>x</code> ကို တိုက်ရိုက်ပေးပို့ရန် (pass လုပ်ရန်) မလိုအပ်တော့ပါ။ ယင်းအစား၊ အောက်တွင် ပြသထားသည့်အတိုင်း internal definitions များတွင် <code>x</code> ကို free variable တစ်ခုအဖြစ် ရှိနေရန် ခွင့်ပြုပါသည်။ ထို့နောက် <code>x</code> သည် အပြင်ဘက်ဆုံး procedure ဖြစ်သော <code>sqrt</code> ကို ခေါ်ဆိုလိုက်သည့် argument မှတစ်ဆင့် ၎င်း၏ တန်ဖိုးကို ရရှိပါလိမ့်မည်။ ဤနည်းစနစ်ကို <a id="index-lexical-scoping"></a>
+<em>lexical scoping</em> ဟု ခေါ်ဆိုပါသည်။<a class="footnote_link" id="DOCF27" href="#FOOT27"><sup>27</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sqrt x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">good-enough? guess</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pun">&lt;</span><span class="pln"> </span><span class="opn">(</span><span class="pln">abs </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square guess</span><span class="clo">)</span><span class="pln"> x</span><span class="clo">))</span><span class="pln"> </span><span class="lit">0.001</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">improve guess</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">average guess </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> x guess</span><span class="clo">)))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sqrt-iter guess</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">good-enough? guess</span><span class="clo">)</span><span class="pln">
+        guess
+        </span><span class="opn">(</span><span class="pln canvas"></span><span class="pln">sqrt-iter </span><span class="opn">(</span><span class="pln">improve guess</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">sqrt-iter </span><span class="lit">1.0</span><span class="clo">))</span></pre></div>
+
+<p>ကျွန်ုပ်တို့သည် ပရိုဂရမ်ကြီးများကို ကိုင်တွယ်ရလွယ်ကူသော အစိတ်အပိုင်းများအဖြစ် ခွဲခြမ်းစိတ်ဖြာရန် block structure ကို ကျယ်ကျယ်ပြန့်ပြန့် အသုံးပြုသွားမည် ဖြစ်ပါသည်။<a class="footnote_link" id="DOCF28" href="#FOOT28"><sup>28</sup></a>
+block structure ၏ အယူအဆသည် Algol 60 ပရိုဂရမ်မင်းဘာသာစကားမှ စတင်ခဲ့ပါသည်။ ၎င်းကို အဆင့်မြင့် ပရိုဂရမ်မင်းဘာသာစကား အများစုတွင် တွေ့ရှိရပြီး ပရိုဂရမ်ကြီးများ တည်ဆောက်မှုကို စနစ်တကျ ဖြစ်စေရန် ကူညီပေးသည့် အရေးကြီးသော ကိရိယာတစ်ခု ဖြစ်ပါသည်။
+</p>
+<div class="footnote">
+<h4 class="footnotes-heading">Footnotes</h4>
+
+<div id="FOOT4"><p><a class="footnote_backlink" href="#DOCF4"><sup>4</sup></a>
+ကိန်းဂဏန်းများကို “ရိုးရှင်းသောအချက်အလက်များ” (simple data) အဖြစ် သတ်မှတ်ခြင်းမှာ သိသာထင်ရှားလှသော လှည့်စားမှုတစ်ခုသာ ဖြစ်သည်။ အမှန်စင်စစ်တွင်၊ ကိန်းဂဏန်းများကို ကိုင်တွယ်ဖြေရှင်းခြင်းသည် မည်သည့် ပရိုဂရမ်မင်းဘာသာစကားတွင်မဆို အခက်ခဲဆုံးနှင့် အရှုပ်ထွေးဆုံး ကဏ္ဍတစ်ခုဖြစ်သည်။ ၎င်းနှင့်ပတ်သက်သော ပုံမှန်ပြဿနာအချို့မှာ- အချို့သော ကွန်ပျူတာစနစ်များသည် <a id="index-integers"></a>
+2 ကဲ့သို့သော <em>integers</em> (ကိန်းပြည့်များ) နှင့် <a id="index-real-numbers"></a>
+2.71 ကဲ့သို့သော <em>real numbers</em> (ကိန်းစစ်များ) ကို ခွဲခြားထားတတ်သည်။ ကိန်းစစ် 2.00 သည် ကိန်းပြည့် 2 နှင့် ကွာခြားပါသလား? ကိန်းပြည့်များအတွက် အသုံးပြုသော သင်္ချာလုပ်ဆောင်ချက်များသည် ကိန်းစစ်များအတွက် အသုံးပြုသော လုပ်ဆောင်ချက်များနှင့် တူညီပါသလား? 6 ကို 2 နှင့် စားလျှင် 3 ထွက်လာမည်လား သို့မဟုတ် 3.0 ထွက်လာမည်လား? မည်မျှကြီးမားသော ကိန်းဂဏန်းကို ကျွန်ုပ်တို့ ကိုယ်စားပြုနိုင်သနည်း? ဒသမကိန်း မည်မျှအထိ တိကျစွာ ကိုယ်စားပြုနိုင်သနည်း? ကိန်းပြည့်များ၏ နယ်ပယ် (range) သည် ကိန်းစစ်များ၏ နယ်ပယ်နှင့် တူညီပါသလား? ဤမေးခွန်းများအပြင်၊ အနီးစပ်ဆုံးယူခြင်း (roundoff) နှင့် ဖြတ်တောက်ခြင်း (truncation) ဆိုင်ရာ အမှားအယွင်းများ—ဆိုလိုသည်မှာ ကိန်းဂဏန်းပိုင်းဆိုင်ရာ ခွဲခြမ်းစိတ်ဖြာမှုပညာရပ် (numerical analysis) တစ်ခုလုံးနှင့်ဆိုင်သော ကိစ္စရပ်များလည်း ရှိနေပါသည်။ ဤစာအုပ်တွင် ကျွန်ုပ်တို့သည် ကိန်းဂဏန်းပိုင်းဆိုင်ရာ နည်းစနစ်များထက် အကြီးစား ပရိုဂရမ်ဒီဇိုင်းကိုသာ အဓိကထားမည်ဖြစ်သဖြင့် ဤပြဿနာများကို လျစ်လျူရှုသွားမည်ဖြစ်သည်။ ဤအခန်းပါ ကိန်းဂဏန်းဆိုင်ရာ ဥပမာများသည် ကိန်းပြည့်မဟုတ်သော လုပ်ဆောင်ချက်များတွင် ဒသမနေရာ အကန့်အသတ်ဖြင့်သာ တိကျမှုကို ထိန်းသိမ်းထားသော သင်္ချာလုပ်ဆောင်ချက်များကို အသုံးပြုသည့်အခါ တွေ့ရလေ့ရှိသော ပုံမှန် roundoff အပြုအမူများကိုသာ ပြသသွားမည် ဖြစ်သည်။</p>
+</div>
+<div id="FOOT5"><p><a class="footnote_backlink" href="#DOCF5"><sup>5</sup></a>
+ဤစာအုပ်တစ်လျှောက်တွင်၊ အသုံးပြုသူ ရိုက်ထည့်လိုက်သော input နှင့် interpreter က ပြန်လည်ထုတ်ပေးသော တုံ့ပြန်မှုတို့ကို ခွဲခြားပြလိုသည့်အခါ နောက်ဆုံးဖော်ပြပါအရာကို စောင်းထားသော စာလုံးများဖြင့် ပြသသွားမည်ဖြစ်သည်။</p>
+</div>
+<div id="FOOT6"><p><a class="footnote_backlink" href="#DOCF6"><sup>6</sup></a>
+Lisp စနစ်များသည် များသောအားဖြင့် expression များကို ပုံစံချရာတွင် အသုံးပြုသူကို ကူညီရန် လုပ်ဆောင်ချက်များ ပါဝင်တတ်သည်။ အထူးသဖြင့် အသုံးဝင်သော လုပ်ဆောင်ချက် နှစ်ခုမှာ၊ စာကြောင်းအသစ် စတင်တိုင်း သင့်လျော်သော pretty-print နေရာသို့ အလိုအလျောက် indentation ပြုလုပ်ပေးခြင်းနှင့် ညာဘက်လက်သည်းကွင်း (right parenthesis) တစ်ခု ရိုက်လိုက်တိုင်း ၎င်းနှင့် ကိုက်ညီသော ဘယ်ဘက်လက်သည်းကွင်းကို တောက်ပြပေးခြင်းတို့ ဖြစ်သည်။</p>
+</div>
+<div id="FOOT7"><p><a class="footnote_backlink" href="#DOCF7"><sup>7</sup></a>
+Lisp သည် expression တိုင်းတွင် တန်ဖိုး (value) တစ်ခုစီ ရှိရမည်ဟူသော သတ်မှတ်ချက်ကို လိုက်နာသည်။ ဤသတ်မှတ်ချက်သည် Lisp အား ထိရောက်မှုမရှိသော ဘာသာစကားတစ်ခုအဖြစ် ရှေးယခင်က ယူဆခဲ့ကြခြင်းနှင့်အတူ Alan Perlis ၏ (Oscar Wilde ကို ကိုးကား၍) “Lisp ပရိုဂရမ်မာများသည် အရာအားလုံး၏ တန်ဖိုးကို သိသော်လည်း မည်သည့်အရာ၏ ကုန်ကျစရိတ်ကိုမျှ မသိကြ” ဟူသော ပြောင်လှောင်မှုကို ဖြစ်ပေါ်စေခဲ့သည်။</p>
+</div>
+<div id="FOOT8"><p><a class="footnote_backlink" href="#DOCF8"><sup>8</sup></a>
+ဤစာအုပ်တွင်၊ definition များကို တွက်ချက်ခြင်း (evaluating) နှင့် ပတ်သက်၍ interpreter ၏ တုံ့ပြန်မှုကို ကျွန်ုပ်တို့ ပြသမည်မဟုတ်ပါ၊ အကြောင်းမှာ ၎င်းသည် implementation ပေါ်တွင် များစွာ မူတည်နေသောကြောင့် ဖြစ်သည်။</p>
+</div>
+<div id="FOOT9"><p><a class="footnote_backlink" href="#DOCF9"><sup>9</sup></a>
+environment (ပတ်ဝန်းကျင်) ဟူသော ဤသဘောတရားသည် interpreter မည်သို့ အလုပ်လုပ်သည်ကို နားလည်ရန်အတွက်ရော၊ interpreter များ တည်ဆောက်ရန်အတွက်ပါ အလွန်အရေးကြီးကြောင်းကို <a href="Chapter-3.html#Chapter-3">Chapter 3</a> တွင် ပြသသွားမည် ဖြစ်သည်။</p>
+</div>
+<div id="FOOT10"><p><a class="footnote_backlink" href="#DOCF10"><sup>10</sup></a>
+တွက်ချက်မှုဆိုင်ရာ စည်းမျဉ်း၏ ပထမအဆင့်အနေဖြင့် combination တစ်ခု၏ ဘယ်ဘက်အစွန်ဆုံး အစိတ်အပိုင်းကို အရင်တွက်ချက်ရမည်ဟု ဆိုထားခြင်းမှာ ထူးဆန်းနေပုံရနိုင်သည်၊ အကြောင်းမှာ ယခုအချက်တွင် ၎င်းသည် ပေါင်းခြင်း သို့မဟုတ် မြှောက်ခြင်းကဲ့သို့သော built-in primitive procedure များကို ကိုယ်စားပြုသည့် <code>+</code> သို့မဟုတ် <code>*</code> ကဲ့သို့သော operator တစ်ခုသာ ဖြစ်နိုင်သောကြောင့် ဖြစ်သည်။ operator များ ကိုယ်တိုင်ကပင် compound expression များ ဖြစ်နေသော combination များနှင့် အလုပ်လုပ်နိုင်ခြင်းသည် မည်မျှအသုံးဝင်ကြောင်းကို နောင်တွင် တွေ့ရပါလိမ့်မည်။</p>
+</div>
+<div id="FOOT11"><p><a class="footnote_backlink" href="#DOCF11"><sup>11</sup></a>
+ပိုမိုညီညွတ်သော ပုံစံများဖြင့် ရေးသားနိုင်သည့် အရာများအတွက် အဆင်ပြေစေရန် အစားထိုး အသုံးပြုထားသော မျက်နှာပြင်ပြ စာသားတည်ဆောက်ပုံများကို Peter Landin က အမည်ပေးခဲ့သည့် <a id="index-syntactic-sugar"></a>
+<em>syntactic sugar</em> ဟု တစ်ခါတစ်ရံ ခေါ်ဆိုကြသည်။ အခြားဘာသာစကား အသုံးပြုသူများနှင့် နှိုင်းယှဉ်ပါက၊ Lisp ပရိုဂရမ်မာများသည် ယေဘုယျအားဖြင့် syntax ဆိုင်ရာ ကိစ္စရပ်များကို သိပ်ဂရုမစိုက်ကြပါ။ (ဆန့်ကျင်ဘက်အနေဖြင့်၊ မည်သည့် Pascal manual ကိုမဆို ကြည့်လိုက်ပါ၊ ၎င်း၏ အစိတ်အပိုင်း အတော်များများကို syntax ဖော်ပြချက်များအတွက် မည်မျှအသုံးပြုထားသည်ကို သတိပြုမိပါလိမ့်မည်။) ဤသို့ syntax အပေါ် ဂရုမထားခြင်းမှာ တစ်စိတ်တစ်ပိုင်းအားဖြင့် Lisp ၏ ပြောင်းလွယ်ပြင်လွယ်ရှိမှုကြောင့် ဖြစ်ပြီး (၎င်းသည် မျက်နှာပြင်ပြ syntax ကို ပြောင်းလဲရန် လွယ်ကူစေသည်)၊ နောက်တစ်ချက်မှာ ဘာသာစကားကို ညီညွတ်မှု လျော့နည်းစေသော "အဆင်ပြေသည့်" syntactic တည်ဆောက်ပုံ အတော်များများသည် ပရိုဂရမ်များ ကြီးမားရှုပ်ထွေးလာသောအခါ တန်ဖိုးထက် ပြဿနာပိုပေးတတ်ခြင်းကို တွေ့ရှိရသောကြောင့် ဖြစ်သည်။ Alan Perlis ၏ စကားအရမူ "Syntactic sugar သည် semicolon ကင်ဆာကို ဖြစ်စေသည်" ဟု ဆိုသည်။</p>
+</div>
+<div id="FOOT12"><p><a class="footnote_backlink" href="#DOCF12"><sup>12</sup></a>
+ဤနေရာတွင် မတူညီသော လုပ်ဆောင်ချက်နှစ်ခု ပေါင်းစပ်ထားသည်ကို သတိပြုပါ- ကျွန်ုပ်တို့သည် procedure တစ်ခုကို ဖန်တီးနေခြင်းဖြစ်ပြီး၊ ၎င်းကို <code>square</code> ဟု အမည်ပေးနေခြင်း ဖြစ်သည်။ ဤအယူအဆ နှစ်ခုကို သီးခြားစီ ခွဲထုတ်နိုင်ရန် အမှန်တကယ်ပင် အရေးကြီးသည်—ဆိုလိုသည်မှာ procedure များကို အမည်မပေးဘဲ ဖန်တီးနိုင်ခြင်းနှင့် ဖန်တီးပြီးသား procedure များကို အမည်ပေးနိုင်ခြင်းတို့ ဖြစ်သည်။ ၎င်းကို မည်သို့လုပ်ဆောင်ရမည်ကို <a href="1_002e3.html#g_t1_002e3_002e2">1.3.2</a> တွင် တွေ့ရမည်ဖြစ်သည်။</p>
+</div>
+<div id="FOOT13"><p><a class="footnote_backlink" href="#DOCF13"><sup>13</sup></a>
+ဤစာအုပ်တစ်လျှောက်လုံးတွင်၊ expression တစ်ခုကို အမှန်တကယ် အသုံးပြုသည့်အခါ ဖြည့်စွက်ရမည့် "နေရာလွတ်" (slots) များကို ဖော်ပြရန်အတွက် angle brackets များဖြင့် ဝန်းရံထားသော စောင်းထားသည့် သင်္ကေတများ—ဥပမာ၊ <code>⟨</code><var>name</var><code>⟩</code>—ကို အသုံးပြုခြင်းဖြင့် expression များ၏ ယေဘုယျ syntax ကို ဖော်ပြသွားမည်ဖြစ်သည်။</p>
+</div>
+<div id="FOOT14"><p><a class="footnote_backlink" href="#DOCF14"><sup>14</sup></a>
+ပိုမိုယေဘုယျကျစွာ ဆိုရလျှင်၊ procedure တစ်ခု၏ body သည် expression များ၏ အစီအစဉ်တစ်ခု (sequence) ဖြစ်နိုင်သည်။ ဤအခြေအနေတွင်၊ interpreter သည် sequence ထဲရှိ expression တစ်ခုချင်းစီကို အစဉ်လိုက် တွက်ချက်ပြီး နောက်ဆုံး expression မှ ရရှိသော တန်ဖိုးကို procedure application ၏ တန်ဖိုးအဖြစ် ပြန်ပေးမည်ဖြစ်သည်။</p>
+</div>
+<div id="FOOT15"><p><a class="footnote_backlink" href="#DOCF15"><sup>15</sup></a>
+substitution (အစားထိုးခြင်း) အယူအဆမှာ ရိုးရှင်းသော်လည်း၊ substitution လုပ်ငန်းစဉ်ကို တိကျသော သင်္ချာနည်းကျ အဓိပ္ပာယ်ဖွင့်ဆိုချက် ပေးရန်မှာ အံ့သြဖွယ်ကောင်းလောက်အောင် ရှုပ်ထွေးကြောင်း တွေ့ရှိရသည်။ procedure ၏ formal parameter များအတွက် အသုံးပြုသော အမည်များနှင့် procedure ကို apply လုပ်မည့် expression များတွင် အသုံးပြုထားသော (တူညီနိုင်သည့်) အမည်များအကြား ရောထွေးသွားနိုင်ခြေကြောင့် ဤပြဿနာ ဖြစ်ပေါ်လာခြင်းဖြစ်သည်။ အမှန်စင်စစ်၊ logic နှင့် programming semantics ဆိုင်ရာ စာပေများတွင် <a id="index-substitution"></a>
+<em>substitution</em> ၏ မှားယွင်းသော အဓိပ္ပာယ်ဖွင့်ဆိုချက်များ ပေးခဲ့သည့် သမိုင်းကြောင်း အရှည်ကြီး ရှိခဲ့သည်။ substitution နှင့် ပတ်သက်၍ အသေးစိတ် ဆွေးနွေးချက်ကို <a href="References.html#Stoy-1977">Stoy 1977</a> တွင် ကြည့်ရှုပါ။</p>
+</div>
+<div id="FOOT16"><p><a class="footnote_backlink" href="#DOCF16"><sup>16</sup></a>
+<a href="Chapter-3.html#Chapter-3">Chapter 3</a> တွင် ကျွန်ုပ်တို့သည် အကန့်အသတ်ရှိသော normal-order evaluation ပုံစံကို ထည့်သွင်းအသုံးပြုခြင်းဖြင့် "အကန့်အသတ်မရှိ" သော data structure များကို ကိုင်တွယ်ဖြေရှင်းသည့် နည်းလမ်းတစ်ခုဖြစ်သည့် <a id="index-stream-processing"></a>
+<em>stream processing</em> ကို မိတ်ဆက်ပေးမည်ဖြစ်သည်။ <a href="4_002e2.html#g_t4_002e2">4.2</a> တွင် Scheme interpreter ကို normal-order အသုံးပြုသော Scheme မျိုးကွဲတစ်ခုအဖြစ် ပြောင်းလဲပြင်ဆင်သွားမည်ဖြစ်သည်။</p>
+</div>
+<div id="FOOT17"><p><a class="footnote_backlink" href="#DOCF17"><sup>17</sup></a>
+“မှန်သည် သို့မဟုတ် မှားသည်ဟု အဓိပ္ပာယ်ကောက်ယူခြင်း” ဆိုသည်မှာ ဤသို့ဖြစ်သည်- Scheme တွင် <code>#t</code> နှင့် <code>#f</code> ဟူသော ကိန်းသေများဖြင့် ကိုယ်စားပြုသည့် ထူးခြားသော တန်ဖိုးနှစ်ခု ရှိသည်။ interpreter သည် predicate တစ်ခု၏ တန်ဖိုးကို စစ်ဆေးသောအခါ၊ ၎င်းသည် <code>#f</code> ကို false (မှား) အဖြစ် အဓိပ္ပာယ်ကောက်ယူသည်။ အခြား မည်သည့်တန်ဖိုးကိုမဆို true (မှန်) အဖြစ် သတ်မှတ်သည်။ (ထို့ကြောင့် <code>#t</code> ကို ပေးထားခြင်းမှာ logic အရ မလိုအပ်သော်လည်း အဆင်ပြေစေရန် ဖြစ်သည်။) ဤစာအုပ်တွင် ကျွန်ုပ်တို့သည် <code>#t</code> နှင့် <code>#f</code> တန်ဖိုးများနှင့် အသီးသီး ဆက်စပ်နေသော <code>true</code> နှင့် <code>false</code> ဟူသော အမည်များကို အသုံးပြုသွားမည်ဖြစ်သည်။</p>
+</div>
+<div id="FOOT18"><p><a class="footnote_backlink" href="#DOCF18"><sup>18</sup></a>
+<code>Abs</code> သည် “minus” operator <code>-</code> ကိုလည်း အသုံးပြုထားသည်၊ ၎င်းကို <code>(- x)</code> တွင်ကဲ့သို့ operand တစ်ခုတည်းနှင့် အသုံးပြုသောအခါ အနုတ်လက္ခဏာ (negation) ကို ပြသည်။</p>
+</div>
+<div id="FOOT19"><p><a class="footnote_backlink" href="#DOCF19"><sup>19</sup></a>
+<code>if</code> နှင့် <code>cond</code> တို့၏ အသေးစား ကွဲပြားချက်တစ်ခုမှာ <code>cond</code> clause တစ်ခုချင်းစီ၏ <code>⟨</code><var>e</var><code>⟩</code> အပိုင်းသည် expression များ၏ အစီအစဉ်တစ်ခု (sequence) ဖြစ်နိုင်သည်။ အကယ်၍ ၎င်းနှင့် သက်ဆိုင်သော <code>⟨</code><var>p</var><code>⟩</code> သည် မှန်ကန်ကြောင်း တွေ့ရှိပါက၊ <code>⟨</code><var>e</var><code>⟩</code> ရှိ expression များကို အစဉ်လိုက် တွက်ချက်ပြီး sequence အတွင်းရှိ နောက်ဆုံး expression ၏ တန်ဖိုးကို <code>cond</code> ၏ တန်ဖိုးအဖြစ် ပြန်ပေးသည်။ သို့သော် <code>if</code> expression တစ်ခုတွင်မူ <code>⟨</code><var>consequent</var><code>⟩</code> နှင့် <code>⟨</code><var>alternative</var><code>⟩</code> တို့သည် expression တစ်ခုတည်းသာ ဖြစ်ရမည်။</p>
+</div>
+<div id="FOOT20"><p><a class="footnote_backlink" href="#DOCF20"><sup>20</sup></a>
+ဖော်ပြချက်ပေးသော (Declarative) နှင့် အမိန့်ပေးသော (imperative) ရှင်းလင်းချက်များသည် သင်္ချာနှင့် ကွန်ပျူတာသိပ္ပံကဲ့သို့ပင် အလွန်နီးကပ်စွာ ဆက်စပ်နေသည်။ ဥပမာအားဖြင့်၊ ပရိုဂရမ်တစ်ခုမှ ထုတ်ပေးသော အဖြေသည် “မှန်ကန်သည်” ဟု ပြောခြင်းသည် ပရိုဂရမ်နှင့် ပတ်သက်၍ declarative statement တစ်ခု ပြုလုပ်ခြင်းဖြစ်သည်။ ပရိုဂရမ်များ မှန်ကန်ကြောင်း သက်သေပြရန် နည်းစနစ်များ တည်ထောင်ရန် ရည်ရွယ်သည့် သုတေသနများစွာ ရှိပြီး၊ ဤဘာသာရပ်၏ နည်းပညာဆိုင်ရာ အခက်အခဲများစွာမှာ (ပရိုဂရမ်များ တည်ဆောက်ထားသည့်) imperative statement များနှင့် (အရာများကို ကောက်ချက်ချရန် အသုံးပြုနိုင်သည့်) declarative statement များအကြား ကူးပြောင်းမှုကို ကိုင်တွယ်ဖြေရှင်းခြင်းနှင့် သက်ဆိုင်သည်။ အလားတူပင်၊ ပရိုဂရမ်မင်းဘာသာစကား ဒီဇိုင်းတွင် အရေးကြီးသော လက်ရှိနယ်ပယ်တစ်ခုမှာ declarative statement များဖြင့်သာ ပရိုဂရမ်ရေးသားရသည့် အလွန်မြင့်မားသော အဆင့်ရှိ ဘာသာစကားများ (very high-level languages) ကို လေ့လာခြင်း ဖြစ်သည်။ ယင်း၏ အယူအဆမှာ interpreter များကို ပိုမိုခေတ်မီလာအောင် ပြုလုပ်ရန်ဖြစ်ပြီး၊ ပရိုဂရမ်မာမှ ပေးလိုက်သော "အဘယ်အရာဖြစ်သည်" (what is) ဟူသော အသိပညာမှတစ်ဆင့် "မည်သို့လုပ်ဆောင်ရမည်" (how to) ဟူသော အသိပညာကို အလိုအလျောက် ထုတ်ပေးနိုင်ရန် ဖြစ်သည်။ ၎င်းကို ယေဘုယျအားဖြင့် အားလုံးအတွက် မလုပ်ဆောင်နိုင်သေးသော်လည်း တိုးတက်မှုရရှိထားသော အရေးကြီးသည့် နယ်ပယ်များ ရှိပါသည်။ ဤအယူအဆကို <a href="Chapter-4.html#Chapter-4">Chapter 4</a> တွင် ပြန်လည် လေ့လာပါမည်။</p>
+</div>
+<div id="FOOT21"><p><a class="footnote_backlink" href="#DOCF21"><sup>21</sup></a>
+ဤ square-root algorithm သည် အမှန်တကယ်တွင် ညီမျှခြင်းများ၏ root များကို ရှာဖွေရန်အတွက် ယေဘုယျ နည်းစနစ်တစ်ခုဖြစ်သော Newton’s method ၏ အထူးအခြေအနေတစ်ခု ဖြစ်သည်။ square-root algorithm ကိုယ်တိုင်ကို ခရစ်သက္ကရာဇ် ပထမရာစုနှစ်တွင် Heron of Alexandria က တီထွင်ခဲ့ခြင်း ဖြစ်သည်။ ယေဘုယျ Newton’s method ကို Lisp procedure တစ်ခုအဖြစ် မည်သို့ ဖော်ပြရမည်ကို <a href="1_002e3.html#g_t1_002e3_002e4">1.3.4</a> တွင် တွေ့ရမည်ဖြစ်သည်။</p>
+</div>
+<div id="FOOT22"><p><a class="footnote_backlink" href="#DOCF22"><sup>22</sup></a>
+ကျွန်ုပ်တို့သည် predicate များကို ၎င်းတို့သည် predicate များဖြစ်ကြောင်း မှတ်မိစေရန်အတွက် များသောအားဖြင့် မေးခွန်းသင်္ကေတဖြင့် ဆုံးသော အမည်များ ပေးလေ့ရှိသည်။ ၎င်းသည် အရေးအသားဆိုင်ရာ ထုံးစံတစ်ခုသာ ဖြစ်သည်။ interpreter အတွက်မူ မေးခွန်းသင်္ကေတသည် သာမန် စာလုံးတစ်လုံးသာ ဖြစ်သည်။</p>
+</div>
+<div id="FOOT23"><p><a class="footnote_backlink" href="#DOCF23"><sup>23</sup></a>
+ကျွန်ုပ်တို့၏ ကနဦး ခန့်မှန်းခြေတန်ဖိုးကို 1 အစား 1.0 ဟု ဖော်ပြထားသည်ကို သတိပြုပါ။ ၎င်းသည် Lisp implementation အတော်များများတွင် ထူးခြားမှု ရှိမည်မဟုတ်ပါ။ သို့သော် <abbr>MIT</abbr> Scheme သည် တိကျသော ကိန်းပြည့်များ (exact integers) နှင့် ဒသမတန်ဖိုးများ (decimal values) ကို ခွဲခြားထားပြီး၊ ကိန်းပြည့်နှစ်ခုကို စားခြင်းဖြင့် ဒသမကိန်းထက် ရာရှင်နယ်ကိန်း (rational number) ကိုသာ ထုတ်ပေးသည်။ ဥပမာအားဖြင့်၊ 10 ကို 6 နှင့် စားလျှင် 5/3 ရရှိပြီး၊ 10.0 ကို 6.0 နှင့် စားလျှင် 1.6666666666666667 ရရှိသည်။ (ရာရှင်နယ်ကိန်းများပေါ်တွင် သင်္ချာလုပ်ဆောင်ချက်များကို မည်သို့လုပ်ဆောင်ရမည်ကို <a href="2_002e1.html#g_t2_002e1_002e1">2.1.1</a> တွင် လေ့လာပါမည်။) အကယ်၍ ကျွန်ုပ်တို့၏ square-root ပရိုဂရမ်တွင် ကနဦး ခန့်မှန်းခြေတန်ဖိုး 1 ဖြင့် စတင်ခဲ့ပြီး <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> သည် တိကျသော ကိန်းပြည့်တစ်ခု ဖြစ်နေပါက၊ square-root တွက်ချက်မှုမှ ထွက်ပေါ်လာသော နောက်ဆက်တွဲ တန်ဖိုးအားလုံးသည် ဒသမကိန်းများမဟုတ်ဘဲ ရာရှင်နယ်ကိန်းများသာ ဖြစ်နေလိမ့်မည်။ ရာရှင်နယ်ကိန်းများနှင့် ဒသမကိန်းများ ရောနှောထားသော လုပ်ဆောင်ချက်များသည် အမြဲတမ်း ဒသမကိန်းများကိုသာ ထုတ်ပေးသောကြောင့်၊ ကနဦး ခန့်မှန်းခြေတန်ဖိုး 1.0 ဖြင့် စတင်ခြင်းသည် နောက်ဆက်တွဲ တန်ဖိုးအားလုံးကို ဒသမကိန်းများ ဖြစ်လာစေရန် အတင်းအကျပ် လုပ်ဆောင်လိုက်ခြင်း ဖြစ်သည်။</p>
+</div>
+<div id="FOOT24"><p><a class="footnote_backlink" href="#DOCF24"><sup>24</sup></a>
+iteration (အကြိမ်ကြိမ်ပြုလုပ်ခြင်း) ကို အကောင်အထည်ဖော်ရန် procedure call များကို အသုံးပြုခြင်းနှင့် ပတ်သက်၍ ထိရောက်မှုဆိုင်ရာ ကိစ္စရပ်များကို စိုးရိမ်နေသော စာဖတ်သူများသည် <a href="1_002e2.html#g_t1_002e2_002e1">1.2.1</a> ရှိ “tail recursion” ဆိုင်ရာ မှတ်ချက်များကို ဖတ်ရှုသင့်သည်။</p>
+</div>
+<div id="FOOT25"><p><a class="footnote_backlink" href="#DOCF25"><sup>25</sup></a>
+ဤ procedure များထဲမှ မည်သည်က ပိုမိုထိရောက်သော implementation ဖြစ်သည်ဆိုသည်မှာပင် ရှင်းရှင်းလင်းလင်း မရှိလှပါ။ ၎င်းသည် ရရှိနိုင်သော hardware ပေါ်တွင် မူတည်သည်။ "သိသာထင်ရှားသော" implementation သည် ပို၍ ထိရောက်မှုနည်းနေတတ်သည့် စက်ပစ္စည်းများလည်း ရှိသည်။ အလွန်ထိရောက်သော နည်းလမ်းဖြင့် သိမ်းဆည်းထားသည့် လော်ဂရစ်သမ် (logarithms) နှင့် အန်တီလော်ဂရစ်သမ် (antilogarithms) ဇယားများစွာ ရှိသော စက်တစ်ခုကို စဉ်းစားကြည့်ပါ။</p>
+</div>
+<div id="FOOT26"><p><a class="footnote_backlink" href="#DOCF26"><sup>26</sup></a>
+တသမတ်တည်းရှိသော အမည်ပြောင်းလဲခြင်း (consistent renaming) အယူအဆသည် အမှန်တကယ်တွင် သိမ်မွေ့ပြီး တိကျစွာ အဓိပ္ပာယ်ဖွင့်ဆိုရန် ခက်ခဲသည်။ နာမည်ကျော် logic ပညာရှင်များပင် ဤနေရာတွင် ရှက်ဖွယ်ကောင်းသော အမှားများ ပြုလုပ်ခဲ့ဖူးသည်။</p>
+</div>
+<div id="FOOT27"><p><a class="footnote_backlink" href="#DOCF27"><sup>27</sup></a>
+Lexical scoping ၏ သတ်မှတ်ချက်အရ procedure တစ်ခုအတွင်းရှိ free variable များသည် ၎င်းတို့ကို ဝန်းရံထားသော procedure definition များမှ ပြုလုပ်ထားသည့် binding များကို ရည်ညွှန်းသည်ဟု သတ်မှတ်သည်။ ဆိုလိုသည်မှာ ၎င်းတို့ကို ထို procedure အဓိပ္ပာယ်ဖွင့်ဆိုခဲ့သည့် environment ထဲတွင် ရှာဖွေခြင်းဖြစ်သည်။ ၎င်းသည် မည်သို့ အလုပ်လုပ်သည်ကို environment များနှင့် interpreter ၏ အသေးစိတ် အပြုအမူများကို လေ့လာမည့် အခန်း ၃ တွင် အသေးစိတ် တွေ့ရမည်ဖြစ်သည်။<a id="Footnote-28"></a></p>
+</div>
+<div id="FOOT28"><p><a class="footnote_backlink" href="#DOCF28"><sup>28</sup></a>
+Embedded definition များသည် procedure body တစ်ခု၏ ရှေ့ဆုံးတွင် လာရမည်ဖြစ်သည်။ definition နှင့် အသုံးပြုမှုကို ရောထွေးထားသော ပရိုဂရမ်များကို run ရာတွင် ဖြစ်ပေါ်လာမည့် နောက်ဆက်တွဲ အကျိုးဆက်များအတွက် စီမံခန့်ခွဲမှုပိုင်းမှ တာဝန်ယူမည်မဟုတ်ပါ။</p>
+</div>
+</div>
+<nav class="header">
+<p>
+Next: <a href="1_002e2.html#g_t1_002e2" accesskey="n" rel="next">1.2</a>, Prev: <a href="Chapter-1.html#Chapter-1" accesskey="p" rel="prev">Chapter 1</a>, Up: <a href="#g_t1_002e1" accesskey="u" rel="prev">1.1</a>   [<a href="index.html#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+
+
+</section><span class="bottom jump" title="Jump to bottom"><a href="#pagebottom" accesskey="b">⇣</a></span><a id="pagebottom"></a>
+</body>
+</html>

@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="my" lang="my">
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>Structure and Interpretation of Computer Programs, 2e: 3.1</title>
+
+<meta name="description" content="Structure and Interpretation of Computer Programs, 2e: 3.1" />
+<meta name="keywords" content="Structure and Interpretation of Computer Programs, 2e: 3.1" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="Generator" content="texi2any" />
+<meta charset="utf-8" />
+<link href="index.html#Top" rel="start" title="Top" />
+<link href="Term-Index.html#Term-Index" rel="index" title="Term Index" />
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents" />
+<link href="Chapter-3.html#Chapter-3" rel="prev" title="Chapter 3" />
+<link href="3_002e2.html#g_t3_002e2" rel="next" title="3.2" />
+<link href="Chapter-3.html#Chapter-3" rel="prev" title="Chapter 3" />
+
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/prettify.css" rel="stylesheet" type="text/css" />
+
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/footnotes.js" type="text/javascript"></script>
+<script src="js/browsertest.js" type="text/javascript"></script>
+</head>
+
+<body>
+<section><span class="top jump" title="Jump to top"><a href="#pagetop" accesskey="t">⇡</a></span><a id="pagetop"></a><a id="g_t3_002e1"></a>
+<nav class="header">
+<p>
+Next: <a href="3_002e2.html#g_t3_002e2" accesskey="n" rel="next">3.2</a>, Prev: <a href="Chapter-3.html#Chapter-3" accesskey="p" rel="prev">Chapter 3</a>, Up: <a href="Chapter-3.html#Chapter-3" accesskey="u" rel="prev">Chapter 3</a>   [<a href="index.html#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+<a id="Assignment-and-Local-State"></a>
+<h3 class="section"><span class="secnum">3.1</span><span class="sectitle">တန်ဖိုးသတ်မှတ်ခြင်းနှင့် ဒေသတွင်းအခြေအနေ (Assignment and Local State)</span></h3>
+
+<p>ကျွန်ုပ်တို့သည် ကမ္ဘာလောကကြီးကို တစ်ခုနှင့်တစ်ခု အမှီအခိုကင်းသော အရာဝတ္ထု (objects) များဖြင့် ဖွဲ့စည်းထားသည်ဟု ပုံမှန်အားဖြင့် ရှုမြင်ကြပြီး၊ ထိုအရာဝတ္ုတစ်ခုချင်းစီတွင် အချိန်နှင့်အမျှ ပြောင်းလဲနေသော အခြေအနေ (state) တစ်ခုစီ ရှိကြသည်။ အရာဝတ္ထုတစ်ခု၏ အပြုအမူသည် ၎င်း၏ အတိတ်ဖြစ်ရပ်များအပေါ် မူတည်နေပါက ထိုအရာဝတ္ထုတွင် “အခြေအနေ ရှိသည်” ဟု ဆိုနိုင်သည်။ ဥပမာအားဖြင့် ဘဏ်အကောင့်တစ်ခုတွင် အခြေအနေရှိသည်၊ အဘယ်ကြောင့်ဆိုသော် “ကျွန်ုပ် ဒေါ်လာ ၁၀၀ ထုတ်ယူနိုင်ပါသလား?” ဟူသော မေးခွန်း၏ အဖြေသည် ငွေသွင်းငွေထုတ် ပြုလုပ်ခဲ့သည့် အတိတ်မှတ်တမ်းများအပေါ် မူတည်သောကြောင့် ဖြစ်သည်။ ကျွန်ုပ်တို့သည် အရာဝတ္ထုတစ်ခု၏ အခြေအနေကို တစ်ခု သို့မဟုတ် တစ်ခုထက်ပိုသော <a id="index-state-variables-1"></a>
+<em>အခြေအနေပြကိန်းရှင် (state variables)</em> များဖြင့် သတ်မှတ်ဖော်ပြနိုင်သည်။ ထိုကိန်းရှင်များသည် အရာဝတ္ထု၏ လက်ရှိအပြုအမူကို ဆုံးဖြတ်ရန်အတွက် လိုအပ်သော အတိတ်ဖြစ်ရပ် အချက်အလက်များကို ထိန်းသိမ်းပေးထားသည်။ ရိုးရှင်းသော ဘဏ်စနစ်တစ်ခုတွင် ကျွန်ုပ်တို့သည် အကောင့်တစ်ခု၏ အခြေအနေကို ငွေသွင်းငွေထုတ် မှတ်တမ်းအားလုံးကို မှတ်သားထားမည့်အစား လက်ကျန်ငွေ (current balance) ဖြင့် သတ်မှတ်ဖော်ပြနိုင်သည်။
+</p>
+<p>အရာဝတ္ထုများစွာဖြင့် ဖွဲ့စည်းထားသော စနစ်တစ်ခုတွင် အရာဝတ္ထုများသည် လုံးဝလွတ်လပ်နေခြင်းမျိုး ခဲယဉ်းသည်။ အချင်းချင်း ဆက်သွယ်ဆောင်ရွက်မှုများမှတစ်ဆင့် တစ်ခုသည် အခြားအရာဝတ္ထုများ၏ အခြေအနေများအပေါ် သက်ရောက်မှု ရှိနိုင်သည်။ ထိုသို့ ဆက်သွယ်ဆောင်ရွက်ခြင်းက အရာဝတ္ထုတစ်ခု၏ အခြေအနေပြကိန်းရှင်များကို အခြားအရာဝတ္ထုများ၏ အခြေအနေပြကိန်းရှင်များနှင့် ချိတ်ဆက်ပေးသည်။ အမှန်စင်စစ်တွင် စနစ်တစ်ခုကို သီးခြားအရာဝတ္ထုများဖြင့် ဖွဲ့စည်းထားသည်ဟူသော အမြင်သည် စနစ်၏ အခြေအနေပြကိန်းရှင်များကို တစ်ခုနှင့်တစ်ခု အားကောင်းစွာ ချိတ်ဆက်ထားသော စနစ်ငယ် (subsystems) များအဖြစ် စုစည်းနိုင်ပြီး၊ ထိုစနစ်ငယ်များသည် အခြားစနစ်ငယ်များနှင့် အားနည်းစွာသာ ချိတ်ဆက်နေသည့် အခါမျိုးတွင် အသုံးအဝင်ဆုံး ဖြစ်သည်။
+</p>
+<p>စနစ်တစ်ခုအပေါ် ဤသို့ရှုမြင်ခြင်းသည် ထိုစနစ်၏ တွက်ချက်မှုဆိုင်ရာ မော်ဒယ် (computational models) များကို ဖွဲ့စည်းတည်ဆောက်ရန်အတွက် အားကောင်းသော မူဘောင်တစ်ခု ဖြစ်နိုင်သည်။ ထိုကဲ့သို့သော မော်ဒယ်တစ်ခုသည် မော်ဂျူလာ (modular) ဖြစ်စေရန်အတွက် ၎င်းကို စနစ်အတွင်းရှိ အစစ်အမှန်အရာဝတ္ထုများကို ပုံတူပြုထားသော တွက်ချက်မှုဆိုင်ရာ အရာဝတ္ထု (computational objects) များအဖြစ် ခွဲခြမ်းစိတ်ဖြာထားသင့်သည်။ တွက်ချက်မှုဆိုင်ရာ အရာဝတ္ထုတစ်ခုစီတွင် အစစ်အမှန်အရာဝတ္ထု၏ အခြေအနေကို ဖော်ပြသော ၎င်း၏ ကိုယ်ပိုင် <a id="index-local-state-variables"></a>
+<em>ဒေသတွင်းအခြေအနေပြကိန်းရှင် (local state variables)</em>
+များ ရှိရမည်။ ပုံတူပြုထားသော စနစ်အတွင်းရှိ အရာဝတ္ထုများ၏ အခြေအနေများသည် အချိန်နှင့်အမျှ ပြောင်းလဲနေသောကြောင့်၊ ၎င်းတို့နှင့် သက်ဆိုင်သော တွက်ချက်မှုဆိုင်ရာ အရာဝတ္ထုများ၏ အခြေအနေပြကိန်းရှင်များသည်လည်း ပြောင်းလဲရမည် ဖြစ်သည်။ အကယ်၍ ကျွန်ုပ်တို့သည် စနစ်အတွင်းရှိ အချိန်စီးဆင်းမှုကို ကွန်ပျူတာအတွင်း ကုန်ဆုံးသွားသော အချိန်ဖြင့် ပုံတူပြုရန် ရွေးချယ်ပါက၊ ပရိုဂရမ်များ လုပ်ဆောင်နေစဉ်အတွင်း အပြုအမူများ ပြောင်းလဲနိုင်သော တွက်ချက်မှုဆိုင်ရာ အရာဝတ္ထုများကို တည်ဆောက်ရန် နည်းလမ်းတစ်ခု ရှိရမည်ဖြစ်သည်။ အထူးသဖြင့် ကျွန်ုပ်တို့သည် အခြေအနေပြကိန်းရှင်များကို ပရိုဂရမ်မင်းဘာသာစကားရှိ သာမန် သင်္ကေတအမည် (symbolic names) များဖြင့် ပုံတူပြုလိုပါက၊ ထိုဘာသာစကားတွင် အမည်တစ်ခုနှင့် သက်ဆိုင်နေသော တန်ဖိုးကို ပြောင်းလဲနိုင်ရန်အတွက် <a id="index-assignment-operator"></a>
+<em>တန်ဖိုးသတ်မှတ်ခြင်း အော်ပရေတာ (assignment operator)</em> 
+တစ်ခု ပါရှိရမည်ဖြစ်သည်။
+</p>
+
+<a id="g_t3_002e1_002e1"></a>
+<a id="Local-State-Variables"></a>
+<h4 class="subsection"><span class="secnum">3.1.1</span><span class="sectitle">Local State Variables</span></h4>
+
+<p>အချိန်နှင့်အမျှ ပြောင်းလဲနေသော အခြေအနေ (time-varying state) ရှိသည့် computational object တစ်ခုအကြောင်းကို ရှင်းပြရန်အတွက် ဘဏ်အကောင့်တစ်ခုမှ ငွေထုတ်ယူခြင်း အခြေအနေကို ပုံစံတူ (model) ပြုလုပ်ကြည့်ကြပါစို့။ ထုတ်ယူမည့် ပမာဏ <code>amount</code> ကို argument အဖြစ် လက်ခံသည့် <code>withdraw</code> ဆိုသော procedure ကို အသုံးပြု၍ ကျွန်ုပ်တို့ ဤသို့ လုပ်ဆောင်ပါမည်။ အကယ်၍ အကောင့်ထဲတွင် ငွေထုတ်ယူရန် လုံလောက်သော ငွေပမာဏရှိပါက၊ <code>withdraw</code> သည် ငွေထုတ်ပြီးနောက် ကျန်ရှိသော လက်ကျန်ငွေ (balance) ကို return ပြန်ပေးရပါမည်။ သို့မဟုတ်ပါက <code>withdraw</code> သည် <em>Insufficient funds</em> ဟူသော မက်ဆေ့ချ်ကို ပြန်ပေးရပါမည်။ ဥပမာအားဖြင့်၊ အကယ်၍ ကျွန်ုပ်တို့သည် အကောင့်ထဲတွင် $100 ဖြင့် စတင်ခဲ့ပါက၊ <code>withdraw</code> ကို အသုံးပြု၍ အောက်ပါအတိုင်း တုံ့ပြန်မှုများကို ရရှိမည်ဖြစ်သည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">withdraw </span><span class="lit">25</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">75</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">withdraw </span><span class="lit">25</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">50</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">withdraw </span><span class="lit">60</span><span class="clo">)</span><span class="pln">
+</span><i><span class="str">"Insufficient funds"</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">withdraw </span><span class="lit">15</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">35</span></i>
+</pre></div>
+
+<p><code>(withdraw 25)</code> ဟူသော expression ကို နှစ်ကြိမ် evaluate လုပ်ရာတွင် မတူညီသော တန်ဖိုးများ ရရှိသည်ကို သတိပြုပါ။ ဤသည်မှာ procedure တစ်ခုအတွက် အပြုအမူ အသစ်တစ်မျိုး ဖြစ်သည်။ ယခုအချိန်အထိ ကျွန်ုပ်တို့၏ procedure များအားလုံးကို သင်္ချာဆိုင်ရာ function များကို တွက်ချက်ရန်အတွက် သတ်မှတ်ချက်များ (specifications) အဖြစ်သာ ရှုမြင်နိုင်ခဲ့သည်။ Procedure တစ်ခုကို ခေါ်ယူခြင်းသည် ပေးထားသော argument များအပေါ်တွင် သက်ရောက်သည့် function ၏ တန်ဖိုးကို တွက်ချက်ခြင်းဖြစ်ပြီး၊ တူညီသော argument များဖြင့် တူညီသော procedure ကို နှစ်ကြိမ်ခေါ်ယူခြင်းသည် အမြဲတမ်း တူညီသော ရလဒ်ကိုသာ ထွက်ပေါ်စေသည်။<a class="footnote_link" id="DOCF129" href="#FOOT129"><sup>129</sup></a>
+</p>
+<p><code>withdraw</code> ကို အကောင်အထည်ဖော်ရန်အတွက် အကောင့်ထဲရှိ လက်ကျန်ငွေကို ဖော်ပြရန် <code>balance</code> ဆိုသော variable ကို အသုံးပြုနိုင်ပြီး၊ <code>balance</code> ကို access လုပ်နိုင်သည့် procedure တစ်ခုအဖြစ် <code>withdraw</code> ကို အဓိပ္ပာယ်ဖွင့်ဆို (define) နိုင်ပါသည်။ <code>withdraw</code> procedure သည် <code>balance</code> သည် တောင်းဆိုထားသော <code>amount</code> ထက် အနည်းဆုံး ကြီးမားခြင်း သို့မဟုတ် ညီမျှခြင်း ရှိမရှိကို စစ်ဆေးသည်။ အကယ်၍ ရှိပါက၊ <code>withdraw</code> သည် <code>balance</code> မှ <code>amount</code> ကို နှုတ်လိုက်ပြီး (decrement)၊ <code>balance</code> ၏ တန်ဖိုးအသစ်ကို return ပြန်ပေးသည်။ သို့မဟုတ်ပါက <code>withdraw</code> သည် <em>Insufficient funds</em> မက်ဆေ့ချ်ကို ပြန်ပေးသည်။ <code>balance</code> နှင့် <code>withdraw</code> တို့၏ အဓိပ္ပာယ်ဖွင့်ဆိုချက်များမှာ အောက်ပါအတိုင်း ဖြစ်သည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> balance </span><span class="lit">100</span><span class="clo">)</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">withdraw amount</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;=</span><span class="pln"> balance amount</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">begin</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> balance </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> balance amount</span><span class="clo">))</span><span class="pln">
+             balance</span><span class="clo">)</span><span class="pln">
+      </span><span class="str">"Insufficient funds"</span><span class="clo">))</span></pre></div>
+
+<p><code>balance</code> ကို လျှော့ချခြင်း (decrementing) ကို အောက်ပါ expression ဖြင့် လုပ်ဆောင်သည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> balance </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> balance amount</span><span class="clo">))</span></pre></div>
+
+<p>ဤသည်မှာ syntax အားဖြင့် အောက်ပါအတိုင်းရှိသော <code>set!</code> special form ကို အသုံးပြုထားခြင်း ဖြစ်သည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> ⟨</span><var><span class="pln">name</span></var><span class="pln">⟩ ⟨</span><var><span class="pln">new-value</span></var><span class="pln">⟩</span><span class="clo">)</span></pre></div>
+
+<p>ဤနေရာတွင် <code>⟨</code><var>name</var><code>⟩</code> သည် symbol တစ်ခုဖြစ်ပြီး <code>⟨</code><var>new-value</var><code>⟩</code> သည် မည်သည့် expression မဆို ဖြစ်နိုင်သည်။ <code>Set!</code> သည် <code>⟨</code><var>name</var><code>⟩</code> ၏ တန်ဖိုးကို <code>⟨</code><var>new-value</var><code>⟩</code> ကို evaluate လုပ်ခြင်းမှ ရရှိလာသော ရလဒ်အဖြစ်သို့ ပြောင်းလဲပေးသည်။ ယခုကိစ္စတွင် ကျွန်ုပ်တို့သည် <code>balance</code> ၏ တန်ဖိုးအသစ်ကို <code>balance</code> ၏ ယခင်တန်ဖိုးထဲမှ <code>amount</code> ကို နှုတ်ခြင်း၏ ရလဒ် ဖြစ်စေရန်အတွက် ပြောင်းလဲနေခြင်း ဖြစ်သည်။<a class="footnote_link" id="DOCF130" href="#FOOT130"><sup>130</sup></a>
+</p>
+<p><code>Withdraw</code> သည် <code>if</code> စမ်းသပ်ချက် မှန်ကန်သောအခါတွင် expression နှစ်ခုကို evaluate လုပ်ရန်အတွက် <code>begin</code> special form ကိုလည်း အသုံးပြုထားသည်။ ပထမဦးစွာ <code>balance</code> ကို လျှော့ချပြီး နောက်ပိုင်းတွင် <code>balance</code> ၏ တန်ဖိုးကို return ပြန်ပေးခြင်း ဖြစ်သည်။ ယေဘုယျအားဖြင့် expression
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">begin</span><span class="pln"> ⟨</span><var><span class="pln">exp</span><span class="pun">₁</span></var><span class="pln">⟩ ⟨</span><var><span class="pln">exp</span><span class="pun">₂</span></var><span class="pln">⟩ </span><span class="roman"><span class="pun">…</span></span><span class="pln"> ⟨</span><var><span class="pln">exp</span><span class="pun">ₖ</span></var><span class="pln">⟩</span><span class="clo">)</span></pre></div>
+
+<p>ကို evaluate လုပ်ခြင်းသည် expression <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">⟨</mo>
+    <mi>e</mi>
+    <mi>x</mi>
+    <msub>
+      <mi>p</mi>
+      <mn>1</mn>
+    </msub>
+    <mo stretchy="false">⟩</mo>
+  </mrow>
+</math> မှ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">⟨</mo>
+    <mi>e</mi>
+    <mi>x</mi>
+    <msub>
+      <mi>p</mi>
+      <mi>k</mi>
+    </msub>
+    <mo stretchy="false">⟩</mo>
+  </mrow>
+</math> အထိကို အစဉ်လိုက် evaluate လုပ်စေပြီး၊ နောက်ဆုံး expression <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">⟨</mo>
+    <mi>e</mi>
+    <mi>x</mi>
+    <msub>
+      <mi>p</mi>
+      <mi>k</mi>
+    </msub>
+    <mo stretchy="false">⟩</mo>
+  </mrow>
+</math> ၏ တန်ဖိုးကို <code>begin</code> form တစ်ခုလုံး၏ တန်ဖိုးအဖြစ် ပြန်ပေးစေသည်။<a class="footnote_link" id="DOCF131" href="#FOOT131"><sup>131</sup></a>
+</p>
+<p><code>withdraw</code> သည် လိုချင်သလို အလုပ်လုပ်သော်လည်း၊ <code>balance</code> variable သည် ပြဿနာတစ်ခု ရှိနေသည်။ အထက်တွင် ဖော်ပြထားသည့်အတိုင်း၊ <code>balance</code> သည် global environment တွင် အဓိပ္ပာယ်ဖွင့်ဆိုထားသော အမည်တစ်ခုဖြစ်ပြီး မည်သည့် procedure ကမဆို လွတ်လပ်စွာ ကြည့်ရှုခြင်း သို့မဟုတ် ပြုပြင်ခြင်း ပြုလုပ်နိုင်သည်။ အကယ်၍ ကျွန်ုပ်တို့သည် <code>balance</code> ကို <code>withdraw</code> ၏ အတွင်းပိုင်း (internal) အဖြစ် တစ်နည်းနည်းဖြင့် ပြုလုပ်နိုင်ပါက ပိုမိုကောင်းမွန်မည် ဖြစ်သည်။ ထိုသို့ပြုလုပ်ခြင်းဖြင့် <code>withdraw</code> သည်သာလျှင် <code>balance</code> ကို တိုက်ရိုက် access လုပ်နိုင်မည်ဖြစ်ပြီး၊ အခြား procedure များသည် <code>withdraw</code> ကို ခေါ်ယူခြင်းမှတစ်ဆင့် သွယ်ဝိုက်သောနည်းဖြင့်သာ <code>balance</code> ကို access လုပ်နိုင်မည် ဖြစ်သည်။ ဤသည်မှာ <code>balance</code> သည် အကောင့်၏ အခြေအနေကို ခြေရာခံရန် <code>withdraw</code> က အသုံးပြုသော local state variable တစ်ခုဖြစ်သည်ဟူသော အယူအဆကို ပိုမိုတိကျစွာ ပုံဖော်နိုင်မည် ဖြစ်သည်။
+</p>
+<p>Definition ကို အောက်ပါအတိုင်း ပြန်လည်ရေးသားခြင်းဖြင့် <code>balance</code> ကို <code>withdraw</code> ၏ အတွင်းပိုင်း (internal) အဖြစ် ပြုလုပ်နိုင်ပါသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> new-withdraw
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">balance </span><span class="lit">100</span><span class="clo">))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">amount</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;=</span><span class="pln"> balance amount</span><span class="clo">)</span><span class="pln">
+          </span><span class="opn">(</span><span class="kwd">begin</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> balance 
+                       </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> balance amount</span><span class="clo">))</span><span class="pln">
+                 balance</span><span class="clo">)</span><span class="pln">
+          </span><span class="str">"Insufficient funds"</span><span class="clo">))))</span></pre></div>
+
+<p>ဤနေရာတွင် ကျွန်ုပ်တို့ လုပ်ဆောင်ခဲ့သည်မှာ ကနဦးတန်ဖိုး 100 ဖြင့် သတ်မှတ်ထားသော local variable <code>balance</code> ပါဝင်သည့် environment တစ်ခုကို တည်ဆောက်ရန် <code>let</code> ကို အသုံးပြုခဲ့ခြင်း ဖြစ်သည်။ ဤ local environment အတွင်း၌၊ <code>amount</code> ကို argument အဖြစ် လက်ခံပြီး ကျွန်ုပ်တို့၏ ယခင် <code>withdraw</code> procedure ကဲ့သို့ အလုပ်လုပ်သည့် procedure တစ်ခု ဖန်တီးရန် <code>lambda</code> ကို အသုံးပြုသည်။ <code>let</code> expression ကို evaluate လုပ်ခြင်း၏ ရလဒ်အဖြစ် ပြန်လာသော ဤ procedure သည် <code>new-withdraw</code> ဖြစ်သည်။ ၎င်းသည် <code>withdraw</code> နှင့် အတိအကျ တူညီသော နည်းလမ်းဖြင့် အလုပ်လုပ်သော်လည်း ၎င်း၏ variable <code>balance</code> ကို အခြား မည်သည့် procedure ကမှ access မလုပ်နိုင်ပါ။<a class="footnote_link" id="DOCF132" href="#FOOT132"><sup>132</sup></a>
+</p>
+<p><code>set!</code> ကို local variables များဖြင့် ပေါင်းစပ်ခြင်းသည် local state ရှိသော computational objects များကို တည်ဆောက်ရန် ကျွန်ုပ်တို့ အသုံးပြုမည့် ယေဘုယျ programming နည်းစနစ် ဖြစ်သည်။ ကံမကောင်းစွာဖြင့်၊ ဤနည်းစနစ်ကို အသုံးပြုခြင်းသည် ကြီးမားသော ပြဿနာတစ်ခုကို ဖြစ်ပေါ်စေသည်။ ကျွန်ုပ်တို့ procedure များကို စတင်မိတ်ဆက်စဉ်က procedure application ဆိုသည်မှာ ဘာကို ဆိုလိုသည်ကို ရှင်းပြရန် evaluation ၏ substitution model (<a href="1_002e1.html#g_t1_002e1_002e5">1.1.5</a>) ကိုလည်း မိတ်ဆက်ပေးခဲ့သည်။ Procedure တစ်ခုကို apply လုပ်ခြင်းကို formal parameter များအား ၎င်းတို့၏ တန်ဖိုးများဖြင့် အစားထိုးပြီး procedure ၏ body ကို evaluate လုပ်ခြင်းအဖြစ် အဓိပ္ပာယ်ဖွင့်ဆိုရမည်ဟု ကျွန်ုပ်တို့ ပြောခဲ့သည်။ ပြဿနာမှာ ကျွန်ုပ်တို့၏ language ထဲသို့ assignment ကို မိတ်ဆက်လိုက်သည်နှင့် တပြိုင်နက်၊ substitution သည် procedure application အတွက် လုံလောက်သော model တစ်ခု မဟုတ်တော့ခြင်းပင် ဖြစ်သည်။ (ဤသို့ဖြစ်ရခြင်း အကြောင်းရင်းကို <a href="#g_t3_002e1_002e3">3.1.3</a> တွင် တွေ့မြင်ရမည် ဖြစ်သည်။) ထို့ကြောင့် နည်းပညာအရ ကျွန်ုပ်တို့အနေဖြင့် <code>new-withdraw</code> procedure သည် အထက်ပါအတိုင်း အဘယ်ကြောင့် အလုပ်လုပ်ရသည်ကို နားလည်ရန် ယခုအချိန်တွင် နည်းလမ်းမရှိသေးပါ။ <code>new-withdraw</code> ကဲ့သို့သော procedure တစ်ခုကို အမှန်တကယ် နားလည်နိုင်ရန်အတွက်၊ procedure application ၏ model အသစ်တစ်ခုကို တည်ဆောက်ရန် လိုအပ်မည် ဖြစ်သည်။ <a href="3_002e2.html#g_t3_002e2">3.2</a> တွင် <code>set!</code> နှင့် local variables များအကြောင်း ရှင်းလင်းချက်များနှင့်အတူ ထိုကဲ့သို့သော model တစ်ခုကို မိတ်ဆက်ပေးပါမည်။ သို့သော် ပထမဦးစွာ၊ <code>new-withdraw</code> က တည်ဆောက်ပေးလိုက်သော အယူအဆပေါ်တွင် အခြေခံထားသည့် အခြားပုံစံအချို့ကို လေ့လာကြည့်ကြပါစို့။
+</p>
+<p>အောက်ပါ procedure ဖြစ်သော <code>make-withdraw</code> သည် "withdrawal processors" များကို ဖန်တီးပေးသည်။ <code>make-withdraw</code> ရှိ formal parameter <code>balance</code> သည် အကောင့်ထဲရှိ ကနဦး ငွေပမာဏကို သတ်မှတ်ပေးသည်။<a class="footnote_link" id="DOCF133" href="#FOOT133"><sup>133</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-withdraw balance</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">amount</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;=</span><span class="pln"> balance amount</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">begin</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> balance 
+                     </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> balance amount</span><span class="clo">))</span><span class="pln">
+               balance</span><span class="clo">)</span><span class="pln">
+        </span><span class="str">"Insufficient funds"</span><span class="clo">)))</span></pre></div>
+
+<p><code>W1</code> နှင့် <code>W2</code> ဆိုသော object နှစ်ခုကို ဖန်တီးရန် <code>Make-withdraw</code> ကို အောက်ပါအတိုင်း အသုံးပြုနိုင်သည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> W1 </span><span class="opn">(</span><span class="pln">make-withdraw </span><span class="lit">100</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> W2 </span><span class="opn">(</span><span class="pln">make-withdraw </span><span class="lit">100</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">W1 </span><span class="lit">50</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">50</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">W2 </span><span class="lit">70</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">30</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">W2 </span><span class="lit">40</span><span class="clo">)</span><span class="pln">
+</span><i><span class="str">"Insufficient funds"</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">W1 </span><span class="lit">40</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">10</span></i>
+</pre></div>
+
+<p><code>W1</code> နှင့် <code>W2</code> တို့သည် တစ်ခုနှင့်တစ်ခု လုံးဝ သီးခြားဖြစ်သော object များဖြစ်ပြီး၊ တစ်ခုစီတွင် ကိုယ်ပိုင် local state variable <code>balance</code> ရှိသည်ကို သတိပြုပါ။ တစ်ခုမှ ငွေထုတ်ယူခြင်းသည် အခြားတစ်ခုအပေါ် သက်ရောက်မှု မရှိပါ။
+</p>
+<p>ကျွန်ုပ်တို့သည် ငွေထုတ်ယူခြင်းသာမက ငွေသွင်းခြင်းကိုပါ ကိုင်တွယ်နိုင်သော object များကိုလည်း ဖန်တီးနိုင်ပြီး၊ ထို့ကြောင့် ရိုးရှင်းသော ဘဏ်အကောင့်များကို ကိုယ်စားပြုနိုင်သည်။ သတ်မှတ်ထားသော ကနဦးလက်ကျန်ငွေပါဝင်သည့် "bank-account object" တစ်ခုကို return ပြန်ပေးသည့် procedure တစ်ခုမှာ အောက်ပါအတိုင်း ဖြစ်သည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-account balance</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">withdraw amount</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;=</span><span class="pln"> balance amount</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">begin</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> balance 
+                     </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> balance amount</span><span class="clo">))</span><span class="pln">
+               balance</span><span class="clo">)</span><span class="pln">
+        </span><span class="str">"Insufficient funds"</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">deposit amount</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> balance </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> balance amount</span><span class="clo">))</span><span class="pln">
+    balance</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">dispatch m</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> m </span><span class="lit">'withdraw</span><span class="clo">)</span><span class="pln"> withdraw</span><span class="clo">)</span><span class="pln">
+          </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> m </span><span class="lit">'deposit</span><span class="clo">)</span><span class="pln"> deposit</span><span class="clo">)</span><span class="pln">
+          </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Unknown request: 
+                 MAKE-ACCOUNT"</span><span class="pln"> m</span><span class="clo">))))</span><span class="pln">
+  dispatch</span><span class="clo">)</span></pre></div>
+
+<p><code>make-account</code> ကို ခေါ်ယူတိုင်းတွင် local state variable <code>balance</code> ပါဝင်သော environment တစ်ခုကို တည်ဆောက်ပေးသည်။ ဤ environment အတွင်း၌၊ <code>make-account</code> သည် <code>balance</code> ကို access လုပ်သည့် <code>deposit</code> နှင့် <code>withdraw</code> procedure များကို အဓိပ္ပာယ်ဖွင့်ဆိုပြီး၊ "message" တစ်ခုကို input အဖြစ် လက်ခံကာ local procedure နှစ်ခုထဲမှ တစ်ခုကို return ပြန်ပေးသည့် နောက်ထပ် procedure တစ်ခုဖြစ်သော <code>dispatch</code> ကိုလည်း အဓိပ္ပာယ်ဖွင့်ဆိုသည်။ <code>dispatch</code> procedure ကိုယ်တိုင်ကို bank-account object ကို ကိုယ်စားပြုသည့် တန်ဖိုးအဖြစ် ပြန်ပေးသည်။ ဤသည်မှာ <a id="index-message_002dpassing"></a>
+<em>message-passing</em> ပုံစံ programming အတိအကျပင် ဖြစ်သည်။ သို့သော် ဤနေရာတွင် ၎င်းကို local variables များကို ပြုပြင်နိုင်စွမ်းနှင့် ပေါင်းစပ်အသုံးပြုထားခြင်း ဖြစ်သည်။
+</p>
+<p><code>Make-account</code> ကို အောက်ပါအတိုင်း အသုံးပြုနိုင်သည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> acc </span><span class="opn">(</span><span class="pln">make-account </span><span class="lit">100</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">((</span><span class="pln">acc </span><span class="lit">'withdraw</span><span class="clo">)</span><span class="pln"> </span><span class="lit">50</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">50</span></i><span class="pln">
+
+</span><span class="opn">((</span><span class="pln">acc </span><span class="lit">'withdraw</span><span class="clo">)</span><span class="pln"> </span><span class="lit">60</span><span class="clo">)</span><span class="pln">
+</span><i><span class="str">"Insufficient funds"</span></i><span class="pln">
+
+</span><span class="opn">((</span><span class="pln">acc </span><span class="lit">'deposit</span><span class="clo">)</span><span class="pln"> </span><span class="lit">40</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">90</span></i><span class="pln">
+
+</span><span class="opn">((</span><span class="pln">acc </span><span class="lit">'withdraw</span><span class="clo">)</span><span class="pln"> </span><span class="lit">60</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">30</span></i>
+</pre></div>
+
+<p><code>acc</code> ကို ခေါ်ယူတိုင်းတွင် local အဖြစ် အဓိပ္ပာယ်ဖွင့်ဆိုထားသော <code>deposit</code> သို့မဟုတ် <code>withdraw</code> procedure ကို ပြန်ပေးပြီး၊ ၎င်းကို သတ်မှတ်ထားသော <code>amount</code> ပေါ်တွင် apply လုပ်သည်။ <code>make-withdraw</code> တွင်ကဲ့သို့ပင်၊ <code>make-account</code> ကို နောက်တစ်ကြိမ် ခေါ်ယူခြင်း
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> acc2 </span><span class="opn">(</span><span class="pln">make-account </span><span class="lit">100</span><span class="clo">))</span></pre></div>
+
+<p>သည် ၎င်း၏ ကိုယ်ပိုင် local <code>balance</code> ကို ထိန်းသိမ်းထားသည့် လုံးဝ သီးခြားဖြစ်သော account object တစ်ခုကို ထုတ်ပေးလိမ့်မည်။
+</p>
+<blockquote>
+<p><strong><a id="Exercise-3_002e1"></a>လေ့ကျင့်ခန်း ၃.၁:</strong> အ <a id="index-accumulator-1"></a>
+<em>accumulator</em> ဆိုသည်မှာ ကိန်းဂဏန်း argument တစ်ခုဖြင့် အကြိမ်ကြိမ် ခေါ်ယူရသော procedure တစ်ခုဖြစ်ပြီး ၎င်း၏ argument များကို ပေါင်းလဒ်တစ်ခုအဖြစ် စုစည်းပေးသည်။ ၎င်းကို ခေါ်ယူသည့် အကြိမ်တိုင်းတွင် လက်ရှိ စုဆောင်းမိထားသော ပေါင်းလဒ်ကို return ပြန်ပေးသည်။ သီးခြား ပေါင်းလဒ်တစ်ခုစီကို ထိန်းသိမ်းထားနိုင်သော accumulator များကို ထုတ်ပေးသည့် <code>make-accumulator</code> ဆိုသော procedure တစ်ခုကို ရေးသားပါ။ <code>make-accumulator</code> သို့ ပေးရမည့် input သည် ပေါင်းလဒ်၏ ကနဦးတန်ဖိုးကို သတ်မှတ်ပေးရမည်။ ဥပမာ -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> A </span><span class="opn">(</span><span class="pln">make-accumulator </span><span class="lit">5</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">A </span><span class="lit">10</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">15</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">A </span><span class="lit">10</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">25</span></i>
+</pre></div>
+</blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-3_002e2"></a>လေ့ကျင့်ခန်း ၃.၂:</strong> Software-testing လုပ်ငန်းများတွင်၊ တွက်ချက်မှုတစ်ခုအတွင်း ပေးထားသော procedure တစ်ခုကို မည်မျှအကြိမ်ရေ ခေါ်ယူခဲ့သည်ကို ရေတွက်နိုင်ခြင်းသည် အသုံးဝင်ပါသည်။ input တစ်ခု လက်ခံသော procedure <code>f</code> ကို input အဖြစ် ယူသည့် <code>make-monitored</code> ဆိုသော procedure တစ်ခုကို ရေးသားပါ။ <code>make-monitored</code> မှ ပြန်ပေးသော ရလဒ်သည် တတိယမြောက် procedure (ဥပမာ <code>mf</code>) ဖြစ်ပြီး၊ ၎င်းသည် internal counter တစ်ခုကို ထိန်းသိမ်းခြင်းဖြင့် ၎င်းကို မည်မျှအကြိမ်ရေ ခေါ်ယူခဲ့သည်ကို ခြေရာခံသည်။ အကယ်၍ <code>mf</code> သို့ ပေးသော input သည် <code>how-many-calls?</code> ဆိုသော special symbol ဖြစ်ပါက <code>mf</code> သည် counter ၏ တန်ဖိုးကို ပြန်ပေးသည်။ အကယ်၍ input သည် <code>reset-count</code> ဖြစ်ပါက <code>mf</code> သည် counter ကို သုညသို့ reset လုပ်သည်။ အခြား မည်သည့် input အတွက်မဆို၊ <code>mf</code> သည် ထို input ပေါ်တွင် <code>f</code> ကို ခေါ်ယူခြင်း၏ ရလဒ်ကို ပြန်ပေးပြီး counter ကို တိုးမြှင့်သည်။ ဥပမာအားဖြင့်၊ ကျွန်ုပ်တို့သည် <code>sqrt</code> procedure ၏ monitored version တစ်ခုကို ဤသို့ ပြုလုပ်နိုင်သည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> s </span><span class="opn">(</span><span class="pln">make-monitored sqrt</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">s </span><span class="lit">100</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">10</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">s </span><span class="lit">'how-many-calls?</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">1</span></i>
+</pre></div>
+</blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-3_002e3"></a>လေ့ကျင့်ခန်း ၃.၃:</strong> စကားဝှက်ဖြင့် ကာကွယ်ထားသော အကောင့်များ (password-protected accounts) ဖန်တီးနိုင်ရန် <code>make-account</code> procedure ကို ပြုပြင်ပါ။ ဆိုလိုသည်မှာ <code>make-account</code> သည် အောက်ပါအတိုင်း အပို argument အဖြစ် symbol တစ်ခုကို လက်ခံရမည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> acc 
+  </span><span class="opn">(</span><span class="pln">make-account </span><span class="lit">100</span><span class="pln"> </span><span class="lit">'secret-password</span><span class="clo">))</span></pre></div>
+
+<p>ရရှိလာသော account object သည် အကောင့်ဖန်တီးစဉ်က အသုံးပြုခဲ့သော စကားဝှက် ပါဝင်မှသာ တောင်းဆိုမှုကို လုပ်ဆောင်ပေးရမည်ဖြစ်ပြီး၊ သို့မဟုတ်ပါက တိုင်တန်းမှု (complaint) တစ်ခုကို ပြန်ပေးရမည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">((</span><span class="pln">acc </span><span class="lit">'secret-password</span><span class="pln"> </span><span class="lit">'withdraw</span><span class="clo">)</span><span class="pln"> </span><span class="lit">40</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">60</span></i><span class="pln">
+
+</span><span class="opn">((</span><span class="pln">acc </span><span class="lit">'some-other-password</span><span class="pln"> </span><span class="lit">'deposit</span><span class="clo">)</span><span class="pln"> </span><span class="lit">50</span><span class="clo">)</span><span class="pln">
+</span><i><span class="str">"Incorrect password"</span></i>
+</pre></div>
+</blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-3_002e4"></a>လေ့ကျင့်ခန်း ၃.၄:</strong> လေ့ကျင့်ခန်း ၃.၃ ရှိ <code>make-account</code> procedure ကို အခြား local state variable တစ်ခု ထပ်မံထည့်သွင်းခြင်းဖြင့် ပြုပြင်ပါ။ ထိုသို့ပြုလုပ်ခြင်းဖြင့် အကယ်၍ အကောင့်တစ်ခုကို မှားယွင်းသော စကားဝှက်ဖြင့် ခုနစ်ကြိမ်ဆက်တိုက် access လုပ်ရန် ကြိုးပမ်းပါက ၎င်းသည် <code>call-the-cops</code> procedure ကို ခေါ်ယူစေရမည်။
+</p></blockquote>
+
+<a id="g_t3_002e1_002e2"></a>
+<a id="The-Benefits-of-Introducing-Assignment"></a>
+<h4 class="subsection"><span class="secnum">3.1.2</span><span class="sectitle">Assignment ကို စတင်အသုံးပြုခြင်း၏ အကျိုးကျေးဇူးများ</span></h4>
+
+<p>ကျွန်ုပ်တို့ မြင်တွေ့ရမည့်အတိုင်း၊ ကျွန်ုပ်တို့၏ programming language ထဲသို့ assignment ကို ထည့်သွင်းခြင်းသည် ခက်ခဲသော အယူအဆဆိုင်ရာ ပြဿနာများစွာဆီသို့ ဦးတည်သွားစေပါသည်။ သို့သော်ငြားလည်း၊ စနစ်များကို local state ရှိသော object များ၏ စုစည်းမှုအဖြစ် ရှုမြင်ခြင်းသည် modular design ကို ထိန်းသိမ်းရန်အတွက် အစွမ်းထက်သော နည်းလမ်းတစ်ခု ဖြစ်ပါသည်။ ရိုးရှင်းသော ဥပမာတစ်ခုအနေဖြင့်၊ ခေါ်ယူသည့်အခါတိုင်း random ရွေးချယ်ထားသော ကိန်းပြည့်တစ်ခုကို return ပြန်ပေးသည့် <code>rand</code> ဆိုသော procedure ၏ ဒီဇိုင်းကို စဉ်းစားကြည့်ပါ။
+</p>
+<p>“random ရွေးချယ်သည်” ဆိုသည်မှာ ဘာကိုဆိုလိုသည်မှာ လုံးဝ ရှင်းလင်းမှုမရှိပါ။ ကျွန်ုပ်တို့ အလိုရှိသည်မှာ <code>rand</code> ကို ဆက်တိုက်ခေါ်ယူမှုများမှ uniform distribution ဖြစ်သော စာရင်းအင်းဆိုင်ရာ ဂုဏ်သတ္တိများရှိသည့် ကိန်းဂဏန်း အစီအစဉ်တစ်ခု ထွက်ပေါ်လာရန် ဖြစ်သည်ဟု ယူဆရပါမည်။ သင့်တော်သော အစီအစဉ်များ ထုတ်လုပ်ရန် နည်းလမ်းများကို ဤနေရာတွင် ဆွေးနွေးမည်မဟုတ်ပါ။ ယင်းအစား၊ ပေးထားသော ကိန်းဂဏန်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>x</mi>
+    <mn>1</mn>
+  </msub>
+</math> ဖြင့် စတင်ပြီး
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><var><span class="pln">x</span><span class="pun">₂</span></var><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="opn">(</span><span class="pln">rand-update </span><var><span class="pln">x</span><span class="pun">₁</span></var><span class="clo">)</span><span class="pln">
+</span><var><span class="pln">x</span><span class="pun">₃</span></var><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="opn">(</span><span class="pln">rand-update </span><var><span class="pln">x</span><span class="pun">₂</span></var><span class="clo">)</span></pre></div>
+
+<p>ကို ဖွဲ့စည်းပါက၊ တန်ဖိုးများ အစီအစဉ် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>x</mi>
+    <mn>1</mn>
+  </msub>
+</math>၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>x</mi>
+    <mn>2</mn>
+  </msub>
+</math>၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>x</mi>
+    <mn>3</mn>
+  </msub>
+</math>၊ … သည် အလိုရှိသော စာရင်းအင်းဆိုင်ရာ ဂုဏ်သတ္တိများ ရှိမည်ဖြစ်သော <code>rand-update</code> procedure တစ်ခု ရှိသည်ဟု ယူဆကြပါစို့။<a class="footnote_link" id="DOCF134" href="#FOOT134"><sup>134</sup></a>
+</p>
+<p>ကျွန်ုပ်တို့သည် <code>rand</code> ကို သတ်မှတ်ထားသော တန်ဖိုး <code>random-init</code> ဖြင့် စတင်ထားသည့် local state variable <code>x</code> ပါဝင်သော procedure တစ်ခုအဖြစ် အကောင်အထည်ဖော်နိုင်ပါသည်။ <code>rand</code> ကို ခေါ်ယူမှုတိုင်းသည် <code>x</code> ၏ လက်ရှိတန်ဖိုးကို <code>rand-update</code> တွက်ချက်ပြီး၊ ယင်းကို random number အဖြစ် return ပြန်ပေးကာ <code>x</code> ၏ တန်ဖိုးအသစ်အဖြစ်လည်း သိမ်းဆည်းထားမည် ဖြစ်ပါသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> rand
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">x random-init</span><span class="clo">))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> x </span><span class="opn">(</span><span class="pln">rand-update x</span><span class="clo">))</span><span class="pln"> x</span><span class="clo">)))</span></pre></div>
+
+<p>မှန်ပါသည်၊ ကျွန်ုပ်တို့သည် assignment ကို အသုံးမပြုဘဲ <code>rand-update</code> ကို တိုက်ရိုက်ခေါ်ယူခြင်းဖြင့်လည်း အဆိုပါ random number အစီအစဉ်ကိုပင် ထုတ်လုပ်နိုင်ပါသည်။ သို့သော်၊ ဤသို့ပြုလုပ်ခြင်းသည် random numbers များကို အသုံးပြုသည့် ကျွန်ုပ်တို့၏ program ၏ မည်သည့်အစိတ်အပိုင်းမဆို <code>rand-update</code> ထံသို့ argument အဖြစ် ပေးပို့ရန် <code>x</code> ၏ လက်ရှိတန်ဖိုးကို အတိအလင်း မှတ်သားထားရမည်ဟု ဆိုလိုပါသည်။ ဤသည်မှာ မည်မျှအနှောင့်အယှက်ဖြစ်စေမည်ကို သိရှိနိုင်ရန်၊ <a id="index-Monte-Carlo-simulation"></a>
+<em>Monte Carlo simulation</em> ဟုခေါ်သော နည်းစနစ်တစ်ခုကို အကောင်အထည်ဖော်ရန် random numbers များကို အသုံးပြုခြင်းအား စဉ်းစားကြည့်ပါ။
+</p>
+<p>Monte Carlo နည်းလမ်းသည် ကြီးမားသော အစုအဝေးတစ်ခုထဲမှ စမ်းသပ်ချက်နမူနာများကို random ရွေးချယ်ပြီးနောက်၊ ထိုစမ်းသပ်ချက်များ၏ ရလဒ်များကို ဇယားပြုစုခြင်းမှ ခန့်မှန်းရရှိသော ဖြစ်တန်စွမ်းများ (probabilities) အပေါ် အခြေခံ၍ ကောက်ချက်ချခြင်း ဖြစ်ပါသည်။ ဥပမာအားဖြင့်၊ random ရွေးချယ်ထားသော ကိန်းပြည့်နှစ်ခုတွင် တူညီသော ဆခွဲကိန်းများ (factors) မရှိခြင်း၊ ဆိုလိုသည်မှာ ၎င်းတို့၏ အကြီးဆုံးဘုံဆခွဲကိန်း (greatest common divisor) သည် 1 ဖြစ်နေခြင်း၏ ဖြစ်တန်စွမ်းမှာ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>6</mn>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mo>/</mo>
+    </mrow>
+    <msup>
+      <mi>π<!-- π --></mi>
+      <mn>2</mn>
+    </msup>
+  </mrow>
+</math> ဖြစ်သည်ဟူသော အချက်ကို အသုံးပြု၍ ကျွန်ုပ်တို့သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>π<!-- π --></mi>
+</math> ကို အနီးစပ်ဆုံး တွက်ချက်နိုင်ပါသည်။<a class="footnote_link" id="DOCF135" href="#FOOT135"><sup>135</sup></a> <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>π<!-- π --></mi>
+</math> ၏ အနီးစပ်ဆုံးတန်ဖိုးကို ရရှိရန် ကျွန်ုပ်တို့သည် အမြောက်အမြား စမ်းသပ်မှုများကို လုပ်ဆောင်ကြသည်။
+စမ်းသပ်မှုတစ်ခုစီတွင် ကျွန်ုပ်တို့သည် ကိန်းပြည့်နှစ်ခုကို random ရွေးချယ်ပြီး ၎င်းတို့၏ <abbr>GCD</abbr> သည် 1 ဖြစ်၊ မဖြစ် စစ်ဆေးသည်။ စမ်းသပ်မှု အောင်မြင်သည့် အကြိမ်အရေအတွက် အချိုးအစားသည် ကျွန်ုပ်တို့အား <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>6</mn>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mo>/</mo>
+    </mrow>
+    <msup>
+      <mi>π<!-- π --></mi>
+      <mn>2</mn>
+    </msup>
+  </mrow>
+</math> ၏ ခန့်မှန်းချက်ကို ပေးစွမ်းပြီး၊ ယင်းမှတစ်ဆင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>π<!-- π --></mi>
+</math> ၏ အနီးစပ်ဆုံးတန်ဖိုးကို ရရှိသည်။
+</p>
+<p>ကျွန်ုပ်တို့၏ program ၏ အဓိက အစိတ်အပိုင်းမှာ <code>monte-carlo</code> procedure ဖြစ်ပြီး၊ ၎င်းသည် စမ်းသပ်မှု ပြုလုပ်ရမည့် အကြိမ်အရေအတွက်နှင့်အတူ run သည့်အခါတိုင်း true သို့မဟုတ် false ပြန်ပေးမည့် no-argument procedure အဖြစ် ဖော်ပြထားသော စမ်းသပ်ချက်ကို argument များအဖြစ် လက်ခံပါသည်။ <code>Monte-carlo</code> သည် သတ်မှတ်ထားသော စမ်းသပ်မှု အကြိမ်ရေအတိုင်း လုပ်ဆောင်ပြီး စမ်းသပ်ချက် true ဖြစ်ခဲ့သည့် အကြိမ်အရေအတွက် အချိုးအစားကို return ပြန်ပေးပါသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">estimate-pi trials</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">sqrt </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> </span><span class="lit">6</span><span class="pln"> </span><span class="opn">(</span><span class="pln">monte-carlo trials 
+                          cesaro-test</span><span class="clo">))))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">cesaro-test</span><span class="clo">)</span><span class="pln">
+   </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> </span><span class="opn">(</span><span class="pln">gcd </span><span class="opn">(</span><span class="pln">rand</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">rand</span><span class="clo">))</span><span class="pln"> </span><span class="lit">1</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">monte-carlo trials experiment</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">iter trials-remaining trials-passed</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pun">=</span><span class="pln"> trials-remaining </span><span class="lit">0</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> trials-passed trials</span><span class="clo">))</span><span class="pln">
+          </span><span class="opn">((</span><span class="pln">experiment</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">iter </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> trials-remaining </span><span class="lit">1</span><span class="clo">)</span><span class="pln"> 
+                 </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> trials-passed </span><span class="lit">1</span><span class="clo">)))</span><span class="pln">
+          </span><span class="opn">(</span><span class="kwd">else</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">iter </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> trials-remaining </span><span class="lit">1</span><span class="clo">)</span><span class="pln"> 
+                 trials-passed</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">iter trials </span><span class="lit">0</span><span class="clo">))</span></pre></div>
+
+<p>ယခု၊ local state ကို ပုံဖော်ရန် assignment ကို အသုံးမပြုခဲ့ပါက ကျွန်ုပ်တို့ လုပ်ဆောင်ရမည့် နည်းလမ်းအတိုင်း <code>rand</code> အစား <code>rand-update</code> ကို တိုက်ရိုက်အသုံးပြု၍ အဆိုပါ တွက်ချက်မှုကို ပြုလုပ်ကြည့်ကြပါစို့။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">estimate-pi trials</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">sqrt </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> </span><span class="lit">6</span><span class="pln"> </span><span class="opn">(</span><span class="pln">random-gcd-test trials 
+                              random-init</span><span class="clo">))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">random-gcd-test trials initial-x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">iter trials-remaining 
+                trials-passed 
+                x</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">x1 </span><span class="opn">(</span><span class="pln">rand-update x</span><span class="clo">)))</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">x2 </span><span class="opn">(</span><span class="pln">rand-update x1</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pun">=</span><span class="pln"> trials-remaining </span><span class="lit">0</span><span class="clo">)</span><span class="pln">
+               </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> trials-passed trials</span><span class="clo">))</span><span class="pln">
+              </span><span class="opn">((</span><span class="pun">=</span><span class="pln"> </span><span class="opn">(</span><span class="pln">gcd x1 x2</span><span class="clo">)</span><span class="pln"> </span><span class="lit">1</span><span class="clo">)</span><span class="pln">
+               </span><span class="opn">(</span><span class="pln">iter </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> trials-remaining </span><span class="lit">1</span><span class="clo">)</span><span class="pln">
+                     </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> trials-passed </span><span class="lit">1</span><span class="clo">)</span><span class="pln">
+                     x2</span><span class="clo">))</span><span class="pln">
+              </span><span class="opn">(</span><span class="kwd">else</span><span class="pln">
+               </span><span class="opn">(</span><span class="pln">iter </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> trials-remaining </span><span class="lit">1</span><span class="clo">)</span><span class="pln">
+                     trials-passed
+                     x2</span><span class="clo">))))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">iter trials </span><span class="lit">0</span><span class="pln"> initial-x</span><span class="clo">))</span></pre></div>
+
+<p>Program သည် ရိုးရှင်းနေသေးသော်လည်း modularity ဆိုင်ရာ ပြင်းထန်သော ချိုးဖောက်မှုအချို့ကို တွေ့ရှိရသည်။ ကျွန်ုပ်တို့၏ ပထမ version program တွင် <code>rand</code> ကို အသုံးပြုခြင်းဖြင့် စိတ်ကြိုက် <code>experiment</code> procedure ကို argument အဖြစ် လက်ခံသည့် ယေဘုယျ <code>monte-carlo</code> procedure တစ်ခုအဖြစ် Monte Carlo နည်းလမ်းကို တိုက်ရိုက် ဖော်ပြနိုင်ပါသည်။ ကျွန်ုပ်တို့၏ ဒုတိယ version program တွင် random-number generator အတွက် local state မရှိသောကြောင့် <code>random-gcd-test</code> သည် random numbers များဖြစ်သော <code>x1</code> နှင့် <code>x2</code> တို့ကို အတိအလင်း ကိုင်တွယ်ရပြီး <code>x2</code> ကို <code>rand-update</code> ၏ input အသစ်အဖြစ် iterative loop မှတစ်ဆင့် ပြန်လည် အသုံးပြုရပါသည်။ ဤကဲ့သို့ random numbers များကို အတိအလင်း ကိုင်တွယ်ရခြင်းသည် စမ်းသပ်ချက် ရလဒ်များကို စုဆောင်းသည့် တည်ဆောက်ပုံနှင့် ကျွန်ုပ်တို့၏ စမ်းသပ်ချက်တွင် random number နှစ်ခု အသုံးပြုထားသည်ဟူသော အချက်ကို ရောထွေးသွားစေသည် (အခြား Monte Carlo စမ်းသပ်ချက်များတွင် random number တစ်ခု သို့မဟုတ် သုံးခု အသုံးပြုကောင်း အသုံးပြုနိုင်သော်လည်း)။ အမြင့်ဆုံးအဆင့်ရှိ <code>estimate-pi</code> procedure ပင်လျှင် အစပျိုး random number တစ်ခု ပေးပို့ရန်အတွက်ပါ ထည့်သွင်းစဉ်းစားနေရပါသည်။ Random-number generator ၏ အတွင်းပိုင်း အစိတ်အပိုင်းများသည် program ၏ အခြား အစိတ်အပိုင်းများသို့ ပျံ့နှံ့ရောက်ရှိနေခြင်းကြောင့် Monte Carlo အယူအဆကို အခြား လုပ်ဆောင်ချက်များတွင် အသုံးပြုနိုင်ရန် သီးခြားခွဲထုတ်ရန် ခက်ခဲစေပါသည်။ ပထမ version program တွင်မူ assignment သည် random-number generator ၏ state ကို <code>rand</code> procedure အတွင်း၌ encapsulate ပြုလုပ်ထားသောကြောင့် random-number ထုတ်လုပ်ခြင်းဆိုင်ရာ အသေးစိတ် အချက်အလက်များသည် program ၏ အခြားအစိတ်အပိုင်းများနှင့် ကင်းလွတ်နေပါသည်။
+</p>
+<p>Monte Carlo ဥပမာမှ သရုပ်ဖော်ထားသော ယေဘုယျဖြစ်ရပ်မှာ ဤသို့ဖြစ်သည်- ရှုပ်ထွေးသော လုပ်ငန်းစဉ်တစ်ခု၏ အစိတ်အပိုင်းတစ်ခု၏ အမြင်မှကြည့်လျှင် အခြားအစိတ်အပိုင်းများသည် အချိန်နှင့်အမျှ ပြောင်းလဲနေပုံပေါ်သည်။ ၎င်းတို့တွင် ဝှက်ထားသော အချိန်နှင့်အမျှ ပြောင်းလဲနေသည့် local state များ ရှိကြသည်။ ဤခွဲခြမ်းစိပ်ဖြာမှုကို ထင်ဟပ်စေသော computer programs များကို ရေးသားလိုပါက၊ ကျွန်ုပ်တို့သည် အချိန်နှင့်အမျှ အပြုအမူ ပြောင်းလဲသည့် computational objects များ (ဥပမာ- bank accounts များနှင့် random-number generators များ) ကို ပြုလုပ်ကြသည်။ ကျွန်ုပ်တို့သည် state ကို local state variables များဖြင့် ပုံဖော်ပြီး၊ state ပြောင်းလဲမှုများကို ထို variables များသို့ assignment ပြုလုပ်ခြင်းဖြင့် ပုံဖော်ကြသည်။
+</p>
+<p>Assignment နှင့် state ကို local variables များတွင် ဝှက်ထားသော နည်းစနစ်ကို အသုံးပြုခြင်းဖြင့်၊ state အားလုံးကို အပို parameter များ ပေးပို့ကာ အတိအလင်း ကိုင်တွယ်ရခြင်းထက် ပိုမိုကောင်းမွန်သော modular ပုံစံဖြင့် စနစ်များကို တည်ဆောက်နိုင်သည်ဟု ပြောဆိုကာ ဤဆွေးနွေးမှုကို အဆုံးသတ်ချင်စရာ ဖြစ်ပါသည်။ ကံမကောင်းစွာဖြင့်၊ ကျွန်ုပ်တို့ မြင်တွေ့ရမည့်အတိုင်း ၎င်းမှာ ထိုမျှမရိုးရှင်းပါ။
+</p>
+<blockquote>
+<p><strong><a id="Exercise-3_002e5"></a>Exercise 3.5:</strong> <a id="index-Monte-Carlo-integration"></a>
+<em>Monte Carlo integration</em>
+သည် Monte Carlo simulation အသုံးပြု၍ definite integrals များကို ခန့်မှန်းတွက်ချက်သည့် နည်းလမ်းတစ်ခု ဖြစ်ပါသည်။ နယ်ပယ်အတွင်းရှိ (x, y) အမှတ်များအတွက် true ဖြစ်ပြီး နယ်ပယ်ပြင်ပရှိ အမှတ်များအတွက် false ဖြစ်သော predicate <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>P</mi>
+    <mo stretchy="false">(</mo>
+    <mi>x</mi>
+    <mo>,</mo>
+    <mi>y</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ဖြင့် ဖော်ပြထားသော ဟင်းလင်းပြင် (space) ၏ ဧရိယာကို တွက်ချက်ရန် စဉ်းစားပါ။ ဥပမာအားဖြင့်၊ (5, 7) ကို ဗဟိုပြု၍ အချင်းဝက် (radius) 3 ရှိသော စက်ဝိုင်းအတွင်းရှိ နယ်ပယ်ကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <mi>x</mi>
+    <mo>−<!-- − --></mo>
+    <mn>5</mn>
+    <msup>
+      <mo stretchy="false">)</mo>
+      <mn>2</mn>
+    </msup>
+  </mrow>
+  <mo>+</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <mi>y</mi>
+    <mo>−<!-- − --></mo>
+    <mn>7</mn>
+    <msup>
+      <mo stretchy="false">)</mo>
+      <mn>2</mn>
+    </msup>
+    <mo>≤<!-- ≤ --></mo>
+    <msup>
+      <mn>3</mn>
+      <mn>2</mn>
+    </msup>
+  </mrow>
+</math> ဟုတ်မဟုတ် စစ်ဆေးသော predicate ဖြင့် ဖော်ပြနိုင်ပါသည်။ ထိုသို့သော predicate ဖြင့် ဖော်ပြထားသော နယ်ပယ်၏ ဧရိယာကို ခန့်မှန်းရန်၊ ထိုနယ်ပယ် ပါဝင်နေသော စတုဂံပုံ (rectangle) တစ်ခုကို ရွေးချယ်ခြင်းဖြင့် စတင်ပါ။ ဥပမာအားဖြင့်၊ (2, 4) နှင့် (8, 10) တို့တွင် ထောင့်ဖြတ်ဆန့်ကျင်ဘက် ထောင့်များရှိသော စတုဂံသည် အထက်ပါ စက်ဝိုင်းကို ငုံမိပါသည်။ အလိုရှိသော integral မှာ ထိုစတုဂံ၏ နယ်ပယ်အတွင်း ကျရောက်နေသော အစိတ်အပိုင်း၏ ဧရိယာ ဖြစ်ပါသည်။ ကျွန်ုပ်တို့သည် စတုဂံအတွင်းရှိ (x, y) အမှတ်များကို random ရွေးချယ်ပြီး အမှတ်တစ်ခုစီအတွက် နယ်ပယ်အတွင်း ကျရောက်ခြင်း ရှိ၊ မရှိ သိနိုင်ရန် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>P</mi>
+    <mo stretchy="false">(</mo>
+    <mi>x</mi>
+    <mo>,</mo>
+    <mi>y</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ကို စစ်ဆေးခြင်းဖြင့် integral ကို ခန့်မှန်းနိုင်ပါသည်။ အမှတ်များစွာဖြင့် စမ်းသပ်ကြည့်ပါက၊ နယ်ပယ်အတွင်း ကျရောက်သော အမှတ်အရေအတွက် အချိုးအစားသည် စတုဂံ၏ မည်မျှသော အစိတ်အပိုင်းမှာ နယ်ပယ်အတွင်း ရှိနေသည်ဟူသော ခန့်မှန်းချက်ကို ပေးပါလိမ့်မည်။ ထို့ကြောင့်၊ ထိုအချိုးအစားကို စတုဂံတစ်ခုလုံး၏ ဧရိယာနှင့် မြှောက်ခြင်းဖြင့် integral ၏ ခန့်မှန်းခြေတန်ဖိုးကို ရရှိမည်ဖြစ်သည်။
+</p>
+<p>Monte Carlo integration ကို predicate <code>P</code>၊ စတုဂံအတွက် upper နှင့် lower bounds များဖြစ်သော <code>x1</code>၊ <code>x2</code>၊ <code>y1</code>၊ <code>y2</code> နှင့် ခန့်မှန်းချက်ရရှိရန် စမ်းသပ်ရမည့် အကြိမ်အရေအတွက်တို့ကို argument များအဖြစ် လက်ခံသော <code>estimate-integral</code> procedure အဖြစ် အကောင်အထည်ဖော်ပါ။ သင်၏ procedure သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>π<!-- π --></mi>
+</math> ကို ခန့်မှန်းရန် အထက်တွင် အသုံးပြုခဲ့သော <code>monte-carlo</code> procedure ကိုပင် အသုံးပြုရမည်။ ယူနစ်စက်ဝိုင်း (unit circle) ၏ ဧရိယာကို တိုင်းတာခြင်းဖြင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>π<!-- π --></mi>
+</math> ၏ ခန့်မှန်းခြေတန်ဖိုးကို ထုတ်ယူရန် သင်၏ <code>estimate-integral</code> ကို အသုံးပြုပါ။
+</p>
+<p>ပေးထားသော range တစ်ခုအတွင်းမှ random ရွေးချယ်ထားသော ကိန်းဂဏန်းတစ်ခုကို return ပြန်ပေးသည့် procedure တစ်ခုရှိခြင်းသည် အသုံးဝင်ပါလိမ့်မည်။ အောက်ပါ <code>random-in-range</code> procedure သည် input ထက်ငယ်သော အနုတ်မဟုတ်သည့် ကိန်းဂဏန်းကို return ပြန်ပေးသည့် <a href="1_002e2.html#g_t1_002e2_002e6">1.2.6</a> တွင် အသုံးပြုခဲ့သော <code>random</code> procedure ကို အသုံးပြု၍ ဤအချက်ကို အကောင်အထည်ဖော်ထားပါသည်။<a class="footnote_link" id="DOCF136" href="#FOOT136"><sup>136</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">random-in-range low high</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">range </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> high low</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> low </span><span class="opn">(</span><span class="pln">random range</span><span class="clo">))))</span></pre></div>
+</blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-3_002e6"></a>Exercise 3.6:</strong> ပေးထားသော တန်ဖိုးတစ်ခုမှ စတင်၍ အစီအစဉ်တစ်ခု ထွက်ပေါ်လာစေရန် random-number generator ကို reset ပြုလုပ်နိုင်ခြင်းမှာ အသုံးဝင်ပါသည်။ Argument အဖြစ် <code>generate</code> symbol သို့မဟုတ် <code>reset</code> symbol ဖြင့် ခေါ်ယူနိုင်ပြီး အောက်ပါအတိုင်း အလုပ်လုပ်သော <code>rand</code> procedure အသစ်တစ်ခုကို ဒီဇိုင်းဆွဲပါ- <code>(rand 'generate)</code> သည် random number အသစ်တစ်ခုကို ထုတ်ပေးမည်ဖြစ်ပြီး၊ <code>((rand 'reset) ⟨<var>new-value</var>⟩)</code> သည် internal state variable ကို သတ်မှတ်ထားသော <code>⟨</code><var>new-value</var><code>⟩</code> သို့ reset ပြုလုပ်ပေးမည် ဖြစ်သည်။ ထို့ကြောင့် state ကို reset ပြုလုပ်ခြင်းဖြင့် ပြန်လည်အသုံးပြုနိုင်သော (repeatable) အစီအစဉ်များကို ထုတ်လုပ်နိုင်ပါသည်။ random numbers များအသုံးပြုသော programs များကို test ပြုလုပ်ခြင်းနှင့် debug ပြုလုပ်ခြင်းများတွင် ၎င်းတို့သည် အလွန်ပင် အသုံးဝင်ပါသည်။
+</p></blockquote>
+
+<a id="g_t3_002e1_002e3"></a>
+<a id="The-Costs-of-Introducing-Assignment"></a>
+<h4 class="subsection"><span class="secnum">3.1.3</span><span class="sectitle">Assignment မိတ်ဆက်ခြင်း၏ ကုန်ကျစရိတ်များ</span></h4>
+
+<p>ကျွန်ုပ်တို့ တွေ့မြင်ခဲ့ရသည့်အတိုင်း <code>set!</code> operation သည် ကျွန်ုပ်တို့အား local state ရှိသော object များကို model လုပ်ရန် အထောက်အကူပြုသည်။ သို့သော်၊ ဤအားသာချက်တွင် ပေးဆပ်ရမည့် တန်ဖိုးတစ်ခုရှိသည်။ ကျွန်ုပ်တို့၏ programming language ကို <a href="1_002e1.html#g_t1_002e1_002e5">1.1.5</a> တွင် မိတ်ဆက်ခဲ့သည့် procedure application ၏ substitution model အနေဖြင့် ထပ်မံ အဓိပ္ပာယ်ဖွင့်ဆို၍ မရတော့ပေ။ ထို့အပြင်၊ "ကောင်းမွန်သော" mathematical ဂုဏ်သတ္တိများရှိသည့် မည်သည့်ရိုးရှင်းသော model မျှ programming language များရှိ object များနှင့် assignment များကို ကိုင်တွယ်ဖြေရှင်းရန် လုံလောက်သော framework တစ်ခု မဖြစ်နိုင်တော့ပေ။
+</p>
+<p>ကျွန်ုပ်တို့သည် assignment များကို အသုံးမပြုသရွေ့၊ တူညီသော argument များဖြင့် တူညီသော procedure ကို နှစ်ကြိမ် evaluation ပြုလုပ်ပါက တူညီသော ရလဒ်ကိုသာ ထွက်ပေါ်စေမည်ဖြစ်သည်၊ ထို့ကြောင့် procedure များကို mathematical function များကို တွက်ချက်ခြင်းအဖြစ် ရှုမြင်နိုင်သည်။ ဤစာအုပ်၏ ပထမ အခန်းနှစ်ခန်းလုံးတွင် ကျွန်ုပ်တို့ လုပ်ဆောင်ခဲ့သကဲ့သို့ assignment တစ်ခုမျှ အသုံးမပြုဘဲ programming ရေးသားခြင်းကို <a id="index-functional-programming"></a>
+<em>functional programming</em> ဟု ခေါ်ဆိုပါသည်။
+</p>
+<p>Assignment သည် ကိစ္စရပ်များကို မည်သို့ ရှုပ်ထွေးစေသည်ကို နားလည်စေရန်၊ <a href="#g_t3_002e1_002e1">3.1.1</a> ရှိ <code>make-withdraw</code> procedure ၏ လက်ကျန်ငွေ မလုံလောက်မှုကို စစ်ဆေးရန် မလိုအပ်သော ရိုးရှင်းသည့် version တစ်ခုကို စဉ်းစားကြည့်ပါ:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-simplified-withdraw balance</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">amount</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> balance </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> balance amount</span><span class="clo">))</span><span class="pln">
+    balance</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> W </span><span class="opn">(</span><span class="pln">make-simplified-withdraw </span><span class="lit">25</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">W </span><span class="lit">20</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">5</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">W </span><span class="lit">10</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">-5</span></i>
+</pre></div>
+
+<p>ဤ procedure ကို <code>set!</code> အသုံးမပြုသော အောက်ပါ <code>make-decrementer</code> procedure နှင့် နှိုင်းယှဉ်ကြည့်ပါ:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-decrementer balance</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">amount</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> balance amount</span><span class="clo">)))</span></pre></div>
+
+<p><code>Make-decrementer</code> သည် သတ်မှတ်ထားသော ပမာဏ <code>balance</code> ထဲမှ ၎င်း၏ input ကို နုတ်ပေးသော procedure တစ်ခုကို return ပြန်ပေးသည်၊ သို့သော် <code>make-simplified-withdraw</code> တွင်ကဲ့သို့ တစ်ကြိမ်ပြီးတစ်ကြိမ် ခေါ်ဆိုမှုများအပေါ် စုဆောင်းမိသော သက်ရောက်မှု (accumulated effect) မရှိပါ:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> D </span><span class="opn">(</span><span class="pln">make-decrementer </span><span class="lit">25</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">D </span><span class="lit">20</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">5</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">D </span><span class="lit">10</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">15</span></i>
+</pre></div>
+
+<p><code>make-decrementer</code> မည်သို့ အလုပ်လုပ်သည်ကို ရှင်းပြရန် substitution model ကို အသုံးပြုနိုင်သည်။ ဥပမာအားဖြင့်၊ အောက်ပါ expression ၏ evaluation ကို ဆန်းစစ်ကြည့်ကြပါစို့
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">((</span><span class="pln">make-decrementer </span><span class="lit">25</span><span class="clo">)</span><span class="pln"> </span><span class="lit">20</span><span class="clo">)</span></pre></div>
+
+<p>ကျွန်ုပ်တို့သည် ဦးစွာ <code>make-decrementer</code> ၏ body ထဲရှိ <code>balance</code> နေရာတွင် 25 ဖြင့် အစားထိုးခြင်းအားဖြင့် combination ၏ operator ကို ရိုးရှင်းအောင် ပြုလုပ်သည်။ ၎င်းက expression ကို အောက်ပါအတိုင်း လျှော့ချပေးသည်
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">((</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">amount</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="lit">25</span><span class="pln"> amount</span><span class="clo">))</span><span class="pln"> </span><span class="lit">20</span><span class="clo">)</span></pre></div>
+
+<p>ယခုအခါ <code>lambda</code> expression ၏ body ထဲရှိ <code>amount</code> နေရာတွင် 20 ဖြင့် အစားထိုးခြင်းအားဖြင့် operator ကို apply လုပ်သည်:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="lit">25</span><span class="pln"> </span><span class="lit">20</span><span class="clo">)</span></pre></div>
+
+<p>နောက်ဆုံးအဖြေမှာ 5 ဖြစ်သည်။
+</p>
+<p>သို့သော်၊ <code>make-simplified-withdraw</code> ဖြင့် အလားတူ substitution analysis ကို ပြုလုပ်ရန် ကြိုးစားပါက မည်သို့ဖြစ်မည်ကို လေ့လာကြည့်ပါ:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">((</span><span class="pln">make-simplified-withdraw </span><span class="lit">25</span><span class="clo">)</span><span class="pln"> </span><span class="lit">20</span><span class="clo">)</span></pre></div>
+
+<p>ကျွန်ုပ်တို့သည် ဦးစွာ <code>make-simplified-withdraw</code> ၏ body ထဲရှိ <code>balance</code> နေရာတွင် 25 ဖြင့် အစားထိုးခြင်းအားဖြင့် operator ကို ရိုးရှင်းအောင် ပြုလုပ်သည်။ ၎င်းက expression ကို အောက်ပါအတိုင်း လျှော့ချပေးသည်<a class="footnote_link" id="DOCF137" href="#FOOT137"><sup>137</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">((</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">amount</span><span class="clo">)</span><span class="pln"> 
+   </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> balance </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="lit">25</span><span class="pln"> amount</span><span class="clo">))</span><span class="pln"> </span><span class="lit">25</span><span class="clo">)</span><span class="pln">
+ </span><span class="lit">20</span><span class="clo">)</span></pre></div>
+
+<p>ယခုအခါ <code>lambda</code> expression ၏ body ထဲရှိ <code>amount</code> နေရာတွင် 20 ဖြင့် အစားထိုးခြင်းအားဖြင့် operator ကို apply လုပ်သည်:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> balance </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="lit">25</span><span class="pln"> </span><span class="lit">20</span><span class="clo">))</span><span class="pln"> </span><span class="lit">25</span></pre></div>
+
+<p>အကယ်၍ ကျွန်ုပ်တို့သည် substitution model ကိုသာ လိုက်နာခဲ့ပါက၊ procedure application ၏ အဓိပ္ပာယ်မှာ ဦးစွာ <code>balance</code> ကို 5 အဖြစ် သတ်မှတ်ပြီး၊ ထို့နောက် expression ၏ တန်ဖိုးအဖြစ် 25 ကို return ပြန်ပေးခြင်း ဖြစ်သည်ဟု ဆိုရမည်ဖြစ်သည်။ ၎င်းသည် မှားယွင်းသော အဖြေကို ရရှိစေသည်။ မှန်ကန်သော အဖြေကို ရရှိရန်အတွက်၊ ကျွန်ုပ်တို့သည် ပထမအကြိမ် ပေါ်ပေါက်သော <code>balance</code> (<code>set!</code> ၏ သက်ရောက်မှု မရှိမီ) နှင့် ဒုတိယအကြိမ် ပေါ်ပေါက်သော <code>balance</code> (<code>set!</code> ၏ သက်ရောက်မှု ရှိပြီးနောက်) တို့ကို တစ်နည်းနည်းဖြင့် ခွဲခြားရန် လိုအပ်မည်ဖြစ်သော်လည်း substitution model သည် ယင်းကို မလုပ်ဆောင်နိုင်ပါ။
+</p>
+<p>ဤနေရာတွင် အခက်အခဲမှာ substitution သည် ကျွန်ုပ်တို့၏ language ထဲရှိ symbol များသည် အခြေခံအားဖြင့် တန်ဖိုးများအတွက် အမည်များသာ ဖြစ်သည်ဟူသော အယူအဆအပေါ်တွင် အဆုံးစွန်အထိ အခြေခံထားခြင်း ဖြစ်သည်။ သို့သော် ကျွန်ုပ်တို့သည် <code>set!</code> နှင့် variable တစ်ခု၏ တန်ဖိုး ပြောင်းလဲနိုင်သည်ဟူသော အယူအဆကို မိတ်ဆက်လိုက်သည်နှင့် တပြိုင်နက်၊ variable တစ်ခုသည် ရိုးရှင်းသော အမည်တစ်ခုအဖြစ်သာ မရှိနိုင်တော့ပေ။ ယခုအခါ variable တစ်ခုသည် တန်ဖိုးတစ်ခုကို သိမ်းဆည်းထားနိုင်သည့် "နေရာ" တစ်ခုကို တစ်နည်းနည်းဖြင့် ရည်ညွှန်းပြီး၊ ထိုနေရာတွင် သိမ်းဆည်းထားသော တန်ဖိုးသည် ပြောင်းလဲနိုင်သည်။ <a href="3_002e2.html#g_t3_002e2">3.2</a> တွင် ကျွန်ုပ်တို့၏ computational model ၌ environment များသည် ဤ "နေရာ" (place) ၏ အခန်းကဏ္ဍတွင် မည်သို့ ပါဝင်သည်ကို တွေ့မြင်ရမည်ဖြစ်သည်။
+</p>
+<a id="Sameness-and-change"></a>
+<h5 class="subsubheading">တူညီမှုနှင့် ပြောင်းလဲမှု</h5>
+
+<p>ဤနေရာတွင် ပေါ်ပေါက်လာသော ကိစ္စရပ်သည် သီးခြား computation model တစ်ခု ပျက်ပြားသွားခြင်းထက် ပို၍ နက်ရှိုင်းသည်။ ကျွန်ုပ်တို့၏ computational model များထဲသို့ အပြောင်းအလဲ (change) ကို မိတ်ဆက်လိုက်သည်နှင့် တပြိုင်နက်၊ ယခင်က ရှင်းလင်းလှသော အယူအဆ အများအပြားသည် ပြဿနာရှိလာသည်။ အရာဝတ္ထု နှစ်ခုသည် "တူညီသည်" ဟူသော အယူအဆကို စဉ်းစားကြည့်ပါ။
+</p>
+<p>တူညီသော argument ဖြင့် <code>make-decrementer</code> ကို နှစ်ကြိမ်ခေါ်ဆိုပြီး procedure နှစ်ခု ဖန်တီးသည်ဟု ယူဆပါစို့:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> D1 </span><span class="opn">(</span><span class="pln">make-decrementer </span><span class="lit">25</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> D2 </span><span class="opn">(</span><span class="pln">make-decrementer </span><span class="lit">25</span><span class="clo">))</span></pre></div>
+
+<p><code>D1</code> နှင့် <code>D2</code> တို့သည် တူညီပါသလား? လက်ခံနိုင်သော အဖြေမှာ "ဟုတ်ကဲ့" ဖြစ်သည်၊ အကြောင်းမှာ <code>D1</code> နှင့် <code>D2</code> တို့သည် တူညီသော computational behavior ရှိသောကြောင့်ဖြစ်သည်—၎င်းတို့ တစ်ခုချင်းစီသည် ၎င်း၏ input ကို 25 ထဲမှ နုတ်ပေးသော procedure များ ဖြစ်ကြသည်။ အမှန်စင်စစ်၊ မည်သည့် computation တွင်မဆို ရလဒ်ကို မပြောင်းလဲစေဘဲ <code>D1</code> ကို <code>D2</code> နေရာတွင် အစားထိုးနိုင်သည်။
+</p>
+<p>ယင်းကို <code>make-simplified-withdraw</code> ကို နှစ်ကြိမ် ခေါ်ဆိုခြင်းနှင့် နှိုင်းယှဉ်ကြည့်ပါ:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> W1 </span><span class="opn">(</span><span class="pln">make-simplified-withdraw </span><span class="lit">25</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> W2 </span><span class="opn">(</span><span class="pln">make-simplified-withdraw </span><span class="lit">25</span><span class="clo">))</span></pre></div>
+
+<p><code>W1</code> နှင့် <code>W2</code> တို့သည် တူညီပါသလား? သေချာပေါက် မတူညီပါ၊ အကြောင်းမှာ အောက်ပါ interaction အစီအစဉ်များတွင် ပြသထားသည့်အတိုင်း <code>W1</code> နှင့် <code>W2</code> တို့ကို ခေါ်ဆိုခြင်းသည် ကွဲပြားသော သက်ရောက်မှုများ ရှိသောကြောင့် ဖြစ်သည်:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">W1 </span><span class="lit">20</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">5</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">W1 </span><span class="lit">20</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">-15</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">W2 </span><span class="lit">20</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">5</span></i>
+</pre></div>
+
+<p><code>W1</code> နှင့် <code>W2</code> တို့သည် တူညီသော expression ဖြစ်သည့် <code>(make-simplified-withdraw 25)</code> ကို evaluate လုပ်ခြင်းဖြင့် ဖန်တီးထားခြင်းဖြစ်သောကြောင့် "တူညီသည်" (equal) ဟု ဆိုနိုင်သော်လည်း၊ မည်သည့် expression တွင်မဆို evaluate လုပ်သည့် ရလဒ်ကို မပြောင်းလဲစေဘဲ <code>W1</code> ကို <code>W2</code> နေရာတွင် အစားထိုးနိုင်သည်ဆိုခြင်းမှာ မမှန်ကန်ပါ။
+</p>
+<p>Expression တစ်ခု၏ တန်ဖိုးကို မပြောင်းလဲစေဘဲ "တူညီသောအရာများကို တူညီသောအရာများဖြင့် အစားထိုးနိုင်သည်" ဟူသော အယူအဆကို ထောက်ပံ့သော language တစ်ခုကို <a id="index-referentially-transparent"></a>
+<em>referentially transparent</em> ဖြစ်သည်ဟု ဆိုသည်။ ကျွန်ုပ်တို့၏ computer language တွင် <code>set!</code> ကို ထည့်သွင်းလိုက်သောအခါ referential transparency သည် ပျက်ပြားသွားသည်။ ၎င်းသည် တူညီသော expression များဖြင့် အစားထိုးခြင်းအားဖြင့် expression များကို မည်သည့်အချိန်တွင် ရိုးရှင်းအောင် ပြုလုပ်နိုင်သည်ကို ဆုံးဖြတ်ရန် ခက်ခဲစေသည်။ ရလဒ်အနေဖြင့်၊ assignment ကို အသုံးပြုသော program များအကြောင်း ဆင်ခြင်တွေးတောခြင်း (reasoning) သည် သိသိသာသာ ပိုမိုခက်ခဲလာသည်။
+</p>
+<p>ကျွန်ုပ်တို့သည် referential transparency ကို စွန့်လွှတ်လိုက်သည်နှင့် တပြိုင်နက်၊ computational object များ "တူညီခြင်း" ဟူသည်မှာ အဘယ်နည်းဆိုသော အယူအဆကို ပုံသေနည်းလမ်းဖြင့် ဖော်ပြရန် ခက်ခဲလာသည်။ အမှန်စင်စစ်၊ ကျွန်ုပ်တို့၏ program များက model ပြုလုပ်သော လက်တွေ့ကမ္ဘာရှိ "တူညီခြင်း" ၏ အဓိပ္ပာယ်မှာပင် ရှင်းလင်းမှု မရှိလှပေ။ ယေဘုယျအားဖြင့်၊ မြင်တွေ့ရသော အရာဝတ္ထုနှစ်ခုသည် အမှန်တကယ်ပင် "တူညီသော တစ်ခုတည်း" ဖြစ်ကြောင်းကို အရာဝတ္ထုတစ်ခုအား ပြုပြင်ပြောင်းလဲကြည့်ပြီး အခြားအရာဝတ္ထုသည်လည်း ထိုနည်းအတိုင်း ပြောင်းလဲသွားခြင်း ရှိမရှိ စောင့်ကြည့်ခြင်းဖြင့်သာ ဆုံးဖြတ်နိုင်သည်။ သို့သော် အရာဝတ္ထုတစ်ခု "ပြောင်းလဲသွားခြင်း" ကို "တူညီသော" အရာဝတ္ထုအား နှစ်ကြိမ် စောင့်ကြည့်ပြီး အရာဝတ္ထု၏ ဂုဏ်သတ္တိအချို့သည် တစ်ကြိမ်နှင့်တစ်ကြိမ် ကွဲပြားမှု ရှိမရှိကို ကြည့်ခြင်းမှလွဲ၍ အခြားမည်သို့ ပြောနိုင်မည်နည်း? ထို့ကြောင့် ကျွန်ုပ်တို့သည် "တူညီမှု" ဟူသော ကြိုတင်အယူအဆ (a priori notion) မရှိဘဲ "ပြောင်းလဲမှု" ကို ဆုံးဖြတ်၍ မရနိုင်သလို၊ ပြောင်းလဲမှု၏ သက်ရောက်မှုများကို စောင့်ကြည့်ခြင်း မရှိဘဲ တူညီမှုကိုလည်း ဆုံးဖြတ်၍ မရနိုင်ပါ။
+</p>
+<p>ဤကိစ္စရပ်သည် programming တွင် မည်သို့ ပေါ်ပေါက်လာသည်ကို ဥပမာအနေဖြင့်၊ Peter နှင့် Paul တို့တွင် $100 ရှိသော ဘဏ်အကောင့်တစ်ခု ရှိသည်ဟူသော အခြေအနေကို စဉ်းစားကြည့်ပါ။ ယင်းကို အောက်ပါအတိုင်း model ပြုလုပ်ခြင်းနှင့်
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> peter-acc </span><span class="opn">(</span><span class="pln">make-account </span><span class="lit">100</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> paul-acc </span><span class="opn">(</span><span class="pln">make-account </span><span class="lit">100</span><span class="clo">))</span></pre></div>
+
+<p>အောက်ပါအတိုင်း model ပြုလုပ်ခြင်းတို့အကြား ကြီးမားသော ခြားနားချက် ရှိသည်:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> peter-acc </span><span class="opn">(</span><span class="pln">make-account </span><span class="lit">100</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> paul-acc peter-acc</span><span class="clo">)</span></pre></div>
+
+<p>ပထမအခြေအနေတွင်၊ ဘဏ်အကောင့်နှစ်ခုသည် သီးခြားစီဖြစ်သည်။ Peter ပြုလုပ်သော ငွေကြေးအရောင်းအဝယ်များသည် Paul ၏ အကောင့်ကို ထိခိုက်မည်မဟုတ်သလို၊ Paul ပြုလုပ်သည့်အရာသည်လည်း Peter ၏ အကောင့်ကို ထိခိုက်မည်မဟုတ်ပါ။ သို့သော် ဒုတိယအခြေအနေတွင်၊ ကျွန်ုပ်တို့သည် <code>paul-acc</code> ကို <code>peter-acc</code> နှင့် <em>တစ်ခုတည်းသော အရာ</em> အဖြစ် သတ်မှတ်ခဲ့သည်။ ရလဒ်အားဖြင့်၊ Peter နှင့် Paul တို့သည် ယခုအခါ ပူးတွဲဘဏ်အကောင့်တစ်ခု ရှိသွားပြီဖြစ်ပြီး၊ အကယ်၍ Peter က <code>peter-acc</code> မှ ငွေထုတ်ယူပါက Paul သည် <code>paul-acc</code> တွင် ငွေနည်းသွားသည်ကို တွေ့ရမည်ဖြစ်သည်။ ဤသို့ ဆင်တူသော်လည်း ကွဲပြားသော အခြေအနေနှစ်ခုသည် computational model များ တည်ဆောက်ရာတွင် ရှုပ်ထွေးမှုများ ဖြစ်ပေါ်စေနိုင်သည်။ အထူးသဖြင့် မျှဝေအသုံးပြုသော အကောင့် (shared account) တွင်၊ အရာဝတ္ထုတစ်ခုတည်း (ဘဏ်အကောင့်) ကို အမည်နှစ်ခု (<code>peter-acc</code> နှင့် <code>paul-acc</code>) ပေးထားခြင်းက ပို၍ ရှုပ်ထွေးစေနိုင်သည်။ အကယ်၍ ကျွန်ုပ်တို့သည် <code>paul-acc</code> ပြောင်းလဲနိုင်သော နေရာအားလုံးကို program ထဲတွင် ရှာဖွေနေပါက၊ <code>peter-acc</code> ကို ပြောင်းလဲစေသော အရာများကိုလည်း ရှာဖွေရန် သတိရရမည်ဖြစ်သည်။<a class="footnote_link" id="DOCF138" href="#FOOT138"><sup>138</sup></a>
+</p>
+<p>အထက်ဖော်ပြပါ "တူညီမှု" နှင့် "ပြောင်းလဲမှု" ဆိုင်ရာ မှတ်ချက်များကို ရည်ညွှန်းရလျှင်၊ အကယ်၍ Peter နှင့် Paul တို့သည် ၎င်းတို့၏ ဘဏ်လက်ကျန်ငွေများကိုသာ စစ်ဆေးနိုင်ပြီး လက်ကျန်ငွေကို ပြောင်းလဲစေသော လုပ်ဆောင်ချက်များကို မလုပ်ဆောင်နိုင်ပါက၊ အကောင့်နှစ်ခုသည် သီးခြားဖြစ်မဖြစ် ဆိုသည့်ကိစ္စမှာ အငြင်းပွားဖွယ် မဟုတ်တော့ပေ။ ယေဘုယျအားဖြင့်၊ ကျွန်ုပ်တို့သည် data object များကို ဘယ်တော့မှ မပြုပြင်မပြောင်းလဲသရွေ့၊ compound data object တစ်ခုကို ၎င်း၏ အစိတ်အပိုင်းအားလုံး ပေါင်းစည်းထားခြင်းဟု တိတိကျကျ မှတ်ယူနိုင်သည်။ ဥပမာအားဖြင့်၊ rational number တစ်ခုကို ၎င်း၏ numerator နှင့် denominator ပေးခြင်းဖြင့် သတ်မှတ်သည်။ သို့သော် အပြောင်းအလဲများ ရှိလာသောအခါ ဤအမြင်သည် မမှန်ကန်တော့ပေ၊ အကြောင်းမှာ compound data object တစ်ခုတွင် ၎င်းကို ဖွဲ့စည်းထားသော အစိတ်အပိုင်းများနှင့် ကွဲပြားသော "identity" (ကိုယ်ပိုင်လက္ခဏာ) ရှိလာသောကြောင့် ဖြစ်သည်။ ငွေထုတ်ယူခြင်းဖြင့် လက်ကျန်ငွေကို ပြောင်းလဲလိုက်သော်လည်း ဘဏ်အကောင့်သည် "တူညီသော" ဘဏ်အကောင့်အဖြစ်ပင် ရှိနေသေးသည်။ ပြောင်းပြန်အားဖြင့်၊ တူညီသော state information ရှိသည့် မတူညီသော ဘဏ်အကောင့်နှစ်ခုလည်း ရှိနိုင်သည်။ ဤရှုပ်ထွေးမှုသည် ကျွန်ုပ်တို့၏ programming language ကြောင့် မဟုတ်ဘဲ၊ ဘဏ်အကောင့်တစ်ခုကို object တစ်ခုအဖြစ် ကျွန်ုပ်တို့၏ ရှုမြင်ပုံကြောင့် ဖြစ်ပေါ်လာခြင်း ဖြစ်သည်။ ဥပမာအားဖြင့်၊ ကျွန်ုပ်တို့သည် ပုံမှန်အားဖြင့် rational number တစ်ခုကို numerator ပြောင်းလဲသွားသော်လည်း "တူညီသော" rational number တစ်ခုအဖြစ် တည်ရှိနေမည့် identity ရှိသော ပြောင်းလဲနိုင်သည့် object တစ်ခုအဖြစ် မသတ်မှတ်ကြပါ။
+</p>
+<a id="Pitfalls-of-imperative-programming"></a>
+<h5 class="subsubheading">Imperative programming ၏ အန္တရာယ်ရှိသော ထောင်ချောက်များ</h5>
+
+<p>Functional programming နှင့် ဆန့်ကျင်ဘက်အားဖြင့်၊ assignment များကို အလွန်အကျွံ အသုံးပြုသော programming ကို <a id="index-imperative-programming"></a>
+<em>imperative programming</em> ဟု ခေါ်ဆိုသည်။ Computational model များအကြောင်း ရှုပ်ထွေးမှုများကို မြင့်တက်စေသည့်အပြင်၊ imperative style ဖြင့် ရေးသားထားသော program များသည် functional program များတွင် မဖြစ်ပေါ်နိုင်သော bug များ ဖြစ်ပွားရန် ပိုမိုလွယ်ကူသည်။ ဥပမာအားဖြင့်၊ <a href="1_002e2.html#g_t1_002e2_002e1">1.2.1</a> မှ iterative factorial program ကို ပြန်လည် အမှတ်ရကြည့်ပါ:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">factorial n</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">iter product counter</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;</span><span class="pln"> counter n</span><span class="clo">)</span><span class="pln">
+        product
+        </span><span class="opn">(</span><span class="pln">iter </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> counter product</span><span class="clo">)</span><span class="pln">
+              </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> counter </span><span class="lit">1</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">iter </span><span class="lit">1</span><span class="pln"> </span><span class="lit">1</span><span class="clo">))</span></pre></div>
+
+<p>Internal iterative loop ထဲတွင် argument များ ပေးပို့မည့်အစား၊ <code>product</code> နှင့် <code>counter</code> variable များ၏ တန်ဖိုးများကို update လုပ်ရန် တိကျသော (explicit) assignment ကို အသုံးပြုခြင်းဖြင့် ပို၍ imperative ဆန်သော style ကို အသုံးပြုနိုင်သည်:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">factorial n</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">product </span><span class="lit">1</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">counter </span><span class="lit">1</span><span class="clo">))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">iter</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;</span><span class="pln"> counter n</span><span class="clo">)</span><span class="pln">
+          product
+          </span><span class="opn">(</span><span class="kwd">begin</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> product </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> counter 
+                                  product</span><span class="clo">))</span><span class="pln">
+                 </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> counter </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> counter </span><span class="lit">1</span><span class="clo">))</span><span class="pln">
+                 </span><span class="opn">(</span><span class="pln">iter</span><span class="clo">))))</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">iter</span><span class="clo">)))</span></pre></div>
+
+<p>၎င်းသည် program မှ ထုတ်ပေးသော ရလဒ်များကို မပြောင်းလဲစေသော်လည်း၊ သိမ်မွေ့သော ထောင်ချောက်တစ်ခုကို မိတ်ဆက်ပေးသည်။ Assignment များ၏ အစီအစဉ်ကို ကျွန်ုပ်တို့ မည်သို့ ဆုံးဖြတ်မည်နည်း? လက်ရှိ ရေးသားထားသည့်အတိုင်းဆိုလျှင် program သည် မှန်ကန်ပါသည်။ သို့သော် assignment များကို ဆန့်ကျင်ဘက် အစီအစဉ်ဖြင့် ရေးသားပါက
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> counter </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> counter </span><span class="lit">1</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> product </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> counter product</span><span class="clo">))</span></pre></div>
+
+<p>ကွဲပြားပြီး မှားယွင်းသော ရလဒ်ကို ထွက်ပေါ်စေလိမ့်မည်။ ယေဘုယျအားဖြင့်၊ assignment ဖြင့် programming ရေးသားခြင်းသည် statement တစ်ခုချင်းစီက ပြောင်းလဲထားသော variable များ၏ မှန်ကန်သော version ကို အသုံးပြုနေကြောင်း သေချာစေရန် assignment များ၏ အစီအစဉ်ကို ဂရုတစိုက် စဉ်းစားရန် ကျွန်ုပ်တို့အား ဖိအားပေးသည်။ ဤပြဿနာသည် functional program များတွင် လုံးဝ ပေါ်ပေါက်လာခြင်း မရှိပါ။<a class="footnote_link" id="DOCF139" href="#FOOT139"><sup>139</sup></a>
+</p>
+<p>အကယ်၍ ကျွန်ုပ်တို့သည် process အများအပြား ပြိုင်တူ (concurrently) အလုပ်လုပ်သော application များကို ထည့်သွင်းစဉ်းစားပါက imperative program များ၏ ရှုပ်ထွေးမှုသည် ပို၍ပင် ဆိုးရွားလာသည်။ ကျွန်ုပ်တို့သည် <a href="3_002e4.html#g_t3_002e4">3.4</a> တွင် ဤအကြောင်းအရာသို့ ပြန်လာပါမည်။ သို့သော် ဦးစွာပထမ၊ ကျွန်ုပ်တို့သည် assignment ပါဝင်သော expression များအတွက် computational model တစ်ခု ပံ့ပိုးပေးမည့် ကိစ္စကို ကိုင်တွယ်ဖြေရှင်းမည်ဖြစ်ပြီး၊ simulation များ ဒီဇိုင်းဆွဲရာတွင် local state ရှိသော object များ၏ အသုံးချပုံများကို ရှာဖွေလေ့လာပါမည်။
+</p>
+<blockquote>
+<p><strong><a id="Exercise-3_002e7"></a>လေ့ကျင့်ခန်း ၃.၇:</strong> <a href="#Exercise-3_002e3">လေ့ကျင့်ခန်း ၃.၃</a> တွင် ဖော်ပြထားသော password ပြင်ဆင်ချက်နှင့်အတူ <code>make-account</code> ဖြင့် ဖန်တီးထားသော ဘဏ်အကောင့် object များကို စဉ်းစားပါ။ ကျွန်ုပ်တို့၏ ဘဏ်စနစ်တွင် ပူးတွဲအကောင့် (joint accounts) များ ပြုလုပ်နိုင်သော စွမ်းရည် လိုအပ်သည်ဟု ယူဆပါစို့။ ယင်းကို လုပ်ဆောင်ပေးနိုင်သော <code>make-joint</code> procedure တစ်ခုကို define လုပ်ပါ။ <code>Make-joint</code> သည် argument သုံးခု ယူရမည်။ ပထမတစ်ခုမှာ password ဖြင့် ကာကွယ်ထားသော အကောင့်ဖြစ်သည်။ ဒုတိယ argument သည် <code>make-joint</code> လုပ်ဆောင်ချက် ဆက်လက်လုပ်ဆောင်နိုင်ရန်အတွက် ထိုအကောင့်ကို သတ်မှတ်စဉ်က အသုံးပြုခဲ့သော password နှင့် ကိုက်ညီရမည်။ တတိယ argument မှာ password အသစ် ဖြစ်သည်။ <code>Make-joint</code> သည် password အသစ်ကို အသုံးပြု၍ မူလအကောင့်သို့ နောက်ထပ် ဝင်ရောက်ခွင့် (access) တစ်ခု ဖန်တီးပေးရန် ဖြစ်သည်။ ဥပမာအားဖြင့်၊ အကယ်၍ <code>peter-acc</code> သည် password <code>open-sesame</code> ရှိသော ဘဏ်အကောင့်တစ်ခု ဖြစ်ပါက၊
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> paul-acc
+  </span><span class="opn">(</span><span class="pln">make-joint peter-acc 
+              </span><span class="lit">'open-sesame</span><span class="pln"> 
+              </span><span class="lit">'rosebud</span><span class="clo">))</span></pre></div>
+
+<p>သည် <code>paul-acc</code> ဟူသော အမည်နှင့် password <code>rosebud</code> ကို အသုံးပြု၍ <code>peter-acc</code> အပေါ် ငွေကြေးအရောင်းအဝယ်များ ပြုလုပ်နိုင်စေမည် ဖြစ်သည်။ ဤလုပ်ဆောင်ချက်အသစ်ကို ထည့်သွင်းနိုင်ရန် သင်၏ <a href="#Exercise-3_002e3">လေ့ကျင့်ခန်း ၃.၃</a> အဖြေကို ပြင်ဆင်လိုပါလိမ့်မည်။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-3_002e8"></a>လေ့ကျင့်ခန်း ၃.၈:</strong> <a href="1_002e1.html#g_t1_002e1_002e3">1.1.3</a> တွင် evaluation model ကို သတ်မှတ်စဉ်က၊ expression တစ်ခုကို evaluate လုပ်ရာတွင် ပထမဆုံး အဆင့်မှာ ၎င်း၏ subexpression များကို evaluate လုပ်ခြင်း ဖြစ်သည်ဟု ပြောခဲ့သည်။ သို့သော် subexpression များကို မည်သည့်အစီအစဉ်ဖြင့် evaluate လုပ်ရမည် (ဥပမာ- ဘယ်မှညာ သို့မဟုတ် ညာမှဘယ်) ကို ကျွန်ုပ်တို့ ဘယ်သောအခါမျှ အတိအကျ မသတ်မှတ်ခဲ့ပါ။ ကျွန်ုပ်တို့သည် assignment ကို မိတ်ဆက်လိုက်သောအခါ၊ procedure တစ်ခုသို့ ပေးပို့သော argument များကို evaluate လုပ်သည့် အစီအစဉ်သည် ရလဒ်အပေါ် ကွဲပြားမှု ရှိစေနိုင်သည်။ အကယ်၍ <code>+</code> သို့ ပေးပို့သော argument များကို ဘယ်မှညာသို့ evaluate လုပ်ပါက 0 ကို return ပြန်ပေးပြီး၊ ညာမှဘယ်သို့ evaluate လုပ်ပါက 1 ကို return ပြန်ပေးမည့် ရိုးရှင်းသော <code>f</code> procedure တစ်ခုကို define လုပ်ပါ။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">f </span><span class="lit">0</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">f </span><span class="lit">1</span><span class="clo">))</span></pre></div>
+
+<p>
+</p></blockquote>
+
+<div class="footnote">
+<h4 class="footnotes-heading">အောက်ခြေမှတ်စုများ</h4>
+
+<div id="FOOT129"><p><a class="footnote_backlink" href="#DOCF129"><sup>129</sup></a>
+အမှန်စင်စစ်၊ ဤအချက်သည် လုံးဝမှန်ကန်သည်တော့ မဟုတ်ပါ။ ခြွင်းချက်တစ်ခုမှာ <a href="1_002e2.html#g_t1_002e2_002e6">1.2.6</a> ရှိ random-number generator ဖြစ်ပါသည်။
+အခြားခြွင်းချက်တစ်ခုမှာ <a href="2_002e4.html#g_t2_002e4_002e3">2.4.3</a> တွင် ကျွန်ုပ်တို့မိတ်ဆက်ခဲ့သော operation/type table များဖြစ်ပြီး၊ ထိုနေရာတွင် argument တူညီသော <code>get</code> ကို နှစ်ကြိမ်ခေါ်ဆိုမှုမှ ရလဒ်များသည် ကြားဖြတ်ခေါ်ဆိုသော <code>put</code> များပေါ်တွင် မူတည်နေပါသည်။ တစ်ဖက်တွင်လည်း၊ ကျွန်ုပ်တို့သည် assignment ကို မိတ်မဆက်မချင်း၊ ထိုကဲ့သို့သော procedure မျိုးကို ကိုယ်တိုင်ဖန်တီးရန် နည်းလမ်းမရှိသေးပါ။</p>
+</div>
+<div id="FOOT130"><p><a class="footnote_backlink" href="#DOCF130"><sup>130</sup></a>
+<code>set!</code> expression တစ်ခု၏ တန်ဖိုးသည် implementation-dependent ဖြစ်သည်။ <code>set!</code> ကို ၎င်း၏ value အတွက်မဟုတ်ဘဲ ၎င်း၏ effect အတွက်သာ အသုံးပြုသင့်သည်။
+</p>
+<p><code>set!</code> ဟူသော အမည်သည် Scheme တွင် အသုံးပြုသည့် naming convention တစ်ခုကို ဖော်ပြနေခြင်းဖြစ်သည်- variable များ၏ တန်ဖိုးကို ပြောင်းလဲသော (သို့မဟုတ် <a href="3_002e3.html#g_t3_002e3">3.3</a> တွင် တွေ့ရမည့် data structure များကို ပြောင်းလဲသော) operation များကို အာမေဍိတ်အမှတ်အသား (!) ဖြင့် ဆုံးသော အမည်များ ပေးလေ့ရှိသည်။
+ဒါဟာ predicate တွေကို မေးခွန်းသင်္ကေတ (?) နဲ့ ဆုံးတဲ့ နာမည်တွေပေးတဲ့ လုပ်ထုံးလုပ်နည်းနဲ့ ဆင်တူပါတယ်။</p>
+</div>
+<div id="FOOT131"><p><a class="footnote_backlink" href="#DOCF131"><sup>131</sup></a>
+Scheme တွင် procedure တစ်ခု၏ body သည် sequence of expressions ဖြစ်နိုင်သောကြောင့် ကျွန်ုပ်တို့၏ ပရိုဂရမ်များတွင် <code>begin</code> ကို သွယ်ဝိုက်သောနည်းဖြင့် အသုံးပြုခဲ့ပြီးဖြစ်သည်။ ထို့ပြင် <code>cond</code> expression ရှိ clause တစ်ခုစီ၏ <code>⟨</code><var>consequent</var><code>⟩</code> အပိုင်းသည် expression တစ်ခုတည်းမဟုတ်ဘဲ sequence of expressions ဖြစ်နိုင်သည်။</p>
+</div>
+<div id="FOOT132"><p><a class="footnote_backlink" href="#DOCF132"><sup>132</sup></a>
+Programming-language ဝေါဟာရအရ <code>balance</code> variable သည် <code>new-withdraw</code> procedure အတွင်း <a id="index-encapsulated"></a>
+<em>encapsulated</em> ဖြစ်နေသည်ဟု ဆိုကြသည်။ Encapsulation သည် <a id="index-hiding-principle"></a>
+<em>hiding principle</em> ဟု သိကြသော အထွေထွေ system-design မူဝါဒကို ထင်ဟပ်စေသည်- စနစ်တစ်ခု၏ အစိတ်အပိုင်းများကို တစ်ခုနှင့်တစ်ခု ကာကွယ်ပေးခြင်းဖြင့် စနစ်ကို ပိုမို modular နှင့် robust ဖြစ်စေနိုင်သည်။ ဆိုလိုသည်မှာ “သိရန်လိုအပ်သော” အစိတ်အပိုင်းများကိုသာ အချက်အလက်များအား ရယူခွင့်ပေးခြင်း ဖြစ်သည်။</p>
+</div>
+<div id="FOOT133"><p><a class="footnote_backlink" href="#DOCF133"><sup>133</sup></a>
+အထက်ပါ <code>new-withdraw</code> နှင့် မတူသည်မှာ <code>balance</code> ကို local variable ဖြစ်စေရန် <code>let</code> ကို အသုံးပြုရန် မလိုခြင်းဖြစ်သည်၊ အကြောင်းမှာ formal parameters များသည် local ဖြစ်ပြီးသားဖြစ်သောကြောင့်ဖြစ်သည်။ ဤအချက်သည် <a href="3_002e2.html#g_t3_002e2">3.2</a> ရှိ environment model of evaluation ဆွေးနွေးချက်တွင် ပိုမိုရှင်းလင်းလာပါလိမ့်မည်။ (<a href="3_002e2.html#Exercise-3_002e10">Exercise 3.10</a> ကိုလည်း ကြည့်ပါ။)</p>
+</div>
+<div id="FOOT134"><p><a class="footnote_backlink" href="#DOCF134"><sup>134</sup></a>
+<code>rand-update</code> ကို အကောင်အထည်ဖော်ရန် အသုံးများသော နည်းလမ်းတစ်ခုမှာ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> ကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>a</mi>
+    <mi>x</mi>
+    <mo>+</mo>
+    <mi>b</mi>
+  </mrow>
+</math> 
+modulo <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>m</mi>
+</math> သို့ update လုပ်ရန်ဖြစ်ပြီး၊ ဤနေရာတွင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math>, <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>b</mi>
+</math>, နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>m</mi>
+</math> တို့သည် သင့်လျော်စွာ ရွေးချယ်ထားသော integer များ ဖြစ်ကြသည်။ <a href="References.html#Knuth-1981">Knuth 1981</a> ၏ အခန်း ၃ တွင် sequence of random numbers များ ထုတ်လုပ်ခြင်းနှင့် ၎င်းတို့၏ statistical properties များကို သတ်မှတ်ခြင်းဆိုင်ရာ နည်းစနစ်များကို ကျယ်ကျယ်ပြန့်ပြန့် ဆွေးနွေးထားပါသည်။ <code>rand-update</code> procedure သည် သင်္ချာ function တစ်ခုကို တွက်ချက်ခြင်းဖြစ်ကြောင်း သတိပြုပါ- input အတူတူကို နှစ်ကြိမ်ပေးလျှင် output အတူတူကိုသာ ထုတ်ပေးသည်။ ထို့ကြောင့် အကယ်၍ “random” ဟုဆိုရာတွင် sequence ထဲမှ ကိန်းတစ်ခုစီသည် ရှေ့ကိန်းနှင့် မသက်ဆိုင်ရဟု ကျွန်ုပ်တို့ သတ်မှတ်မည်ဆိုပါက <code>rand-update</code> မှ ထုတ်ပေးသော number sequence သည် “random” မဟုတ်သည်မှာ သေချာပါသည်။ “စစ်မှန်သော randomness” နှင့် ကောင်းစွာသတ်မှတ်ထားသော တွက်ချက်မှုများမှ ထွက်ပေါ်လာသော်လည်း သင့်လျော်သော statistical properties များရှိသည့် <a id="index-pseudo_002drandom"></a>
+<em>pseudo-random</em> sequences များကြားရှိ ဆက်နွှယ်မှုသည် သင်္ချာနှင့် ဒဿနိကဗေဒဆိုင်ရာ ခက်ခဲသောကိစ္စရပ်များ ပါဝင်သည့် ရှုပ်ထွေးသော မေးခွန်းတစ်ခုဖြစ်သည်။ Kolmogorov, Solomonoff, နှင့် Chaitin တို့သည် ဤကိစ္စရပ်များကို ရှင်းလင်းရန်အတွက် များစွာတိုးတက်အောင် ဆောင်ရွက်ခဲ့ကြသည်၊ ဆွေးနွေးချက်များကို <a href="References.html#Chaitin-1975">Chaitin 1975</a> တွင် တွေ့နိုင်ပါသည်။</p>
+</div>
+<div id="FOOT135"><p><a class="footnote_backlink" href="#DOCF135"><sup>135</sup></a>
+ဤသီအိုရမ်သည် E. Cesàro ၏ လက်ရာဖြစ်သည်။ ဆွေးနွေးချက်နှင့် သက်သေပြချက်အတွက် <a href="References.html#Knuth-1981">Knuth 1981</a> ၏ အပိုင်း ၄.၅.၂ ကို ကြည့်ပါ။</p>
+</div>
+<div id="FOOT136"><p><a class="footnote_backlink" href="#DOCF136"><sup>136</sup></a>
+<abbr>MIT</abbr> Scheme သည် ထိုကဲ့သို့သော procedure တစ်ခုကို ပေးထားပါသည်။ အကယ်၍ <code>random</code> သို့ exact integer တစ်ခု ပေးခဲ့လျှင် (<a href="1_002e2.html#g_t1_002e2_002e6">1.2.6</a> တွင်ကဲ့သို့) ၎င်းသည် exact integer တစ်ခုကို ပြန်ပေးသည်၊ သို့သော် အကယ်၍ decimal တန်ဖိုးတစ်ခု ပေးခဲ့လျှင် (ဤလေ့ကျင့်ခန်းတွင်ကဲ့သို့) ၎င်းသည် decimal တန်ဖိုးတစ်ခုကို ပြန်ပေးသည်။</p>
+</div>
+<div id="FOOT137"><p><a class="footnote_backlink" href="#DOCF137"><sup>137</sup></a>
+<code>set!</code> expression ရှိ <code>balance</code> ကို အစားမထိုးပါ၊ အကြောင်းမှာ <code>set!</code> ထဲရှိ <code>⟨</code><var>name</var><code>⟩</code> ကို evaluate မလုပ်သောကြောင့်ဖြစ်သည်။ အကယ်၍ ကျွန်ုပ်တို့သာ အစားထိုးခဲ့မည်ဆိုလျှင် အဓိပ္ပာယ်မရှိသော <code>(set! 25 (- 25 amount))</code> ကို ရရှိမည်ဖြစ်သည်။</p>
+</div>
+<div id="FOOT138"><p><a class="footnote_backlink" href="#DOCF138"><sup>138</sup></a>
+Computational object တစ်ခုတည်းကို အမည်တစ်ခုထက်ပို၍ ခေါ်ဆိုအသုံးပြုခြင်းကို <a id="index-aliasing"></a>
+<em>aliasing</em> ဟု ခေါ်သည်။ ပူးတွဲဘဏ်အကောင့် အခြေအနေသည် alias ၏ အလွန်ရိုးရှင်းသော ဥပမာတစ်ခုကို သရုပ်ဖော်သည်။ <a href="3_002e3.html#g_t3_002e3">3.3</a> တွင် အစိတ်အပိုင်းအချို့ကို မျှဝေအသုံးပြုထားသည့် “distinct” compound data structures များကဲ့သို့ ပိုမိုရှုပ်ထွေးသော ဥပမာများကို မြင်တွေ့ရမည်ဖြစ်သည်။ “ကွဲပြားသော” object နှစ်ခုသည် အမှန်တကယ်တွင် မတူညီသော alias များအောက်ရှိ object တစ်ခုတည်းဖြစ်နေသဖြင့် object တစ်ခုအား ပြောင်းလဲခြင်းသည် “side effect” အနေဖြင့် “အခြား” object တစ်ခုကိုလည်း ပြောင်းလဲစေနိုင်ကြောင်း ကျွန်ုပ်တို့ မေ့လျော့သွားပါက ပရိုဂရမ်များတွင် bug များ ဖြစ်ပေါ်လာနိုင်သည်။ ဤသို့ခေါ်ဆိုသော <a id="index-side_002deffect-bugs"></a>
+<em>side-effect bugs</em> များသည် ရှာဖွေရန်နှင့် ခွဲခြမ်းစိတ်ဖြာရန် အလွန်ခက်ခဲသောကြောင့် အချို့သောသူများက programming languages များကို side effects သို့မဟုတ် aliasing များကို ခွင့်မပြုသော ပုံစံဖြင့် ဒီဇိုင်းထုတ်ရန် အကြံပြုခဲ့ကြသည် (<a href="References.html#Lampson-et-al_002e-1981">Lampson et al. 1981</a>; 
+<a href="References.html#Morris-et-al_002e-1980">Morris et al. 1980</a>)။</p>
+</div>
+<div id="FOOT139"><p><a class="footnote_backlink" href="#DOCF139"><sup>139</sup></a>
+ဤအချက်ကို ကြည့်ခြင်းအားဖြင့်၊ အခြေခံ programming ကို imperative style ဖြင့် အများဆုံး သင်ကြားလေ့ရှိခြင်းမှာ သရော်စာဆန်လှသည်။ ဒါဟာ ၁၉၆၀ နဲ့ ၁၉၇၀ ခုနှစ်တွေတုန်းက အသုံးများခဲ့တဲ့၊ procedure တွေကို ခေါ်ယူတဲ့ ပရိုဂရမ်တွေဟာ assignment တွေကို လုပ်ဆောင်တဲ့ ပရိုဂရမ်တွေထက် ထိရောက်မှု ပိုနည်းရမယ်ဆိုတဲ့ ယုံကြည်ချက်ရဲ့ အကြွင်းအကျန် ဖြစ်နိုင်ပါတယ်။ (<a href="References.html#Steele-1977">Steele 1977</a> သည် ဤအငြင်းပွားမှုကို ချေဖျက်ခဲ့သည်။) သို့မဟုတ်ပါက တစ်ဆင့်ချင်းစီ assignment လုပ်ခြင်းသည် စတင်လေ့လာသူများအတွက် procedure call ထက် ပိုမိုမြင်သာလွယ်သည်ဟူသော အမြင်ကို ထင်ဟပ်စေခြင်းလည်း ဖြစ်နိုင်သည်။ မည်သည့်အကြောင်းကြောင့်ဖြစ်စေ၊ ၎င်းသည် စတင်လေ့လာသူ ပရိုဂရမ်မာများအား “ဒီ variable ကို ဟိုတစ်ခု မတိုင်ခင် သို့မဟုတ် နောက်မှ set လုပ်သင့်သလား” ဟူသော စိုးရိမ်ပူပန်မှုများကို ပေးလေ့ရှိပြီး ပရိုဂရမ်ရေးသားခြင်းကို ရှုပ်ထွေးစေကာ အရေးကြီးသော အယူအဆများကို ဝေဝါးစေသည်။</p>
+</div>
+</div>
+<nav class="header">
+<p>
+Next: <a href="3_002e2.html#g_t3_002e2" accesskey="n" rel="next">3.2</a>, Prev: <a href="Chapter-3.html#Chapter-3" accesskey="p" rel="prev">Chapter 3</a>, Up: <a href="#g_t3_002e1" accesskey="u" rel="prev">3.1</a>   [<a href="index.html#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+
+
+</section><span class="bottom jump" title="Jump to bottom"><a href="#pagebottom" accesskey="b">⇣</a></span><a id="pagebottom"></a>
+</body>
+</html>

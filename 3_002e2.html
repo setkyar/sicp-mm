@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="my" lang="my">
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>Structure and Interpretation of Computer Programs, 2e: 3.2</title>
+
+<meta name="description" content="Structure and Interpretation of Computer Programs, 2e: 3.2" />
+<meta name="keywords" content="Structure and Interpretation of Computer Programs, 2e: 3.2" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="Generator" content="texi2any" />
+<meta charset="utf-8" />
+<link href="index.html#Top" rel="start" title="Top" />
+<link href="Term-Index.html#Term-Index" rel="index" title="Term Index" />
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents" />
+<link href="Chapter-3.html#Chapter-3" rel="prev" title="Chapter 3" />
+<link href="3_002e3.html#g_t3_002e3" rel="next" title="3.3" />
+<link href="3_002e1.html#g_t3_002e1_002e3" rel="prev" title="3.1.3" />
+
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/prettify.css" rel="stylesheet" type="text/css" />
+
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/footnotes.js" type="text/javascript"></script>
+<script src="js/browsertest.js" type="text/javascript"></script>
+</head>
+
+<body>
+<section><span class="top jump" title="Jump to top"><a href="#pagetop" accesskey="t">⇡</a></span><a id="pagetop"></a><a id="g_t3_002e2"></a>
+<nav class="header">
+<p>
+Next: <a href="3_002e3.html#g_t3_002e3" accesskey="n" rel="next">3.3</a>, Prev: <a href="3_002e1.html#g_t3_002e1" accesskey="p" rel="prev">3.1</a>, Up: <a href="Chapter-3.html#Chapter-3" accesskey="u" rel="prev">Chapter 3</a>   [<a href="index.html#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+<a id="The-Environment-Model-of-Evaluation"></a>
+<h3 class="section"><span class="secnum">3.2</span><span class="sectitle">The Environment Model of Evaluation</span></h3>
+
+<p><a href="Chapter-1.html#Chapter-1">အခန်း ၁</a> မှာ compound procedure တွေကို စတင်မိတ်ဆက်တုန်းက၊ procedure တစ်ခုကို argument တွေနဲ့ ဘယ်လို apply လုပ်သလဲဆိုတာကို အဓိပ္ပာယ်ဖွင့်ဆိုဖို့ substitution model of evaluation (<a href="1_002e1.html#g_t1_002e1_002e5">1.1.5</a>) ကို အသုံးပြုခဲ့ပါတယ်။
+</p>
+<ul>
+<li> compound procedure တစ်ခုကို argument တွေနဲ့ apply လုပ်ဖို့ဆိုတာ၊ procedure ရဲ့ formal parameter တစ်ခုချင်းစီကို သက်ဆိုင်ရာ argument တွေနဲ့ အစားထိုးပြီး procedure ရဲ့ body ကို evaluate လုပ်ခြင်း ဖြစ်ပါတယ်။
+
+</li></ul>
+
+<p>ကျွန်ုပ်တို့ရဲ့ programming language ထဲကို assignment ကို ထည့်သွင်းလိုက်တာနဲ့ အဲဒီလို အဓိပ္ပာယ်ဖွင့်ဆိုချက်ဟာ လုံလောက်မှု မရှိတော့ပါဘူး။ အထူးသဖြင့်၊ assignment ရှိနေတဲ့အခါ variable တစ်ခုဟာ တန်ဖိုးတစ်ခုအတွက် အမည်တစ်ခုသက်သက် မဟုတ်တော့ဘူးလို့ <a href="3_002e1.html#g_t3_002e1_002e3">3.1.3</a> မှာ အငြင်းပွားခဲ့ပါတယ်။ အဲဒီအစား၊ variable တစ်ခုဟာ တန်ဖိုးတွေကို သိမ်းဆည်းထားနိုင်တဲ့ "နေရာ" (place) တစ်ခုကို တစ်နည်းနည်းနဲ့ ညွှန်းဆိုရပါမယ်။ ကျွန်ုပ်တို့ရဲ့ evaluation model အသစ်မှာတော့ ဒီနေရာတွေကို <a id="index-environments"></a>
+<em>environments</em> လို့ခေါ်တဲ့ structure တွေထဲမှာ ထိန်းသိမ်းထားမှာ ဖြစ်ပါတယ်။
+</p>
+<p>environment ဆိုတာ <a id="index-frames"></a>
+<em>frames</em> တွေရဲ့ အစီအစဉ် (sequence) တစ်ခု ဖြစ်ပါတယ်။ frame တစ်ခုစီဟာ variable နာမည်တွေကို ၎င်းတို့နဲ့ သက်ဆိုင်တဲ့ တန်ဖိုးတွေနဲ့ ချိတ်ဆက်ပေးထားတဲ့ <a id="index-bindings"></a>
+<em>bindings</em> တွေရဲ့ ဇယား (ဗလာ ဖြစ်နေနိုင်ပါတယ်) တစ်ခု ဖြစ်ပါတယ်။ (frame တစ်ခုထဲမှာ variable တစ်ခုအတွက် အများဆုံး binding တစ်ခုသာ ရှိနိုင်ပါတယ်။) frame တစ်ခုစီမှာ ၎င်းရဲ့ <a id="index-enclosing-environment"></a>
+<em>enclosing environment</em> ဆီကို ညွှန်ပြတဲ့ pointer တစ်ခုလည်း ရှိပါတယ်။ ဆွေးနွေးမှု ရည်ရွယ်ချက်အရ အဲဒီ frame ဟာ <a id="index-global-1"></a>
+<em>global</em> လို့ သတ်မှတ်မထားဘူးဆိုရင်ပေါ့။ environment တစ်ခုနဲ့ သက်ဆိုင်တဲ့ <a id="index-value-of-a-variable"></a>
+<em>variable တစ်ခုရဲ့ တန်ဖိုး</em> ဆိုတာ အဲဒီ environment ရဲ့ ပထမဆုံး frame ကစပြီး ရှာဖွေရာမှာ အဲဒီ variable အတွက် binding တွေ့တဲ့ ပထမဆုံး frame က ပေးထားတဲ့ တန်ဖိုး ဖြစ်ပါတယ်။ အကယ်၍ sequence ထဲက ဘယ် frame မှာမှ အဲဒီ variable အတွက် binding မသတ်မှတ်ထားဘူးဆိုရင်၊ အဲဒီ variable ဟာ အဲဒီ environment မှာ <a id="index-unbound"></a>
+<em>unbound</em> ဖြစ်နေတယ်လို့ ဆိုပါတယ်။
+</p>
+<p><a href="#Figure-3_002e1">ပုံ ၃.၁</a> မှာ I, II, နဲ့ III လို့ အမည်တပ်ထားတဲ့ frame သုံးခုနဲ့ ဖွဲ့စည်းထားတဲ့ ရိုးရှင်းတဲ့ environment structure တစ်ခုကို ပြသထားပါတယ်။ ပုံမှာ A, B, C, နဲ့ D တို့ဟာ environment တွေကို ညွှန်ပြတဲ့ pointer တွေ ဖြစ်ပါတယ်။ C နဲ့ D ဟာ environment တစ်ခုတည်းကိုပဲ ညွှန်ပြနေတာပါ။ variable <code>z</code> နဲ့ <code>x</code> တို့ကို frame II မှာ bind လုပ်ထားပြီး၊ <code>y</code> နဲ့ <code>x</code> တို့ကိုတော့ frame I မှာ bind လုပ်ထားပါတယ်။ environment D မှာ <code>x</code> ရဲ့ တန်ဖိုးဟာ ၃ ဖြစ်ပါတယ်။ environment B နဲ့ သက်ဆိုင်တဲ့ <code>x</code> ရဲ့ တန်ဖိုးဟာလည်း ၃ ပဲ ဖြစ်ပါတယ်။ ဒါကို အခုလို ဆုံးဖြတ်ပါတယ်- ကျွန်ုပ်တို့ဟာ sequence ထဲက ပထမဆုံး frame (frame III) ကို စစ်ဆေးပြီး <code>x</code> အတွက် binding မတွေ့တဲ့အတွက်၊ အပြင်ဘက်က enclosing environment D ကို ဆက်သွားပြီး frame I မှာ binding ကို တွေ့ရှိပါတယ်။ အခြားတစ်ဖက်မှာတော့ environment A မှာ <code>x</code> ရဲ့ တန်ဖိုးဟာ ၇ ဖြစ်ပါတယ်၊ ဘာကြောင့်လဲဆိုတော့ sequence ရဲ့ ပထမဆုံး frame (frame II) မှာ <code>x</code> ကို ၇ နဲ့ bind လုပ်ထားတာ တွေ့ရလို့ပါ။ environment A နဲ့ ပတ်သက်ရင်၊ frame II မှာ <code>x</code> ကို ၇ နဲ့ bind လုပ်ထားတာဟာ frame I မှာ <code>x</code> ကို ၃ နဲ့ bind လုပ်ထားတာကို <a id="index-shadow"></a>
+<em>shadow</em> လုပ်ထားတယ် (လွှမ်းမိုးထားတယ်) လို့ ဆိုပါတယ်။
+</p>
+<figure class="float">
+<a id="Figure-3_002e1"></a>
+<object style="width: 26.51ex; height: 23.31ex;" data="fig/chap3/Fig3.1b.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>ပုံ ၃.၁:</strong> ရိုးရှင်းသော environment structure တစ်ခု။</p>
+</figcaption>
+</figure>
+
+<p>environment ဟာ evaluation process အတွက် အလွန်အရေးကြီးပါတယ်၊ ဘာကြောင့်လဲဆိုတော့ သူဟာ expression တစ်ခုကို ဘယ် context (နောက်ခံအခြေအနေ) မှာ evaluate လုပ်ရမလဲဆိုတာကို ဆုံးဖြတ်ပေးလို့ ဖြစ်ပါတယ်။ တကယ်တော့ programming language တစ်ခုက expression တွေဟာ သူတို့ဘာသာသူတို့ ဘယ်လိုအဓိပ္ပာယ်မှ မရှိဘူးလို့တောင် ပြောနိုင်ပါတယ်။ အဲဒီအစား၊ expression တစ်ခုဟာ ၎င်းကို evaluate လုပ်မယ့် environment တစ်ခုခုနဲ့ သက်ဆိုင်မှသာ အဓိပ္ပာယ်ရှိလာတာ ဖြစ်ပါတယ်။ <code>(+ 1 1)</code> လို ရိုးရှင်းတဲ့ expression တစ်ခုရဲ့ interpretation တောင်မှ <code>+</code> ဆိုတာ ပေါင်းခြင်းအတွက် သင်္ကေတဖြစ်တယ်ဆိုတဲ့ context တစ်ခုမှာ လုပ်ဆောင်နေတယ်ဆိုတဲ့ နားလည်မှုပေါ်မှာ မူတည်နေပါတယ်။ ဒါကြောင့် ကျွန်ုပ်တို့ရဲ့ evaluation model မှာ expression တစ်ခုကို environment တစ်ခုခုနဲ့ သက်ဆိုင်ပြီး evaluate လုပ်ခြင်းအကြောင်း အမြဲပြောမှာ ဖြစ်ပါတယ်။ interpreter နဲ့ ဆက်သွယ်ဆောင်ရွက်မှုတွေကို ဖော်ပြဖို့အတွက်၊ primitive procedure တွေနဲ့ သက်ဆိုင်တဲ့ သင်္ကေတတွေအတွက် တန်ဖိုးတွေပါဝင်တဲ့ (အပြင်ဘက် environment မရှိတဲ့) frame တစ်ခုတည်းပါတဲ့ global environment တစ်ခုရှိတယ်လို့ ယူဆပါမယ်။ ဥပမာအားဖြင့်၊ <code>+</code> ဟာ ပေါင်းခြင်းအတွက် သင်္ကေတဖြစ်တယ်ဆိုတဲ့ အယူအဆကို သင်္ကေတ <code>+</code> ဟာ global environment မှာ primitive addition procedure နဲ့ bind လုပ်ထားတယ်လို့ ပြောခြင်းဖြင့် ဖော်ပြပါတယ်။
+</p>
+
+<a id="g_t3_002e2_002e1"></a>
+<a id="The-Rules-for-Evaluation"></a>
+<h4 class="subsection"><span class="secnum">3.2.1</span><span class="sectitle">The Rules for Evaluation</span></h4>
+
+<p>interpreter က combination တစ်ခုကို ဘယ်လို evaluate လုပ်သလဲဆိုတဲ့ ယေဘုယျ သတ်မှတ်ချက်ဟာ <a href="1_002e1.html#g_t1_002e1_002e3">1.1.3</a> မှာ ပထမဆုံး မိတ်ဆက်ခဲ့တုန်းကအတိုင်းပဲ ရှိနေပါသေးတယ်-
+</p>
+<ul>
+<li> combination တစ်ခုကို evaluate လုပ်ရန်-
+
+</li></ul>
+
+<ol>
+<li> combination ရဲ့ subexpression တွေကို evaluate လုပ်ပါ။<a class="footnote_link" id="DOCF140" href="#FOOT140"><sup>140</sup></a>
+
+</li><li> operator subexpression ရဲ့ တန်ဖိုးကို operand subexpression တွေရဲ့ တန်ဖိုးတွေပေါ်မှာ apply လုပ်ပါ။
+
+</li></ol>
+
+<p>environment model of evaluation ဟာ compound procedure တစ်ခုကို argument တွေနဲ့ apply လုပ်တာ ဘာကိုဆိုလိုသလဲဆိုတဲ့ သတ်မှတ်ချက်မှာ substitution model ရဲ့ နေရာမှာ အစားထိုးဝင်ရောက်လာပါတယ်။
+</p>
+<p>environment model of evaluation မှာ procedure တစ်ခုဆိုတာ code အချို့နဲ့ environment တစ်ခုကို ညွှန်ပြတဲ့ pointer တစ်ခုတို့ ပါဝင်တဲ့ pair တစ်ခု အမြဲဖြစ်ပါတယ်။ procedure တွေကို နည်းလမ်းတစ်ခုတည်းနဲ့ပဲ ဖန်တီးနိုင်ပါတယ်- အဲဒါကတော့ λ-expression တစ်ခုကို evaluate လုပ်ခြင်းဖြင့် ဖြစ်ပါတယ်။ ဒါဟာ λ-expression ရဲ့ စာသားကနေ ရရှိတဲ့ code ပါဝင်ပြီး၊ အဲဒီ procedure ကို ဖန်တီးဖို့ evaluate လုပ်ခဲ့တဲ့ environment ကို environment အဖြစ် သတ်မှတ်ထားတဲ့ procedure တစ်ခုကို ထွက်ပေါ်စေပါတယ်။ ဥပမာအားဖြင့်၊
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x x</span><span class="clo">))</span></pre></div>
+
+<p>ဆိုတဲ့ procedure definition ကို global environment မှာ evaluate လုပ်တာကို စဉ်းစားကြည့်ပါ။ procedure definition syntax ဟာ အောက်ခြေမှာရှိနေတဲ့ implicit λ-expression အတွက် syntactic sugar သက်သက်သာ ဖြစ်ပါတယ်။ အောက်ပါအတိုင်း အသုံးပြုတာနဲ့ အတူတူပဲ ဖြစ်မှာပါ-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> square
+  </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x x</span><span class="clo">)))</span></pre></div>
+
+<p>ဒါဟာ <code>(lambda (x) (* x x))</code> ကို evaluate လုပ်ပြီး၊ ရရှိလာတဲ့ တန်ဖိုးကို <code>square</code> နဲ့ bind လုပ်လိုက်တာ ဖြစ်ပါတယ်၊ ဒါတွေအားလုံးဟာ global environment ထဲမှာ ဖြစ်ပျက်တာပါ။
+</p>
+<p><a href="#Figure-3_002e2">ပုံ ၃.၂</a> မှာ ဒီ <code>define</code> expression ကို evaluate လုပ်လိုက်တဲ့ ရလဒ်ကို ပြသထားပါတယ်။ procedure object ဆိုတာ code ကနေ ၎င်း procedure မှာ formal parameter တစ်ခု (<code>x</code>) ရှိပြီး procedure body ကတော့ <code>(* x x)</code> ဖြစ်တယ်လို့ သတ်မှတ်ထားတဲ့ pair တစ်ခု ဖြစ်ပါတယ်။ procedure ရဲ့ environment အပိုင်းကတော့ global environment ကို ညွှန်ပြတဲ့ pointer တစ်ခု ဖြစ်ပါတယ်၊ ဘာကြောင့်လဲဆိုတော့ procedure ကို ဖန်တီးဖို့ λ-expression ကို evaluate လုပ်ခဲ့တဲ့ environment ဟာ global environment ဖြစ်လို့ပါ။ procedure object ကို သင်္ကေတ <code>square</code> နဲ့ ချိတ်ဆက်ပေးတဲ့ binding အသစ်တစ်ခုကို global frame ထဲမှာ ထည့်သွင်းလိုက်ပါတယ်။ ယေဘုယျအားဖြင့်၊ <code>define</code> ဟာ frame တွေထဲမှာ binding တွေ ထပ်ထည့်ခြင်းအားဖြင့် definition တွေကို ဖန်တီးပေးပါတယ်။
+</p>
+<figure class="float">
+<a id="Figure-3_002e2"></a>
+<object style="width: 33.85ex; height: 27.37ex;" data="fig/chap3/Fig3.2b.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>ပုံ ၃.၂:</strong> global environment တွင် <code>(define (square x) (* x x))</code> ကို evaluate လုပ်ခြင်းမှ ထွက်ပေါ်လာသော Environment structure။</p>
+</figcaption>
+</figure>
+
+<p>အခု procedure တွေ ဘယ်လိုဖန်တီးသလဲဆိုတာကို မြင်တွေ့ခဲ့ပြီးပြီဆိုတော့၊ procedure တွေကို ဘယ်လို apply လုပ်သလဲဆိုတာကို ဖော်ပြနိုင်ပါပြီ။ environment model က အခုလို သတ်မှတ်ပါတယ်- procedure တစ်ခုကို argument တွေနဲ့ apply လုပ်ဖို့၊ parameter တွေကို argument တွေရဲ့ တန်ဖိုးတွေနဲ့ bind လုပ်ထားတဲ့ frame တစ်ခုပါဝင်တဲ့ environment အသစ်တစ်ခုကို ဖန်တီးပါ။ အဲဒီ frame ရဲ့ enclosing environment ဟာ procedure မှာ သတ်မှတ်ထားတဲ့ environment ဖြစ်ပါတယ်။ အခု၊ အဲဒီ environment အသစ်အတွင်းမှာ procedure body ကို evaluate လုပ်ပါ။
+</p>
+<p>ဒီ rule ကို ဘယ်လိုလိုက်နာသလဲဆိုတာ ပြသဖို့၊ <a href="#Figure-3_002e3">ပုံ ၃.၃</a> မှာ global environment ထဲမှာ <code>(square 5)</code> expression ကို evaluate လုပ်လို့ ထွက်ပေါ်လာတဲ့ environment structure ကို ဖော်ပြထားပါတယ်။ ဒီမှာ <code>square</code> ဆိုတာ <a href="#Figure-3_002e2">ပုံ ၃.၂</a> မှာ ဖန်တီးခဲ့တဲ့ procedure ဖြစ်ပါတယ်။ procedure ကို apply လုပ်လိုက်တဲ့အခါ ပုံထဲမှာ E1 လို့ အမည်တပ်ထားတဲ့ environment အသစ်တစ်ခု ဖန်တီးမှုကို ဖြစ်ပေါ်စေပါတယ်၊ အဲဒီ environment ဟာ procedure ရဲ့ formal parameter ဖြစ်တဲ့ <code>x</code> ကို argument 5 နဲ့ bind လုပ်ထားတဲ့ frame နဲ့ စတင်ပါတယ်။ ဒီ frame ကနေ အပေါ်ကို တက်သွားတဲ့ pointer က ဒီ frame ရဲ့ enclosing environment ဟာ global environment ဖြစ်ကြောင်း ပြသနေပါတယ်။ ဒီနေရာမှာ global environment ကို ရွေးချယ်ရတာဟာ <code>square</code> procedure object ရဲ့ အစိတ်အပိုင်းအဖြစ် ညွှန်ပြထားတဲ့ environment ဖြစ်လို့ပါ။ E1 အတွင်းမှာ၊ procedure ရဲ့ body ဖြစ်တဲ့ <code>(* x x)</code> ကို ကျွန်ုပ်တို့ evaluate လုပ်ပါတယ်။ E1 မှာ <code>x</code> ရဲ့ တန်ဖိုးဟာ 5 ဖြစ်တဲ့အတွက်၊ ရလဒ်ဟာ <code>(* 5 5)</code> သို့မဟုတ် 25 ဖြစ်ပါတယ်။
+</p>
+<figure class="float">
+<a id="Figure-3_002e3"></a>
+<object style="width: 52.49ex; height: 27.37ex;" data="fig/chap3/Fig3.3b.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>ပုံ ၃.၃:</strong> global environment တွင် <code>(square 5)</code> ကို evaluate လုပ်ခြင်းဖြင့် ဖန်တီးလိုက်သော Environment။</p>
+</figcaption>
+</figure>
+
+<p>procedure application ရဲ့ environment model ကို စည်းမျဉ်း နှစ်ခုနဲ့ အကျဉ်းချုပ်နိုင်ပါတယ်-
+</p>
+<ul>
+<li> procedure object တစ်ခုကို argument အစုအဝေးတစ်ခုပေါ်မှာ apply လုပ်ရာမှာ၊ frame တစ်ခုကို တည်ဆောက်ပြီး procedure ရဲ့ formal parameter တွေကို call မှာပါတဲ့ argument တွေနဲ့ bind လုပ်ရပါတယ်၊ ပြီးရင်တော့ အဲဒီ တည်ဆောက်လိုက်တဲ့ environment အသစ်ရဲ့ context မှာ procedure ရဲ့ body ကို evaluate လုပ်ရပါတယ်။ environment အသစ်မှာ ပါဝင်တဲ့ frame ရဲ့ enclosing environment ဟာ apply လုပ်ခံရတဲ့ procedure object ထဲမှာ ပါဝင်တဲ့ environment ဖြစ်ပါတယ်။
+
+</li><li> procedure တစ်ခုကို ပေးထားတဲ့ environment တစ်ခုနဲ့ သက်ဆိုင်တဲ့ λ-expression ကို evaluate လုပ်ခြင်းဖြင့် ဖန်တီးပါတယ်။ ရရှိလာတဲ့ procedure object ဆိုတာ λ-expression ရဲ့ စာသားနဲ့ အဲဒီ procedure ကို ဖန်တီးခဲ့တဲ့ environment ကို ညွှန်ပြတဲ့ pointer တို့ ပါဝင်တဲ့ pair တစ်ခု ဖြစ်ပါတယ်။
+
+</li></ul>
+
+<p>ကျွန်ုပ်တို့ဟာ <code>define</code> ကို အသုံးပြုပြီး သင်္ကေတတစ်ခုကို သတ်မှတ်ခြင်းဟာ လက်ရှိ environment frame မှာ binding တစ်ခုကို ဖန်တီးပြီး၊ အဲဒီသင်္ကေတကို သတ်မှတ်ထားတဲ့ တန်ဖိုး ပေးအပ်ခြင်း ဖြစ်တယ်လို့လည်း သတ်မှတ်ပါတယ်။<a class="footnote_link" id="DOCF141" href="#FOOT141"><sup>141</sup></a> နောက်ဆုံးအနေနဲ့၊ ကျွန်ုပ်တို့ကို environment model အသုံးပြုဖို့ တွန်းအားပေးခဲ့တဲ့ <code>set!</code> ရဲ့ လုပ်ဆောင်ပုံကို သတ်မှတ်ပါမယ်။ environment တစ်ခုခုမှာ <code>(set! ⟨<var>variable</var>⟩ ⟨<var>value</var>⟩)</code> expression ကို evaluate လုပ်ခြင်းဟာ အဲဒီ environment ထဲမှာ variable ရဲ့ binding ကို ရှာဖွေပြီး၊ အဲဒီ binding ကို တန်ဖိုးအသစ်ဖြစ်အောင် ပြောင်းလဲလိုက်ခြင်း ဖြစ်ပါတယ်။ ဆိုလိုတာကတော့၊ environment ထဲမှာ variable အတွက် binding ပါဝင်တဲ့ ပထမဆုံး frame ကို ရှာပြီး အဲဒီ frame ကို ပြင်ဆင်လိုက်တာ ဖြစ်ပါတယ်။ အကယ်၍ variable ဟာ environment မှာ unbound ဖြစ်နေရင်၊ <code>set!</code> ဟာ error တစ်ခုကို ထုတ်ပေးပါလိမ့်မယ်။
+</p>
+<p>ဒီ evaluation rule တွေဟာ substitution model ထက် ပိုမိုရှုပ်ထွေးပေမယ့်၊ အသင့်အတင့်တော့ ရိုးရှင်းနေပါသေးတယ်။ ဒါ့အပြင်၊ evaluation model ဟာ abstract ဖြစ်ပေမယ့် interpreter က expression တွေကို ဘယ်လို evaluate လုပ်သလဲဆိုတာကို မှန်ကန်တဲ့ ဖော်ပြချက်တစ်ခု ပေးစွမ်းပါတယ်။ <a href="Chapter-4.html#Chapter-4">အခန်း ၄</a> မှာတော့ ဒီ model ဟာ လက်တွေ့အလုပ်လုပ်တဲ့ interpreter တစ်ခုကို implement လုပ်ဖို့အတွက် ဘယ်လို blueprint အဖြစ် အသုံးဝင်မလဲဆိုတာကို မြင်တွေ့ရပါလိမ့်မယ်။ နောက်လာမယ့် အပိုင်းတွေမှာတော့ သရုပ်ပြ ပရိုဂရမ်အချို့ကို analysis လုပ်ခြင်းဖြင့် ဒီ model ရဲ့ အသေးစိတ်တွေကို ရှင်းလင်းတင်ပြသွားမှာ ဖြစ်ပါတယ်။
+</p>
+<a id="g_t3_002e2_002e2"></a>
+<a id="Applying-Simple-Procedures"></a>
+<h4 class="subsection"><span class="secnum">3.2.2</span><span class="sectitle">Applying Simple Procedures</span></h4>
+
+<p>ကျွန်ုပ်တို့ <a href="1_002e1.html#g_t1_002e1_002e5">1.1.5</a> တွင် substitution model ကို မိတ်ဆက်ခဲ့စဉ်က၊ အောက်ပါ procedure definition များအရ <code>(f 5)</code> ဆိုသော combination သည် မည်ကဲ့သို့ 136 အဖြစ် evaluate ဖြစ်သွားသည်ကို ပြသခဲ့ပြီး ဖြစ်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x x</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sum-of-squares x y</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square y</span><span class="clo">)))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">f a</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">sum-of-squares </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> a </span><span class="lit">1</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> a </span><span class="lit">2</span><span class="clo">)))</span></pre></div>
+
+<p>ယခု ဤဥပမာကိုပင် environment model ကို အသုံးပြု၍ analyze လုပ်ကြည့်ပါမည်။ <a href="#Figure-3_002e4">Figure 3.4</a> တွင် global environment ထဲ၌ <code>f</code>၊ <code>square</code> နှင့် <code>sum-of-squares</code> တို့၏ definition များကို evaluate လုပ်ခြင်းဖြင့် ဖန်တီးလိုက်သော procedure object သုံးခုကို ပြထားပါသည်။ procedure object တစ်ခုစီတွင် code အချို့နှင့်အတူ global environment သို့ ညွှန်းထားသော pointer တစ်ခု ပါဝင်ပါသည်။
+</p>
+<figure class="float">
+<a id="Figure-3_002e4"></a>
+<object style="width: 54.14ex; height: 35.83ex;" data="fig/chap3/Fig3.4b.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>Figure 3.4:</strong> Global frame အတွင်းရှိ Procedure object များ။</p>
+</figcaption>
+</figure>
+
+<p><a href="#Figure-3_002e5">Figure 3.5</a> တွင် <code>(f 5)</code> expression ကို evaluate လုပ်ခြင်းဖြင့် ဖန်တီးလိုက်သော environment structure ကို တွေ့နိုင်ပါသည်။ <code>f</code> ကို ခေါ်ယူလိုက်ခြင်းသည် environment အသစ် E1 ကို ဖန်တီးပေးပြီး၊ ၎င်းသည် <code>f</code> ၏ formal parameter ဖြစ်သော <code>a</code> ကို argument 5 နှင့် ချည်နှောင်ထားသည့် frame တစ်ခုနှင့် စတင်ပါသည်။ E1 ထဲတွင် <code>f</code> ၏ body ကို ကျွန်ုပ်တို့ evaluate လုပ်ပါသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">sum-of-squares </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> a </span><span class="lit">1</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> a </span><span class="lit">2</span><span class="clo">))</span></pre></div>
+
+<figure class="float">
+<a id="Figure-3_002e5"></a>
+<object style="width: 57.93ex; height: 31.17ex;" data="fig/chap3/Fig3.5b.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>Figure 3.5:</strong> <a href="#Figure-3_002e4">Figure 3.4</a> ပါ procedure များကို အသုံးပြု၍ <code>(f 5)</code> ကို evaluate လုပ်ခြင်းဖြင့် ဖန်တီးလိုက်သော environment များ။</p>
+</figcaption>
+</figure>
+
+<p>ဤ combination ကို evaluate လုပ်ရန် ပထမဦးစွာ subexpression များကို evaluate လုပ်ပါသည်။ ပထမ subexpression ဖြစ်သော <code>sum-of-squares</code> တွင် တန်ဖိုးတစ်ခု ရှိပြီး ၎င်းသည် procedure object တစ်ခု ဖြစ်ပါသည်။ (ဤတန်ဖိုးကို မည်သို့ရှာဖွေသည်ကို သတိပြုပါ- ပထမဦးစွာ E1 ၏ ပထမ frame ထဲတွင် ရှာပါသည်၊ ထိုနေရာတွင် <code>sum-of-squares</code> အတွက် binding မရှိပါ။ ထို့နောက် ၎င်းကို ဝန်းရံထားသော environment ဖြစ်သည့် global environment သို့ ဆက်လက်ရှာဖွေရာ <a href="#Figure-3_002e4">Figure 3.4</a> တွင် ပြထားသော binding ကို တွေ့ရှိရပါသည်။) အခြား subexpression နှစ်ခုကိုမူ primitive operation များဖြစ်သော <code>+</code> နှင့် <code>*</code> တို့ကို အသုံးပြု၍ <code>(+ a 1)</code> နှင့် <code>(* a 2)</code> combination တို့ကို evaluate လုပ်ပြီး 6 နှင့် 10 တို့ကို အသီးသီး ရရှိပါသည်။
+</p>
+<p>ယခု <code>sum-of-squares</code> procedure object ကို argument 6 နှင့် 10 တို့ဖြင့် apply လုပ်ပါမည်။ ၎င်းသည် environment အသစ် E2 ကို ရရှိစေပြီး ထိုနေရာတွင် formal parameter များဖြစ်သော <code>x</code> နှင့် <code>y</code> တို့ကို argument များဖြင့် ချည်နှောင်ထားပါသည်။ E2 အတွင်းတွင် combination <code>(+ (square x) (square y))</code> ကို evaluate လုပ်ပါသည်။ ၎င်းသည် ကျွန်ုပ်တို့အား <code>(square x)</code> ကို evaluate လုပ်ရန် လမ်းညွှန်ပါသည်၊ ထိုနေရာတွင် <code>square</code> ကို global frame တွင် တွေ့ရပြီး <code>x</code> သည် 6 ဖြစ်ပါသည်။ ထပ်မံ၍ environment အသစ် E3 တစ်ခုကို တည်ဆောက်ပြီး <code>x</code> ကို 6 နှင့် ချည်နှောင်ကာ ၎င်းအတွင်း၌ <code>square</code> ၏ body ဖြစ်သော <code>(* x x)</code> ကို evaluate လုပ်ပါသည်။ ထို့အပြင် <code>sum-of-squares</code> ကို apply လုပ်ခြင်း၏ အစိတ်အပိုင်းတစ်ခုအနေဖြင့် subexpression <code>(square y)</code> ကိုလည်း evaluate လုပ်ရပါမည်၊ ဤနေရာတွင် <code>y</code> သည် 10 ဖြစ်ပါသည်။ ဤဒုတိယအကြိမ် <code>square</code> ကို ခေါ်ယူခြင်းသည် အခြား environment E4 တစ်ခုကို ဖန်တီးပြီး ၎င်းထဲတွင် <code>square</code> ၏ formal parameter ဖြစ်သော <code>x</code> ကို 10 နှင့် ချည်နှောင်ပါသည်။ E4 အတွင်းတွင်လည်း <code>(* x x)</code> ကို evaluate လုပ်ရမည် ဖြစ်ပါသည်။
+</p>
+<p>သတိပြုရန် အရေးကြီးသော အချက်မှာ <code>square</code> ကို ခေါ်ယူလိုက်တိုင်း <code>x</code> အတွက် binding တစ်ခုပါဝင်သော environment အသစ်တစ်ခုကို ဖန်တီးခြင်း ဖြစ်ပါသည်။ <code>x</code> ဟု အမည်ပေးထားသော မတူညီသည့် local variable အားလုံးကို frame အသီးသီးက မည်ကဲ့သို့ သီးခြားစီ ထိန်းသိမ်းထားသည်ကို ဤနေရာတွင် မြင်နိုင်ပါသည်။ <code>square</code> ကြောင့် ဖန်တီးလိုက်သော frame တစ်ခုစီသည် global environment ကို ညွှန်းနေသည်ကို သတိပြုပါ၊ အဘယ်ကြောင့်ဆိုသော် ၎င်းသည် <code>square</code> procedure object က ညွှန်ပြထားသော environment ဖြစ်သောကြောင့် ဖြစ်ပါသည်။
+</p>
+<p>subexpression များကို evaluate လုပ်ပြီးနောက် ရလဒ်များကို ပြန်ပေး (return) ပါသည်။ <code>square</code> ကို နှစ်ကြိမ်ခေါ်ယူခြင်းမှ ထွက်ပေါ်လာသော တန်ဖိုးများကို <code>sum-of-squares</code> က ပေါင်းစပ်ပေးပြီး ထိုရလဒ်ကို <code>f</code> က return လုပ်ပါသည်။ ကျွန်ုပ်တို့သည် ဤနေရာတွင် environment structure များကိုသာ အဓိကထားသောကြောင့် ဤ return လုပ်လိုက်သော တန်ဖိုးများသည် call တစ်ခုမှ တစ်ခုသို့ မည်သို့ စီးဆင်းသွားသည်ကို အသေးစိတ် မဆွေးနွေးတော့ပါ။ သို့သော် ၎င်းသည်လည်း evaluation process ၏ အရေးကြီးသော ကဏ္ဍတစ်ခု ဖြစ်ပြီး <a href="Chapter-5.html#Chapter-5">Chapter 5</a> တွင် အသေးစိတ် ပြန်လည် ဆွေးနွေးပါမည်။
+</p>
+<blockquote>
+<p><strong><a id="Exercise-3_002e9"></a>Exercise 3.9:</strong> <a href="1_002e2.html#g_t1_002e2_002e1">1.2.1</a> တွင် factorial များ တွက်ချက်ရန် procedure နှစ်ခုကို analyze လုပ်ဖို့ substitution model ကို အသုံးပြုခဲ့ပါသည်။ recursive version မှာ-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">factorial n</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> n </span><span class="lit">1</span><span class="clo">)</span><span class="pln">
+      </span><span class="lit">1</span><span class="pln">
+      </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> n </span><span class="opn">(</span><span class="pln">factorial </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> n </span><span class="lit">1</span><span class="clo">)))))</span></pre></div>
+
+<p>နှင့် iterative version မှာ-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">factorial n</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">fact-iter </span><span class="lit">1</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> n</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">fact-iter product 
+                   counter 
+                   max-count</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;</span><span class="pln"> counter max-count</span><span class="clo">)</span><span class="pln">
+      product
+      </span><span class="opn">(</span><span class="pln">fact-iter </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> counter product</span><span class="clo">)</span><span class="pln">
+                 </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> counter </span><span class="lit">1</span><span class="clo">)</span><span class="pln">
+                 max-count</span><span class="clo">)))</span></pre></div>
+
+<p><code>factorial</code> procedure တစ်ခုစီကို အသုံးပြု၍ <code>(factorial 6)</code> ကို evaluate လုပ်ခြင်းဖြင့် ဖြစ်ပေါ်လာသော environment structure များကို ပြသပါ။<a class="footnote_link" id="DOCF142" href="#FOOT142"><sup>142</sup></a>
+</p></blockquote>
+
+<a id="g_t3_002e2_002e3"></a>
+<a id="Frames-as-the-Repository-of-Local-State"></a>
+<h4 class="subsection"><span class="secnum">3.2.3</span><span class="sectitle">Frames as the Repository of Local State</span></h4>
+
+<p>လုပ်ဆောင်ချက် (procedures) များနှင့် တန်ဖိုးသတ်မှတ်ခြင်း (assignment) တို့ကို အသုံးပြု၍ local state ရှိသော objects များကို မည်သို့ကိုယ်စားပြုနိုင်သည်ကို သိရှိရန် environment model ကို လေ့လာနိုင်သည်။ ဥပမာအနေဖြင့် <a href="3_002e1.html#g_t3_002e1_002e1">3.1.1</a> ရှိ အောက်ပါ procedure ကို ခေါ်ယူခြင်းဖြင့် တည်ဆောက်ထားသော “withdrawal processor” ကို ကြည့်ပါ။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-withdraw balance</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">amount</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;=</span><span class="pln"> balance amount</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">begin</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> balance 
+                     </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> balance amount</span><span class="clo">))</span><span class="pln">
+               balance</span><span class="clo">)</span><span class="pln">
+        </span><span class="str">"Insufficient funds"</span><span class="clo">)))</span></pre></div>
+
+<p>အောက်ပါ expression ကို evaluation ပြုလုပ်ပုံကို ရှင်းပြပါမည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> W1 </span><span class="opn">(</span><span class="pln">make-withdraw </span><span class="lit">100</span><span class="clo">))</span></pre></div>
+
+<p>ထို့နောက်
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">W1 </span><span class="lit">50</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">50</span></i>
+</pre></div>
+
+<p><code>make-withdraw</code> procedure ကို global environment တွင် define လုပ်ထားသည့် ရလဒ်ကို <a href="#Figure-3_002e6">Figure 3.6</a> တွင် ပြသထားသည်။ ၎င်းသည် global environment သို့ pointer ပါဝင်သော procedure object တစ်ခုကို ထုတ်ပေးသည်။ ဤအဆင့်အထိသည် procedure ၏ body ကိုယ်တိုင်က λ-expression ဖြစ်နေသည်မှအပ ကျွန်ုပ်တို့ ယခင်က မြင်တွေ့ခဲ့ရသော ဥပမာများနှင့် မခြားနားပါ။
+</p>
+<figure class="float">
+<a id="Figure-3_002e6"></a>
+<object style="width: 51.72ex; height: 36.87ex;" data="fig/chap3/Fig3.6c.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>Figure 3.6:</strong> <code>make-withdraw</code> ကို global environment တွင် define လုပ်ခြင်း၏ ရလဒ်။</p>
+</figcaption>
+</figure>
+
+<p>တွက်ချက်မှု၏ စိတ်ဝင်စားစရာ အပိုင်းမှာ <code>make-withdraw</code> procedure ကို argument တစ်ခုဖြင့် apply လုပ်သောအခါ ဖြစ်ပေါ်လာသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> W1 </span><span class="opn">(</span><span class="pln">make-withdraw </span><span class="lit">100</span><span class="clo">))</span></pre></div>
+
+<p>ပုံမှန်အတိုင်းပင် formal parameter ဖြစ်သော <code>balance</code> ကို argument 100 နှင့် bind လုပ်ထားသည့် environment E1 ကို အစပြု တည်ဆောက်သည်။ ဤ environment အတွင်း၌ <code>make-withdraw</code> ၏ body ဖြစ်သော λ-expression ကို evaluation ပြုလုပ်သည်။ ၎င်းသည် procedure အသစ်တစ်ခုကို တည်ဆောက်ပြီး ၎င်း၏ code မှာ <code>lambda</code> မှ သတ်မှတ်ထားသည့်အတိုင်း ဖြစ်ကာ ၎င်း၏ environment မှာ ထို procedure ထုတ်လုပ်ရန် <code>lambda</code> ကို evaluation ပြုလုပ်ခဲ့သည့် environment E1 ဖြစ်သည်။ ရရှိလာသော procedure object သည် <code>make-withdraw</code> ကို ခေါ်ယူမှုမှ ပြန်လာသော value ဖြစ်သည်။ <code>define</code> ကိုယ်တိုင်ကို global environment တွင် evaluate လုပ်နေခြင်းဖြစ်သောကြောင့် ၎င်းကို global environment ရှိ <code>W1</code> နှင့် bind လုပ်လိုက်သည်။ <a href="#Figure-3_002e7">Figure 3.7</a> တွင် ရရှိလာသော environment structure ကို ပြသထားသည်။
+</p>
+<figure class="float">
+<a id="Figure-3_002e7"></a>
+<object style="width: 59.06ex; height: 40.41ex;" data="fig/chap3/Fig3.7b.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>Figure 3.7:</strong> <code>(define W1 (make-withdraw 100))</code> ကို evaluate လုပ်ခြင်း၏ ရလဒ်။</p>
+</figcaption>
+</figure>
+
+<p>ယခု <code>W1</code> ကို argument တစ်ခုဖြင့် apply လုပ်သောအခါ ဘာဖြစ်မည်ကို ဆန်းစစ်ကြည့်ကြပါစို့။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">W1 </span><span class="lit">50</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">50</span></i>
+</pre></div>
+
+<p>ဦးစွာ <code>W1</code> ၏ formal parameter ဖြစ်သော <code>amount</code> ကို argument 50 နှင့် bind လုပ်ထားသည့် frame တစ်ခုကို တည်ဆောက်ခြင်းဖြင့် စတင်သည်။ သတိပြုရန် အဓိကအချက်မှာ ဤ frame ၏ enclosing environment သည် global environment မဟုတ်ဘဲ <code>W1</code> procedure object မှ ညွှန်းဆိုထားသည့် environment E1 ဖြစ်နေခြင်းပင် ဖြစ်သည်။ ဤ environment အသစ်အတွင်း၌ procedure ၏ body ကို evaluate လုပ်သည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;=</span><span class="pln"> balance amount</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">begin</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> balance </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> balance amount</span><span class="clo">))</span><span class="pln">
+           balance</span><span class="clo">)</span><span class="pln">
+    </span><span class="str">"Insufficient funds"</span><span class="clo">)</span></pre></div>
+
+<p>ရရှိလာသော environment structure ကို <a href="#Figure-3_002e8">Figure 3.8</a> တွင် ပြသထားသည်။ Evaluate လုပ်နေသော expression သည် <code>amount</code> နှင့် <code>balance</code> နှစ်ခုလုံးကို ရည်ညွှန်းသည်။ <code>amount</code> ကို environment ၏ ပထမဆုံး frame တွင် တွေ့ရှိမည်ဖြစ်ပြီး <code>balance</code> ကိုမူ enclosing-environment pointer မှတစ်ဆင့် E1 တွင် တွေ့ရှိမည်ဖြစ်သည်။
+</p>
+<figure class="float">
+<a id="Figure-3_002e8"></a>
+<object style="width: 58.97ex; height: 43.69ex;" data="fig/chap3/Fig3.8c.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>Figure 3.8:</strong> procedure object <code>W1</code> ကို apply လုပ်ခြင်းဖြင့် တည်ဆောက်ထားသော environments များ။</p>
+</figcaption>
+</figure>
+
+<p><code>set!</code> ကို execute လုပ်သောအခါ E1 ရှိ <code>balance</code> ၏ binding သည် ပြောင်းလဲသွားသည်။ <code>W1</code> ကို ခေါ်ယူမှု ပြီးဆုံးသွားသောအခါ <code>balance</code> သည် 50 ဖြစ်သွားပြီး <code>balance</code> ပါဝင်သော frame ကို <code>W1</code> procedure object မှ ဆက်လက် ညွှန်းဆိုနေဆဲ ဖြစ်သည်။ <code>amount</code> ကို bind လုပ်ထားသော frame (<code>balance</code> ကို ပြောင်းလဲစေသော code ကို run ခဲ့သည့် frame) သည် ၎င်းကို တည်ဆောက်ခဲ့သည့် procedure call ပြီးဆုံးသွားပြီ ဖြစ်သောကြောင့်လည်းကောင်း၊ အခြား environment အစိတ်အပိုင်းများမှ ထို frame သို့ pointer မရှိတော့သောကြောင့်လည်းကောင်း နောက်ထပ် မသက်ဆိုင်တော့ပါ။ နောက်တစ်ကြိမ် <code>W1</code> ကို ထပ်မံခေါ်ယူသောအခါ <code>amount</code> ကို bind လုပ်ထားသည့် frame အသစ်တစ်ခုကို ထပ်မံတည်ဆောက်မည်ဖြစ်ပြီး ၎င်း၏ enclosing environment မှာ E1 ဖြစ်နေမည်ဖြစ်သည်။ E1 သည် <code>W1</code> procedure object အတွက် local state variable ကို သိမ်းဆည်းပေးထားသော “နေရာ” အဖြစ် ဆောင်ရွက်ပေးနေသည်ကို တွေ့ရမည်ဖြစ်သည်။ <a href="#Figure-3_002e9">Figure 3.9</a> တွင် <code>W1</code> ကို ခေါ်ယူပြီးနောက် အခြေအနေကို ပြသထားသည်။
+</p>
+<figure class="float">
+<a id="Figure-3_002e9"></a>
+<object style="width: 59.49ex; height: 32.72ex;" data="fig/chap3/Fig3.9b.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>Figure 3.9:</strong> <code>W1</code> ကို ခေါ်ယူပြီးနောက် environments များ။</p>
+</figcaption>
+</figure>
+
+<p><code>make-withdraw</code> ကို ထပ်မံခေါ်ယူခြင်းဖြင့် ဒုတိယမြောက် “withdraw” object တစ်ခုကို တည်ဆောက်သောအခါ ဘာဖြစ်မည်ကို လေ့လာကြည့်ပါ။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> W2 </span><span class="opn">(</span><span class="pln">make-withdraw </span><span class="lit">100</span><span class="clo">))</span></pre></div>
+
+<p>၎င်းသည် <a href="#Figure-3_002e10">Figure 3.10</a> ရှိ environment structure ကို ထုတ်ပေးသည်။ <code>W2</code> သည် code အချို့နှင့် environment တစ်ခုပါဝင်သော procedure object တစ်ခုဖြစ်သည်ကို ပြသနေသည်။ <code>W2</code> အတွက် environment E2 ကို <code>make-withdraw</code> ခေါ်ယူမှုမှ တည်ဆောက်ခဲ့ခြင်း ဖြစ်သည်။ ၎င်းတွင် <code>balance</code> အတွက် ကိုယ်ပိုင် local binding ပါဝင်သော frame တစ်ခု ရှိသည်။ အခြားတစ်ဖက်တွင် <code>W1</code> နှင့် <code>W2</code> တို့တွင် တူညီသော code ရှိနေသည် - ၎င်းမှာ <code>make-withdraw</code> ၏ body ရှိ λ-expression မှ သတ်မှတ်ထားသော code ဖြစ်သည်။<a class="footnote_link" id="DOCF143" href="#FOOT143"><sup>143</sup></a> ဤနေရာတွင် <code>W1</code> နှင့် <code>W2</code> တို့သည် အမှီအခိုကင်းသော objects များအဖြစ် အဘယ်ကြောင့် အလုပ်လုပ်ကြသည်ကို ကျွန်ုပ်တို့ တွေ့မြင်နိုင်သည်။ <code>W1</code> သို့ ခေါ်ယူမှုများသည် E1 တွင် သိမ်းဆည်းထားသော state variable <code>balance</code> ကို ရည်ညွှန်းပြီး၊ <code>W2</code> သို့ ခေါ်ယူမှုများသည် E2 တွင် သိမ်းဆည်းထားသော <code>balance</code> ကို ရည်ညွှန်းသည်။ ထို့ကြောင့် object တစ်ခု၏ local state ကို ပြောင်းလဲခြင်းသည် အခြား object ကို သက်ရောက်မှု မရှိပါ။
+</p>
+<figure class="float">
+<a id="Figure-3_002e10"></a>
+<object style="width: 59.66ex; height: 38.68ex;" data="fig/chap3/Fig3.10b.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>Figure 3.10:</strong> ဒုတိယ object တစ်ခု တည်ဆောက်ရန် <code>(define W2 (make-withdraw 100))</code> ကို အသုံးပြုခြင်း။</p>
+</figcaption>
+</figure>
+
+<blockquote>
+<p><strong><a id="Exercise-3_002e10"></a>Exercise 3.10:</strong> <code>make-withdraw</code> procedure တွင် local variable <code>balance</code> ကို <code>make-withdraw</code> ၏ parameter တစ်ခုအဖြစ် တည်ဆောက်ထားသည်။ ကျွန်ုပ်တို့သည် local state variable ကို <code>let</code> အသုံးပြု၍ အောက်ပါအတိုင်း တိတိပပ တည်ဆောက်နိုင်သည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-withdraw initial-amount</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">balance initial-amount</span><span class="clo">))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">amount</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;=</span><span class="pln"> balance amount</span><span class="clo">)</span><span class="pln">
+          </span><span class="opn">(</span><span class="kwd">begin</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> balance 
+                       </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> balance amount</span><span class="clo">))</span><span class="pln">
+                 balance</span><span class="clo">)</span><span class="pln">
+          </span><span class="str">"Insufficient funds"</span><span class="clo">))))</span></pre></div>
+
+<p><a href="1_002e3.html#g_t1_002e3_002e2">1.3.2</a> အရ <code>let</code> သည် procedure call တစ်ခုအတွက် syntactic sugar သာ ဖြစ်သည်ကို ပြန်လည်သတိရပါ-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">⟨</span><var><span class="pln">var</span></var><span class="pln">⟩ ⟨</span><var><span class="pln">exp</span></var><span class="pln">⟩</span><span class="clo">))</span><span class="pln"> ⟨</span><var><span class="pln">body</span></var><span class="pln">⟩</span><span class="clo">)</span></pre></div>
+
+<p>ကို အောက်ပါအတိုင်း အစားထိုး syntax တစ်ခုအဖြစ် အဓိပ္ပာယ်ဖွင့်ဆိုသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">((</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">⟨</span><var><span class="pln">var</span></var><span class="pln">⟩</span><span class="clo">)</span><span class="pln"> ⟨</span><var><span class="pln">body</span></var><span class="pln">⟩</span><span class="clo">)</span><span class="pln"> ⟨</span><var><span class="pln">exp</span></var><span class="pln">⟩</span><span class="clo">)</span></pre></div>
+
+<p>ဤ <code>make-withdraw</code> version အသစ်ကို environment model အသုံးပြု၍ ဆန်းစစ်ပါ။ အပြန်အလှန် ဆက်သွယ်မှုများကို ဖော်ပြရန် အထက်ပါပုံများကဲ့သို့ ပုံများဆွဲပါ။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> W1 </span><span class="opn">(</span><span class="pln">make-withdraw </span><span class="lit">100</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">W1 </span><span class="lit">50</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> W2 </span><span class="opn">(</span><span class="pln">make-withdraw </span><span class="lit">100</span><span class="clo">))</span></pre></div>
+
+<p><code>make-withdraw</code> version နှစ်ခုလုံးသည် တူညီသော လုပ်ဆောင်ချက်ရှိသည့် objects များကို တည်ဆောက်ကြောင်း ပြသပါ။ version နှစ်ခုအတွက် environment structure များ မည်သို့ကွာခြားသနည်း။
+</p></blockquote>
+
+<a id="g_t3_002e2_002e4"></a>
+<a id="Internal-Definitions"></a>
+<h4 class="subsection"><span class="secnum">3.2.4</span><span class="sectitle">Internal Definitions</span></h4>
+
+<p>အပိုင်း <a href="1_002e1.html#g_t1_002e1_002e8">1.1.8</a> တွင် procedures များ၌ internal definitions များ ရှိနိုင်သည်ဟူသော အယူအဆကို မိတ်ဆက်ခဲ့ပြီး၊ ၎င်းသည် အောက်ပါ square roots တွက်ချက်သည့် procedure တွင်ကဲ့သို့ block structure တစ်ခုကို ဖြစ်ပေါ်စေသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sqrt x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">good-enough? guess</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pun">&lt;</span><span class="pln"> </span><span class="opn">(</span><span class="pln">abs </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square guess</span><span class="clo">)</span><span class="pln"> x</span><span class="clo">))</span><span class="pln"> </span><span class="lit">0.001</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">improve guess</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">average guess </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> x guess</span><span class="clo">)))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sqrt-iter guess</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">good-enough? guess</span><span class="clo">)</span><span class="pln">
+        guess
+        </span><span class="opn">(</span><span class="pln">sqrt-iter </span><span class="opn">(</span><span class="pln">improve guess</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">sqrt-iter </span><span class="lit">1.0</span><span class="clo">))</span></pre></div>
+
+<p>ယခုအခါ ဤ internal definitions များသည် အဘယ်ကြောင့် မျှော်လင့်ထားသည့်အတိုင်း အလုပ်လုပ်သည်ကို သိမြင်နိုင်ရန် environment model ကို အသုံးပြုနိုင်ပြီဖြစ်သည်။ <a href="#Figure-3_002e11">Figure 3.11</a> တွင် <code>(sqrt 2)</code> expression ကို evaluation ပြုလုပ်နေစဉ် <code>good-enough?</code> ဆိုသည့် internal procedure ကို <code>guess</code> တန်ဖိုး 1 ဖြင့် ပထမဆုံးအကြိမ် ခေါ်ဆိုလိုက်သည့် အချိန်ကို ပြသထားသည်။
+</p>
+<figure class="float">
+<a id="Figure-3_002e11"></a>
+<object style="width: 60.01ex; height: 56.90ex;" data="fig/chap3/Fig3.11b.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>Figure 3.11:</strong> Internal definitions များပါဝင်သော <code>Sqrt</code> procedure။</p>
+</figcaption>
+</figure>
+
+<p>Environment ၏ တည်ဆောက်ပုံကို လေ့လာကြည့်ပါ။ <code>Sqrt</code> သည် global environment ထဲရှိ symbol တစ်ခုဖြစ်ပြီး၊ ၎င်းနှင့် ဆက်နွှယ်နေသော environment မှာ global environment ဖြစ်သည့် procedure object တစ်ခုနှင့် bound ဖြစ်နေသည်။ <code>sqrt</code> ကို ခေါ်ဆိုလိုက်သောအခါ၊ global environment ၏ လက်အောက်ခံဖြစ်သော environment အသစ် E1 ကို ဖန်တီးလိုက်ပြီး၊ ထိုပတ်ဝန်းကျင်တွင် parameter <code>x</code> သည် 2 နှင့် bound ဖြစ်သွားသည်။ ထို့နောက် <code>sqrt</code> ၏ body ကို E1 ထဲတွင် evaluation ပြုလုပ်သည်။ <code>sqrt</code> ၏ body ထဲရှိ ပထမဆုံး expression မှာ-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">good-enough? guess</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pun">&lt;</span><span class="pln"> </span><span class="opn">(</span><span class="pln">abs </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square guess</span><span class="clo">)</span><span class="pln"> x</span><span class="clo">))</span><span class="pln"> </span><span class="lit">0.001</span><span class="clo">))</span></pre></div>
+
+<p>ဤ expression ကို evaluation ပြုလုပ်ခြင်းဖြင့် <code>good-enough?</code> procedure ကို environment E1 ထဲတွင် define လုပ်လိုက်သည်။ ပို၍ တိတိကျကျ ပြောရလျှင်၊ <code>good-enough?</code> symbol ကို E1 ၏ ပထမဆုံး frame ထဲသို့ ထည့်သွင်းလိုက်ပြီး၊ ၎င်းနှင့် ဆက်နွှယ်နေသော environment မှာ E1 ဖြစ်သည့် procedure object တစ်ခုနှင့် bound ဖြစ်စေလိုက်သည်။ ထို့အတူ <code>improve</code> နှင့် <code>sqrt-iter</code> တို့ကိုလည်း E1 ထဲတွင် procedures များအဖြစ် define လုပ်ခဲ့သည်။ ပုံကို ကျစ်လျစ်စေရန်အတွက် <a href="#Figure-3_002e11">Figure 3.11</a> တွင် <code>good-enough?</code> အတွက် procedure object ကိုသာ ပြသထားသည်။
+</p>
+<p>Local procedures များကို define လုပ်ပြီးနောက်၊ <code>(sqrt-iter 1.0)</code> expression ကို environment E1 ထဲ၌ပင် evaluation ပြုလုပ်သည်။ ထို့ကြောင့် E1 ထဲတွင် <code>sqrt-iter</code> နှင့် bound ဖြစ်နေသော procedure object ကို argument 1 ဖြင့် ခေါ်ဆိုလိုက်သည်။ ၎င်းသည် environment E2 ကို ဖန်တီးပေးပြီး၊ ထိုပတ်ဝန်းကျင်တွင် <code>sqrt-iter</code> ၏ parameter ဖြစ်သော <code>guess</code> သည် 1 နှင့် bound ဖြစ်နေသည်။ <code>Sqrt-iter</code> သည် တစ်ဖန် <code>good-enough?</code> ကို ခေါ်ဆိုရာတွင် (E2 မှ) <code>guess</code> ၏ တန်ဖိုးကို <code>good-enough?</code> အတွက် argument အဖြစ် အသုံးပြုသည်။ ၎င်းသည် အခြား environment တစ်ခုဖြစ်သော E3 ကို တည်ဆောက်ပေးပြီး၊ ထိုပတ်ဝန်းကျင်တွင် <code>guess</code> (<code>good-enough?</code> ၏ parameter) သည် 1 နှင့် bound ဖြစ်နေသည်။ <code>sqrt-iter</code> နှင့် <code>good-enough?</code> နှစ်ခုလုံးတွင် <code>guess</code> အမည်ရှိသော parameter တစ်ခုစီ ပါရှိသော်လည်း၊ ၎င်းတို့သည် မတူညီသော frames များတွင် တည်ရှိသည့် သီးခြား local variables နှစ်ခုဖြစ်သည်။ ထို့ပြင် E2 နှင့် E3 နှစ်ခုလုံး၏ enclosing environment မှာ E1 ဖြစ်သည်၊ အကြောင်းမှာ <code>sqrt-iter</code> နှင့် <code>good-enough?</code> procedures နှစ်ခုလုံး၏ environment part မှာ E1 ဖြစ်သောကြောင့်ဖြစ်သည်။ ယင်း၏ ရလဒ်တစ်ခုမှာ <code>good-enough?</code> ၏ body ထဲတွင် ပါရှိသော symbol <code>x</code> သည် E1 ထဲတွင် ရှိနေသော <code>x</code> ၏ binding (မူလ <code>sqrt</code> procedure ကို ခေါ်ဆိုခဲ့စဉ်က <code>x</code> ၏ တန်ဖိုး) ကို ရည်ညွှန်းမည် ဖြစ်သည်။
+</p>
+<p>Environment model သည် ပရိုဂရမ်များကို modularizing ပြုလုပ်ရာတွင် local procedure definitions များကို အသုံးဝင်သော နည်းစနစ်တစ်ခု ဖြစ်စေသည့် အဓိက ဂုဏ်သတ္တိနှစ်ခုကို ရှင်းပြပေးသည်-
+</p>
+<ul>
+<li> Local procedures များ၏ အမည်များသည် ၎င်းတို့ကို ဝန်းရံထားသော procedure ၏ အပြင်ဘက်ရှိ အမည်များကို အနှောင့်အယှက် မဖြစ်စေပါ။ အကြောင်းမှာ local procedure အမည်များကို global environment တွင် bound ဖြစ်စေမည့်အစား၊ ၎င်းကို run သည့်အခါ ထို procedure မှ ဖန်တီးလိုက်သော frame ထဲတွင်သာ bound ဖြစ်စေမည် ဖြစ်သောကြောင့်ဖြစ်သည်။
+
+</li><li> Local procedures များသည် ၎င်းတို့ကို ဝန်းရံထားသော procedure ၏ arguments များကို parameter အမည်များအား free variables များအဖြစ် အသုံးပြုခြင်းဖြင့် အလွယ်တကူ ရယူနိုင်သည်။ အကြောင်းမှာ local procedure ၏ body ကို evaluation ပြုလုပ်သည့် environment သည် ဝန်းရံထားသော procedure အတွက် evaluation environment ၏ လက်အောက်ခံ ဖြစ်နေသောကြောင့် ဖြစ်သည်။
+
+</li></ul>
+
+<blockquote>
+<p><strong><a id="Exercise-3_002e11"></a>Exercise 3.11:</strong> အပိုင်း <a href="#g_t3_002e2_002e3">3.2.3</a> တွင် local state ပါဝင်သော procedures များ၏ လုပ်ဆောင်ပုံကို environment model က မည်သို့ ဖော်ပြသည်ကို ကျွန်ုပ်တို့ တွေ့မြင်ခဲ့ရသည်။ ယခုအခါ internal definitions များ မည်သို့ အလုပ်လုပ်သည်ကိုလည်း တွေ့မြင်ပြီးဖြစ်သည်။ ပုံမှန် message-passing procedure တစ်ခုတွင် ဤအချက်နှစ်ခုလုံး ပါဝင်လေ့ရှိသည်။ အပိုင်း <a href="3_002e1.html#g_t3_002e1_002e1">3.1.1</a> မှ ဘဏ်အကောင့် (bank account) procedure ကို လေ့လာကြည့်ပါ-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-account balance</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">withdraw amount</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;=</span><span class="pln"> balance amount</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">begin</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> balance 
+                     </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> balance 
+                        amount</span><span class="clo">))</span><span class="pln">
+               balance</span><span class="clo">)</span><span class="pln">
+        </span><span class="str">"Insufficient funds"</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">deposit amount</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> balance </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> balance amount</span><span class="clo">))</span><span class="pln">
+    balance</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">dispatch m</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> m </span><span class="lit">'withdraw</span><span class="clo">)</span><span class="pln"> withdraw</span><span class="clo">)</span><span class="pln">
+          </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> m </span><span class="lit">'deposit</span><span class="clo">)</span><span class="pln"> deposit</span><span class="clo">)</span><span class="pln">
+          </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Unknown request: 
+                        MAKE-ACCOUNT"</span><span class="pln"> 
+                       m</span><span class="clo">))))</span><span class="pln">
+  dispatch</span><span class="clo">)</span></pre></div>
+
+<p>အောက်ပါ အပြန်အလှန် လုပ်ဆောင်မှုများကြောင့် ဖြစ်ပေါ်လာသော environment structure ကို ဖော်ပြပါ-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> acc </span><span class="opn">(</span><span class="pln">make-account </span><span class="lit">50</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">((</span><span class="pln">acc </span><span class="lit">'deposit</span><span class="clo">)</span><span class="pln"> </span><span class="lit">40</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">90</span></i><span class="pln">
+
+</span><span class="opn">((</span><span class="pln">acc </span><span class="lit">'withdraw</span><span class="clo">)</span><span class="pln"> </span><span class="lit">60</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">30</span></i>
+</pre></div>
+
+<p><code>acc</code> အတွက် local state ကို မည်သည့်နေရာတွင် သိမ်းဆည်းထားသနည်း။ အခြား အကောင့်တစ်ခုကို define လုပ်သည်ဟု ယူဆပါ-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> acc2 </span><span class="opn">(</span><span class="pln">make-account </span><span class="lit">100</span><span class="clo">))</span></pre></div>
+
+<p>အကောင့်နှစ်ခုလုံးအတွက် local states များကို မည်သို့ သီးခြားစီ ခွဲခြားထားသနည်း။ Environment structure ၏ မည်သည့် အစိတ်အပိုင်းများကို <code>acc</code> နှင့် <code>acc2</code> တို့အကြား မျှဝေအသုံးပြုထားသနည်း။
+</p></blockquote>
+
+<div class="footnote">
+<h4 class="footnotes-heading">Footnotes</h4>
+
+<div id="FOOT140"><p><a class="footnote_backlink" href="#DOCF140"><sup>140</sup></a>
+Assignment သည် evaluation rule ၏ အဆင့် (၁) တွင် ရှုပ်ထွေးမှု အနည်းငယ်ကို ဖြစ်ပေါ်စေသည်။ <a href="3_002e1.html#Exercise-3_002e8">Exercise 3.8</a> တွင် ပြသထားသည့်အတိုင်း၊ assignment ပါဝင်နေခြင်းကြောင့် combination တစ်ခုရှိ subexpressions များကို evaluation ပြုလုပ်သည့် အစီအစဉ်အပေါ် မူတည်၍ မတူညီသော တန်ဖိုးများ ထွက်ပေါ်လာနိုင်သော expressions များကို ရေးသားနိုင်သည်။ ထို့ကြောင့် ပိုမို တိကျစေရန်အတွက် အဆင့် (၁) တွင် evaluation order တစ်ခု (ဥပမာ- ဘယ်မှညာ သို့မဟုတ် ညာမှဘယ်) ကို သတ်မှတ်ပေးသင့်သည်။ သို့သော် ဤအစီအစဉ်ကို implementation ၏ အသေးစိတ် အချက်အလက်တစ်ခုအဖြစ်သာ အမြဲတမ်း မှတ်ယူသင့်ပြီး၊ သီးခြား အစီအစဉ်တစ်ခုအပေါ် မှီခိုနေသော ပရိုဂရမ်များကို မည်သည့်အခါမျှ မရေးသားသင့်ပါ။ ဥပမာအားဖြင့်၊ ဆန်းပြားသော compiler တစ်ခုသည် subexpressions များ၏ evaluation order ကို ပြောင်းလဲခြင်းဖြင့် ပရိုဂရမ်ကို optimize ပြုလုပ်နိုင်သည်။</p>
+</div>
+<div id="FOOT141"><p><a class="footnote_backlink" href="#DOCF141"><sup>141</sup></a>
+လက်ရှိ frame ထဲတွင် variable အတွက် binding တစ်ခု ရှိနှင့်ပြီးသား ဖြစ်ပါက၊ ထို binding ကို ပြောင်းလဲလိုက်သည်။ ၎င်းသည် symbol များကို ပြန်လည် အဓိပ္ပာယ်ဖွင့်ဆို (redefinition) ရန် လွယ်ကူစေသော်လည်း၊ <code>set!</code> ကို တိုက်ရိုက် အသုံးမပြုဘဲ <code>define</code> ကို အသုံးပြု၍ တန်ဖိုးများကို ပြောင်းလဲနိုင်ခြင်းကြောင့် assignment နှင့် ပတ်သက်သော ပြဿနာများကို ဖြစ်ပေါ်စေနိုင်သည်။ ထို့ကြောင့် အချို့သောသူများက ရှိနှင့်ပြီးသား symbol များကို ပြန်လည် အဓိပ္ပာယ်ဖွင့်ဆိုခြင်းကို error သို့မဟုတ် warning များ ပြသစေလိုကြသည်။</p>
+</div>
+<div id="FOOT142"><p><a class="footnote_backlink" href="#DOCF142"><sup>142</sup></a>
+အပိုင်း <a href="1_002e2.html#g_t1_002e2_002e1">1.2.1</a> တွင် ဖော်ပြခဲ့သော interpreter သည် <code>fact-iter</code> ကဲ့သို့သော procedure ကို tail recursion အသုံးပြု၍ ကိန်းသေ ပမာဏရှိသော space ဖြင့် လုပ်ဆောင်နိုင်သည်ဟူသော အချက်ကို environment model ဖြင့် ရှင်းလင်းနိုင်မည် မဟုတ်ပါ။ Tail recursion အကြောင်းကို အပိုင်း <a href="5_002e4.html#g_t5_002e4">5.4</a> ရှိ interpreter ၏ control structure အကြောင်း ဆွေးနွေးသည့်အခါ ဖော်ပြပေးပါမည်။</p>
+</div>
+<div id="FOOT143"><p><a class="footnote_backlink" href="#DOCF143"><sup>143</sup></a>
+<code>W1</code> နှင့် <code>W2</code> တို့သည် ကွန်ပျူတာထဲတွင် သိမ်းဆည်းထားသော physical code အတူတူကို မျှဝေသုံးစွဲခြင်း သို့မဟုတ် ၎င်းတို့ကိုယ်တိုင် code မိတ္တူတစ်ခုစီ သိမ်းဆည်းထားခြင်း ရှိမရှိ ဆိုသည်မှာ implementation ၏ အသေးစိတ် အချက်အလက်မျှသာ ဖြစ်သည်။ <a href="Chapter-4.html#Chapter-4">Chapter 4</a> တွင် ကျွန်ုပ်တို့ အကောင်အထည်ဖော်မည့် interpreter အတွက်မူ code ကို လက်တွေ့တွင် မျှဝေသုံးစွဲထားသည်။</p>
+</div>
+</div>
+<nav class="header">
+<p>
+Next: <a href="3_002e3.html#g_t3_002e3" accesskey="n" rel="next">3.3</a>, Prev: <a href="3_002e1.html#g_t3_002e1" accesskey="p" rel="prev">3.1</a>, Up: <a href="#g_t3_002e2" accesskey="u" rel="prev">3.2</a>   [<a href="index.html#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+
+
+</section><span class="bottom jump" title="Jump to bottom"><a href="#pagebottom" accesskey="b">⇣</a></span><a id="pagebottom"></a>
+</body>
+</html>

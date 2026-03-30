@@ -1,0 +1,2998 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="my" lang="my">
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>Structure and Interpretation of Computer Programs, 2e: 1.2</title>
+
+<meta name="description" content="Structure and Interpretation of Computer Programs, 2e: 1.2" />
+<meta name="keywords" content="Structure and Interpretation of Computer Programs, 2e: 1.2" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="Generator" content="texi2any" />
+<meta charset="utf-8" />
+<link href="index.html#Top" rel="start" title="Top" />
+<link href="Term-Index.html#Term-Index" rel="index" title="Term Index" />
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents" />
+<link href="Chapter-1.html#Chapter-1" rel="prev" title="Chapter 1" />
+<link href="1_002e3.html#g_t1_002e3" rel="next" title="1.3" />
+<link href="1_002e1.html#g_t1_002e1_002e8" rel="prev" title="1.1.8" />
+
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/prettify.css" rel="stylesheet" type="text/css" />
+
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/footnotes.js" type="text/javascript"></script>
+<script src="js/browsertest.js" type="text/javascript"></script>
+</head>
+
+<body>
+<section><span class="top jump" title="Jump to top"><a href="#pagetop" accesskey="t">⇡</a></span><a id="pagetop"></a><a id="g_t1_002e2"></a>
+<nav class="header">
+<p>
+Next: <a href="1_002e3.html#g_t1_002e3" accesskey="n" rel="next">1.3</a>, Prev: <a href="1_002e1.html#g_t1_002e1" accesskey="p" rel="prev">1.1</a>, Up: <a href="Chapter-1.html#Chapter-1" accesskey="u" rel="prev">Chapter 1</a>   [<a href="index.html#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+<a id="Procedures-and-the-Processes-They-Generate"></a>
+<h3 class="section"><span class="secnum">1.2</span><span class="sectitle">Procedures နှင့် ၎င်းတို့က ဖြစ်ပေါ်စေသော လုပ်ငန်းစဉ်များ</span></h3>
+
+<p>ကျွန်ုပ်တို့သည် ယခုအခါ ပရိုဂရမ်ရေးသားခြင်း၏ အခြေခံအစိတ်အပိုင်းများကို လေ့လာခဲ့ပြီးဖြစ်သည်။ ကျွန်ုပ်တို့သည် အခြေခံဂဏန်းသင်္ချာ လုပ်ဆောင်ချက်များကို အသုံးပြုခဲ့ကြပြီး၊ ထိုလုပ်ဆောင်ချက်များကို ပေါင်းစပ်ခဲ့ကြကာ၊ ၎င်းတို့ကို compound procedures များအဖြစ် သတ်မှတ်ခြင်းဖြင့် စုပေါင်းလုပ်ဆောင်ချက်များကို abstract ပြုလုပ်ခဲ့ကြသည်။ သို့သော် ၎င်းသည် ကျွန်ုပ်တို့ ပရိုဂရမ် မည်သို့ရေးရမည်ကို သိပြီဟု ပြောနိုင်ရန် လုံလောက်မှု မရှိသေးပါ။ ကျွန်ုပ်တို့၏ အခြေအနေသည် စစ်တုရင်ရုပ်များ မည်သို့ရွေ့လျားရမည်ဟူသော စည်းမျဉ်းများကို သိသော်လည်း ပုံမှန်အဖွင့်ဗျူဟာများ၊ နည်းဗျူဟာများ သို့မဟုတ် မဟာဗျူဟာများကို ဘာမျှမသိသေးသူတစ်ဦးနှင့် ဆင်တူနေပါသည်။ စစ်တုရင်ကစားသမား အသစ်တစ်ယောက်ကဲ့သို့ပင် ကျွန်ုပ်တို့သည် ဤနယ်ပယ်တွင် အသုံးများသော ပုံစံများကို မသိသေးပါ။ မည်သည့်အကွက်များကို ရွှေ့သင့်သည် (မည်သည့် procedures များကို သတ်မှတ်သင့်သည်) ဆိုသော အသိပညာ ကျွန်ုပ်တို့တွင် မရှိသေးပါ။ အကွက်တစ်ခုကို ရွှေ့ခြင်း (procedure တစ်ခုကို လုပ်ဆောင်ခြင်း) ၏ နောက်ဆက်တွဲရလဒ်များကို ခန့်မှန်းနိုင်သော အတွေ့အကြုံလည်း ကျွန်ုပ်တို့တွင် မရှိသေးပါ။
+</p>
+<p>စဉ်းစားနေသော လုပ်ဆောင်ချက်များ၏ နောက်ဆက်တွဲရလဒ်များကို မြင်ယောင်ကြည့်နိုင်စွမ်းသည် မည်သည့် ဖန်တီးမှုဆိုင်ရာ လုပ်ဆောင်ချက်မျိုးတွင်မဆို အရေးကြီးသကဲ့သို့ ကျွမ်းကျင်သော ပရိုဂရမ်မာတစ်ယောက် ဖြစ်လာစေရန်အတွက်လည်း အရေးကြီးပါသည်။ ဥပမာအားဖြင့် ကျွမ်းကျင်သော ဓာတ်ပုံဆရာတစ်ဦး ဖြစ်လာရန်အတွက် မြင်ကွင်းတစ်ခုကို ကြည့်ပြီး exposure နှင့် development အခြေအနေများ၏ ရွေးချယ်မှုတစ်ခုစီအတွက် ဓာတ်ပုံပေါ်တွင် နေရာတစ်ခုစီသည် မည်မျှအမှောင်ကျမည်ကို သိအောင် သင်ယူရမည်ဖြစ်သည်။ ထိုသို့သိရှိမှသာ လိုလားအပ်သော ရလဒ်များရရှိရန် framing၊ lighting၊ exposure နှင့် development တို့ကို နောက်ပြန်တွေးဆကာ စီစဉ်နိုင်မည်ဖြစ်သည်။ ပရိုဂရမ်ရေးသားခြင်းသည်လည်း ထို့အတူပင်ဖြစ်သည်၊ ကျွန်ုပ်တို့သည် လုပ်ငန်းစဉ် (process) တစ်ခုမှ လုပ်ဆောင်မည့် အစီအစဉ်များကို စီစဉ်နေခြင်းဖြစ်ပြီး ပရိုဂရမ်တစ်ခုမှတစ်ဆင့် ထိုလုပ်ငန်းစဉ်ကို ထိန်းချုပ်နေခြင်းဖြစ်သည်။ ကျွမ်းကျင်သူများဖြစ်လာစေရန် procedures အမျိုးမျိုးကြောင့် ဖြစ်ပေါ်လာသော လုပ်ငန်းစဉ်များကို မြင်ယောင်ကြည့်နိုင်ရန် သင်ယူရမည်ဖြစ်သည်။ ထိုကဲ့သို့သော ကျွမ်းကျင်မှုမျိုးကို ပြုစုပျိုးထောင်ပြီးမှသာ လိုလားအပ်သော အမူအကျင့်များကို ပြသနိုင်သည့် ပရိုဂရမ်များကို စိတ်ချယုံကြည်စွာ တည်ဆောက်နိုင်မည်ဖြစ်သည်။
+</p>
+<p>Procedure တစ်ခုဆိုသည်မှာ computational process တစ်ခု၏ <a id="index-local-evolution"></a>
+<em>local evolution</em> (ဒေသန္တရ ဆင့်ကဲပြောင်းလဲမှု) အတွက် ပုံစံတစ်ခု ဖြစ်သည်။ ၎င်းသည် လုပ်ငန်းစဉ်၏ အဆင့်တစ်ခုစီကို ယခင်အဆင့်အပေါ်တွင် မည်သို့တည်ဆောက်သည်ကို သတ်မှတ်ပေးသည်။ Procedure တစ်ခုက local evolution ကို သတ်မှတ်ပေးထားသော လုပ်ငန်းစဉ်တစ်ခု၏ ခြုံငုံသော သို့မဟုတ် <a id="index-global"></a>
+<em>global</em> အမူအကျင့်နှင့် ပတ်သက်၍ ဖော်ပြချက်များ ပြုလုပ်နိုင်ရန် ကျွန်ုပ်တို့ အလိုရှိသည်။ ယေဘုယျအားဖြင့် ဤသို့ပြုလုပ်ရန်မှာ အလွန်ခက်ခဲသော်လည်း အနည်းဆုံးအားဖြင့် လုပ်ငန်းစဉ်ဆင့်ကဲပြောင်းလဲမှု၏ ပုံမှန်ပုံစံအချို့ကို ဖော်ပြရန် ကြိုးစားနိုင်သည်။
+</p>
+<p>ဤကဏ္ဍတွင် ရိုးရှင်းသော procedures များကြောင့် ဖြစ်ပေါ်လာသော လုပ်ငန်းစဉ်များ၏ အသုံးများသော “ပုံသဏ္ဌာန်များ” ကို ကျွန်ုပ်တို့ စစ်ဆေးကြည့်ကြပါမည်။ ထိုလုပ်ငန်းစဉ်များက အရေးကြီးသော computational resources များဖြစ်သည့် အချိန်နှင့် နေရာ (time and space) တို့ကို စားသုံးသည့် နှုန်းထားများကိုလည်း ကျွန်ုပ်တို့ စူးစမ်းလေ့လာပါမည်။ ကျွန်ုပ်တို့ ထည့်သွင်းစဉ်းစားမည့် procedures များသည် အလွန်ရိုးရှင်းပါသည်။ ၎င်းတို့၏ အခန်းကဏ္ဍသည် ဓာတ်ပုံပညာတွင် test patterns များ၏ အခန်းကဏ္ဍနှင့် တူပါသည် - ၎င်းတို့သည် ကိုယ်ပိုင်လက်တွေ့ဥပမာများထက် ပိုမိုရိုးရှင်းအောင် ပြုလုပ်ထားသော ရှေ့ပြေးပုံစံများ (prototypical patterns) အဖြစ်သာ ရှိပါသည်။
+</p>
+
+<a id="g_t1_002e2_002e1"></a>
+<a id="Linear-Recursion-and-Iteration"></a>
+<h4 class="subsection"><span class="secnum">1.2.1</span><span class="sectitle">Linear Recursion နှင့် Iteration</span></h4>
+
+<p>ကျွန်ုပ်တို့သည် အောက်ပါအတိုင်း အဓိပ္ပာယ်ဖွင့်ဆိုထားသည့် factorial function ကို စဉ်းစားခြင်းဖြင့် စတင်ပါမည်။
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mi>n</mi>
+  <mo>!</mo>
+  <mspace width="thinmathspace"/>
+  <mo>=</mo>
+  <mspace width="thinmathspace"/>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <mo>⋅<!-- ⋅ --></mo>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo>−<!-- − --></mo>
+    <mn>1</mn>
+    <mo stretchy="false">)</mo>
+  </mrow>
+  <mo>⋅<!-- ⋅ --></mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo>−<!-- − --></mo>
+    <mn>2</mn>
+    <mo stretchy="false">)</mo>
+  </mrow>
+  <mo>⋯<!-- ⋯ --></mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>3</mn>
+    <mo>⋅<!-- ⋅ --></mo>
+    <mn>2</mn>
+    <mo>⋅<!-- ⋅ --></mo>
+    <mn>1.</mn>
+  </mrow>
+</math>
+
+factorial များကို တွက်ချက်ရန် နည်းလမ်းများစွာ ရှိပါသည်။ နည်းလမ်းတစ်ခုမှာ မည်သည့် အပေါင်းကိန်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> အတွက်မဆို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <mo>!</mo>
+  </mrow>
+</math> သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo>−<!-- − --></mo>
+    <mn>1</mn>
+    <mo stretchy="false">)</mo>
+    <mo>!</mo>
+  </mrow>
+</math> တို့၏ မြှောက်လဒ်နှင့် ညီမျှသည်ဟူသော အချက်ကို အသုံးချခြင်း ဖြစ်ပါသည်။:
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mi>n</mi>
+  <mo>!</mo>
+  <mspace width="thinmathspace"/>
+  <mo>=</mo>
+  <mspace width="thinmathspace"/>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <mo>⋅<!-- ⋅ --></mo>
+    <mo stretchy="false">[</mo>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo>−<!-- − --></mo>
+    <mn>1</mn>
+    <mo stretchy="false">)</mo>
+  </mrow>
+  <mo>⋅<!-- ⋅ --></mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo>−<!-- − --></mo>
+    <mn>2</mn>
+    <mo stretchy="false">)</mo>
+  </mrow>
+  <mo>⋯<!-- ⋯ --></mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>3</mn>
+    <mo>⋅<!-- ⋅ --></mo>
+    <mn>2</mn>
+    <mo>⋅<!-- ⋅ --></mo>
+    <mn>1</mn>
+    <mo stretchy="false">]</mo>
+  </mrow>
+  <mspace width="thinmathspace"/>
+  <mo>=</mo>
+  <mspace width="thinmathspace"/>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <mo>⋅<!-- ⋅ --></mo>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo>−<!-- − --></mo>
+    <mn>1</mn>
+    <mo stretchy="false">)</mo>
+    <mo>!</mo>
+    <mo>.</mo>
+  </mrow>
+</math>
+
+ထို့ကြောင့် ကျွန်ုပ်တို့သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo>−<!-- − --></mo>
+    <mn>1</mn>
+    <mo stretchy="false">)</mo>
+    <mo>!</mo>
+  </mrow>
+</math> ကို တွက်ချက်ပြီး ရလဒ်ကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> နှင့် မြှောက်ခြင်းဖြင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <mo>!</mo>
+  </mrow>
+</math> ကို တွက်ချက်နိုင်ပါသည်။ အကယ်၍ 1! သည် 1 နှင့် ညီမျှသည်ဟူသော သတ်မှတ်ချက်ကို ထည့်သွင်းလိုက်လျှင် ဤတွေ့ရှိချက်ကို procedure တစ်ခုအဖြစ် တိုက်ရိုက် ပြောင်းလဲနိုင်ပါသည်။:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">factorial n</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> n </span><span class="lit">1</span><span class="clo">)</span><span class="pln"> 
+      </span><span class="lit">1</span><span class="pln"> 
+      </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> n </span><span class="opn">(</span><span class="pln">factorial </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> n </span><span class="lit">1</span><span class="clo">)))))</span></pre></div>
+
+<p>ကျွန်ုပ်တို့သည် <a href="1_002e1.html#g_t1_002e1_002e5">1.1.5</a> ရှိ substitution model ကို အသုံးပြု၍ <a href="#Figure-1_002e3">Figure 1.3</a> တွင် ပြထားသည့်အတိုင်း 6! ကို တွက်ချက်ရာတွင် ဤ procedure ၏ လုပ်ဆောင်ပုံကို ကြည့်ရှုနိုင်ပါသည်။
+</p>
+<figure class="float">
+<a id="Figure-1_002e3"></a>
+<object style="width: 52.58ex; height: 31.43ex;" data="fig/chap1/Fig1.3d.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>Figure 1.3:</strong> 6! ကို တွက်ချက်ရန် linear recursive process တစ်ခု။</p>
+</figcaption>
+</figure>
+
+<p>ယခု factorial များကို တွက်ချက်ခြင်းနှင့် ပတ်သက်၍ အခြားရှုထောင့်တစ်ခုမှ ကြည့်ကြပါစို့။ ကျွန်ုပ်တို့သည် 1 ကို 2 နှင့် အရင်မြှောက်၊ ထို့နောက် ရလဒ်ကို 3 နှင့် မြှောက်၊ ထို့နောက် 4 နှင့် မြှောက် စသည်ဖြင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> သို့ ရောက်သည်အထိ မြှောက်ခြင်းဖြင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <mo>!</mo>
+  </mrow>
+</math> ကို တွက်ချက်ရန် စည်းမျဉ်းတစ်ခုကို ဖော်ပြနိုင်ပါသည်။ ပို၍ တိကျစွာ ပြောရလျှင် ကျွန်ုပ်တို့သည် ရလဒ် (product) တစ်ခုနှင့် 1 မှ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> အထိ ရေတွက်မည့် counter တစ်ခုကို ထားရှိပါမည်။ အဆင့်တစ်ခုမှ တစ်ခုသို့ counter နှင့် product တို့သည် အောက်ပါစည်းမျဉ်းအတိုင်း တစ်ပြိုင်နက် ပြောင်းလဲသွားသည်ဟု ဆိုခြင်းဖြင့် ဤတွက်ချက်မှုကို ဖော်ပြနိုင်ပါသည်။
+</p>
+<div class="example">
+<pre class="example">product <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mo stretchy="false">←<!-- ← --></mo>
+</math> counter * product
+counter <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mo stretchy="false">←<!-- ← --></mo>
+</math> counter + 1
+</pre></div>
+
+<p>ထို့ပြင် counter သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ထက် ကျော်လွန်သွားသောအခါ product ၏ တန်ဖိုးသည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <mo>!</mo>
+  </mrow>
+</math> ဖြစ်သည်ဟု သတ်မှတ်ပါသည်။
+</p>
+<p>တစ်ဖန်၊ ကျွန်ုပ်တို့၏ ဖော်ပြချက်ကို factorial များ တွက်ချက်ရန် procedure တစ်ခုအဖြစ် ပြန်လည် ရေးသားနိုင်ပါသည်:<a class="footnote_link" id="DOCF29" href="#FOOT29"><sup>29</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">factorial n</span><span class="clo">)</span><span class="pln"> 
+  </span><span class="opn">(</span><span class="pln">fact-iter </span><span class="lit">1</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> n</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">fact-iter product counter max-count</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;</span><span class="pln"> counter max-count</span><span class="clo">)</span><span class="pln">
+      product
+      </span><span class="opn">(</span><span class="pln">fact-iter </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> counter product</span><span class="clo">)</span><span class="pln">
+                 </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> counter </span><span class="lit">1</span><span class="clo">)</span><span class="pln">
+                 max-count</span><span class="clo">)))</span></pre></div>
+
+<p>ယခင်အတိုင်းပင် <a href="#Figure-1_002e4">Figure 1.4</a> တွင် ပြထားသည့်အတိုင်း 6! ကို တွက်ချက်သည့် process ကို မြင်သာစေရန် substitution model ကို အသုံးပြုနိုင်ပါသည်။
+</p>
+<figure class="float">
+<a id="Figure-1_002e4"></a>
+<object style="width: 23.40ex; height: 23.31ex;" data="fig/chap1/Fig1.4d.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>Figure 1.4:</strong> 6! ကို တွက်ချက်ရန် linear iterative process တစ်ခု။</p>
+</figcaption>
+</figure>
+
+<p>ဤ process နှစ်ခုကို နှိုင်းယှဉ်ကြည့်ပါ။ ရှုထောင့်တစ်ခုမှကြည့်လျှင် ၎င်းတို့သည် လုံးဝနီးပါး မခြားနားလှပါ။ နှစ်ခုလုံးသည် တူညီသော domain ပေါ်တွင် တူညီသော သင်္ချာဆိုင်ရာ function ကို တွက်ချက်ကြပြီး၊ တစ်ခုချင်းစီသည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <mo>!</mo>
+  </mrow>
+</math> ကို တွက်ချက်ရန် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> နှင့် တိုက်ရိုက်အချိုးကျသော အဆင့်အရေအတွက် လိုအပ်ပါသည်။ အမှန်စင်စစ်အားဖြင့် process နှစ်ခုလုံးသည် မြှောက်ခြင်း အစီအစဉ်အတိုင်းပင် လုပ်ဆောင်ကြပြီး တူညီသော partial product များကို ရရှိကြသည်။ အခြားတစ်ဖက်တွင်မူ process နှစ်ခု၏ “ပုံသဏ္ဌာန်” (shapes) များကို စဉ်းစားကြည့်သောအခါ ၎င်းတို့သည် အတော်လေး ကွဲပြားစွာ ပြောင်းလဲတိုးတက်သွားသည်ကို တွေ့ရမည်ဖြစ်သည်။
+</p>
+<p>ပထမ process ကို စဉ်းစားကြည့်ပါ။ Substitution model သည် <a href="#Figure-1_002e3">Figure 1.3</a> ရှိ မြှားဖြင့် ညွှန်ပြထားသည့်အတိုင်း ကားထွက်သွားပြီးမှ ပြန်ကျုံ့သွားသော ပုံသဏ္ဌာန်တစ်ခုကို ဖော်ပြနေသည်။ Process သည် <a id="index-deferred-operations"></a>
+<em>deferred operations</em> (ဤနေရာတွင်မူ မြှောက်ခြင်းကွင်းဆက်များ) ကွင်းဆက်တစ်ခုကို တည်ဆောက်လိုက်သောအခါ expansion ဖြစ်ပေါ်သည်။ လုပ်ဆောင်ချက်များကို အမှန်တကယ် လုပ်ဆောင်လိုက်သောအခါ contraction ဖြစ်ပေါ်သည်။ ဆိုင်းငံ့ထားသော လုပ်ဆောင်ချက်များ ကွင်းဆက်ဖြင့် သတ်မှတ်သည့် ဤကဲ့သို့သော process မျိုးကို <a id="index-recursive-process"></a>
+<em>recursive process</em> ဟု ခေါ်သည်။ ဤ process ကို လုပ်ဆောင်ရန်အတွက် interpreter သည် နောက်မှလုပ်ဆောင်ရမည့် လုပ်ဆောင်ချက်များကို မှတ်သားထားရန် လိုအပ်သည်။ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <mo>!</mo>
+  </mrow>
+</math> ကို တွက်ချက်ရာတွင် ဆိုင်းငံ့ထားသော မြှောက်ခြင်းကွင်းဆက်၏ အရှည်၊ ထို့ကြောင့် ၎င်းကို မှတ်သားရန် လိုအပ်သော အချက်အလက်ပမာဏသည် အဆင့်အရေအတွက်ကဲ့သို့ပင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> နှင့်အတူ လီနီယာအတိုင်း တိုးပွားလာသည် (<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> နှင့် တိုက်ရိုက်အချိုးကျသည်)။ ထိုသို့သော process မျိုးကို
+<a id="index-linear-recursive-process"></a>
+<em>linear recursive process</em> ဟု ခေါ်သည်။
+</p>
+<p>ဆန့်ကျင်ဘက်အနေဖြင့် ဒုတိယ process သည် ကြီးထွားလာခြင်း သို့မဟုတ် ကျုံ့သွားခြင်း မရှိပါ။ အဆင့်တိုင်းတွင် မည်သည့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> အတွက်မဆို ကျွန်ုပ်တို့ မှတ်သားထားရန် လိုအပ်သည်မှာ variable များဖြစ်သော <code>product</code>, <code>counter</code> နှင့် <code>max-count</code> တို့၏ လက်ရှိတန်ဖိုးများသာ ဖြစ်သည်။ ဤအရာကို
+<a id="index-iterative-process"></a>
+<em>iterative process</em> ဟု ခေါ်သည်။ ယေဘုယျအားဖြင့် iterative process ဆိုသည်မှာ ၎င်း၏ state ကို ပုံသေ <a id="index-state-variables"></a>
+<em>state variables</em> အရေအတွက်ဖြင့် အနှစ်ချုပ်နိုင်ပြီး၊ အခြေအနေတစ်ခုမှ တစ်ခုသို့ ကူးပြောင်းရာတွင် state variables များ မည်သို့ update ဖြစ်သင့်သည်ကို ဖော်ပြသည့် ပုံသေစည်းမျဉ်းတစ်ခုနှင့် process ရပ်တန့်ရမည့် အခြေအနေများကို သတ်မှတ်ပေးသည့် (ရွေးချယ်နိုင်သော) end test တစ်ခုတို့ ရှိသည့် process မျိုးဖြစ်သည်။ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <mo>!</mo>
+  </mrow>
+</math> ကို တွက်ချက်ရာတွင် လိုအပ်သော အဆင့်အရေအတွက်သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> နှင့်အတူ လီနီယာအတိုင်း တိုးပွားလာသည်။ ထိုသို့သော process မျိုးကို <a id="index-linear-iterative-process"></a>
+<em>linear iterative process</em> ဟု ခေါ်သည်။
+</p>
+<p>Process နှစ်ခုကြားရှိ ခြားနားချက်ကို အခြားနည်းလမ်းဖြင့်လည်း မြင်နိုင်ပါသည်။ Iterative ဖြစ်စဉ်တွင် program variables များသည် မည်သည့်အချိန်တွင်မဆို process ၏ state ကို အပြည့်အဝ ဖော်ပြပေးနိုင်သည်။ အကယ်၍ ကျွန်ုပ်တို့သည် အဆင့်များကြားတွင် တွက်ချက်မှုကို ရပ်တန့်လိုက်ပါက၊ တွက်ချက်မှုကို ပြန်လည်စတင်ရန်အတွက် interpreter ထံသို့ ထို program variables သုံးခု၏ တန်ဖိုးများကို ပေးရုံသာ လိုအပ်ပါသည်။ Recursive process တွင်မူ ထိုသို့မဟုတ်ပါ။ ဤဖြစ်စဉ်တွင် interpreter က ထိန်းသိမ်းထားပြီး program variables များထဲတွင် မပါဝင်သော အပိုဆောင်း “ဝှက်ထားသော” အချက်အလက်အချို့ ရှိနေသည်။ ၎င်းသည် ဆိုင်းငံ့ထားသော လုပ်ဆောင်ချက်များ ကွင်းဆက်ကို ကိုင်တွယ်ရာတွင် “process က မည်သည့်နေရာသို့ ရောက်နေသည်” ကို ညွှန်ပြသည်။ ကွင်းဆက် ပိုရှည်လေလေ၊ ပိုမိုများပြားသော အချက်အလက်များကို ထိန်းသိမ်းထားရလေလေ ဖြစ်သည်။<a class="footnote_link" id="DOCF30" href="#FOOT30"><sup>30</sup></a>
+</p>
+<p>Iteration နှင့် recursion ကို နှိုင်းယှဉ်ရာတွင် recursive <a id="index-process"></a>
+<em>process</em> နှင့် recursive
+<a id="index-procedure"></a>
+<em>procedure</em> တို့ကို မရောထွေးမိစေရန် သတိပြုရမည်။ ကျွန်ုပ်တို့သည် procedure တစ်ခုကို recursive ဟု ဖော်ပြသောအခါ procedure definition သည် ၎င်းကိုယ်တိုင်ကို (တိုက်ရိုက်ဖြစ်စေ၊ သွယ်ဝိုက်၍ဖြစ်စေ) ပြန်လည်ညွှန်းဆိုထားသည်ဟူသော syntax ဆိုင်ရာ အချက်ကို ရည်ညွှန်းခြင်းဖြစ်သည်။ သို့သော် process တစ်ခုသည် linear recursive ပုံစံအတိုင်း သွားနေသည်ဟု ကျွန်ုပ်တို့ ပြောသောအခါ procedure ကို မည်သို့ syntax ဖြင့် ရေးသားထားသည်ကို မဟုတ်ဘဲ process သည် မည်သို့ ပြောင်းလဲတိုးတက်သွားသည်ကို ပြောခြင်းဖြစ်သည်။ <code>fact-iter</code> ကဲ့သို့သော recursive procedure တစ်ခုသည် iterative process တစ်ခုကို ထုတ်ပေးသည်ဟု ဆိုခြင်းမှာ စိတ်ရှုပ်စရာ ဖြစ်ကောင်းဖြစ်နိုင်ပါသည်။ သို့သော်လည်း ထို process သည် အမှန်တကယ်ပင် iterative ဖြစ်ပါသည်- ၎င်း၏ state ကို state variables သုံးခုဖြင့် အပြည့်အဝ ဖော်ပြနိုင်ပြီး၊ process ကို လုပ်ဆောင်ရန် interpreter အနေဖြင့် variable သုံးခုကိုသာ မှတ်သားထားရန် လိုအပ်သောကြောင့် ဖြစ်သည်။
+</p>
+<p>Process နှင့် procedure ကြားရှိ ခြားနားချက်ကို ရှုပ်ထွေးစေသော အကြောင်းရင်းတစ်ခုမှာ (Ada, Pascal နှင့် C အပါအဝင်) အသုံးများသော language အများစု၏ implementation များသည် recursive procedure တစ်ခုကို interpret လုပ်ရာတွင် procedure calls အရေအတွက်နှင့်အမျှ တိုးပွားလာသော memory ပမာဏကို အသုံးပြုရန် ဒီဇိုင်းထုတ်ထားသောကြောင့် ဖြစ်သည်။ ဖော်ပြထားသော process သည် မူအရ iterative ဖြစ်နေလျှင်ပင် ထိုသို့ ဖြစ်တတ်သည်။ အကျိုးဆက်အားဖြင့် ဤ language များသည် iterative processes များကို <code>do</code>, <code>repeat</code>, <code>until</code>, <code>for</code> နှင့် <code>while</code> ကဲ့သို့သော အထူးရည်ရွယ်ချက်သုံး “looping constructs” များကို အသုံးပြုခြင်းဖြင့်သာ ဖော်ပြနိုင်သည်။ <a href="Chapter-5.html#Chapter-5">Chapter 5</a> တွင် ကျွန်ုပ်တို့ လေ့လာမည့် Scheme implementation တွင်မူ ဤချို့ယွင်းချက် မရှိပါ။ ၎င်းသည် iterative process ကို recursive procedure ဖြင့် ဖော်ပြထားလျှင်ပင် constant space ဖြင့်သာ လုပ်ဆောင်ပေးမည် ဖြစ်သည်။ ဤဂုဏ်သတ္တိရှိသော implementation ကို <a id="index-tail_002drecursive"></a>
+<em>tail-recursive</em> ဟု ခေါ်သည်။ tail-recursive implementation ဖြင့် iteration ကို သာမန် procedure call ယန္တရားကို အသုံးပြု၍ ဖော်ပြနိုင်သောကြောင့် အထူး iteration constructs များသည် syntactic sugar အဖြစ်သာ အသုံးဝင်ပါသည်။<a class="footnote_link" id="DOCF31" href="#FOOT31"><sup>31</sup></a>
+</p>
+<blockquote>
+<p><strong><a id="Exercise-1_002e9"></a>Exercise 1.9:</strong> အောက်ပါ procedure နှစ်ခုစီသည် argument ကို 1 တိုးပေးသော <code>inc</code> procedure နှင့် argument ကို 1 လျှော့ပေးသော <code>dec</code> procedure တို့ကို အသုံးပြု၍ အပေါင်းကိန်းနှစ်ခုကို ပေါင်းသည့် နည်းလမ်းတစ်ခုစီကို အဓိပ္ပာယ်ဖွင့်ဆိုသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> a b</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> a </span><span class="lit">0</span><span class="clo">)</span><span class="pln"> 
+      b 
+      </span><span class="opn">(</span><span class="pln">inc </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">dec a</span><span class="clo">)</span><span class="pln"> b</span><span class="clo">))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> a b</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> a </span><span class="lit">0</span><span class="clo">)</span><span class="pln"> 
+      b 
+      </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">dec a</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">inc b</span><span class="clo">))))</span></pre></div>
+
+<p>Substitution model ကို အသုံးပြု၍ <code>(+ 4 5)</code> ကို တွက်ချက်ရာတွင် procedure တစ်ခုချင်းစီမှ ထွက်ပေါ်လာသော process ကို သရုပ်ဖော်ပါ။ ဤ process များသည် iterative လား သို့မဟုတ် recursive လား?
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-1_002e10"></a>Exercise 1.10:</strong> အောက်ပါ procedure သည် Ackermann’s function ဟုခေါ်သော သင်္ချာဆိုင်ရာ function တစ်ခုကို တွက်ချက်ပေးပါသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">A x y</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pun">=</span><span class="pln"> y </span><span class="lit">0</span><span class="clo">)</span><span class="pln"> </span><span class="lit">0</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="pun">=</span><span class="pln"> x </span><span class="lit">0</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="lit">2</span><span class="pln"> y</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">((</span><span class="pun">=</span><span class="pln"> y </span><span class="lit">1</span><span class="clo">)</span><span class="pln"> </span><span class="lit">2</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> </span><span class="opn">(</span><span class="pln">A </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> x </span><span class="lit">1</span><span class="clo">)</span><span class="pln">
+                 </span><span class="opn">(</span><span class="pln">A x </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> y </span><span class="lit">1</span><span class="clo">))))))</span></pre></div>
+
+<p>အောက်ပါ expression များ၏ တန်ဖိုးများမှာ အဘယ်နည်း?
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">A </span><span class="lit">1</span><span class="pln"> </span><span class="lit">10</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">A </span><span class="lit">2</span><span class="pln"> </span><span class="lit">4</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">A </span><span class="lit">3</span><span class="pln"> </span><span class="lit">3</span><span class="clo">)</span></pre></div>
+
+<p>အထက်တွင် အဓိပ္ပာယ်ဖွင့်ဆိုထားသည့် procedure <code>A</code> ကို အသုံးပြုထားသော အောက်ပါ procedures များကို စဉ်းစားကြည့်ပါ:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">f n</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">A </span><span class="lit">0</span><span class="pln"> n</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">g n</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">A </span><span class="lit">1</span><span class="pln"> n</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">h n</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">A </span><span class="lit">2</span><span class="pln"> n</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">k n</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="lit">5</span><span class="pln"> n n</span><span class="clo">))</span></pre></div>
+
+<p><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ၏ အပေါင်းကိန်း တန်ဖိုးများအတွက် procedure <code>f</code>, <code>g</code> နှင့် <code>h</code> တို့မှ တွက်ချက်ပေးသော function များအတွက် တိကျသော သင်္ချာဆိုင်ရာ အဓိပ္ပာယ်ဖွင့်ဆိုချက်များကို ပေးပါ။ ဥပမာအားဖြင့် <code>(k n)</code> သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>5</mn>
+    <msup>
+      <mi>n</mi>
+      <mn>2</mn>
+    </msup>
+  </mrow>
+</math> ကို တွက်ချက်ပေးပါသည်။
+</p></blockquote>
+
+<a id="g_t1_002e2_002e2"></a>
+<a id="Tree-Recursion"></a>
+<h4 class="subsection"><span class="secnum">1.2.2</span><span class="sectitle">Tree Recursion</span></h4>
+
+<p>နောက်ထပ် အသုံးများတဲ့ တွက်ချက်မှုပုံစံတစ်ခုကတော့ <a id="index-tree-recursion"></a>
+<em>tree recursion</em> ဖြစ်ပါတယ်။ ဥပမာအနေနဲ့ Fibonacci ကိန်းစဉ်တန်းကို တွက်ချက်ပုံကို ကြည့်ရအောင်။ Fibonacci ကိန်းစဉ်တန်းမှာ ကိန်းတစ်ခုစီဟာ သူ့အရင်ကိန်းနှစ်ခုရဲ့ ပေါင်းလဒ်ဖြစ်ပါတယ်။
+</p>
+<div style="text-align: center">0, 1, 1, 2, 3, 5, 8, 13, 21, ….
+</div>
+<p>ယေဘုယျအားဖြင့် Fibonacci ကိန်းတွေကို အောက်ပါစည်းမျဉ်းအတိုင်း သတ်မှတ်နိုင်ပါတယ်။
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mtext>Fib</mtext>
+  <mo stretchy="false">(</mo>
+  <mi>n</mi>
+  <mo stretchy="false">)</mo>
+  <mspace width="thickmathspace"/>
+  <mo>=</mo>
+  <mspace width="thickmathspace"/>
+  <mrow>
+    <mo>{</mo>
+    <mtable columnalign="left left" rowspacing="4pt" columnspacing="1em">
+      <mtr>
+        <mtd>
+          <mn>0</mn>
+        </mtd>
+        <mtd>
+          <mspace width="thickmathspace"/>
+          <mtext>if</mtext>
+          <mspace width="thickmathspace"/>
+          <mspace width="thickmathspace"/>
+          <mi>n</mi>
+          <mo>=</mo>
+          <mn>0</mn>
+          <mo>,</mo>
+        </mtd>
+      </mtr>
+      <mtr>
+        <mtd>
+          <mn>1</mn>
+        </mtd>
+        <mtd>
+          <mspace width="thickmathspace"/>
+          <mtext>if</mtext>
+          <mspace width="thickmathspace"/>
+          <mspace width="thickmathspace"/>
+          <mi>n</mi>
+          <mo>=</mo>
+          <mn>1</mn>
+          <mo>,</mo>
+        </mtd>
+      </mtr>
+      <mtr>
+        <mtd>
+          <mtext>Fib</mtext>
+          <mo stretchy="false">(</mo>
+          <mi>n</mi>
+          <mo>−<!-- − --></mo>
+          <mn>1</mn>
+          <mo stretchy="false">)</mo>
+          <mo>+</mo>
+          <mtext>Fib</mtext>
+          <mo stretchy="false">(</mo>
+          <mi>n</mi>
+          <mo>−<!-- − --></mo>
+          <mn>2</mn>
+          <mo stretchy="false">)</mo>
+        </mtd>
+        <mtd>
+          <mspace width="thickmathspace"/>
+          <mtext>otherwise</mtext>
+          <mo>.</mo>
+        </mtd>
+      </mtr>
+    </mtable>
+  </mrow>
+</math>
+
+ဒီအဓိပ္ပာယ်ဖွင့်ဆိုချက်ကို Fibonacci ကိန်းတွေကို တွက်ချက်ပေးမယ့် recursive procedure တစ်ခုအဖြစ် တိုက်ရိုက် ပြောင်းလဲနိုင်ပါတယ်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">fib n</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pun">=</span><span class="pln"> n </span><span class="lit">0</span><span class="clo">)</span><span class="pln"> </span><span class="lit">0</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="pun">=</span><span class="pln"> n </span><span class="lit">1</span><span class="clo">)</span><span class="pln"> </span><span class="lit">1</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">fib </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> n </span><span class="lit">1</span><span class="clo">))</span><span class="pln">
+                 </span><span class="opn">(</span><span class="pln">fib </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> n </span><span class="lit">2</span><span class="clo">))))))</span></pre></div>
+
+<p>ဒီတွက်ချက်မှုရဲ့ ပုံစံကို ကြည့်ရအောင်။ <code>(fib 5)</code> ကို တွက်ဖို့အတွက် <code>(fib 4)</code> နဲ့ <code>(fib 3)</code> ကို တွက်ရပါတယ်။ <code>(fib 4)</code> ကို တွက်ဖို့အတွက် <code>(fib 3)</code> နဲ့ <code>(fib 2)</code> ကို တွက်ရပါတယ်။ ယေဘုယျအားဖြင့် ဒီဖြစ်စဉ်ဟာ <a href="#Figure-1_002e5">Figure 1.5</a> မှာ ပြထားတဲ့အတိုင်း သစ်ပင် (tree) တစ်ပင်နဲ့ တူပါတယ်။ အကိုင်းအခက်တွေဟာ အောက်ခြေကလွဲလို့ အဆင့်တိုင်းမှာ နှစ်ခုစီ ခွဲထွက်သွားတာကို သတိပြုပါ။ ဒါဟာ <code>fib</code> procedure ကို ခေါ်ယူတိုင်း သူ့ဘာသာသူ နှစ်ကြိမ် ပြန်လည်ခေါ်ယူနေတယ်ဆိုတဲ့ အချက်ကို ဖော်ပြနေတာပါ။
+</p>
+<figure class="float">
+<a id="Figure-1_002e5"></a>
+<object style="width: 58.07ex; height: 36.18ex;" data="fig/chap1/Fig1.5d.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>Figure 1.5:</strong> <code>(fib 5)</code> ကို တွက်ချက်ရာမှာ ဖြစ်ပေါ်လာတဲ့ tree-recursive process။</p>
+</figcaption>
+</figure>
+
+<p>ဒီ procedure ဟာ tree recursion ရဲ့ နမူနာပုံစံတစ်ခုအနေနဲ့ သင်ခန်းစာရစရာဖြစ်ပေမယ့် Fibonacci ကိန်းတွေကို တွက်ချက်ဖို့အတွက်တော့ အလွန်ညံ့ဖျင်းတဲ့ နည်းလမ်းဖြစ်ပါတယ်။ ဘာလို့လဲဆိုတော့ ပိုလျှံနေတဲ့ တွက်ချက်မှုတွေ အများကြီးလုပ်ဆောင်ရလို့ဖြစ်ပါတယ်။ <a href="#Figure-1_002e5">Figure 1.5</a> ကို ကြည့်မယ်ဆိုရင် <code>(fib 3)</code> ကို တွက်ချက်မှုတစ်ခုလုံး (အလုပ်ပမာဏရဲ့ ထက်ဝက်နီးပါး) ကို ထပ်ခါတလဲလဲ လုပ်ဆောင်နေရတာကို တွေ့ရပါလိမ့်မယ်။ အမှန်တော့ ဒီ procedure ဟာ <code>(fib 1)</code> ဒါမှမဟုတ် <code>(fib 0)</code> ကို တွက်ချက်ရမယ့် အကြိမ်အရေအတွက် (အပေါ်က tree ရဲ့ အရွက်အရေအတွက်) ဟာ အတိအကျဆိုရင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mtext>Fib</mtext>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo>+</mo>
+    <mn>1</mn>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ဖြစ်ကြောင်း သက်သေပြဖို့ မခက်ခဲပါဘူး။ ဒါဟာ ဘယ်လောက်ထိ ဆိုးရွားသလဲဆိုတာ သိနိုင်ဖို့ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mtext>Fib</mtext>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ရဲ့ တန်ဖိုးဟာ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> နဲ့အမျှ exponential အတိုင်း တိုးပွားလာတာကို တွေ့နိုင်ပါတယ်။ ပိုပြီး တိတိကျကျဆိုရရင် (<a href="#Exercise-1_002e13">Exercise 1.13</a> ကိုကြည့်ပါ) <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mtext>Fib</mtext>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ဆိုတာ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <msup>
+      <mi>φ<!-- φ --></mi>
+      <mi>n</mi>
+    </msup>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mo>/</mo>
+    </mrow>
+    <msqrt>
+      <mn>5</mn>
+    </msqrt>
+  </mrow>
+</math> နဲ့ အနီးစပ်ဆုံး ကိန်းပြည့်ဖြစ်ပါတယ်။ ဒီနေရာမှာ
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mi>φ<!-- φ --></mi>
+  <mspace width="thinmathspace"/>
+  <mo>=</mo>
+  <mspace width="thinmathspace"/>
+  <mfrac>
+    <mrow>
+      <mn>1</mn>
+      <mo>+</mo>
+      <msqrt>
+        <mn>5</mn>
+      </msqrt>
+    </mrow>
+    <mn>2</mn>
+  </mfrac>
+  <mspace width="thinmathspace"/>
+  <mo>≈<!-- ≈ --></mo>
+  <mspace width="thinmathspace"/>
+  <mn>1.6180</mn>
+</math>
+
+ဆိုတာဟာ အောက်ပါညီမျှခြင်းကို ပြေလည်စေတဲ့ <a id="index-golden-ratio"></a>
+<em>golden ratio</em> ဖြစ်ပါတယ်။
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <msup>
+    <mi>φ<!-- φ --></mi>
+    <mn>2</mn>
+  </msup>
+  <mspace width="thinmathspace"/>
+  <mo>=</mo>
+  <mspace width="thinmathspace"/>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>φ<!-- φ --></mi>
+    <mo>+</mo>
+    <mn>1.</mn>
+  </mrow>
+</math>
+
+ဒါကြောင့် ဒီဖြစ်စဉ်ဟာ input နဲ့အမျှ exponential အတိုင်း တိုးပွားလာတဲ့ လုပ်ဆောင်ချက် အဆင့်အရေအတွက်ကို အသုံးပြုပါတယ်။ အခြားတစ်ဖက်မှာတော့ လိုအပ်တဲ့ နေရာလွတ် (space) ဟာ input နဲ့အမျှ linear အတိုင်းသာ တိုးပွားပါတယ်။ ဘာလို့လဲဆိုတော့ တွက်ချက်မှုရဲ့ ဘယ်အချိန်မှာမဆို tree ထဲက ကိုယ့်အပေါ်မှာရှိတဲ့ node တွေကိုပဲ မှတ်ထားဖို့ လိုအပ်လို့ဖြစ်ပါတယ်။ ယေဘုယျအားဖြင့် tree-recursive process တစ်ခုမှာ လိုအပ်တဲ့ လုပ်ဆောင်ချက် အဆင့်အရေအတွက်ဟာ tree ထဲက node အရေအတွက်နဲ့ တိုက်ရိုက်အချိုးကျပြီး၊ လိုအပ်တဲ့ နေရာလွတ်ကတော့ tree ရဲ့ အမြင့်ဆုံးအနက် (maximum depth) နဲ့ တိုက်ရိုက်အချိုးကျပါတယ်။
+</p>
+<p>Fibonacci ကိန်းတွေကို တွက်ချက်ဖို့အတွက် iterative process တစ်ခုကိုလည်း ဖန်တီးနိုင်ပါတယ်။ အယူအဆကတော့ ကိန်းပြည့်တစ်စုံဖြစ်တဲ့ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> နဲ့ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>b</mi>
+</math> ကို အသုံးပြုဖို့ဖြစ်ပြီး၊ ၎င်းတို့ကို 
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mtext>Fib(1) = 1</mtext>
+  </mrow>
+</math> နဲ့ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mtext>Fib(0) = 0</mtext>
+  </mrow>
+</math> အဖြစ် စတင်သတ်မှတ်ကာ အောက်ပါ အပြောင်းအလဲများကို ထပ်ခါတလဲလဲ လုပ်ဆောင်ရမှာဖြစ်ပါတယ်။
+</p>
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mtable columnalign="left" rowspacing="4pt" columnspacing="1em">
+    <mtr>
+      <mtd>
+        <mi>a</mi>
+        <mspace width="thickmathspace"/>
+        <mo stretchy="false">←<!-- ← --></mo>
+        <mspace width="thickmathspace"/>
+        <mi>a</mi>
+        <mo>+</mo>
+        <mi>b</mi>
+        <mo>,</mo>
+      </mtd>
+    </mtr>
+    <mtr>
+      <mtd>
+        <mi>b</mi>
+        <mspace width="thickmathspace"/>
+        <mo stretchy="false">←<!-- ← --></mo>
+        <mspace width="thickmathspace"/>
+        <mi>a</mi>
+        <mo>.</mo>
+      </mtd>
+    </mtr>
+  </mtable>
+</math>
+
+<p>ဒီအပြောင်းအလဲကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ကြိမ် လုပ်ဆောင်ပြီးတဲ့အခါ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> နဲ့ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>b</mi>
+</math> တို့ဟာ အသီးသီး <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mtext>Fib</mtext>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo>+</mo>
+    <mn>1</mn>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> နဲ့
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mtext>Fib</mtext>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> တို့နဲ့ ညီမျှနေမယ်ဆိုတာကို ပြဖို့ မခက်ပါဘူး။ ဒါကြောင့် Fibonacci ကိန်းတွေကို အောက်ပါ procedure ကိုသုံးပြီး iterative နည်းနဲ့ တွက်ချက်နိုင်ပါတယ်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">fib n</span><span class="clo">)</span><span class="pln"> 
+  </span><span class="opn">(</span><span class="pln">fib-iter </span><span class="lit">1</span><span class="pln"> </span><span class="lit">0</span><span class="pln"> n</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">fib-iter a b count</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> count </span><span class="lit">0</span><span class="clo">)</span><span class="pln">
+      b
+      </span><span class="opn">(</span><span class="pln">fib-iter </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> a b</span><span class="clo">)</span><span class="pln"> a </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> count </span><span class="lit">1</span><span class="clo">))))</span></pre></div>
+
+<p><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mtext>Fib</mtext>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ကို တွက်ချက်တဲ့ ဒီဒုတိယနည်းလမ်းဟာ linear iteration ဖြစ်ပါတယ်။ ဒီနည်းလမ်းနှစ်ခုရဲ့ လိုအပ်တဲ့ အဆင့်အရေအတွက် ကွာခြားချက်ဟာ—တစ်ခုက <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> နဲ့အမျှ linear ဖြစ်ပြီး၊ နောက်တစ်ခုက <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mtext>Fib</mtext>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> အတိုင်း တိုးပွားတာ— input အနည်းငယ်အတွက်တောင်မှ အလွန်ကြီးမားပါတယ်။
+</p>
+<p>ဒါပေမယ့် tree-recursive process တွေဟာ အသုံးမဝင်ဘူးလို့ မကောက်ချက်ချသင့်ပါဘူး။ ကိန်းဂဏန်းတွေအစား အဆင့်ဆင့်ဖွဲ့စည်းထားတဲ့ (hierarchically structured) data တွေပေါ်မှာ လုပ်ဆောင်တဲ့ ဖြစ်စဉ်တွေကို လေ့လာတဲ့အခါ tree recursion ဟာ သဘာဝကျပြီး အစွမ်းထက်တဲ့ ကိရိယာတစ်ခုဖြစ်တာကို တွေ့ရပါလိမ့်မယ်။<a class="footnote_link" id="DOCF32" href="#FOOT32"><sup>32</sup></a> ကိန်းဂဏန်းဆိုင်ရာ လုပ်ဆောင်ချက်တွေမှာတောင်မှ tree-recursive process တွေဟာ program တွေကို နားလည်ဖို့နဲ့ ဒီဇိုင်းဆွဲဖို့အတွက် အထောက်အကူဖြစ်စေနိုင်ပါတယ်။ ဥပမာအားဖြင့် ပထမ <code>fib</code> procedure ဟာ ဒုတိယတစ်ခုလောက် မထိရောက်ပေမယ့်၊ သူက Fibonacci ကိန်းစဉ်တန်းရဲ့ အဓိပ္ပာယ်ဖွင့်ဆိုချက်ကို Lisp အဖြစ် တိုက်ရိုက်ပြောင်းလဲထားတာမို့ ပိုပြီး ရိုးရှင်းပါတယ်။ Iterative algorithm ကို ဖော်ထုတ်ဖို့အတွက်တော့ တွက်ချက်မှုကို state variable သုံးခုပါတဲ့ iteration တစ်ခုအဖြစ် ပြောင်းလဲနိုင်တယ်ဆိုတာကို သတိပြုမိဖို့ လိုအပ်ပါတယ်။
+</p>
+<a id="Example_003a-Counting-change"></a>
+<h5 class="subsubheading">Example: Counting change</h5>
+
+<p>Iterative Fibonacci algorithm ကို ဖော်ထုတ်ဖို့အတွက် ပါးနပ်မှု အနည်းငယ်ပဲ လိုအပ်ပါတယ်။ အဲဒါနဲ့ ဆန့်ကျင်ဘက်အနေနဲ့ အောက်ပါပြဿနာကို စဉ်းစားကြည့်ပါ- half-dollars, quarters, dimes, nickels, နဲ့ pennies ဒင်္ဂါးပြားတွေရှိမယ်ဆိုရင် ဒေါ်လာ ၁.၀၀ ကို လဲလှယ်နိုင်တဲ့ နည်းလမ်းပေါင်း ဘယ်နှစ်မျိုးရှိသလဲ။ ပိုပြီး ယေဘုယျကျကျပြောရရင် ပေးထားတဲ့ ဘယ်ငွေပမာဏကိုမဆို လဲလှယ်နိုင်တဲ့ နည်းလမ်းအရေအတွက်ကို တွက်ချက်ပေးမယ့် procedure တစ်ခုကို ရေးနိုင်မလား။
+</p>
+<p>ဒီပြဿနာမှာ recursive procedure အနေနဲ့ ရိုးရှင်းတဲ့ အဖြေရှိပါတယ်။ ရရှိနိုင်တဲ့ ဒင်္ဂါးအမျိုးအစားတွေကို အစီအစဉ်တစ်ခုအတိုင်း ရှိနေတယ်လို့ စဉ်းစားကြည့်ပါ။ ဒါဆိုရင် အောက်ပါဆက်သွယ်ချက် ရှိပါတယ်။
+</p>
+<p>ဒင်္ဂါးအမျိုးအစား <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> မျိုးကို သုံးပြီး ငွေပမာဏ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> ကို လဲလှယ်နိုင်တဲ့ နည်းလမ်းအရေအတွက်ဟာ အောက်ပါတို့ရဲ့ ပေါင်းလဒ်နဲ့ ညီမျှပါတယ်။
+</p>
+<ul>
+<li> ပထမဆုံး ဒင်္ဂါးအမျိုးအစားကလွဲလို့ ကျန်တဲ့ ဒင်္ဂါးအမျိုးအစားအားလုံးကို သုံးပြီး ငွေပမာဏ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> ကို လဲလှယ်နိုင်တဲ့ နည်းလမ်းအရေအတွက်၊
+အပြင်
+
+</li><li> ဒင်္ဂါးအမျိုးအစား <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> မျိုးလုံးကို သုံးပြီး ငွေပမာဏ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>a</mi>
+    <mo>−<!-- − --></mo>
+    <mi>d</mi>
+  </mrow>
+</math> ကို လဲလှယ်နိုင်တဲ့ နည်းလမ်းအရေအတွက် (ဒီနေရာမှာ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>d</mi>
+</math> ဆိုတာ ပထမဆုံး ဒင်္ဂါးအမျိုးအစားရဲ့ တန်ဖိုးဖြစ်ပါတယ်)။
+
+</li></ul>
+
+<p>ဒါဟာ ဘာကြောင့် မှန်သလဲဆိုတာ သိနိုင်ဖို့ ငွေလဲလှယ်နိုင်တဲ့ နည်းလမ်းတွေကို အုပ်စုနှစ်စု ခွဲကြည့်နိုင်ပါတယ်- ပထမဆုံး ဒင်္ဂါးအမျိုးအစားကို လုံးဝမသုံးတဲ့ နည်းလမ်းတွေနဲ့ သုံးတဲ့ နည်းလမ်းတွေပါ။ ဒါကြောင့် ငွေပမာဏတစ်ခုအတွက် စုစုပေါင်း ငွေလဲလှယ်နိုင်တဲ့ နည်းလမ်းအရေအတွက်ဟာ ပထမဆုံး ဒင်္ဂါးအမျိုးအစားကို မသုံးဘဲ လဲလှယ်နိုင်တဲ့ နည်းလမ်းအရေအတွက်နဲ့ ပထမဆုံး ဒင်္ဂါးအမျိုးအစားကို သုံးမယ်လို့ ယူဆပြီး လဲလှယ်နိုင်တဲ့ နည်းလမ်းအရေအတွက်တို့ရဲ့ ပေါင်းလဒ်နဲ့ ညီမျှပါတယ်။ ဒါပေမယ့် နောက်ဆုံးအရေအတွက်ဟာ ပထမဆုံး ဒင်္ဂါးတစ်ပြားကို သုံးပြီးနောက် ကျန်ရှိနေတဲ့ ငွေပမာဏကို လဲလှယ်နိုင်တဲ့ နည်းလမ်းအရေအတွက်နဲ့ အတူတူပဲ ဖြစ်ပါတယ်။
+</p>
+<p>ဒါကြောင့် ပေးထားတဲ့ ငွေပမာဏကို လဲလှယ်တဲ့ ပြဿနာကို ဒင်္ဂါးအမျိုးအစား နည်းနည်းသုံးပြီး ငွေပမာဏ အနည်းငယ်ကို လဲလှယ်တဲ့ ပြဿနာအဖြစ် recursive နည်းနဲ့ လျှော့ချနိုင်ပါတယ်။ ဒီလျှော့ချတဲ့ စည်းမျဉ်းကို သေချာစဉ်းစားကြည့်ပါ။ အောက်ပါ အခြေခံအကျဆုံး အခြေအနေ (degenerate cases) တွေကို သတ်မှတ်ပေးရင် ဒါကို algorithm တစ်ခုအနေနဲ့ သုံးနိုင်တယ်ဆိုတာကို သင်ကိုယ်တိုင် လက်ခံနိုင်ပါလိမ့်မယ်။<a class="footnote_link" id="DOCF33" href="#FOOT33"><sup>33</sup></a>
+</p>
+<ul>
+<li> အကယ်၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> ဟာ အတိအကျ 0 ဖြစ်နေရင်၊ ဒါကို ငွေလဲလှယ်နိုင်တဲ့ နည်းလမ်း ၁ မျိုးလို့ သတ်မှတ်ရပါမယ်။
+
+</li><li> အကယ်၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> ဟာ 0 ထက် ငယ်နေရင်၊ ဒါကို ငွေလဲလှယ်နိုင်တဲ့ နည်းလမ်း 0 မျိုးလို့ သတ်မှတ်ရပါမယ်။
+
+</li><li> အကယ်၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ဟာ 0 ဖြစ်နေရင်၊ ဒါကို ငွေလဲလှယ်နိုင်တဲ့ နည်းလမ်း 0 မျိုးလို့ သတ်မှတ်ရပါမယ်။
+
+</li></ul>
+
+<p>ဒီဖော်ပြချက်ကို recursive procedure တစ်ခုအဖြစ် အလွယ်တကူ ပြောင်းလဲနိုင်ပါတယ်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">count-change amount</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">cc amount </span><span class="lit">5</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">cc amount kinds-of-coins</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pun">=</span><span class="pln"> amount </span><span class="lit">0</span><span class="clo">)</span><span class="pln"> </span><span class="lit">1</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="kwd">or</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&lt;</span><span class="pln"> amount </span><span class="lit">0</span><span class="clo">)</span><span class="pln"> 
+             </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> kinds-of-coins </span><span class="lit">0</span><span class="clo">))</span><span class="pln"> 
+         </span><span class="lit">0</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> 
+         </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">cc amount </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> kinds-of-coins </span><span class="lit">1</span><span class="clo">))</span><span class="pln">
+            </span><span class="opn">(</span><span class="pln">cc </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> amount </span><span class="opn">(</span><span class="pln">first-denomination 
+                           kinds-of-coins</span><span class="clo">))</span><span class="pln">
+                kinds-of-coins</span><span class="clo">)))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">first-denomination kinds-of-coins</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pun">=</span><span class="pln"> kinds-of-coins </span><span class="lit">1</span><span class="clo">)</span><span class="pln"> </span><span class="lit">1</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="pun">=</span><span class="pln"> kinds-of-coins </span><span class="lit">2</span><span class="clo">)</span><span class="pln"> </span><span class="lit">5</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="pun">=</span><span class="pln"> kinds-of-coins </span><span class="lit">3</span><span class="clo">)</span><span class="pln"> </span><span class="lit">10</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="pun">=</span><span class="pln"> kinds-of-coins </span><span class="lit">4</span><span class="clo">)</span><span class="pln"> </span><span class="lit">25</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="pun">=</span><span class="pln"> kinds-of-coins </span><span class="lit">5</span><span class="clo">)</span><span class="pln"> </span><span class="lit">50</span><span class="clo">)))</span></pre></div>
+
+<p>(<code>first-denomination</code> procedure ဟာ ရရှိနိုင်တဲ့ ဒင်္ဂါးအမျိုးအစား အရေအတွက်ကို input အနေနဲ့ ယူပြီး၊ ပထမဆုံး အမျိုးအစားရဲ့ တန်ဖိုးကို ပြန်ပေးပါတယ်။ ဒီနေရာမှာ ဒင်္ဂါးတွေကို အကြီးဆုံးကနေ အသေးဆုံးအထိ အစဉ်လိုက် ရှိနေတယ်လို့ ယူဆထားပေမယ့် ဘယ်လိုအစီအစဉ်နဲ့မဆို လုပ်ဆောင်နိုင်ပါတယ်။) အခုဆိုရင် ကျွန်တော်တို့ရဲ့ မူလမေးခွန်းဖြစ်တဲ့ တစ်ဒေါ်လာကို လဲလှယ်တဲ့ ပြဿနာကို အဖြေထုတ်နိုင်ပါပြီ။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">count-change </span><span class="lit">100</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">292</span></i>
+</pre></div>
+
+<p><code>Count-change</code> ဟာ ကျွန်တော်တို့ရဲ့ ပထမ <code>fib</code> procedure လိုပဲ ပိုလျှံနေတဲ့ တွက်ချက်မှုတွေပါဝင်တဲ့ tree-recursive process တစ်ခုကို ဖြစ်ပေါ်စေပါတယ်။ (အဲဒီ ၂၉၂ ဆိုတဲ့ အဖြေထွက်လာဖို့ အချိန်အတော်ကြာပါလိမ့်မယ်။) အခြားတစ်ဖက်မှာတော့ ရလဒ်ကို တွက်ချက်ဖို့ ပိုကောင်းတဲ့ algorithm တစ်ခုကို ဘယ်လို ဒီဇိုင်းဆွဲရမလဲဆိုတာ မသိသာလှပါဘူး၊ ဒါကြောင့် ဒီပြဿနာကို စိန်ခေါ်မှုတစ်ခုအနေနဲ့ ချန်ထားခဲ့ပါမယ်။ Tree-recursive process တစ်ခုဟာ အလွန်မထိရောက်နိုင်ပေမယ့် သတ်မှတ်ဖို့နဲ့ နားလည်ဖို့ လွယ်ကူလေ့ရှိတယ်ဆိုတဲ့ အချက်အပေါ် မူတည်ပြီး၊ tree-recursive procedure တွေကို တူညီတဲ့ရလဒ်ထွက်မယ့် ပိုပြီးထိရောက်တဲ့ procedure တွေအဖြစ် ပြောင်းလဲပေးနိုင်တဲ့ “smart compiler” တွေကို တီထွင်ဖို့ လူတွေက အကြံပြုလာကြပါတယ်။<a class="footnote_link" id="DOCF34" href="#FOOT34"><sup>34</sup></a>
+</p>
+<blockquote>
+<p><strong><a id="Exercise-1_002e11"></a>Exercise 1.11:</strong> function <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>f</mi>
+</math> ကို အောက်ပါ စည်းမျဉ်းအတိုင်း သတ်မှတ်ထားပါတယ်။ အကယ်၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <mo>&lt;</mo>
+    <mn>3</mn>
+  </mrow>
+</math> ဖြစ်လျှင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>f</mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+    <mo>=</mo>
+    <mi>n</mi>
+  </mrow>
+</math> ဖြစ်ပြီး၊ အကယ်၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <mo>≥<!-- ≥ --></mo>
+    <mn>3</mn>
+  </mrow>
+</math> ဖြစ်လျှင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>f</mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+  <mo>=</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>f</mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo>−<!-- − --></mo>
+    <mn>1</mn>
+    <mo stretchy="false">)</mo>
+  </mrow>
+  <mo>+</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>2</mn>
+    <mi>f</mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo>−<!-- − --></mo>
+    <mn>2</mn>
+    <mo stretchy="false">)</mo>
+  </mrow>
+  <mo>+</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>3</mn>
+    <mi>f</mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo>−<!-- − --></mo>
+    <mn>3</mn>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ဖြစ်ပါတယ်။
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>f</mi>
+</math> ကို recursive process နည်းဖြင့် တွက်ချက်ပေးမည့် procedure တစ်ခုကို ရေးပါ။ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>f</mi>
+</math> ကို iterative process နည်းဖြင့် တွက်ချက်ပေးမည့် procedure တစ်ခုကို ရေးပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-1_002e12"></a>Exercise 1.12:</strong> အောက်ပါ ကိန်းဂဏန်းပုံစံကို <a id="index-Pascal_0027s-triangle"></a>
+<em>Pascal’s triangle</em> လို့ ခေါ်ပါတယ်။
+</p>
+<div class="example">
+<pre class="example">         1
+       1   1
+     1   2   1
+   1   3   3   1
+ 1   4   6   4   1
+       . . .
+</pre></div>
+
+<p>တြိဂံရဲ့ အနားသတ်မှာရှိတဲ့ ကိန်းတွေအားလုံးဟာ 1 ဖြစ်ပြီး၊ တြိဂံအတွင်းထဲက ကိန်းတစ်ခုစီဟာ သူ့အပေါ်က ကိန်းနှစ်ခုရဲ့ ပေါင်းလဒ်ဖြစ်ပါတယ်။<a class="footnote_link" id="DOCF35" href="#FOOT35"><sup>35</sup></a> Pascal’s triangle ရဲ့ အစိတ်အပိုင်းတွေကို recursive process နည်းနဲ့ တွက်ချက်ပေးမယ့် procedure တစ်ခုကို ရေးပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-1_002e13"></a>Exercise 1.13:</strong> <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mtext>Fib</mtext>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ဟာ 
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <msup>
+      <mi>φ<!-- φ --></mi>
+      <mi>n</mi>
+    </msup>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mo>/</mo>
+    </mrow>
+    <msqrt>
+      <mn>5</mn>
+    </msqrt>
+  </mrow>
+</math> နဲ့ အနီးစပ်ဆုံး ကိန်းပြည့်ဖြစ်ကြောင်း သက်သေပြပါ၊ ဤနေရာတွင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>φ<!-- φ --></mi>
+  <mo>=</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <mn>1</mn>
+    <mo>+</mo>
+    <msqrt>
+      <mn>5</mn>
+    </msqrt>
+    <mo stretchy="false">)</mo>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mo>/</mo>
+    </mrow>
+    <mn>2</mn>
+  </mrow>
+</math> ဖြစ်သည်။
+လမ်းညွှန်ချက်: <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>ψ<!-- ψ --></mi>
+  <mo>=</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <mn>1</mn>
+    <mo>−<!-- − --></mo>
+    <msqrt>
+      <mn>5</mn>
+    </msqrt>
+    <mo stretchy="false">)</mo>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mo>/</mo>
+    </mrow>
+    <mn>2</mn>
+  </mrow>
+</math> ဟု ထားပါ။
+Induction နှင့် Fibonacci ကိန်းများ၏ အဓိပ္ပာယ်ဖွင့်ဆိုချက် (<a href="#g_t1_002e2_002e2">1.2.2</a> ကိုကြည့်ပါ) ကို အသုံးပြု၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mtext>Fib</mtext>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+  <mo>=</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <msup>
+      <mi>φ<!-- φ --></mi>
+      <mi>n</mi>
+    </msup>
+    <mo>−<!-- − --></mo>
+    <msup>
+      <mi>ψ<!-- ψ --></mi>
+      <mi>n</mi>
+    </msup>
+    <mo stretchy="false">)</mo>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mo>/</mo>
+    </mrow>
+    <msqrt>
+      <mn>5</mn>
+    </msqrt>
+  </mrow>
+</math> ဖြစ်ကြောင်း သက်သေပြပါ။
+</p></blockquote>
+
+<a id="g_t1_002e2_002e3"></a>
+<a id="Orders-of-Growth"></a>
+<h4 class="subsection"><span class="secnum">1.2.3</span><span class="sectitle">Orders of Growth</span></h4>
+
+<p>ယခင် ဥပမာများအရ လုပ်ငန်းစဉ် (processes) များသည် ၎င်းတို့ အသုံးပြုသော တွက်ချက်မှုဆိုင်ရာ အရင်းအမြစ် (computational resources) ပမာဏအပေါ် မူတည်၍ သိသိသာသာ ကွဲပြားနိုင်ကြောင်း တွေ့ရပါသည်။ ဤကွဲပြားမှုကို ဖော်ပြရန် အဆင်ပြေသော နည်းလမ်းတစ်ခုမှာ အဝင်တန်ဖိုး (inputs) များ ပိုမိုကြီးမားလာသည်နှင့်အမျှ လုပ်ငန်းစဉ်တစ်ခုမှ လိုအပ်သော အရင်းအမြစ်များကို အကြမ်းဖျင်း တိုင်းတာနိုင်ရန် <a id="index-order-of-growth"></a>
+<em>order of growth</em> အယူအဆကို အသုံးပြုခြင်း ဖြစ်ပါသည်။
+</p>
+<p>ပြဿနာ၏ အရွယ်အစားကို တိုင်းတာသည့် ပါရာမီတာကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ဟု သတ်မှတ်ပါ၊ အရွယ်အစား <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ရှိသော ပြဿနာတစ်ခုအတွက် လုပ်ငန်းစဉ်မှ လိုအပ်သော အရင်းအမြစ် ပမာဏကို
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>R</mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ဟု ထားပါ။ ကျွန်ုပ်တို့၏ ယခင်ဥပမာများတွင် ပေးထားသော ဖန်ရှင်တစ်ခုကို တွက်ချက်ရမည့် ကိန်းဂဏန်းကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> အဖြစ် ယူဆခဲ့သော်လည်း အခြားသော ဖြစ်နိုင်ခြေများလည်း ရှိပါသည်။ ဥပမာအားဖြင့်၊ ကျွန်ုပ်တို့၏ ရည်မှန်းချက်မှာ ကိန်းဂဏန်းတစ်ခု၏ နှစ်ထပ်ကိန်းရင်း (square root) အတွက် ခန့်မှန်းခြေတန်ဖိုးကို တွက်ချက်ရန်ဖြစ်ပါက၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ကို လိုအပ်သော ဒသမနေရာ တိကျမှု အရေအတွက်အဖြစ် ယူဆနိုင်ပါသည်။ မေးထရစ် မြှောက်ခြင်း (matrix multiplication) အတွက်မူ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ကို မေးထရစ်များရှိ အတန်း (rows) အရေအတွက်အဖြစ် ယူဆနိုင်ပါသည်။ ယေဘုယျအားဖြင့် ပေးထားသော လုပ်ငန်းစဉ်တစ်ခုကို ခွဲခြမ်းစိတ်ဖြာရန် ပြဿနာ၏ ဂုဏ်သတ္တိများစွာ ရှိပါသည်။ ထို့အတူ
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>R</mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> သည် အသုံးပြုထားသော အတွင်းပိုင်း သိမ်းဆည်းမှု မှတ်ပုံတင်များ (internal storage registers) အရေအတွက်၊ လုပ်ဆောင်ခဲ့သော အခြေခံ စက်ပိုင်းဆိုင်ရာ လုပ်ဆောင်ချက်များ (elementary machine operations) အရေအတွက် စသည်တို့ကို တိုင်းတာနိုင်ပါသည်။ တစ်ကြိမ်လျှင် သတ်မှတ်ထားသော လုပ်ဆောင်ချက် အရေအတွက်ကိုသာ လုပ်ဆောင်နိုင်သည့် ကွန်ပျူတာများတွင် လိုအပ်သော အချိန်သည် လုပ်ဆောင်ခဲ့သော အခြေခံ စက်ပိုင်းဆိုင်ရာ လုပ်ဆောင်ချက် အရေအတွက်နှင့် တိုက်ရိုက် အချိုးကျမည် ဖြစ်ပါသည်။
+</p>
+<p><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> နှင့် မသက်ဆိုင်သော အပေါင်းကိန်း သေကိန်းများဖြစ်သည့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>k</mi>
+    <mn>1</mn>
+  </msub>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>k</mi>
+    <mn>2</mn>
+  </msub>
+</math> ရှိပြီး၊ လုံလောက်စွာ ကြီးမားသော <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> တန်ဖိုးတိုင်းအတွက် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <msub>
+      <mi>k</mi>
+      <mn>1</mn>
+    </msub>
+    <mi>f</mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+  <mo>≤<!-- ≤ --></mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>R</mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+  <mo>≤<!-- ≤ --></mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <msub>
+      <mi>k</mi>
+      <mn>2</mn>
+    </msub>
+    <mi>f</mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> 
+for any sufficiently large value of <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> အတွက် ဖြစ်ပါက၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>R</mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> တွင် order of growth <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ<!-- Θ --></mi>
+    <mo stretchy="false">(</mo>
+    <mi>f</mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ရှိသည်ဟု ဆိုကာ၊
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>R</mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+  <mo>=</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ<!-- Θ --></mi>
+    <mo stretchy="false">(</mo>
+    <mi>f</mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> (“theta of
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>f</mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math>” ဟု ဖတ်သည်) ဟု ရေးသားပါသည်။ (တစ်နည်းအားဖြင့် ဆိုရသော် ကြီးမားသော <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> အတွက်၊
+တန်ဖိုး <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>R</mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <msub>
+      <mi>k</mi>
+      <mn>1</mn>
+    </msub>
+    <mi>f</mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> နှင့်
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <msub>
+      <mi>k</mi>
+      <mn>2</mn>
+    </msub>
+    <mi>f</mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ကြားတွင် ရှိနေခြင်း ဖြစ်ပါသည်။)
+</p>
+<p>ဥပမာအားဖြင့်၊ အပိုင်း <a href="#g_t1_002e2_002e1">1.2.1</a> တွင် ဖော်ပြထားသော ဖက်တိုရီရယ် (factorial) တွက်ချက်သည့် လီနီယာ ရီကာဆစ် လုပ်ငန်းစဉ် (linear recursive process) တွင် လုပ်ဆောင်ချက် အဆင့်အရေအတွက်သည် အဝင်တန်ဖိုး <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> နှင့် အချိုးကျ တိုးတက်ပါသည်။ ထို့ကြောင့် ဤလုပ်ငန်းစဉ်အတွက် လိုအပ်သော အဆင့်များသည်
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ<!-- Θ --></mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> အဖြစ် တိုးတက်ပါသည်။ လိုအပ်သော နေရာလွတ် (space) သည်လည်း
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ<!-- Θ --></mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> အဖြစ် တိုးတက်သည်ကို ကျွန်ုပ်တို့ တွေ့ခဲ့ရပါသည်။ အစ်ထရေးတစ် ဖက်တိုရီရယ် (iterative factorial) အတွက်မူ အဆင့်အရေအတွက်မှာ
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ<!-- Θ --></mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ပင် ဖြစ်သော်လည်း နေရာလွတ်မှာ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ<!-- Θ --></mi>
+    <mo stretchy="false">(</mo>
+    <mn>1</mn>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math>—ဆိုလိုသည်မှာ
+ကိန်းသေ ဖြစ်ပါသည်။<a class="footnote_link" id="DOCF36" href="#FOOT36"><sup>36</sup></a> သစ်ပင်ပုံစံ ရီကာဆစ် (tree-recursive) Fibonacci တွက်ချက်မှုတွင်မူ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ<!-- Θ --></mi>
+    <mo stretchy="false">(</mo>
+    <msup>
+      <mi>φ<!-- φ --></mi>
+      <mi>n</mi>
+    </msup>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math>
+အဆင့်များနှင့် နေရာလွတ် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ<!-- Θ --></mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> လိုအပ်ပြီး၊ ဤနေရာတွင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>φ<!-- φ --></mi>
+</math> သည် အပိုင်း <a href="#g_t1_002e2_002e2">1.2.2</a> တွင် ဖော်ပြထားသော golden ratio ဖြစ်ပါသည်။
+</p>
+<p>Orders of growth သည် လုပ်ငန်းစဉ်တစ်ခု၏ လုပ်ဆောင်ပုံကို အကြမ်းဖျင်းသာ ဖော်ပြနိုင်ပါသည်။
+ဥပမာအားဖြင့် အဆင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mi>n</mi>
+    <mn>2</mn>
+  </msup>
+</math> လိုအပ်သော လုပ်ငန်းစဉ်၊ အဆင့်
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>1000</mn>
+    <msup>
+      <mi>n</mi>
+      <mn>2</mn>
+    </msup>
+  </mrow>
+</math> လိုအပ်သော လုပ်ငန်းစဉ်နှင့် အဆင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>3</mn>
+    <msup>
+      <mi>n</mi>
+      <mn>2</mn>
+    </msup>
+  </mrow>
+  <mo>+</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>10</mn>
+    <mi>n</mi>
+  </mrow>
+  <mo>+</mo>
+  <mn>17</mn>
+</math> လိုအပ်သော လုပ်ငန်းစဉ် အားလုံးသည်
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ<!-- Θ --></mi>
+    <mo stretchy="false">(</mo>
+    <msup>
+      <mi>n</mi>
+      <mn>2</mn>
+    </msup>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> order of growth ရှိကြပါသည်။ အခြားတစ်ဖက်တွင်မူ order of growth သည် ပြဿနာ၏ အရွယ်အစားကို ပြောင်းလဲလိုက်သောအခါ လုပ်ငန်းစဉ်၏ လုပ်ဆောင်ပုံ မည်သို့ပြောင်းလဲသွားမည်ကို ခန့်မှန်းရန် အသုံးဝင်သော အချက်အလက်များကို ပေးပါသည်။ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ<!-- Θ --></mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math>
+(linear) လုပ်ငန်းစဉ်တစ်ခုအတွက် အရွယ်အစားကို နှစ်ဆတိုးလိုက်လျှင် အသုံးပြုသော အရင်းအမြစ် ပမာဏမှာလည်း အကြမ်းဖျင်းအားဖြင့် နှစ်ဆ ဖြစ်လာပါမည်။ အိတ်စ်ပိုနန်းရှယ် (exponential) လုပ်ငန်းစဉ်တစ်ခုအတွက်မူ ပြဿနာ၏ အရွယ်အစား တိုးလာမှုတိုင်းသည် အရင်းအမြစ် အသုံးပြုမှုကို ကိန်းသေ ဆတိုးကိန်းတစ်ခုဖြင့် မြှောက်သွားမည် ဖြစ်ပါသည်။ အပိုင်း <a href="#g_t1_002e2">1.2</a> ၏ ကျန်ရှိသော အပိုင်းများတွင် order of growth သည် logarithmic ဖြစ်သော algorithm နှစ်ခုကို လေ့လာပါမည်။ ထိုအခါ ပြဿနာ၏ အရွယ်အစားကို နှစ်ဆတိုးခြင်းသည် အရင်းအမြစ် လိုအပ်ချက်ကို ကိန်းသေ ပမာဏတစ်ခုသာ တိုးလာစေမည် ဖြစ်ပါသည်။
+</p>
+<blockquote>
+<p><strong><a id="Exercise-1_002e14"></a>လေ့ကျင့်ခန်း ၁.၁၄:</strong> ၁၁ ဆင့် (11 cents) အတွက် အကြွေလဲခြင်းကို အပိုင်း <a href="#g_t1_002e2_002e2">1.2.2</a> ရှိ <code>count-change</code> ပရိုစီဂျာဖြင့် လုပ်ဆောင်ရာတွင် ဖြစ်ပေါ်လာသော လုပ်ငန်းစဉ်ကို သရုပ်ဖော်သည့် သစ်ပင်ပုံစံကို ဆွဲပါ။ လဲလှယ်ရမည့် ပမာဏ တိုးလာသည်နှင့်အမျှ ဤလုပ်ငန်းစဉ်မှ အသုံးပြုသော နေရာလွတ်နှင့် အဆင့်အရေအတွက်တို့၏ orders of growth မှာ အဘယ်နည်း။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-1_002e15"></a>လေ့ကျင့်ခန်း ၁.၁၅:</strong> ထောင့်တစ်ခု၏ ဆိုင်းတန်ဖိုး (sine) ကို (ရေဒီယံဖြင့် ဖော်ပြထားလျှင်) <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>sin</mi>
+    <mo>⁡<!-- ⁡ --></mo>
+    <mi>x</mi>
+    <mo>≈<!-- ≈ --></mo>
+    <mi>x</mi>
+  </mrow>
+</math> ဖြစ်ရန် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> သည် လုံလောက်စွာ ငယ်ပါက၊ sin ၏ အာဂူးမန့် (argument) အရွယ်အစားကို လျှော့ချရန် ထရီဂိုနိုမေတြီ သင်္ချာပုံသေနည်း
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>sin</mi>
+    <mo>⁡<!-- ⁡ --></mo>
+    <mi>x</mi>
+  </mrow>
+  <mspace width="thinmathspace"/>
+  <mo>=</mo>
+  <mspace width="thinmathspace"/>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>3</mn>
+    <mi>sin</mi>
+    <mo>⁡<!-- ⁡ --></mo>
+    <mfrac>
+      <mi>x</mi>
+      <mn>3</mn>
+    </mfrac>
+  </mrow>
+  <mspace width="thinmathspace"/>
+  <mo>−<!-- − --></mo>
+  <mspace width="thinmathspace"/>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>4</mn>
+    <msup>
+      <mi>sin</mi>
+      <mn>3</mn>
+    </msup>
+    <mo>⁡<!-- ⁡ --></mo>
+    <mfrac>
+      <mi>x</mi>
+      <mn>3</mn>
+    </mfrac>
+  </mrow>
+</math>
+
+ကို အသုံးပြု၍ တွက်ချက်နိုင်ပါသည်။ (ဤလေ့ကျင့်ခန်းအတွက် ထောင့်တစ်ခု၏ ပမာဏသည် 0.1 ရေဒီယံထက် မကြီးပါက “လုံလောက်စွာ ငယ်သည်” ဟု ယူဆပါသည်။) ဤအယူအဆများကို အောက်ပါ ပရိုစီဂျာများတွင် ထည့်သွင်းထားပါသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">cube x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x x x</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">p x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="lit">4</span><span class="pln"> </span><span class="opn">(</span><span class="pln">cube x</span><span class="clo">))))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sine angle</span><span class="clo">)</span><span class="pln">
+   </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">not </span><span class="opn">(</span><span class="pun">&gt;</span><span class="pln"> </span><span class="opn">(</span><span class="pln">abs angle</span><span class="clo">)</span><span class="pln"> </span><span class="lit">0.1</span><span class="clo">))</span><span class="pln">
+       angle
+       </span><span class="opn">(</span><span class="pln">p </span><span class="opn">(</span><span class="pln">sine </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> angle </span><span class="lit">3.0</span><span class="clo">)))))</span></pre></div>
+
+<ol>
+<li> <code>(sine 12.15)</code> ကို တွက်ချက်သောအခါ ပရိုစီဂျာ <code>p</code> ကို မည်မျှ အကြိမ်ရေ အသုံးပြုသနည်း။
+
+</li><li> <code>(sine a)</code> ကို တွက်ချက်သောအခါ <code>sine</code> ပရိုစီဂျာမှ ဖြစ်ပေါ်လာသော လုပ်ငန်းစဉ်၏ နေရာလွတ်နှင့် အဆင့်အရေအတွက် (
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> ၏ ဖန်ရှင်အဖြစ်) ၏ order of growth မှာ အဘယ်နည်း။
+
+</li></ol>
+</blockquote>
+
+<a id="g_t1_002e2_002e4"></a>
+<a id="Exponentiation"></a>
+<h4 class="subsection"><span class="secnum">1.2.4</span><span class="sectitle">Exponentiation</span></h4>
+
+<p>ပေးထားသော ကိန်းတစ်ခု၏ ထပ်ကိန်း (exponential) ကို တွက်ချက်ခြင်း ပြဿနာကို စဉ်းစားကြည့်ကြပါစို့။ အခြေ (base) <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>b</mi>
+</math> နှင့် အပေါင်းကိန်း ထပ်ညွှန်း (positive integer exponent) <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> တို့ကို argument များအဖြစ် လက်ခံပြီး <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mi>b</mi>
+    <mi>n</mi>
+  </msup>
+</math> ကို တွက်ချက်ပေးမည့် procedure တစ်ခုကို ကျွန်ုပ်တို့ အလိုရှိပါသည်။ ဤအရာကို ပြုလုပ်နိုင်သည့် နည်းလမ်းတစ်ခုမှာ recursive definition မှတစ်ဆင့် ဖြစ်သည်-
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mtable columnalign="left" rowspacing="4pt" columnspacing="1em">
+    <mtr>
+      <mtd>
+        <msup>
+          <mi>b</mi>
+          <mi>n</mi>
+        </msup>
+        <mspace width="thinmathspace"/>
+        <mo>=</mo>
+        <mspace width="thinmathspace"/>
+        <mi>b</mi>
+        <mo>⋅<!-- ⋅ --></mo>
+        <msup>
+          <mi>b</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mi>n</mi>
+            <mo>−<!-- − --></mo>
+            <mn>1</mn>
+          </mrow>
+        </msup>
+        <mo>,</mo>
+      </mtd>
+    </mtr>
+    <mtr>
+      <mtd>
+        <msup>
+          <mi>b</mi>
+          <mn>0</mn>
+        </msup>
+        <mspace width="thinmathspace"/>
+        <mo>=</mo>
+        <mspace width="thinmathspace"/>
+        <mn>1</mn>
+        <mo>,</mo>
+      </mtd>
+    </mtr>
+  </mtable>
+</math>
+
+၎င်းကို အောက်ပါ procedure အဖြစ် အလွယ်တကူ ပြောင်းလဲနိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">expt b n</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> n </span><span class="lit">0</span><span class="clo">)</span><span class="pln"> 
+      </span><span class="lit">1</span><span class="pln"> 
+      </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> b </span><span class="opn">(</span><span class="pln">expt b </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> n </span><span class="lit">1</span><span class="clo">)))))</span></pre></div>
+
+<p>ဤသည်မှာ linear recursive process တစ်ခုဖြစ်ပြီး၊ အဆင့်ပေါင်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ<!-- Θ --></mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> နှင့် နေရာလွတ် (space) <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ<!-- Θ --></mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> လိုအပ်ပါသည်။ factorial ကဲ့သို့ပင်၊ ကျွန်ုပ်တို့သည် ၎င်းနှင့် ညီမျှသော linear iteration တစ်ခုကို အောက်ပါအတိုင်း အလွယ်တကူ ဖော်ထုတ်နိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">expt b n</span><span class="clo">)</span><span class="pln"> 
+  </span><span class="opn">(</span><span class="pln">expt-iter b n </span><span class="lit">1</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">expt-iter b counter product</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> counter </span><span class="lit">0</span><span class="clo">)</span><span class="pln">
+      product
+      </span><span class="opn">(</span><span class="pln">expt-iter b
+                 </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> counter </span><span class="lit">1</span><span class="clo">)</span><span class="pln">
+                 </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> b product</span><span class="clo">))))</span></pre></div>
+
+<p>ဤ version တွင် အဆင့်ပေါင်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ<!-- Θ --></mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> နှင့် နေရာလွတ် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ<!-- Θ --></mi>
+    <mo stretchy="false">(</mo>
+    <mn>1</mn>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> လိုအပ်ပါသည်။
+</p>
+<p>ဆင့်ကဲ နှစ်ထပ်ကိန်းတင်ခြင်း (successive squaring) ကို အသုံးပြု၍ ထပ်ကိန်းများကို အဆင့်နည်းနည်းဖြင့် တွက်ချက်နိုင်ပါသည်။ ဥပမာအားဖြင့်၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mi>b</mi>
+    <mn>8</mn>
+  </msup>
+</math> ကို အောက်ပါအတိုင်း တွက်မည့်အစား-
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>b</mi>
+    <mo>⋅<!-- ⋅ --></mo>
+    <mo stretchy="false">(</mo>
+    <mi>b</mi>
+    <mo>⋅<!-- ⋅ --></mo>
+    <mo stretchy="false">(</mo>
+    <mi>b</mi>
+  </mrow>
+  <mo>⋅<!-- ⋅ --></mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <mi>b</mi>
+    <mo>⋅<!-- ⋅ --></mo>
+    <mo stretchy="false">(</mo>
+    <mi>b</mi>
+    <mo>⋅<!-- ⋅ --></mo>
+    <mo stretchy="false">(</mo>
+    <mi>b</mi>
+  </mrow>
+  <mo>⋅<!-- ⋅ --></mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <mi>b</mi>
+    <mo>⋅<!-- ⋅ --></mo>
+    <mi>b</mi>
+    <mo stretchy="false">)</mo>
+    <mo stretchy="false">)</mo>
+    <mo stretchy="false">)</mo>
+    <mo stretchy="false">)</mo>
+    <mo stretchy="false">)</mo>
+    <mo stretchy="false">)</mo>
+    <mo>,</mo>
+  </mrow>
+</math>
+
+မြှောက်ခြင်း သုံးကြိမ်သာ အသုံးပြု၍ တွက်ချက်နိုင်သည်-
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mtable columnalign="left" rowspacing="4pt" columnspacing="1em">
+    <mtr>
+      <mtd>
+        <msup>
+          <mi>b</mi>
+          <mn>2</mn>
+        </msup>
+        <mspace width="thinmathspace"/>
+        <mo>=</mo>
+        <mspace width="thinmathspace"/>
+        <mi>b</mi>
+        <mo>⋅<!-- ⋅ --></mo>
+        <mi>b</mi>
+        <mo>,</mo>
+      </mtd>
+    </mtr>
+    <mtr>
+      <mtd>
+        <msup>
+          <mi>b</mi>
+          <mn>4</mn>
+        </msup>
+        <mspace width="thinmathspace"/>
+        <mo>=</mo>
+        <mspace width="thinmathspace"/>
+        <msup>
+          <mi>b</mi>
+          <mn>2</mn>
+        </msup>
+        <mo>⋅<!-- ⋅ --></mo>
+        <msup>
+          <mi>b</mi>
+          <mn>2</mn>
+        </msup>
+        <mo>,</mo>
+      </mtd>
+    </mtr>
+    <mtr>
+      <mtd>
+        <msup>
+          <mi>b</mi>
+          <mn>8</mn>
+        </msup>
+        <mspace width="thinmathspace"/>
+        <mo>=</mo>
+        <mspace width="thinmathspace"/>
+        <msup>
+          <mi>b</mi>
+          <mn>4</mn>
+        </msup>
+        <mo>⋅<!-- ⋅ --></mo>
+        <msup>
+          <mi>b</mi>
+          <mn>4</mn>
+        </msup>
+        <mo>.</mo>
+      </mtd>
+    </mtr>
+  </mtable>
+</math>
+
+ဤနည်းလမ်းသည် ၂ ၏ ထပ်ကိန်းများ ဖြစ်သော ထပ်ညွှန်းများအတွက် ကောင်းမွန်စွာ အလုပ်လုပ်ပါသည်။ အကယ်၍ ကျွန်ုပ်တို့သည် အောက်ပါ စည်းမျဉ်းကို အသုံးပြုမည်ဆိုလျှင် ယေဘုယျအားဖြင့် ထပ်ကိန်းများကို တွက်ချက်ရာတွင် ဆင့်ကဲ နှစ်ထပ်ကိန်းတင်ခြင်း၏ အားသာချက်ကို ရယူနိုင်ပါသည်။
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mtable columnalign="left left" rowspacing="4pt" columnspacing="1em">
+    <mtr>
+      <mtd>
+        <msup>
+          <mi>b</mi>
+          <mi>n</mi>
+        </msup>
+        <mspace width="thinmathspace"/>
+        <mo>=</mo>
+        <mspace width="thinmathspace"/>
+        <mo stretchy="false">(</mo>
+        <msup>
+          <mi>b</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mi>n</mi>
+            <mrow class="MJX-TeXAtom-ORD">
+              <mo>/</mo>
+            </mrow>
+            <mn>2</mn>
+          </mrow>
+        </msup>
+        <msup>
+          <mo stretchy="false">)</mo>
+          <mn>2</mn>
+        </msup>
+      </mtd>
+      <mtd>
+        <mtext>if</mtext>
+        <mspace width="thickmathspace"/>
+        <mi>n</mi>
+        <mspace width="thickmathspace"/>
+        <mtext>is even</mtext>
+        <mo>,</mo>
+      </mtd>
+    </mtr>
+    <mtr>
+      <mtd>
+        <msup>
+          <mi>b</mi>
+          <mi>n</mi>
+        </msup>
+        <mspace width="thinmathspace"/>
+        <mo>=</mo>
+        <mspace width="thinmathspace"/>
+        <mi>b</mi>
+        <mo>⋅<!-- ⋅ --></mo>
+        <msup>
+          <mi>b</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mi>n</mi>
+            <mo>−<!-- − --></mo>
+            <mn>1</mn>
+          </mrow>
+        </msup>
+      </mtd>
+      <mtd>
+        <mtext>if</mtext>
+        <mspace width="thickmathspace"/>
+        <mi>n</mi>
+        <mspace width="thickmathspace"/>
+        <mtext>is odd</mtext>
+        <mo>.</mo>
+      </mtd>
+    </mtr>
+  </mtable>
+</math>
+
+ဤနည်းလမ်းကို procedure တစ်ခုအနေဖြင့် အောက်ပါအတိုင်း ဖော်ပြနိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">fast-expt b n</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pun">=</span><span class="pln"> n </span><span class="lit">0</span><span class="clo">)</span><span class="pln"> 
+         </span><span class="lit">1</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="pln">even? n</span><span class="clo">)</span><span class="pln"> 
+         </span><span class="opn">(</span><span class="pln">square </span><span class="opn">(</span><span class="pln">fast-expt b </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> n </span><span class="lit">2</span><span class="clo">))))</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> 
+         </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> b </span><span class="opn">(</span><span class="pln">fast-expt b </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> n </span><span class="lit">1</span><span class="clo">))))))</span></pre></div>
+
+<p>ကိန်းပြည့်တစ်ခု စုံ (even) မစုံ စစ်ဆေးမည့် predicate ကို primitive procedure <code>remainder</code> အသုံးပြု၍ အောက်ပါအတိုင်း အဓိပ္ပာယ်ဖွင့်နိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">even? n</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> </span><span class="opn">(</span><span class="pln">remainder n </span><span class="lit">2</span><span class="clo">)</span><span class="pln"> </span><span class="lit">0</span><span class="clo">))</span></pre></div>
+
+<p><code>fast-expt</code> မှ ဖြစ်ပေါ်လာသော process သည် နေရာလွတ်နှင့် အဆင့် အရေအတွက် နှစ်မျိုးလုံးတွင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> နှင့်အညီ logarithmically တိုးပွားပါသည်။ ဤအချက်ကို သိရှိနိုင်ရန် <code>fast-expt</code> ကို အသုံးပြု၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mi>b</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mn>2</mn>
+      <mi>n</mi>
+    </mrow>
+  </msup>
+</math> ကို တွက်ချက်ခြင်းသည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mi>b</mi>
+    <mi>n</mi>
+  </msup>
+</math> ကို တွက်ချက်ခြင်းထက် မြှောက်ခြင်း တစ်ကြိမ်သာ ပိုမိုလိုအပ်ကြောင်း သတိပြုပါ။ ထို့ကြောင့် ကျွန်ုပ်တို့ တွက်ချက်နိုင်သော ထပ်ညွှန်း၏ ပမာဏသည် ခွင့်ပြုထားသော မြှောက်ခြင်းအသစ် တစ်ကြိမ်စီတိုင်းတွင် (ခန့်မှန်းခြေအားဖြင့်) နှစ်ဆ တိုးလာပါသည်။ ထို့ကြောင့် ထပ်ညွှန်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> အတွက် လိုအပ်သော မြှောက်ခြင်း အရေအတွက်သည် ၂ ကို အခြေခံသော <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ၏ logarithm ကဲ့သို့ လျင်မြန်စွာ တိုးပွားပါသည်။ ဤ process သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ<!-- Θ --></mi>
+    <mo stretchy="false">(</mo>
+    <mi>log</mi>
+    <mo>⁡<!-- ⁡ --></mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> တိုးပွားမှုနှုန်း ရှိပါသည်။<a class="footnote_link" id="DOCF37" href="#FOOT37"><sup>37</sup></a>
+</p>
+<p><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ<!-- Θ --></mi>
+    <mo stretchy="false">(</mo>
+    <mi>log</mi>
+    <mo>⁡<!-- ⁡ --></mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> တိုးပွားမှုနှုန်းနှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ<!-- Θ --></mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> တိုးပွားမှုနှုန်းတို့၏ ကွာခြားချက်သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ကြီးမားလာသည်နှင့်အမျှ သိသိသာသာ ထင်ရှားလာပါသည်။ ဥပမာအားဖြင့်၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> = 1000 အတွက် <code>fast-expt</code> သည် မြှောက်ခြင်း ၁၄ ကြိမ်သာ လိုအပ်ပါသည်။<a class="footnote_link" id="DOCF38" href="#FOOT38"><sup>38</sup></a> ဆင့်ကဲ နှစ်ထပ်ကိန်းတင်ခြင်း အယူအဆကို အသုံးပြု၍ logarithmic အဆင့်များဖြင့် ထပ်ကိန်းများကို တွက်ချက်နိုင်သော iterative algorithm တစ်ခုကိုလည်း ဖန်တီးနိုင်ပါသည် (<a href="#Exercise-1_002e16">လေ့ကျင့်ခန်း ၁.၁၆</a> ကိုကြည့်ပါ)။ သို့သော် iterative algorithm များတွင် ဖြစ်လေ့ရှိသည့်အတိုင်း ၎င်းသည် recursive algorithm ကဲ့သို့ တိုက်ရိုက် ရိုးရှင်းစွာ ရေးသားထားခြင်းမျိုး မဟုတ်ပါ။<a class="footnote_link" id="DOCF39" href="#FOOT39"><sup>39</sup></a>
+</p>
+<blockquote>
+<p><strong><a id="Exercise-1_002e16"></a>လေ့ကျင့်ခန်း ၁.၁၆:</strong> <code>fast-expt</code> ကဲ့သို့ပင် ဆင့်ကဲ နှစ်ထပ်ကိန်းတင်ခြင်းကို အသုံးပြုပြီး logarithmic အဆင့်များဖြင့် အလုပ်လုပ်သော iterative exponentiation process တစ်ခုကို ဖော်ဆောင်ပေးမည့် procedure တစ်ခုကို ရေးဆွဲပါ။ (အရိပ်အမြွက်- <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <msup>
+      <mi>b</mi>
+      <mrow class="MJX-TeXAtom-ORD">
+        <mi>n</mi>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mo>/</mo>
+        </mrow>
+        <mn>2</mn>
+      </mrow>
+    </msup>
+    <msup>
+      <mo stretchy="false">)</mo>
+      <mn>2</mn>
+    </msup>
+  </mrow>
+  <mo>=</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <msup>
+      <mi>b</mi>
+      <mn>2</mn>
+    </msup>
+    <msup>
+      <mo stretchy="false">)</mo>
+      <mrow class="MJX-TeXAtom-ORD">
+        <mi>n</mi>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mo>/</mo>
+        </mrow>
+        <mn>2</mn>
+      </mrow>
+    </msup>
+  </mrow>
+</math> ဖြစ်သည်ဟူသော အချက်ကို အသုံးပြု၍၊ ထပ်ညွှန်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> နှင့် အခြေ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>b</mi>
+</math> တို့နှင့်အတူ နောက်ထပ် state variable <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> တစ်ခုကို ထားရှိပါ၊ ထို့နောက် မြှောက်လဒ် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>a</mi>
+    <msup>
+      <mi>b</mi>
+      <mi>n</mi>
+    </msup>
+  </mrow>
+</math> သည် state တစ်ခုမှ တစ်ခုသို့ ပြောင်းလဲသော်လည်း မပြောင်းလဲဘဲ တည်ရှိနေစေမည့် state transformation ကို သတ်မှတ်ပါ။ လုပ်ငန်းစဉ်၏ အစတွင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> ကို 1 အဖြစ် ယူဆပြီး၊ အဖြေကို လုပ်ငန်းစဉ်၏ အဆုံးတွင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> ၏ တန်ဖိုးဖြင့် ရရှိမည် ဖြစ်သည်။ ယေဘုယျအားဖြင့်၊ state တစ်ခုမှ တစ်ခုသို့ မပြောင်းလဲဘဲ တည်ရှိနေသော <em>invariant quantity</em> တစ်ခုကို သတ်မှတ်သည့် နည်းစနစ်သည် iterative algorithm များ၏ ဒီဇိုင်းကို စဉ်းစားရာတွင် အလွန်ထိရောက်သော နည်းလမ်းတစ်ခု ဖြစ်သည်။)
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-1_002e17"></a>လေ့ကျင့်ခန်း ၁.၁၇:</strong> ဤအပိုင်းရှိ ထပ်ကိန်းတင်ခြင်း algorithm များသည် မြှောက်ခြင်းကို ထပ်ခါတလဲလဲ ပြုလုပ်ခြင်းဖြင့် ထပ်ကိန်းတင်ခြင်းကို လုပ်ဆောင်ခြင်းအပေါ် အခြေခံထားပါသည်။ ထို့အတူပင်၊ ပေါင်းခြင်းကို ထပ်ခါတလဲလဲ ပြုလုပ်ခြင်းဖြင့် ကိန်းပြည့်များကို မြှောက်ခြင်းကို လုပ်ဆောင်နိုင်ပါသည်။ အောက်ပါ မြှောက်ခြင်း procedure (ကျွန်ုပ်တို့၏ language သည် ပေါင်းရုံသာ ပေါင်းနိုင်ပြီး မမြှောက်နိုင်ဟု ယူဆထားသည်) သည် <code>expt</code> procedure နှင့် ဆင်တူပါသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> a b</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> b </span><span class="lit">0</span><span class="clo">)</span><span class="pln">
+      </span><span class="lit">0</span><span class="pln">
+      </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> a </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> a </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> b </span><span class="lit">1</span><span class="clo">)))))</span></pre></div>
+
+<p>ဤ algorithm သည် <code>b</code> နှင့်အညီ linear ဖြစ်သော အဆင့်အရေအတွက်ကို ယူပါသည်။ ယခု ကျွန်ုပ်တို့တွင် ပေါင်းခြင်းနှင့်အတူ၊ ကိန်းပြည့်တစ်ခုကို နှစ်ဆတိုးပေးသော <code>double</code> နှင့် (စုံကိန်း) ကိန်းပြည့်တစ်ခုကို ၂ နှင့် စားပေးသော <code>halve</code> operation များ ရှိသည်ဟု ဆိုပါစို့။ ၎င်းတို့ကို အသုံးပြု၍ logarithmic အဆင့်များကို အသုံးပြုသော <code>fast-expt</code> နှင့် ဆင်တူသည့် မြှောက်ခြင်း procedure တစ်ခုကို ဒီဇိုင်းထုတ်ပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-1_002e18"></a>လေ့ကျင့်ခန်း ၁.၁၈:</strong> <a href="#Exercise-1_002e16">လေ့ကျင့်ခန်း ၁.၁၆</a> နှင့် <a href="#Exercise-1_002e17">လေ့ကျင့်ခန်း ၁.၁၇</a> တို့၏ ရလဒ်များကို အသုံးပြု၍၊ ပေါင်းခြင်း၊ နှစ်ဆတိုးခြင်းနှင့် နှစ်ပိုင်းပိုင်းခြင်းတို့ကို အသုံးပြု၍ ကိန်းပြည့်နှစ်ခုကို မြှောက်ရန်အတွက် iterative process တစ်ခုကို ထုတ်ပေးပြီး logarithmic အဆင့်များကို အသုံးပြုသော procedure တစ်ခုကို ဖန်တီးပါ။<a class="footnote_link" id="DOCF40" href="#FOOT40"><sup>40</sup></a>
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-1_002e19"></a>လေ့ကျင့်ခန်း ၁.၁၉:</strong> Fibonacci ကိန်းဂဏန်းများကို logarithmic အဆင့်များဖြင့် တွက်ချက်နိုင်သော ပါးနပ်သည့် algorithm တစ်ခု ရှိပါသည်။ <a href="#g_t1_002e2_002e2">1.2.2</a> ၏ <code>fib-iter</code> process ရှိ state variables <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>b</mi>
+</math> တို့၏ transformation ကို ပြန်လည်သတိရပါ- <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+  <mo stretchy="false">←<!-- ← --></mo>
+  <mi>a</mi>
+  <mo>+</mo>
+  <mi>b</mi>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>b</mi>
+  <mo stretchy="false">←<!-- ← --></mo>
+  <mi>a</mi>
+</math>။ ဤ transformation ကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>T</mi>
+</math> ဟု ခေါ်ဆိုပါ၊ ၁ နှင့် ၀ မှ စတင်၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>T</mi>
+</math> ကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ကြိမ် ထပ်ခါတလဲလဲ အသုံးပြုခြင်းသည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mtext>Fib</mtext>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo>+</mo>
+    <mn>1</mn>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mtext>Fib</mtext>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> အတွဲကို ရရှိစေကြောင်း သတိပြုပါ။ တစ်နည်းအားဖြင့်ဆိုသော်၊ Fibonacci ကိန်းဂဏန်းများသည် (၁, ၀) အတွဲမှ စတင်၍ transformation <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>T</mi>
+</math> ၏ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mi>n</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mtext>th</mtext>
+    </mrow>
+  </msup>
+</math> ထပ်ကိန်းဖြစ်သော <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mi>T</mi>
+    <mi>n</mi>
+  </msup>
+</math> ကို အသုံးပြုခြင်းဖြင့် ထွက်ပေါ်လာပါသည်။ ယခု <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>T</mi>
+</math> ကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>T</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mi>p</mi>
+      <mi>q</mi>
+    </mrow>
+  </msub>
+</math> transformations မိသားစုတွင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>p</mi>
+    <mo>=</mo>
+    <mn>0</mn>
+  </mrow>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>q</mi>
+    <mo>=</mo>
+    <mn>1</mn>
+  </mrow>
+</math> ဖြစ်သော အထူးအခြေအနေတစ်ခုအဖြစ် စဉ်းစားပါ၊ ဤနေရာတွင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>T</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mi>p</mi>
+      <mi>q</mi>
+    </mrow>
+  </msub>
+</math> သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <mi>a</mi>
+    <mo>,</mo>
+    <mi>b</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> အတွဲကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+  <mo stretchy="false">←<!-- ← --></mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>b</mi>
+    <mi>q</mi>
+  </mrow>
+  <mo>+</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>a</mi>
+    <mi>q</mi>
+  </mrow>
+  <mo>+</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>a</mi>
+    <mi>p</mi>
+  </mrow>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>b</mi>
+  <mo stretchy="false">←<!-- ← --></mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>b</mi>
+    <mi>p</mi>
+  </mrow>
+  <mo>+</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>a</mi>
+    <mi>q</mi>
+  </mrow>
+</math> အရ ပြောင်းလဲပေးပါသည်။ အကယ်၍ ကျွန်ုပ်တို့သည် ထိုကဲ့သို့သော transformation <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>T</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mi>p</mi>
+      <mi>q</mi>
+    </mrow>
+  </msub>
+</math> ကို နှစ်ကြိမ် အသုံးပြုပါက၊ ၎င်း၏ အကျိုးသက်ရောက်မှုသည် ပုံစံတူသော single transformation <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>T</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <msup>
+        <mi>p</mi>
+        <mo>′</mo>
+      </msup>
+      <msup>
+        <mi>q</mi>
+        <mo>′</mo>
+      </msup>
+    </mrow>
+  </msub>
+</math> ကို အသုံးပြုခြင်းနှင့် အတူတူပင်ဖြစ်ကြောင်း ပြသပါ၊ ထို့နောက် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mi>p</mi>
+    <mo>′</mo>
+  </msup>
+  <mspace width="negativethinmathspace"/>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mi>q</mi>
+    <mo>′</mo>
+  </msup>
+  <mspace width="negativethinmathspace"/>
+</math> တို့ကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>p</mi>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>q</mi>
+</math> တို့ဖြင့် တွက်ချက်ပါ။ ဤအချက်သည် ကျွန်ုပ်တို့အား ဤ transformations များကို နှစ်ထပ်ကိန်းတင်ရန် နည်းလမ်းတစ်ခုကို ပေးစွမ်းပြီး၊ ထို့ကြောင့် <code>fast-expt</code> procedure တွင်ကဲ့သို့ပင် ဆင့်ကဲ နှစ်ထပ်ကိန်းတင်ခြင်းကို အသုံးပြု၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mi>T</mi>
+    <mi>n</mi>
+  </msup>
+</math> ကို တွက်ချက်နိုင်ပါသည်။ ဤအရာအားလုံးကို ပေါင်းစပ်၍ logarithmic အဆင့်များဖြင့် အလုပ်လုပ်သော အောက်ပါ procedure ကို ပြည့်စုံအောင် ပြုလုပ်ပါ-<a class="footnote_link" id="DOCF41" href="#FOOT41"><sup>41</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">fib n</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">fib-iter </span><span class="lit">1</span><span class="pln"> </span><span class="lit">0</span><span class="pln"> </span><span class="lit">0</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> n</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">fib-iter a b p q count</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pun">=</span><span class="pln"> count </span><span class="lit">0</span><span class="clo">)</span><span class="pln"> 
+         b</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="pln">even? count</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">fib-iter a
+                   b
+                   ⟨</span><span class="pun">??</span><span class="pln">⟩  </span><span class="com">;compute </span><var><span class="com">p'</span></var><span class="pln">
+                   ⟨</span><span class="pun">??</span><span class="pln">⟩  </span><span class="com">;compute </span><var><span class="com">q'</span></var><span class="pln">
+                   </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> count </span><span class="lit">2</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> 
+         </span><span class="opn">(</span><span class="pln">fib-iter </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> b q</span><span class="clo">)</span><span class="pln"> 
+                      </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> a q</span><span class="clo">)</span><span class="pln"> 
+                      </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> a p</span><span class="clo">))</span><span class="pln">
+                   </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> b p</span><span class="clo">)</span><span class="pln"> 
+                      </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> a q</span><span class="clo">))</span><span class="pln">
+                   p
+                   q
+                   </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> count </span><span class="lit">1</span><span class="clo">)))))</span></pre></div>
+</blockquote>
+
+<a id="g_t1_002e2_002e5"></a>
+<a id="Greatest-Common-Divisors"></a>
+<h4 class="subsection"><span class="secnum">1.2.5</span><span class="sectitle">အကြီးဆုံး ဘုံဆခွဲကိန်းများ (Greatest Common Divisors)</span></h4>
+
+<p>ကိန်းပြည့် (integer) <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>b</mi>
+</math> တို့၏ အကြီးဆုံး ဘုံဆခွဲကိန်း (greatest common divisor - <abbr>GCD</abbr>) ဆိုသည်မှာ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>b</mi>
+</math> နှစ်ခုလုံးကို အကြွင်း (remainder) မရှိဘဲ စားနိုင်သည့် အကြီးဆုံး ကိန်းပြည့်ဖြစ်သည်ဟု အဓိပ္ပာယ်ဖွင့်ဆိုသည်။ ဥပမာအားဖြင့် 16 နှင့် 28 တို့၏ <abbr>GCD</abbr> မှာ 4 ဖြစ်သည်။ <a href="Chapter-2.html#Chapter-2">Chapter 2</a> တွင်၊ ရာရှင်နယ်ကိန်း သင်္ချာ (rational-number arithmetic) ကို မည်သို့ အကောင်အထည်ဖော်ရမည်ကို လေ့လာသောအခါ၊ ရာရှင်နယ်ကိန်းများကို အရှင်းဆုံးပုံစံ (lowest terms) သို့ လျှော့ချရန်အတွက် <abbr>GCD</abbr> များကို တွက်ချက်နိုင်ရန် လိုအပ်မည်ဖြစ်သည်။ (ရာရှင်နယ်ကိန်းတစ်ခုကို အရှင်းဆုံးပုံစံသို့ လျှော့ချရန်အတွက် ပိုင်းဝေ (numerator) နှင့် ပိုင်းခြေ (denominator) နှစ်ခုလုံးကို ၎င်းတို့၏ <abbr>GCD</abbr> ဖြင့် စားရမည်ဖြစ်သည်။ ဥပမာအားဖြင့် 16/28 ကို 4/7 သို့ လျှော့ချနိုင်သည်။) ကိန်းပြည့်နှစ်ခု၏ <abbr>GCD</abbr> ကို ရှာဖွေရန် နည်းလမ်းတစ်ခုမှာ ၎င်းတို့ကို ဆခွဲကိန်း (factor) များ ခွဲပြီး ဘုံဆခွဲကိန်းများကို ရှာဖွေခြင်း ဖြစ်သော်လည်း၊ ပိုမိုထိရောက်သော ကျော်ကြားသည့် အယ်လ်ဂိုရီသမ် (algorithm) တစ်ခု ရှိပါသည်။
+</p>
+<p>ဤအယ်လ်ဂိုရီသမ်၏ အခြေခံအယူအဆမှာ အကယ်၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>r</mi>
+</math> သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> ကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>b</mi>
+</math> ဖြင့် စားသောအခါ ရရှိသော အကြွင်းဖြစ်ပါက၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> နှင့်
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>b</mi>
+</math> တို့၏ ဘုံဆခွဲကိန်းများသည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>b</mi>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>r</mi>
+</math> တို့၏ ဘုံဆခွဲကိန်းများနှင့် အတိအကျ တူညီသည်ဟူသော အချက်ပေါ်တွင် အခြေခံထားသည်။ ထို့ကြောင့် ကျွန်ုပ်တို့သည် အောက်ပါညီမျှခြင်းကို အသုံးပြုနိုင်သည်။
+</p>
+<div class="example">
+<pre class="example">GCD(a,b) = GCD(b,r)
+</pre></div>
+
+<p>ဤညီမျှခြင်းကို အသုံးပြု၍ <abbr>GCD</abbr> တွက်ချက်ခြင်း ပြဿနာကို ပို၍ပို၍ သေးငယ်သော ကိန်းပြည့်အစုံများ၏ <abbr>GCD</abbr> တွက်ချက်ခြင်း ပြဿနာအဖြစ်သို့ အဆင့်ဆင့် လျှော့ချသွားနိုင်သည်။ ဥပမာအားဖြင့်၊
+</p>
+<div class="example">
+<pre class="example">GCD(206,40) = GCD(40,6)
+            = GCD(6,4)
+            = GCD(4,2)
+            = GCD(2,0) = 2
+</pre></div>
+
+<p><abbr>GCD</abbr>(206, 40) မှ <abbr>GCD</abbr>(2, 0) သို့ လျှော့ချလိုက်သောအခါ 2 ကို ရရှိသည်။ မည်သည့် အပေါင်းကိန်းပြည့် နှစ်ခုဖြင့်မဆို စတင်ပြီး ထပ်ခါတလဲလဲ လျှော့ချခြင်းကို လုပ်ဆောင်ပါက နောက်ဆုံးတွင် ဒုတိယကိန်းသည် 0 ဖြစ်သော ကိန်းအစုံသို့ အမြဲတမ်း ရောက်ရှိမည်ဖြစ်ကြောင်း သက်သေပြနိုင်သည်။ ထိုအခါ <abbr>GCD</abbr> သည် ထိုကိန်းအစုံရှိ အခြားကိန်းတစ်ခု ဖြစ်သည်။ <abbr>GCD</abbr> ကို တွက်ချက်သည့် ဤနည်းလမ်းကို 
+<a id="index-Euclid_0027s-Algorithm"></a>
+<em>Euclid’s Algorithm</em> ဟု လူသိများသည်။<a class="footnote_link" id="DOCF42" href="#FOOT42"><sup>42</sup></a>
+</p>
+<p>Euclid’s Algorithm ကို လုပ်ထုံးလုပ်နည်း (procedure) တစ်ခုအဖြစ် ဖော်ပြရန် လွယ်ကူပါသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">gcd a b</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> b </span><span class="lit">0</span><span class="clo">)</span><span class="pln">
+      a
+      </span><span class="opn">(</span><span class="pln">gcd b </span><span class="opn">(</span><span class="pln">remainder a b</span><span class="clo">))))</span></pre></div>
+
+<p>၎င်းသည် အဆင့်အရေအတွက်မှာ ပါဝင်သော ကိန်းဂဏန်းများ၏ လော့ဂရစ်သမ် (logarithm) အတိုင်း တိုးပွားလာသော ထပ်ခါတလဲလဲ လုပ်ဆောင်သည့် လုပ်ငန်းစဉ် (iterative process) တစ်ခုကို ဖြစ်ပေါ်စေသည်။
+</p>
+<p>Euclid’s Algorithm အတွက် လိုအပ်သော အဆင့်အရေအတွက်မှာ လော့ဂရစ်သမ်နှုန်းဖြင့် ကြီးထွားခြင်း (logarithmic growth) ရှိသည်ဟူသော အချက်သည် Fibonacci ကိန်းစဉ်များနှင့် စိတ်ဝင်စားဖွယ် ပတ်သက်မှု ရှိနေသည်-
+</p>
+<blockquote>
+<p><strong>Lamé’s Theorem:</strong> အကယ်၍ Euclid’s Algorithm သည် ကိန်းအစုံတစ်ခု၏ <abbr>GCD</abbr> ကို တွက်ချက်ရန် အဆင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>k</mi>
+</math> ဆင့် လိုအပ်ပါက၊ ထိုကိန်းအစုံရှိ ပိုငယ်သောကိန်းသည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mi>k</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mtext>th</mtext>
+    </mrow>
+  </msup>
+</math> Fibonacci ကိန်းထက် ကြီးရမည် သို့မဟုတ် ညီရမည်ဖြစ်သည်။<a class="footnote_link" id="DOCF43" href="#FOOT43"><sup>43</sup></a>
+</p></blockquote>
+
+<p>Euclid’s Algorithm အတွက် ကြီးထွားမှုနှုန်း (order-of-growth) ကို ခန့်မှန်းရန် ဤသီအိုရီကို အသုံးပြုနိုင်သည်။ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ကို လုပ်ထုံးလုပ်နည်း၏ input နှစ်ခုအနက် ပိုငယ်သော ကိန်းဟု ထားပါစို့။ အကယ်၍ လုပ်ငန်းစဉ်သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>k</mi>
+</math> ဆင့် ကြာမြင့်ပါက၊ ကျွန်ုပ်တို့တွင် 
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+  <mo>≥<!-- ≥ --></mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mtext>Fib</mtext>
+    <mo stretchy="false">(</mo>
+    <mi>k</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+  <mo>≈<!-- ≈ --></mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <msup>
+      <mi>φ<!-- φ --></mi>
+      <mi>k</mi>
+    </msup>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mo>/</mo>
+    </mrow>
+    <msqrt>
+      <mn>5</mn>
+    </msqrt>
+  </mrow>
+</math> ရှိရမည်။ ထို့ကြောင့် အဆင့်အရေအတွက် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>k</mi>
+</math>
+သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ၏ လော့ဂရစ်သမ် (အခြေ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>φ<!-- φ --></mi>
+</math>) အတိုင်း ကြီးထွားသည်။ ထို့ကြောင့် ကြီးထွားမှုနှုန်းမှာ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ<!-- Θ --></mi>
+    <mo stretchy="false">(</mo>
+    <mi>log</mi>
+    <mo>⁡<!-- ⁡ --></mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ဖြစ်သည်။
+</p>
+<blockquote>
+<p><strong><a id="Exercise-1_002e20"></a>လေ့ကျင့်ခန်း ၁.၂၀:</strong> လုပ်ထုံးလုပ်နည်းတစ်ခုက ဖြစ်ပေါ်စေသော လုပ်ငန်းစဉ်သည် interpreter က အသုံးပြုသည့် စည်းမျဉ်းများအပေါ်တွင် မူတည်သည်မှာ သိသာပါသည်။ ဥပမာအနေဖြင့် အထက်တွင် ဖော်ပြခဲ့သော iterative <code>gcd</code> လုပ်ထုံးလုပ်နည်းကို စဉ်းစားပါ။ ဤလုပ်ထုံးလုပ်နည်းကို <a href="1_002e1.html#g_t1_002e1_002e5">1.1.5</a> တွင် ဆွေးနွေးခဲ့သည့် normal-order evaluation ကို အသုံးပြု၍ အဓိပ္ပာယ်ဖွင့်ဆိုသည်ဟု ယူဆပါစို့။ (<code>if</code> အတွက် normal-order-evaluation စည်းမျဉ်းကို <a href="1_002e1.html#Exercise-1_002e5">လေ့ကျင့်ခန်း ၁.၅</a> တွင် ဖော်ပြထားသည်။) အစားထိုးနည်းလမ်း (substitution method) (normal order အတွက်) ကို အသုံးပြု၍ <code>(gcd 206 40)</code> ကို တွက်ချက်ရာတွင် ဖြစ်ပေါ်လာသော လုပ်ငန်းစဉ်ကို သရုပ်ဖော်ပြီး၊ အမှန်တကယ် လုပ်ဆောင်ရသည့် <code>remainder</code> လုပ်ဆောင်ချက်များကို ညွှန်ပြပါ။ <code>(gcd 206 40)</code> ကို normal-order evaluation တွင် <code>remainder</code> လုပ်ဆောင်ချက် မည်မျှ အမှန်တကယ် လုပ်ဆောင်ရသနည်း။ Applicative-order evaluation တွင်ကော မည်မျှ လုပ်ဆောင်ရသနည်း။
+</p></blockquote>
+
+<a id="g_t1_002e2_002e6"></a>
+<a id="Example_003a-Testing-for-Primality"></a>
+<h4 class="subsection"><span class="secnum">1.2.6</span><span class="sectitle">ဥပမာ- ကိန်းစစ်ဟုတ်မဟုတ် စစ်ဆေးခြင်း</span></h4>
+
+<p>ဤအပိုင်းတွင် ကိန်းပြည့်
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> တစ်ခုသည် ကိန်းစစ် (prime) ဟုတ်မဟုတ် စစ်ဆေးရန် နည်းလမ်းနှစ်ခုကို ဖော်ပြထားသည်။ တစ်ခုမှာ ကြီးထွားမှုနှုန်း (order of growth) <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ<!-- Θ --></mi>
+    <mo stretchy="false">(</mo>
+    <msqrt>
+      <mi>n</mi>
+    </msqrt>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ရှိပြီး၊ အခြားတစ်ခုမှာ ကြီးထွားမှုနှုန်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ<!-- Θ --></mi>
+    <mo stretchy="false">(</mo>
+    <mi>log</mi>
+    <mo>⁡<!-- ⁡ --></mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ရှိသော “ဖြစ်နိုင်ခြေအခြေပြု” (probabilistic) အယ်လ်ဂိုရီသမ် တစ်ခုဖြစ်သည်။
+ဤအပိုင်း၏ အဆုံးတွင်ပါရှိသော လေ့ကျင့်ခန်းများသည် ဤအယ်လ်ဂိုရီသမ်များအပေါ် အခြေခံသည့် ပရိုဂရမ်ရေးဆွဲခြင်း ပရောဂျက်များကို အကြံပြုထားသည်။
+</p>
+<a id="Searching-for-divisors"></a>
+<h5 class="subsubheading">စားကိန်းများ ရှာဖွေခြင်း</h5>
+
+<p>ရှေးခေတ်ကာလကတည်းက သင်္ချာပညာရှင်များသည် ကိန်းစစ်များနှင့် ပတ်သက်သော ပုစ္ဆာများကို စိတ်ဝင်တစား ရှိခဲ့ကြပြီး၊ ကိန်းဂဏန်းများ ကိန်းစစ်ဟုတ်မဟုတ် စစ်ဆေးနိုင်မည့် နည်းလမ်းများကို လူအများအပြားက ရှာဖွေဖော်ထုတ်ခဲ့ကြသည်။ ကိန်းတစ်ခုသည် ကိန်းစစ်ဟုတ်မဟုတ် စစ်ဆေးနိုင်သည့် နည်းလမ်းတစ်ခုမှာ ထိုကိန်း၏ စားကိန်း (divisor) များကို ရှာဖွေခြင်းဖြစ်သည်။ အောက်ပါ ပရိုဂရမ်သည် ပေးထားသော ကိန်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ၏ (၁ ထက်ကြီးသော) အငယ်ဆုံး ကိန်းပြည့်စားကိန်းကို ရှာဖွေပေးသည်။ ၎င်းသည် ၂ မှ စတင်၍ နောက်ဆက်တွဲ ကိန်းပြည့်များဖြင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ကို စား၍ပြတ်ခြင်း ရှိမရှိ တစ်ခုချင်း စမ်းသပ်ခြင်းဖြင့် တိုက်ရိုက်နည်းလမ်းအတိုင်း လုပ်ဆောင်သည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">smallest-divisor n</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">find-divisor n </span><span class="lit">2</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">find-divisor n test-divisor</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pun">&gt;</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square test-divisor</span><span class="clo">)</span><span class="pln"> n</span><span class="clo">)</span><span class="pln"> 
+         n</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="pln">divides? test-divisor n</span><span class="clo">)</span><span class="pln"> 
+         test-divisor</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> </span><span class="opn">(</span><span class="pln">find-divisor 
+               n 
+               </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> test-divisor </span><span class="lit">1</span><span class="clo">)))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">divides? a b</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> </span><span class="opn">(</span><span class="pln">remainder b a</span><span class="clo">)</span><span class="pln"> </span><span class="lit">0</span><span class="clo">))</span></pre></div>
+
+<p>ကိန်းတစ်ခုသည် ကိန်းစစ်ဟုတ်မဟုတ်ကို အောက်ပါအတိုင်း စမ်းသပ်နိုင်သည်။ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> သည် ကိန်းစစ် ဖြစ်ရန်အတွက် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> သည် ၎င်း၏ ကိုယ်ပိုင် အငယ်ဆုံးစားကိန်း ဖြစ်ရမည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">prime? n</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> n </span><span class="opn">(</span><span class="pln">smallest-divisor n</span><span class="clo">)))</span></pre></div>
+
+<p><code>find-divisor</code> အတွက် အဆုံးသတ် စမ်းသပ်ချက်သည် အကယ်၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> သည် ကိန်းစစ် မဟုတ်ပါက၊ ၎င်းတွင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msqrt>
+    <mi>n</mi>
+  </msqrt>
+</math> ထက် ငယ်သော သို့မဟုတ် ညီသော စားကိန်းတစ်ခု ရှိရမည်ဟူသော အချက်အပေါ် အခြေခံထားသည်။<a class="footnote_link" id="DOCF44" href="#FOOT44"><sup>44</sup></a> ဆိုလိုသည်မှာ ဤအယ်လ်ဂိုရီသမ်သည် ၁ နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msqrt>
+    <mi>n</mi>
+  </msqrt>
+</math> ကြားရှိ စားကိန်းများကိုသာ စမ်းသပ်ရန် လိုအပ်သည်။ ထို့ကြောင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ကို ကိန်းစစ်အဖြစ် သတ်မှတ်ရန် လိုအပ်သော အဆင့်အရေအတွက်သည် ကြီးထွားမှုနှုန်း (order of growth)
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ<!-- Θ --></mi>
+    <mo stretchy="false">(</mo>
+    <msqrt>
+      <mi>n</mi>
+    </msqrt>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ရှိမည် ဖြစ်သည်။
+</p>
+<a id="The-Fermat-test"></a>
+<h5 class="subsubheading">Fermat test</h5>
+
+<p><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ<!-- Θ --></mi>
+    <mo stretchy="false">(</mo>
+    <mi>log</mi>
+    <mo>⁡<!-- ⁡ --></mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ကိန်းစစ်စမ်းသပ်ချက်သည် ကိန်းဗေဒ (number theory) မှ Fermat ၏ သီအိုရီငယ် (Fermat’s Little Theorem) ဟု လူသိများသော ရလဒ်တစ်ခုအပေါ် အခြေခံထားသည်။<a class="footnote_link" id="DOCF45" href="#FOOT45"><sup>45</sup></a>
+</p>
+<blockquote>
+<p><strong>Fermat’s Little Theorem:</strong> အကယ်၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> သည် ကိန်းစစ်တစ်ခု ဖြစ်ပြီး <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ထက် ငယ်သော မည်သည့် အပေါင်းကိန်းပြည့်မဆို ဖြစ်ပါက၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> ၏ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mi>n</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mtext>ကြိမ်မြောက်</mtext>
+    </mrow>
+  </msup>
+</math> ထပ်ညွှန်းကိန်းသည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ဖြင့် စားသောအခါ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> နှင့် အကြွင်းတူသည် (congruent modulo <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math>)။
+</p></blockquote>
+
+<p>(ကိန်းနှစ်ခုလုံးကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ဖြင့် စားသောအခါ အကြွင်းတူပါက ၎င်းတို့ကို <a id="index-congruent-modulo"></a>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> အပေါ်မူတည်၍ <em>အကြွင်းတူခြင်း</em> (<em>congruent modulo</em> <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math>) ဟု ဆိုသည်။ ကိန်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> ကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ဖြင့် စားသောအခါ ရရှိသော အကြွင်းကို <a id="index-remainder-of"></a>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> <em>အပေါ်မူတည်သော</em> <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> ၏ <a id="index-modulo"></a>
+<em>အကြွင်း</em> (<em>remainder of</em> <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> <em>modulo</em> <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math>) သို့မဟုတ် ရိုးရိုးရှင်းရှင်းပင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> <a id="index-modulo-1"></a>
+<em>modulo</em> <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ဟု ခေါ်ဆိုသည်။)
+</p>
+<p>အကယ်၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> သည် ကိန်းစစ် မဟုတ်ပါက၊ ယေဘုယျအားဖြင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>a</mi>
+    <mo>&lt;</mo>
+    <mi>n</mi>
+  </mrow>
+</math> ဖြစ်သော ကိန်းအများစုသည် အထက်ပါ ဆက်သွယ်ချက်ကို လိုက်နာမည် မဟုတ်ပါ။ ၎င်းသည် ကိန်းစစ်ဟုတ်မဟုတ် စစ်ဆေးရန် အောက်ပါ အယ်လ်ဂိုရီသမ်သို့ လမ်းညွှန်ပေးသည်။ ကိန်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> တစ်ခု ပေးထားလျှင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>a</mi>
+    <mo>&lt;</mo>
+    <mi>n</mi>
+  </mrow>
+</math> ဖြစ်သော ကျပန်းကိန်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> တစ်ခုကို ရွေးချယ်ပြီး၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mi>a</mi>
+    <mi>n</mi>
+  </msup>
+</math> ကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ဖြင့် စားသောအခါ ရရှိသော အကြွင်းကို တွက်ချက်ပါ။ အကယ်၍ ရလဒ်သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> နှင့် မညီပါက <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> သည် ကိန်းစစ် မဟုတ်သည်မှာ သေချာသည်။ အကယ်၍ ၎င်းသည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> နှင့် ညီပါက <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> သည် ကိန်းစစ် ဖြစ်နိုင်ခြေ အလွန်များပါသည်။ ယခု အခြား ကျပန်းကိန်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> တစ်ခုကို ထပ်မံရွေးချယ်ပြီး တူညီသော နည်းလမ်းဖြင့် စမ်းသပ်ပါ။ အကယ်၍ ၎င်းသည်လည်း အထက်ပါ ညီမျှခြင်းကို လိုက်နာပါက <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> သည် ကိန်းစစ် ဖြစ်ကြောင်း ပို၍ပင် ယုံကြည်စိတ်ချနိုင်သည်။ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> ၏ တန်ဖိုးများကို ပိုမိုများပြားစွာ စမ်းသပ်ခြင်းဖြင့် ရလဒ်အပေါ် ယုံကြည်စိတ်ချမှုကို တိုးမြှင့်နိုင်သည်။ ဤအယ်လ်ဂိုရီသမ်ကို Fermat test ဟု ခေါ်ဆိုသည်။
+</p>
+<p>Fermat test ကို အကောင်အထည်ဖော်ရန်အတွက် ကိန်းတစ်ခု၏ ထပ်ညွှန်းကိန်းကို အခြားကိန်းတစ်ခုဖြင့် စားသောအခါ ရရှိသော အကြွင်းကို တွက်ချက်ပေးသည့် ပရိုစီဂျာတစ်ခု လိုအပ်သည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">expmod base exp m</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pun">=</span><span class="pln"> exp </span><span class="lit">0</span><span class="clo">)</span><span class="pln"> </span><span class="lit">1</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="pln">even? exp</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">remainder 
+          </span><span class="opn">(</span><span class="pln">square </span><span class="opn">(</span><span class="pln">expmod base </span><span class="opn">(</span><span class="pun">/</span><span class="pln"> exp </span><span class="lit">2</span><span class="clo">)</span><span class="pln"> m</span><span class="clo">))</span><span class="pln">
+          m</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">remainder 
+          </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> base </span><span class="opn">(</span><span class="pln">expmod base </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> exp </span><span class="lit">1</span><span class="clo">)</span><span class="pln"> m</span><span class="clo">))</span><span class="pln">
+          m</span><span class="clo">))))</span></pre></div>
+
+<p>၎င်းသည် <a href="#g_t1_002e2_002e4">1.2.4</a> ရှိ <code>fast-expt</code> ပရိုစီဂျာနှင့် အလွန်ဆင်တူသည်။ ၎င်းသည် အဆင့်ဆင့် နှစ်ထပ်ကိန်းတင်ခြင်း (successive squaring) ကို အသုံးပြုထားသောကြောင့် အဆင့်အရေအတွက်သည် ထပ်ညွှန်းကိန်းနှင့်အညီ လော့ဂရစ်သမ်ပုံစံဖြင့် တိုးပွားမည် ဖြစ်သည်။<a class="footnote_link" id="DOCF46" href="#FOOT46"><sup>46</sup></a>
+</p>
+<p>Fermat test ကို လုပ်ဆောင်ရန်အတွက် ၁ နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <mo>−<!-- − --></mo>
+    <mn>1</mn>
+  </mrow>
+</math> ကြား (နှစ်ခုလုံးအပါအဝင်) ကျပန်းကိန်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> တစ်ခုကို ရွေးချယ်ပြီး၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> ၏ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mi>n</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mtext>ကြိမ်မြောက်</mtext>
+    </mrow>
+  </msup>
+</math> ထပ်ညွှန်းကိန်းကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ဖြင့် စားသောအခါ ရရှိသော အကြွင်းသည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> နှင့် ညီမညီ စစ်ဆေးရမည်။ ကျပန်းကိန်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> ကို <code>random</code> ပရိုစီဂျာ အသုံးပြု၍ ရွေးချယ်မည် ဖြစ်ပြီး၊ ၎င်းကို Scheme တွင် အခြေခံပရိုစီဂျာ (primitive) အဖြစ် ပါဝင်သည်ဟု ယူဆသည်။ <code>Random</code> သည် ၎င်းထံ ပေးပို့လိုက်သော ကိန်းပြည့်ထက် ငယ်သော အနုတ်မဟုတ်သည့် ကိန်းပြည့်တစ်ခုကို ပြန်ပေးသည်။ ထို့ကြောင့် ၁ နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <mo>−<!-- − --></mo>
+    <mn>1</mn>
+  </mrow>
+</math> ကြားရှိ ကျပန်းကိန်းတစ်ခု ရရှိရန်အတွက် <code>random</code> ကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <mo>−<!-- − --></mo>
+    <mn>1</mn>
+  </mrow>
+</math> ထည့်သွင်းပေးပြီး ခေါ်ဆိုကာ ရရှိလာသော ရလဒ်သို့ ၁ ပေါင်းထည့်ရမည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">fermat-test n</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">try-it a</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> </span><span class="opn">(</span><span class="pln">expmod a n n</span><span class="clo">)</span><span class="pln"> a</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">try-it </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> </span><span class="opn">(</span><span class="pln">random </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> n </span><span class="lit">1</span><span class="clo">)))))</span></pre></div>
+
+<p>အောက်ပါ ပရိုစီဂျာသည် ပေးထားသော အကြိမ်အရေအတွက်အတိုင်း စမ်းသပ်မှုကို လုပ်ဆောင်ပေးသည်။ အကယ်၍ စမ်းသပ်မှုတိုင်း အောင်မြင်ပါက ၎င်း၏ တန်ဖိုးသည် true ဖြစ်မည်ဖြစ်ပြီး၊ မအောင်မြင်ပါက false ဖြစ်မည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">fast-prime? n times</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pun">=</span><span class="pln"> times </span><span class="lit">0</span><span class="clo">)</span><span class="pln"> true</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="pln">fermat-test n</span><span class="clo">)</span><span class="pln"> 
+         </span><span class="opn">(</span><span class="pln">fast-prime? n </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> times </span><span class="lit">1</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> false</span><span class="clo">)))</span></pre></div>
+
+<a id="Probabilistic-methods"></a>
+<h5 class="subsubheading">ဖြစ်နိုင်ခြေအခြေပြု နည်းလမ်းများ</h5>
+
+<p>Fermat test ၏ သဘာဝသည် အဖြေမှန်ကို သေချာပေါက် ရရှိစေသော ကျွန်ုပ်တို့ ရင်းနှီးပြီးသား အယ်လ်ဂိုရီသမ် အများစုနှင့် ကွာခြားသည်။ ဤနေရာတွင် ရရှိလာသော အဖြေသည် မှန်ကန်နိုင်ခြေသာ ရှိသည်။ ပို၍ တိတိကျကျ ပြောရလျှင် အကယ်၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> သည် Fermat test ကို တစ်ကြိမ်ပင်ဖြစ်စေ ကျရှုံးပါက <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> သည် ကိန်းစစ် မဟုတ်သည်မှာ သေချာသည်။ သို့သော် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> သည် စမ်းသပ်မှုကို အောင်မြင်ခြင်းမှာ အလွန်ခိုင်လုံသော အထောက်အထား ဖြစ်သော်လည်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> သည် ကိန်းစစ်ဖြစ်သည်ဟု သေချာပေါက် အာမမခံနိုင်ပါ။ ကျွန်ုပ်တို့ ဆိုလိုချင်သည်မှာ မည်သည့် ကိန်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> အတွက်မဆို၊ အကယ်၍ စမ်းသပ်မှုကို အကြိမ်အရေအတွက် အလုံအလောက် ပြုလုပ်ပြီး <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> သည် အမြဲတမ်း အောင်မြင်နေပါက၊ ကျွန်ုပ်တို့၏ ကိန်းစစ်စမ်းသပ်ချက်တွင် မှားယွင်းနိုင်ခြေ (probability of error) ကို စိတ်တိုင်းကျ အလွန်သေးငယ်အောင် ပြုလုပ်နိုင်သည်ဟူ၍ ဖြစ်သည်။
+</p>
+<p>ကံမကောင်းစွာဖြင့် ဤပြောကြားချက်သည် လုံးဝဥဿုံ မမှန်ကန်ပါ။ Fermat test ကို လှည့်စားနိုင်သော ကိန်းများ ရှိနေသောကြောင့် ဖြစ်သည်။ ထိုကိန်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> များသည် ကိန်းစစ် မဟုတ်သော်လည်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>a</mi>
+    <mo>&lt;</mo>
+    <mi>n</mi>
+  </mrow>
+</math> ဖြစ်သော ကိန်းပြည့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> အားလုံးအတွက် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mi>a</mi>
+    <mi>n</mi>
+  </msup>
+</math> သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ဖြင့် စားသောအခါ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> နှင့် အကြွင်းတူနေတတ်သည်။ ထိုကိန်းမျိုးမှာ အလွန်ပင် ရှားပါးလှသဖြင့် လက်တွေ့တွင် Fermat test သည် အတော်ပင် ယုံကြည်စိတ်ချရပါသည်။<a class="footnote_link" id="DOCF47" href="#FOOT47"><sup>47</sup></a>
+</p>
+<p>လှည့်စား၍ မရနိုင်သော Fermat test ၏ အခြားပုံစံကွဲများ ရှိပါသည်။ ထိုစမ်းသပ်ချက်များတွင်လည်း Fermat နည်းလမ်းကဲ့သို့ပင် ကိန်းပြည့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> သည် ကိန်းစစ်ဟုတ်မဟုတ်ကို ကျပန်းကိန်းပြည့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>a</mi>
+    <mo>&lt;</mo>
+    <mi>n</mi>
+  </mrow>
+</math> တစ်ခုကို ရွေးချယ်ပြီး <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> အပေါ် မူတည်သော အခြေအနေတစ်ခုကို စစ်ဆေးခြင်းဖြင့် လုပ်ဆောင်သည်။ (ထိုကဲ့သို့သော စမ်းသပ်ချက်၏ ဥပမာတစ်ခုကို <a href="#Exercise-1_002e28">လေ့ကျင့်ခန်း ၁.၂၈</a> တွင် ကြည့်ပါ။) အခြားတစ်ဖက်တွင်မူ Fermat test နှင့် မတူသည့်အချက်မှာ မည်သည့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> အတွက်မဆို အကယ်၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> သည် ကိန်းစစ် မဟုတ်ပါက <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>a</mi>
+    <mo>&lt;</mo>
+    <mi>n</mi>
+  </mrow>
+</math> ဖြစ်သော ကိန်းပြည့်အများစုအတွက် ထိုအခြေအနေသည် မှန်ကန်မည် မဟုတ်ကြောင်း သက်သေပြနိုင်သည်။ ထို့ကြောင့် အကယ်၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> သည် ကျပန်းရွေးချယ်ထားသော <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> တစ်ခုအတွက် စမ်းသပ်မှုကို အောင်မြင်ပါက <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> သည် ကိန်းစစ်ဖြစ်ရန် တစ်ဝက်ထက်ပိုသော အခွင့်အလမ်း ရှိသည်။ အကယ်၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> သည် ကျပန်းရွေးချယ်ထားသော <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> နှစ်ခုလုံးအတွက် အောင်မြင်ပါက <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> သည် ကိန်းစစ်ဖြစ်ရန် အခွင့်အလမ်းမှာ ၄ ပုံ ၃ ပုံထက် ပိုများသွားသည်။ ကျပန်းရွေးချယ်ထားသော <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>a</mi>
+</math> တန်ဖိုးများကို ပိုမိုများပြားစွာ အသုံးပြု၍ စမ်းသပ်ခြင်းဖြင့် မှားယွင်းနိုင်ခြေကို စိတ်တိုင်းကျ သေးငယ်အောင် ပြုလုပ်နိုင်သည်။
+</p>
+<p>မှားယွင်းနိုင်ခြေကို စိတ်တိုင်းကျ သေးငယ်သွားအောင် လုပ်ဆောင်နိုင်ကြောင်း သက်သေပြနိုင်သည့် စမ်းသပ်ချက်များ ရှိလာခြင်းကြောင့် ဤကဲ့သို့သော အမျိုးအစားရှိသည့် အယ်လ်ဂိုရီသမ်များကို စိတ်ဝင်တစား ရှိလာကြပြီး ၎င်းတို့ကို <a id="index-probabilistic-algorithms"></a>
+<em>ဖြစ်နိုင်ခြေအခြေပြု အယ်လ်ဂိုရီသမ်များ</em> (<em>probabilistic algorithms</em>) ဟု ခေါ်ဆိုလာကြသည်။ ဤနယ်ပယ်တွင် သုတေသနလုပ်ငန်းများ အမြောက်အမြား ရှိနေပြီး ဖြစ်နိုင်ခြေအခြေပြု အယ်လ်ဂိုရီသမ်များကို နယ်ပယ်အသီးသီးတွင် အကျိုးရှိစွာ အသုံးချနေကြပြီ ဖြစ်သည်။<a class="footnote_link" id="DOCF48" href="#FOOT48"><sup>48</sup></a>
+</p>
+<blockquote>
+<p><strong><a id="Exercise-1_002e21"></a>လေ့ကျင့်ခန်း ၁.၂၁:</strong> အောက်ပါ ကိန်းများအသီးသီး၏ အငယ်ဆုံး စားကိန်းကို ရှာဖွေရန် <code>smallest-divisor</code> ပရိုစီဂျာကို အသုံးပြုပါ - ၁၉၉၊ ၁၉၉၉၊ ၁၉၉၉၉။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-1_002e22"></a>လေ့ကျင့်ခန်း ၁.၂၂:</strong> Lisp အများစုတွင် စနစ် (system) စတင်လည်ပတ်ခဲ့သည့် အချိန်ပမာဏ (ဥပမာ မိုက်ခရိုစက္ကန့်ဖြင့် တိုင်းတာသော) ကို ဖော်ပြသည့် ကိန်းပြည့်တစ်ခုကို ပြန်ပေးသော <code>runtime</code> ဟု ခေါ်သည့် အခြေခံပရိုစီဂျာ ပါဝင်သည်။ အောက်ပါ <code>timed-prime-test</code> ပရိုစီဂျာကို ကိန်းပြည့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ဖြင့် ခေါ်ဆိုသောအခါ၊ ၎င်းသည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ကို ရိုက်နှိပ်ဖော်ပြပြီး <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> သည် ကိန်းစစ်ဟုတ်မဟုတ် စစ်ဆေးသည်။ အကယ်၍
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> သည် ကိန်းစစ်ဖြစ်ပါက၊ ပရိုစီဂျာသည် ကြယ်ပွင့်သုံးပွင့်ကို ရိုက်နှိပ်ပြီးနောက် စမ်းသပ်မှုအတွက် ကုန်ဆုံးသွားသော အချိန်ပမာဏကို ဖော်ပြသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">timed-prime-test n</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">newline</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">display n</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">start-prime-test n </span><span class="opn">(</span><span class="pln">runtime</span><span class="clo">)))</span></pre></div>
+
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">start-prime-test n start-time</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">prime? n</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">report-prime </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> </span><span class="opn">(</span><span class="pln">runtime</span><span class="clo">)</span><span class="pln"> 
+                       start-time</span><span class="clo">))))</span></pre></div>
+
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">report-prime elapsed-time</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">display </span><span class="str">" *** "</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">display elapsed-time</span><span class="clo">))</span></pre></div>
+
+<p>ဤပရိုစီဂျာကို အသုံးပြု၍ သတ်မှတ်ထားသော ကိန်းအကွာအဝေးအတွင်းရှိ ဆက်တိုက်ဖြစ်သော မကိန်းပြည့်များ၏ ကိန်းစစ်ဖြစ်မှုကို စစ်ဆေးပေးသည့် <code>search-for-primes</code> ပရိုစီဂျာကို ရေးသားပါ။ သင်၏ ပရိုစီဂျာကို အသုံးပြု၍ ၁,၀၀၀ ထက်ကြီးသော အငယ်ဆုံး ကိန်းစစ် ၃ ခု၊ ၁၀,၀၀၀ ထက်ကြီးသော ကိန်းစစ် ၃ ခု၊ ၁၀၀,၀၀၀ ထက်ကြီးသော ကိန်းစစ် ၃ ခု နှင့် ၁,၀၀၀,၀၀၀ ထက်ကြီးသော ကိန်းစစ် ၃ ခုကို ရှာဖွေပါ။ ကိန်းစစ်တစ်ခုစီကို စမ်းသပ်ရန် လိုအပ်သော အချိန်ကို မှတ်သားထားပါ။ စမ်းသပ်သည့် အယ်လ်ဂိုရီသမ်၏ ကြီးထွားမှုနှုန်းမှာ
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ<!-- Θ --></mi>
+    <mo stretchy="false">(</mo>
+    <msqrt>
+      <mi>n</mi>
+    </msqrt>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ဖြစ်သောကြောင့် ၁၀,၀၀၀ ဝန်းကျင်ရှိ ကိန်းစစ်များကို စမ်းသပ်ခြင်းသည် ၁,၀၀၀ ဝန်းကျင်ရှိ ကိန်းစစ်များကို စမ်းသပ်ခြင်းထက် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msqrt>
+    <mn>10</mn>
+  </msqrt>
+</math> ဆခန့် ပိုကြာမည်ဟု သင် မျှော်လင့်နိုင်ပါသည်။ သင်၏ အချိန်တိုင်းတာချက် ရလဒ်များက ဤအချက်ကို ထောက်ခံပါသလား? ၁၀၀,၀၀၀ နှင့် ၁,၀၀၀,၀၀၀ အတွက် ရရှိသော အချက်အလက်များသည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ<!-- Θ --></mi>
+    <mo stretchy="false">(</mo>
+    <msqrt>
+      <mi>n</mi>
+    </msqrt>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ခန့်မှန်းချက်ကို မည်မျှအထိ ထောက်ကူပါသလဲ? သင်၏ ရလဒ်သည် သင်၏စက်ပေါ်ရှိ ပရိုဂရမ်များ လည်ပတ်ချိန်မှာ တွက်ချက်မှုအတွက် လိုအပ်သော အဆင့်အရေအတွက်နှင့် တိုက်ရိုက်အချိုးကျသည်ဟူသော အယူအဆနှင့် ကိုက်ညီပါသလား?
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-1_002e23"></a>လေ့ကျင့်ခန်း ၁.၂၃:</strong> ဤအပိုင်း၏ အစတွင် ဖော်ပြထားသော <code>smallest-divisor</code> ပရိုစီဂျာသည် မလိုအပ်သော စမ်းသပ်မှုများစွာကို ပြုလုပ်နေသည်။ ကိန်းတစ်ခုသည် ၂ နှင့် စား၍ပြတ်ခြင်း ရှိမရှိ စစ်ဆေးပြီးနောက် ၎င်းထက်ကြီးသော မည်သည့် စုံကိန်းများနှင့်မဆို စား၍ပြတ်ခြင်း ရှိမရှိ စစ်ဆေးနေရန် မလိုတော့ပါ။ ထို့ကြောင့် <code>test-divisor</code> အတွက် အသုံးပြုသော တန်ဖိုးများသည် ၂၊ ၃၊ ၄၊ ၅၊ ၆၊ … မဟုတ်ဘဲ ၂၊ ၃၊ ၅၊ ၇၊ ၉၊ … သာ ဖြစ်သင့်သည်။ ဤပြောင်းလဲမှုကို အကောင်အထည်ဖော်ရန်အတွက် ထည့်သွင်းတန်ဖိုး (input) သည် ၂ နှင့် ညီပါက ၃ ကို ပြန်ပေးပြီး၊ မဟုတ်ပါက ထည့်သွင်းတန်ဖိုးသို့ ၂ ပေါင်း၍ ပြန်ပေးသော <code>next</code> ပရိုစီဂျာတစ်ခုကို သတ်မှတ်ပါ။ <code>smallest-divisor</code> ပရိုစီဂျာတွင် <code>(+ test-divisor 1)</code> အစား <code>(next test-divisor)</code> ကို အသုံးပြုရန် ပြင်ဆင်ပါ။ <code>timed-prime-test</code> တွင် ဤပြုပြင်ထားသော <code>smallest-divisor</code> ကို ထည့်သွင်းပြီး <a href="#Exercise-1_002e22">လေ့ကျင့်ခန်း ၁.၂၂</a> တွင် တွေ့ရှိခဲ့သော ကိန်းစစ် ၁၂ ခုအတွက် စမ်းသပ်မှုကို လုပ်ဆောင်ပါ။ ဤပြုပြင်မှုသည် စမ်းသပ်သည့် အဆင့်အရေအတွက်ကို တစ်ဝက်လျှော့ချပေးသောကြောင့် ၎င်းသည် နှစ်ဆခန့် ပိုမိုမြန်ဆန်လိမ့်မည်ဟု သင် မျှော်လင့်နိုင်ပါသည်။ ထိုမျှော်လင့်ချက်အတိုင်း ဖြစ်လာပါသလား? အကယ်၍ မဟုတ်ပါက၊ အယ်လ်ဂိုရီသမ် နှစ်ခု၏ မြန်နှုန်းအချိုးမှာ မည်မျှဖြစ်ပြီး ၎င်းသည် ၂ နှင့် ကွာခြားနေရသည့် အကြောင်းရင်းကို သင် မည်သို့ ရှင်းပြမည်နည်း?
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-1_002e24"></a>လေ့ကျင့်ခန်း ၁.၂၄:</strong> <a href="#Exercise-1_002e22">လေ့ကျင့်ခန်း ၁.၂၂</a> မှ
+<code>timed-prime-test</code> ပရိုစီဂျာတွင် <code>fast-prime?</code> (Fermat နည်းလမ်း) ကို အသုံးပြုရန် ပြင်ဆင်ပြီး၊ ထိုလေ့ကျင့်ခန်းတွင် သင်တွေ့ရှိခဲ့သော ကိန်းစစ် ၁၂ ခုကို စမ်းသပ်ပါ။ Fermat test သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ<!-- Θ --></mi>
+    <mo stretchy="false">(</mo>
+    <mi>log</mi>
+    <mo>⁡<!-- ⁡ --></mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math>
+ကြီးထွားမှုနှုန်း ရှိသောကြောင့် ၁,၀၀၀,၀၀၀ ဝန်းကျင်ရှိ ကိန်းစစ်များကို စမ်း
+<h4 class="footnotes-heading">Footnotes</h4>
+
+<div id="FOOT29"><p><a class="footnote_backlink" href="#DOCF29"><sup>29</sup></a>
+ပရိုဂရမ်အစစ်တစ်ခုတွင် ကျွန်ုပ်တို့သည် <code>fact-iter</code> ၏ အဓိပ္ပာယ်ဖွင့်ဆိုချက်ကို ဖုံးကွယ်ရန် ပြီးခဲ့သည့် အပိုင်းတွင် မိတ်ဆက်ခဲ့သော block structure ကို အသုံးပြုပေမည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">factorial n</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">iter product counter</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">&gt;</span><span class="pln"> counter n</span><span class="clo">)</span><span class="pln">
+        product
+        </span><span class="opn">(</span><span class="pln">iter </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> counter product</span><span class="clo">)</span><span class="pln">
+              </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> counter </span><span class="lit">1</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">iter </span><span class="lit">1</span><span class="pln"> </span><span class="lit">1</span><span class="clo">))</span></pre></div>
+
+<p>တစ်ချိန်တည်းတွင် စဥ်းစားရမည့် အရာများကို လျှော့ချရန်အတွက် ဤနေရာတွင် ဤသို့ပြုလုပ်ခြင်းကို ရှောင်ကြဉ်ထားပါသည်။</p>
+</div>
+<div id="FOOT30"><p><a class="footnote_backlink" href="#DOCF30"><sup>30</sup></a>
+<a href="Chapter-5.html#Chapter-5">Chapter 5</a> တွင် register machine များပေါ်၌ လုပ်ထုံးလုပ်နည်းများ အကောင်အထည်ဖော်ခြင်းအကြောင်း ဆွေးနွေးသောအခါ၊ မည်သည့် iterative process ကိုမဆို register အစုအဝေးတစ်ခုနှင့် အပိုမှတ်ဉာဏ် (auxiliary memory) မပါရှိသော machine တစ်ခုအဖြစ် "hardware" တွင် ဖန်တီးနိုင်သည်ကို တွေ့ရပါမည်။ ယင်းနှင့် ဆန့်ကျင်ဘက်အနေဖြင့် recursive process တစ်ခုကို ဖန်တီးရန် <a id="index-stack"></a>
+<em>stack</em> ဟုခေါ်သော အပိုဒေတာတည်ဆောက်ပုံ (auxiliary data structure) တစ်ခုကို အသုံးပြုသည့် machine တစ်ခု လိုအပ်ပါသည်။</p>
+</div>
+<div id="FOOT31"><p><a class="footnote_backlink" href="#DOCF31"><sup>31</sup></a>
+Tail recursion ကို compiler optimization နည်းလမ်းတစ်ခုအဖြစ် သိရှိခဲ့ကြသည်မှာ ကြာပြီဖြစ်သည်။ Tail recursion အတွက် ခိုင်မာသော semantic အခြေခံတစ်ခုကို Carl <a href="References.html#Hewitt-_00281977_0029">Hewitt (1977)</a> မှ ပံ့ပိုးပေးခဲ့ပြီး၊ သူသည် ၎င်းကို <a href="Chapter-3.html#Chapter-3">Chapter 3</a> တွင် ကျွန်ုပ်တို့ ဆွေးနွေးမည့် "message-passing" model of computation ဖြင့် ရှင်းပြခဲ့သည်။ ဤအချက်ကို အခြေခံ၍ Gerald Jay Sussman နှင့် Guy Lewis Steele Jr. (ကြည့်ရန် <a href="References.html#Steele-and-Sussman-1975">Steele and Sussman 1975</a>) တို့သည် Scheme အတွက် tail-recursive interpreter တစ်ခုကို တည်ဆောက်ခဲ့ကြသည်။ နောက်ပိုင်းတွင် Steele က tail recursion သည် procedure call များကို compile လုပ်သည့် သဘာဝကျသော နည်းလမ်း၏ ရလဒ်ဖြစ်ကြောင်း ပြသခဲ့သည် (<a href="References.html#Steele-1977">Steele 1977</a>)။ Scheme အတွက် <abbr>IEEE</abbr> စံနှုန်းအရ Scheme အကောင်အထည်ဖော်မှုများသည် tail-recursive ဖြစ်ရန် လိုအပ်ပါသည်။</p>
+</div>
+<div id="FOOT32"><p><a class="footnote_backlink" href="#DOCF32"><sup>32</sup></a>
+ဤအချက်၏ ဥပမာတစ်ခုကို <a href="1_002e1.html#g_t1_002e1_002e3">1.1.3</a> တွင် အရိပ်အမြွက် ဖော်ပြခဲ့သည်။ Interpreter ကိုယ်တိုင်က expression များကို tree-recursive process အသုံးပြု၍ တွက်ချက်ခြင်းဖြစ်သည်။</p>
+</div>
+<div id="FOOT33"><p><a class="footnote_backlink" href="#DOCF33"><sup>33</sup></a>
+ဥပမာအားဖြင့်၊ pennies နှင့် nickels များကို အသုံးပြု၍ ၁၀ ဆင့်အတွက် အကြွေလဲခြင်း ပြဿနာတွင် reduction rule မည်သို့ သက်ရောက်သည်ကို အသေးစိတ် လေ့ကျင့်ကြည့်ပါ။</p>
+</div>
+<div id="FOOT34"><p><a class="footnote_backlink" href="#DOCF34"><sup>34</sup></a>
+ထပ်ခါတလဲလဲ တွက်ချက်မှုများကို ဖြေရှင်းရန် နည်းလမ်းတစ်ခုမှာ တန်ဖိုးများကို တွက်ချက်ပြီးတိုင်း ၎င်းတို့ကို table တစ်ခုအဖြစ် အလိုအလျောက် တည်ဆောက်ရန် စီစဥ်ခြင်းဖြစ်သည်။ လုပ်ထုံးလုပ်နည်းကို argument တစ်ခုခုနှင့် အသုံးပြုရန် တောင်းဆိုသည့်အခါတိုင်း၊ ထိုတန်ဖိုးသည် table ထဲတွင် ရှိပြီးသားလားဆိုသည်ကို ဦးစွာကြည့်ရှုပြီး၊ ရှိနေပါက ထပ်ခါတလဲလဲ တွက်ချက်ခြင်းကို ရှောင်ကြဉ်သည်။ <a id="index-tabulation"></a>
+<em>tabulation</em> သို့မဟုတ် <a id="index-memoization"></a>
+<em>memoization</em> ဟု လူသိများသော ဤမဟာဗျူဟာကို ရိုးရှင်းသောနည်းလမ်းဖြင့် အကောင်အထည်ဖော်နိုင်သည်။ Tabulation ကို အသုံးပြုခြင်းဖြင့် အဆပေါင်းများစွာ တိုးပွားသော အဆင့်များ (exponential number of steps) လိုအပ်သော လုပ်ငန်းစဉ်များကို (ဥပမာ <code>count-change</code> ကဲ့သို့) input ပေါ်မူတည်၍ မျဉ်းဖြောင့်အတိုင်း (linearly) တိုးပွားသော နေရာနှင့် အချိန် လိုအပ်ချက်ရှိသည့် လုပ်ငန်းစဉ်များအဖြစ် ပြောင်းလဲနိုင်သည်။ <a href="3_002e3.html#Exercise-3_002e27">Exercise 3.27</a> ကိုကြည့်ပါ။</p>
+</div>
+<div id="FOOT35"><p><a class="footnote_backlink" href="#DOCF35"><sup>35</sup></a>
+Pascal’s triangle ၏ အစိတ်အပိုင်းများကို <a id="index-binomial-coefficients"></a>
+<em>binomial coefficients</em> ဟု ခေါ်သည်၊ အကြောင်းမှာ
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <msup>
+      <mi>n</mi>
+      <mrow class="MJX-TeXAtom-ORD">
+        <mtext>th</mtext>
+      </mrow>
+    </msup>
+  </mrow>
+</math> အတန်းသည် 
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <mi>x</mi>
+    <mo>+</mo>
+    <mi>y</mi>
+    <msup>
+      <mo stretchy="false">)</mo>
+      <mi>n</mi>
+    </msup>
+  </mrow>
+</math> ကို ဖြန့်ချလိုက်သောအခါ ရရှိသော ကိန်းရှင်များ၏ မြှောက်ဖော်ကိန်းများ ဖြစ်သောကြောင့် ဖြစ်သည်။ ဤမြှောက်ဖော်ကိန်းများကို တွက်ချက်သည့် ပုံစံသည် Blaise Pascal ၏ ၁၆၅၃ ခုနှစ်တွင် ထွက်ရှိခဲ့သော ဖြစ်နိုင်ခြေသီအိုရီဆိုင်ရာ အဓိကလက်ရာဖြစ်သည့် <cite>Traité du triangle arithmétique</cite> တွင် ပါရှိသည်။ <a href="References.html#Knuth-_00281973_0029">Knuth (1973)</a> ၏ အဆိုအရ၊ ဤပုံစံတူကိုပင် တရုတ်သင်္ချာပညာရှင် Chu Shih-chieh မှ ၁၃၀၃ ခုနှစ်တွင် ထုတ်ဝေခဲ့သော <cite>Szu-yuen Yü-chien</cite> (“The Precious Mirror of the Four Elements”) တွင်လည်းကောင်း၊ ၁၂ ရာစု ပါရှန်ကဗျာဆရာနှင့် သင်္ချာပညာရှင် Omar Khayyam ၏ လက်ရာများတွင်လည်းကောင်း၊ ၁၂ ရာစု ဟိန္ဒူသင်္ချာပညာရှင် Bháscara Áchárya ၏ လက်ရာများတွင်လည်းကောင်း တွေ့ရှိရသည်။</p>
+</div>
+<div id="FOOT36"><p><a class="footnote_backlink" href="#DOCF36"><sup>36</sup></a>
+ဤဖော်ပြချက်များသည် အလွန်အမင်း ရိုးရှင်းအောင် ပြုလုပ်ထားခြင်းဖြစ်သည်။ ဥပမာအားဖြင့်၊ လုပ်ငန်းစဉ်အဆင့်များကို "machine operations" အဖြစ် ရေတွက်ပါက၊ မြှောက်ခြင်းတစ်ခု ပြုလုပ်ရန် လိုအပ်သော machine operations အရေအတွက်သည် မြှောက်မည့် ကိန်းဂဏန်းများ၏ ပမာဏအပေါ် မူတည်ခြင်းမရှိဟု ယူဆထားခြင်း ဖြစ်သည်၊ သို့သော် ကိန်းဂဏန်းများ အလွန်ကြီးမားပါက ဤယူဆချက်သည် မှားယွင်းပါသည်။ နေရာလပ် (space) ခန့်မှန်းချက်များအတွက်လည်း အလားတူ မှတ်ချက်များ ရှိပါသည်။ လုပ်ငန်းစဉ်တစ်ခု၏ ဒီဇိုင်းနှင့် ဖော်ပြချက်ကဲ့သို့ပင်၊ လုပ်ငန်းစဉ်တစ်ခု၏ ခွဲခြမ်းစိတ်ဖြာမှု (analysis) ကိုလည်း အဆင့်ဆင့်သော စိတ်ကူးပုံဖော်မှု (abstraction levels) အမျိုးမျိုးဖြင့် ပြုလုပ်နိုင်သည်။</p>
+</div>
+<div id="FOOT37"><p><a class="footnote_backlink" href="#DOCF37"><sup>37</sup></a>
+ပိုမိုတိကျစွာပြောရလျှင် လိုအပ်သော မြှောက်ခြင်းအရေအတွက်သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ၏ log base 2 ထက် ၁ လျော့သော တန်ဖိုးနှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ၏ binary ပုံစံရှိ binary character ၁ များ၏ အရေအတွက် ပေါင်းလဒ်နှင့် ညီမျှသည်။ ဤစုစုပေါင်းသည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ၏ log base 2 ၏ နှစ်ဆထက် အမြဲနည်းပါသည်။ Order notation ၏ အဓိပ္ပာယ်ဖွင့်ဆိုချက်ရှိ ကိန်းသေများ ဖြစ်သော <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>k</mi>
+    <mn>1</mn>
+  </msub>
+</math> နှင့်
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>k</mi>
+    <mn>2</mn>
+  </msub>
+</math> တို့အရ logarithmic process တစ်ခုအတွက် logarithm ၏ base သည် အရေးမကြီးပါ၊ ထို့ကြောင့် ထိုကဲ့သို့သော လုပ်ငန်းစဉ်အားလုံးကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ<!-- Θ --></mi>
+    <mo stretchy="false">(</mo>
+    <mi>log</mi>
+    <mo>⁡<!-- ⁡ --></mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> အဖြစ် ဖော်ပြကြသည်။</p>
+</div>
+<div id="FOOT38"><p><a class="footnote_backlink" href="#DOCF38"><sup>38</sup></a>
+ကိန်းဂဏန်းများကို ထပ်ညွှန်း ၁၀၀၀ တင်ရန် အဘယ်ကြောင့် စိတ်ဝင်စားကြသနည်းဟု သင် သိလိုပေမည်။ <a href="#g_t1_002e2_002e6">1.2.6</a> ကို ကြည့်ပါ။</p>
+</div>
+<div id="FOOT39"><p><a class="footnote_backlink" href="#DOCF39"><sup>39</sup></a>
+ဤ iterative algorithm သည် ရှေးကျပါသည်။ ၎င်းသည် ခရစ်တော်မပေါ်မီ ၂၀၀ နှစ်မတိုင်မီက Áchárya Pingala ရေးသားခဲ့သော <cite>Chandah-sutra</cite> တွင် ပါရှိသည်။ ဤနည်းလမ်းနှင့် အခြားသော ထပ်ညွှန်းတင်ခြင်း နည်းလမ်းများ၏ အပြည့်အစုံ ဆွေးနွေးချက်နှင့် ခွဲခြမ်းစိတ်ဖြာမှုကို <a href="References.html#Knuth-1981">Knuth 1981</a>, အပိုင်း 4.6.3 တွင် ကြည့်ပါ။</p>
+</div>
+<div id="FOOT40"><p><a class="footnote_backlink" href="#DOCF40"><sup>40</sup></a>
+တစ်ခါတစ်ရံ မြှောက်ခြင်း၏ "Russian peasant method" ဟု လူသိများသော ဤ algorithm သည် ရှေးကျပါသည်။ ယင်းကို အသုံးပြုခဲ့သော ဥပမာများကို ခရစ်တော်မပေါ်မီ ၁၇၀၀ ခန့်က (ထိုထက်ပင် ရှေးကျသော စာရွက်စာတမ်းတစ်ခုမှ ကူးယူထားသော) A’h-mose ဟုခေါ်သော အီဂျစ်စာရေးတစ်ဦး ရေးသားခဲ့သည့်၊ လက်ရှိရှိသမျှတွင် အစောဆုံး သင်္ချာစာရွက်စာတမ်းနှစ်ခုထဲမှ တစ်ခုဖြစ်သော Rhind Papyrus တွင် တွေ့ရသည်။</p>
+</div>
+<div id="FOOT41"><p><a class="footnote_backlink" href="#DOCF41"><sup>41</sup></a>
+ဤလေ့ကျင့်ခန်းကို <a href="References.html#Kaldewaij-1990">Kaldewaij 1990</a> ရှိ ဥပမာတစ်ခုအပေါ် အခြေခံ၍ Joe Stoy က ကျွန်ုပ်တို့အား အကြံပြုခဲ့ခြင်းဖြစ်သည်။</p>
+</div>
+<div id="FOOT42"><p><a class="footnote_backlink" href="#DOCF42"><sup>42</sup></a>
+Euclid’s Algorithm ဟု ခေါ်ရခြင်းမှာ ၎င်းသည် Euclid ၏ <cite>Elements</cite> (စာအုပ် ၇၊ ဘီစီ ၃၀၀ ခန့်) တွင် ပါဝင်သောကြောင့် ဖြစ်သည်။ <a href="References.html#Knuth-_00281973_0029">Knuth (1973)</a> ၏ အဆိုအရ၊ ၎င်းကို လူသိများသော ရှေးအကျဆုံး အရေးပါသည့် algorithm အဖြစ် သတ်မှတ်နိုင်သည်။ ရှေးဟောင်းအီဂျစ်လူမျိုးတို့၏ မြှောက်ခြင်းနည်းလမ်း (<a href="#Exercise-1_002e18">Exercise 1.18</a>) သည် သေချာပေါက် ပို၍ ရှေးကျသော်လည်း၊ Knuth ရှင်းပြထားသည့်အတိုင်း Euclid’s algorithm သည် ဥပမာအစုအဝေးတစ်ခုအဖြစ် မဟုတ်ဘဲ ယေဘုယျ algorithm တစ်ခုအဖြစ် တင်ပြထားသည့် အစောဆုံး သိရှိရသော algorithm ဖြစ်သည်။</p>
+</div>
+<div id="FOOT43"><p><a class="footnote_backlink" href="#DOCF43"><sup>43</sup></a>
+ဤသီအိုရီကို ၁၈၄၅ ခုနှစ်တွင် သင်္ချာရူပဗေဒဆိုင်ရာ ပံ့ပိုးမှုများကြောင့် လူသိများသော ပြင်သစ်သင်္ချာပညာရှင်နှင့် အင်ဂျင်နီယာတစ်ဦးဖြစ်သူ Gabriel Lamé က သက်သေပြခဲ့သည်။ သီအိုရီကို သက်သေပြရန်အတွက် Euclid’s Algorithm သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>k</mi>
+</math> ဆင့်ဖြင့် ပြီးဆုံးသွားသည့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <msub>
+      <mi>a</mi>
+      <mi>k</mi>
+    </msub>
+    <mo>,</mo>
+    <msub>
+      <mi>b</mi>
+      <mi>k</mi>
+    </msub>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> အစုံများကို စဉ်းစားကြပါစို့၊ ဤနေရာတွင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <msub>
+      <mi>a</mi>
+      <mi>k</mi>
+    </msub>
+    <mo>≥<!-- ≥ --></mo>
+    <msub>
+      <mi>b</mi>
+      <mi>k</mi>
+    </msub>
+  </mrow>
+</math> ဖြစ်သည်။ သက်သေပြချက်သည် အကယ်၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <msub>
+      <mi>a</mi>
+      <mrow class="MJX-TeXAtom-ORD">
+        <mi>k</mi>
+        <mo>+</mo>
+        <mn>1</mn>
+      </mrow>
+    </msub>
+    <mo>,</mo>
+    <msub>
+      <mi>b</mi>
+      <mrow class="MJX-TeXAtom-ORD">
+        <mi>k</mi>
+        <mo>+</mo>
+        <mn>1</mn>
+      </mrow>
+    </msub>
+    <mo stretchy="false">)</mo>
+  </mrow>
+  <mo stretchy="false">→<!-- → --></mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <msub>
+      <mi>a</mi>
+      <mi>k</mi>
+    </msub>
+    <mo>,</mo>
+    <msub>
+      <mi>b</mi>
+      <mi>k</mi>
+    </msub>
+    <mo stretchy="false">)</mo>
+  </mrow>
+  <mo stretchy="false">→<!-- → --></mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <msub>
+      <mi>a</mi>
+      <mrow class="MJX-TeXAtom-ORD">
+        <mi>k</mi>
+        <mo>−<!-- − --></mo>
+        <mn>1</mn>
+      </mrow>
+    </msub>
+    <mo>,</mo>
+    <msub>
+      <mi>b</mi>
+      <mrow class="MJX-TeXAtom-ORD">
+        <mi>k</mi>
+        <mo>−<!-- − --></mo>
+        <mn>1</mn>
+      </mrow>
+    </msub>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> သည် reduction process ရှိ ဆက်တိုက်ဖြစ်သော အစုံသုံးစုံဖြစ်ပါက၊ ကျွန်ုပ်တို့တွင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>b</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mi>k</mi>
+      <mo>+</mo>
+      <mn>1</mn>
+    </mrow>
+  </msub>
+  <mo>≥<!-- ≥ --></mo>
+  <msub>
+    <mi>b</mi>
+    <mi>k</mi>
+  </msub>
+  <mo>+</mo>
+  <msub>
+    <mi>b</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mi>k</mi>
+      <mo>−<!-- − --></mo>
+      <mn>1</mn>
+    </mrow>
+  </msub>
+</math> ရှိရမည်ဟူသော အချက်ပေါ်တွင် အခြေခံသည်။ ထိုအချက်ကို စစ်ဆေးရန်၊ reduction step တစ်ခုကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <msub>
+      <mi>a</mi>
+      <mrow class="MJX-TeXAtom-ORD">
+        <mi>k</mi>
+        <mo>−<!-- − --></mo>
+        <mn>1</mn>
+      </mrow>
+    </msub>
+    <mo>=</mo>
+    <msub>
+      <mi>b</mi>
+      <mi>k</mi>
+    </msub>
+  </mrow>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <msub>
+      <mi>b</mi>
+      <mrow class="MJX-TeXAtom-ORD">
+        <mi>k</mi>
+        <mo>−<!-- − --></mo>
+        <mn>1</mn>
+      </mrow>
+    </msub>
+    <mo>=</mo>
+  </mrow>
+</math> (<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>a</mi>
+    <mi>k</mi>
+  </msub>
+</math> ကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>b</mi>
+    <mi>k</mi>
+  </msub>
+</math> ဖြင့် စားသော အကြွင်း) ဟူသော အသွင်ပြောင်းလဲမှုဖြင့် သတ်မှတ်ထားကြောင်း ဆင်ခြင်ပါ။ ဒုတိယ ညီမျှခြင်း၏ အဓိပ္ပာယ်မှာ ကိန်းပြည့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>q</mi>
+</math> တစ်ခုအတွက် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>a</mi>
+    <mi>k</mi>
+  </msub>
+  <mo>=</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>q</mi>
+    <msub>
+      <mi>b</mi>
+      <mi>k</mi>
+    </msub>
+  </mrow>
+  <mo>+</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <msub>
+      <mi>b</mi>
+      <mrow class="MJX-TeXAtom-ORD">
+        <mi>k</mi>
+        <mo>−<!-- − --></mo>
+        <mn>1</mn>
+      </mrow>
+    </msub>
+  </mrow>
+</math> ဖြစ်ခြင်းပင်ဖြစ်သည်။ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>q</mi>
+</math> သည် အနည်းဆုံး ၁ ရှိရမည်ဖြစ်သောကြောင့် ကျွန်ုပ်တို့တွင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>a</mi>
+    <mi>k</mi>
+  </msub>
+  <mo>=</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>q</mi>
+    <msub>
+      <mi>b</mi>
+      <mi>k</mi>
+    </msub>
+  </mrow>
+  <mo>+</mo>
+  <msub>
+    <mi>b</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mi>k</mi>
+      <mo>−<!-- − --></mo>
+      <mn>1</mn>
+    </mrow>
+  </msub>
+  <mo>≥<!-- ≥ --></mo>
+  <msub>
+    <mi>b</mi>
+    <mi>k</mi>
+  </msub>
+  <+>
+  <msub>
+    <mi>b</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mi>k</mi>
+      <mo>−<!-- − --></mo>
+      <mn>1</mn>
+    </mrow>
+  </msub>
+</math> ရှိသည်။ သို့သော် ယခင် reduction step တွင် ကျွန်ုပ်တို့၌ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>b</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mi>k</mi>
+      <mo>+</mo>
+      <mn>1</mn>
+    </mrow>
+  </msub>
+  <mo>=</mo>
+  <msub>
+    <mi>a</mi>
+    <mi>k</mi>
+  </msub>
+</math> ရှိခဲ့သည်။ ထို့ကြောင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>b</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mi>k</mi>
+      <mo>+</mo>
+      <mn>1</mn>
+    </mrow>
+  </msub>
+  <mo>=</mo>
+  <msub>
+    <mi>a</mi>
+    <mi>k</mi>
+  </msub>
+  <mo>≥<!-- ≥ --></mo>
+  <msub>
+    <mi>b</mi>
+    <mi>k</mi>
+  </msub>
+  <mo>+</mo>
+  <msub>
+    <mi>b</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mi>k</mi>
+      <mo>−<!-- − --></mo>
+      <mn>1</mn>
+    </mrow>
+  </msub>
+</math> ဖြစ်သည်။ ဤအချက်သည် အထက်ပါဖော်ပြချက်ကို မှန်ကန်ကြောင်း စစ်ဆေးပေးသည်။ ယခု ကျွန်ုပ်တို့သည် algorithm ပြီးဆုံးရန် လိုအပ်သော အဆင့်အရေအတွက် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>k</mi>
+</math> ပေါ်တွင် induction အသုံးပြု၍ သီအိုရီကို သက်သေပြနိုင်သည်။ ရလဒ်သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>k</mi>
+    <mo>=</mo>
+    <mn>1</mn>
+  </mrow>
+</math> အတွက် မှန်ကန်ပါသည်၊ အကြောင်းမှာ ယင်းသည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>b</mi>
+</math> သည် အနည်းဆုံး <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mtext>Fib</mtext>
+    <mo stretchy="false">(</mo>
+    <mn>1</mn>
+    <mo stretchy="false">)</mo>
+    <mo>=</mo>
+    <mn>1</mn>
+  </mrow>
+</math> ကဲ့သို့ ကြီးမားရန်သာ လိုအပ်သောကြောင့်ဖြစ်သည်။ ယခု၊ ရလဒ်သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>k</mi>
+</math> နှင့် ညီမျှသော သို့မဟုတ် ငယ်သော ကိန်းပြည့်အားလုံးအတွက် မှန်ကန်သည်ဟု ယူဆပြီး <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>k</mi>
+    <mo>+</mo>
+    <mn>1</mn>
+  </mrow>
+</math> အတွက် မှန်ကန်ကြောင်း ပြသပါမည်။ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <msub>
+      <mi>a</mi>
+      <mrow class="MJX-TeXAtom-ORD">
+        <mi>k</mi>
+        <mo>+</mo>
+        <mn>1</mn>
+      </mrow>
+    </msub>
+    <mo>,</mo>
+    <msub>
+      <mi>b</mi>
+      <mrow class="MJX-TeXAtom-ORD">
+        <mi>k</mi>
+        <mo>+</mo>
+        <mn>1</mn>
+      </mrow>
+    </msub>
+    <mo stretchy="false">)</mo>
+  </mrow>
+  <mo stretchy="false">→<!-- → --></mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <msub>
+      <mi>a</mi>
+      <mi>k</mi>
+    </msub>
+    <mo>,</mo>
+    <msub>
+      <mi>b</mi>
+      <mi>k</mi>
+    </msub>
+    <mo stretchy="false">)</mo>
+  </mrow>
+  <mo stretchy="false">→<!-- → --></mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo stretchy="false">(</mo>
+    <msub>
+      <mi>a</mi>
+      <mrow class="MJX-TeXAtom-ORD">
+        <mi>k</mi>
+        <mo>−<!-- − --></mo>
+        <mn>1</mn>
+      </mrow>
+    </msub>
+    <mo>,</mo>
+    <msub>
+      <mi>b</mi>
+      <mrow class="MJX-TeXAtom-ORD">
+        <mi>k</mi>
+        <mo>−<!-- − --></mo>
+        <mn>1</mn>
+      </mrow>
+    </msub>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> တို့သည် reduction process ရှိ ဆက်တိုက်ဖြစ်သော အစုံများ ဖြစ်ပါစေ။ ကျွန်ုပ်တို့၏ induction hypotheses အရ ကျွန်ုပ်တို့တွင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>b</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mi>k</mi>
+      <mo>−<!-- − --></mo>
+      <mn>1</mn>
+    </mrow>
+  </msub>
+  <mo>≥<!-- ≥ --></mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mtext>Fib</mtext>
+    <mo stretchy="false">(</mo>
+    <mi>k</mi>
+    <mo>−<!-- − --></mo>
+    <mn>1</mn>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>b</mi>
+    <mi>k</mi>
+  </msub>
+  <mo>≥<!-- ≥ --></mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mtext>Fib</mtext>
+    <mo stretchy="false">(</mo>
+    <mi>k</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ရှိသည်။ ထို့ကြောင့်၊ ကျွန်ုပ်တို့ ခုလေးတင် သက်သေပြခဲ့သော အချက်နှင့် Fibonacci ကိန်းဂဏန်းများ၏ အဓိပ္ပာယ်ဖွင့်ဆိုချက်ကို ပေါင်းစပ်အသုံးပြုခြင်းဖြင့် 
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>b</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mi>k</mi>
+      <mo>+</mo>
+      <mn>1</mn>
+    </mrow>
+  </msub>
+  <mo>≥<!-- ≥ --></mo>
+  <msub>
+    <mi>b</mi>
+    <mi>k</mi>
+  </msub>
+  <mo>+</mo>
+  <msub>
+    <mi>b</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mi>k</mi>
+      <mo>−<!-- − --></mo>
+      <mn>1</mn>
+    </mrow>
+  </msub>
+  <mo>≥<!-- ≥ --></mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mtext>Fib</mtext>
+    <mo stretchy="false">(</mo>
+    <mi>k</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+  <mo>+</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mtext>Fib</mtext>
+    <mo stretchy="false">(</mo>
+    <mi>k</mi>
+    <mo>−<!-- − --></mo>
+    <mn>1</mn>
+    <mo stretchy="false">)</mo>
+  </mrow>
+  <mo>=</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mtext>Fib</mtext>
+    <mo stretchy="false">(</mo>
+    <mi>k</mi>
+    <mo>+</mo>
+    <mn>1</mn>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ကို ရရှိပါသည်၊ ၎င်းသည် Lamé’s Theorem သက်သေပြချက်ကို ပြီးပြည့်စုံစေပါသည်။</p>
+</div>
+<div id="FOOT44"><p><a class="footnote_backlink" href="#DOCF44"><sup>44</sup></a>
+အကယ်၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>d</mi>
+</math> သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ၏ divisor တစ်ခု ဖြစ်ပါက၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi n="n"/>
+    <mspace width="thinmathspace"/>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mo>/</mo>
+    </mrow>
+    <mspace width="thinmathspace"/>
+    <mi>d</mi>
+  </mrow>
+</math> သည်လည်း divisor တစ်ခု ဖြစ်သည်။ သို့သော် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>d</mi>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi n="n"/>
+    <mspace width="thinmathspace"/>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mo>/</mo>
+    </mrow>
+    <mspace width="thinmathspace"/>
+    <mi>d</mi>
+  </mrow>
+</math> နှစ်ခုစလုံးသည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msqrt>
+    <mi>n</mi>
+  </msqrt>
+</math> ထက် မကြီးနိုင်ပါ။</p>
+</div>
+<div id="FOOT45"><p><a class="footnote_backlink" href="#DOCF45"><sup>45</sup></a>
+Pierre de Fermat (၁၆၀၁-၁၆၆၅) ကို ခေတ်သစ် ကိန်းဂဏန်းသီအိုရီ (number theory) ၏ တည်ထောင်သူအဖြစ် သတ်မှတ်ကြသည်။ သူသည် အရေးကြီးသော ကိန်းဂဏန်းသီအိုရီဆိုင်ရာ ရလဒ်များစွာကို ရရှိခဲ့သော်လည်း ပုံမှန်အားဖြင့် သူ၏ သက်သေပြချက်များကို မဖော်ပြဘဲ ရလဒ်များကိုသာ ထုတ်ပြန်လေ့ရှိသည်။ Fermat’s Little Theorem ကို သူ ၁၆၄၀ ခုနှစ်တွင် ရေးသားခဲ့သော ပေးစာတစ်စောင်တွင် ဖော်ပြခဲ့သည်။ ပထမဆုံး ထုတ်ဝေခဲ့သော သက်သေပြချက်ကို Euler က ၁၇၃၆ ခုနှစ်တွင် ဖော်ပြခဲ့သည် (ယင်းနှင့် ထပ်တူကျသော ပိုမိုစောသည့် သက်သေပြချက်တစ်ခုကို Leibniz ၏ မထုတ်ဝေရသေးသော လက်ရေးစာမူများတွင် တွေ့ရှိခဲ့သည်)။ Fermat ၏ ရလဒ်များထဲတွင် အကျော်ကြားဆုံးဖြစ်သော Fermat’s Last Theorem ကို သူ၏ <cite>Arithmetic</cite> စာအုပ် (တတိယရာစု ဂရိသင်္ချာပညာရှင် Diophantus ရေးသားသော) မိတ္တူတွင် ၁၆၃၇ ခုနှစ်၌ “ငါသည် အလွန်မှတ်သားဖွယ်ကောင်းသော သက်သေပြချက်တစ်ခုကို တွေ့ရှိခဲ့ပြီ၊ သို့သော် ဤစာမျက်နှာဘေးရှိ နေရာလွတ်မှာ ယင်းကို ရေးရန် အလွန်ကျဥ်းမြောင်းလွန်းသည်” ဟူသော မှတ်ချက်နှင့်အတူ ရေးခြစ်ထားခဲ့သည်။ Fermat’s Last Theorem အတွက် သက်သေပြချက်ကို ရှာဖွေခြင်းသည် ကိန်းဂဏန်းသီအိုရီတွင် အကျော်ကြားဆုံးသော စိန်ခေါ်မှုများထဲမှ တစ်ခုဖြစ်လာခဲ့သည်။ ပြီးပြည့်စုံသော အဖြေကို နောက်ဆုံးတွင် ၁၉၉၅ ခုနှစ်၌ Princeton University မှ Andrew Wiles က ပေးနိုင်ခဲ့သည်။</p>
+</div>
+<div id="FOOT46"><p><a class="footnote_backlink" href="#DOCF46"><sup>46</sup></a>
+ထပ်ညွှန်း (exponent) <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>e</mi>
+</math> သည် ၁ ထက် ကြီးသော ကိစ္စများရှိ reduction steps များသည် မည်သည့် ကိန်းပြည့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math>၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>y</mi>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>m</mi>
+</math> အတွက်မဆို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>y</mi>
+</math> မြှောက်လဒ်၏ modulo <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>m</mi>
+</math> အကြွင်းကို ရှာဖွေရန် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> modulo <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>m</mi>
+</math> ၏ အကြွင်းနှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>y</mi>
+</math> modulo <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>m</mi>
+</math> ၏ အကြွင်းတို့ကို သီးခြားစီတွက်ချက်ပြီး၊ ၎င်းတို့ကို မြှောက်ကာ ရရှိလာသော ရလဒ်၏ modulo <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>m</mi>
+</math> အကြွင်းကို ယူခြင်းဖြင့် ရရှိနိုင်သည်ဟူသော အချက်အပေါ် အခြေခံသည်။ ဥပမာအားဖြင့်၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>e</mi>
+</math> သည် စုံကိန်းဖြစ်သော ကိစ္စတွင်၊ ကျွန်ုပ်တို့သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mi>b</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mi>e</mi>
+      <mrow class="MJX-TeXAtom-ORD">
+        <mo>/</mo>
+      </mrow>
+      <mn>2</mn>
+    </mrow>
+  </msup>
+</math> modulo <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>m</mi>
+</math> ၏ အကြွင်းကို တွက်ချက်ပြီး၊ ၎င်းကို နှစ်ထပ်တင်ကာ modulo <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>m</mi>
+</math> အကြွင်းကို ယူသည်။ ဤနည်းပညာသည် အသုံးဝင်သည်၊ အကြောင်းမှာ ကျွန်ုပ်တို့၏ တွက်ချက်မှုကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>m</mi>
+</math> ထက် များစွာကြီးမားသော ကိန်းဂဏန်းများကို ကိုင်တွယ်ရန် မလိုဘဲ လုပ်ဆောင်နိုင်သောကြောင့် ဖြစ်သည်။ (<a href="#Exercise-1_002e25">Exercise 1.25</a> နှင့် နှိုင်းယှဥ်ကြည့်ပါ။)</p>
+</div>
+<div id="FOOT47"><p><a class="footnote_backlink" href="#DOCF47"><sup>47</sup></a>
+<a id="Footnote-47"></a>Fermat test ကို လှည့်စားနိုင်သော ကိန်းဂဏန်းများကို <a id="index-Carmichael-numbers"></a>
+<em>Carmichael numbers</em> ဟု ခေါ်ပြီး၊ ၎င်းတို့သည် အလွန်ရှားပါးသည်ဟူသော အချက်မှအပ ၎င်းတို့အကြောင်းကို သိရှိရမှု နည်းပါးလှသည်။ ၁၀၀,၀၀၀,၀၀၀ အောက်တွင် Carmichael numbers ၂၅၅ ခု ရှိသည်။ အငယ်ဆုံး ကိန်းအချို့မှာ ၅၆၁၊ ၁၁၀၅၊ ၁၇၂၉၊ ၂၄၆၅၊ ၂၈၂၁ နှင့် ၆၆၀၁ တို့ ဖြစ်ကြသည်။ ကျပန်းရွေးချယ်ထားသော အလွန်ကြီးမားသော ကိန်းဂဏန်းများ၏ primality ကို စစ်ဆေးရာတွင်၊ Fermat test ကို လှည့်စားနိုင်သော တန်ဖိုးတစ်ခုကို တွေ့ကြုံရမည့် အခွင့်အရေးသည် ကွန်ပျူတာမှ "မှန်ကန်သော" algorithm ကို လုပ်ဆောင်နေစဥ် cosmic radiation ကြောင့် မှားယွင်းမှု ဖြစ်ပေါ်စေနိုင်မည့် အခွင့်အရေးထက်ပင် ပို၍ နည်းပါသည်။ Algorithm တစ်ခုကို ပထမအချက်ကြောင့် မလုံလောက်ဟု ယူဆသော်လည်း ဒုတိယအချက်ကြောင့် မဟုတ်ခြင်းသည် သင်္ချာနှင့် အင်ဂျင်နီယာပညာရပ်တို့အကြား ကွာခြားချက်ကို ဖော်ညွှန်းနေသည်။</p>
+</div>
+<div id="FOOT48"><p><a class="footnote_backlink" href="#DOCF48"><sup>48</sup></a>
+Probabilistic prime testing ၏ စိတ်ဝင်စားစရာ အကောင်းဆုံး အသုံးချမှုတစ်ခုမှာ cryptography နယ်ပယ်တွင် ဖြစ်သည်။ ဂဏန်း ၂၀၀ ပါသော ကျပန်းကိန်းတစ်ခုကို ခွဲခြမ်းစိတ်ဖြာရန် (factorization) လက်ရှိတွင် ကွန်ပျူတာဖြင့် လုပ်ဆောင်ရန် မဖြစ်နိုင်သော်လည်း၊ ထိုကဲ့သို့သော ကိန်းတစ်ခု၏ primality ကို Fermat test ဖြင့် စက္ကန့်အနည်းငယ်အတွင်း စစ်ဆေးနိုင်သည်။ ဤအချက်သည် <a href="References.html#Rivest-et-al_002e-_00281977_0029">Rivest et al. (1977)</a> မှ အကြံပြုထားသော "unbreakable codes" တည်ဆောက်နည်း၏ အခြေခံဖြစ်သည်။ ယင်း၏ ရလဒ်ဖြစ်သော <a id="index-RSA-algorithm"></a>
+<em>RSA algorithm</em> သည် အီလက်ထရောနစ် ဆက်သွယ်ရေး လုံခြုံရေးကို မြှင့်တင်ရန်အတွက် ကျယ်ပြန့်စွာ အသုံးပြုသော နည်းပညာတစ်ခု ဖြစ်လာခဲ့သည်။ ဤကဲ့သို့သော တိုးတက်မှုများကြောင့်၊ တစ်ချိန်က မိမိဘာသာ လေ့လာရန် သန့်စင်သော သင်္ချာ ("pure" mathematics) ခေါင်းစဥ်အဖြစ်သာ သတ်မှတ်ခဲ့သော ကိန်းဦးဂဏန်း (prime numbers) များ လေ့လာခြင်းသည် ယခုအခါ cryptography၊ အီလက်ထရောနစ် ငွေကြေးလွှဲပြောင်းမှုနှင့် သတင်းအချက်အလက် ပြန်လည်ရယူခြင်းတို့တွင် အရေးပါသော လက်တွေ့အသုံးချမှုများ ရှိလာခဲ့သည်။</p>
+</div>
+</div>
+<nav class="header">
+<p>
+Next: <a href="1_002e3.html#g_t1_002e3" accesskey="n" rel="next">1.3</a>, Prev: <a href="1_002e1.html#g_t1_002e1" accesskey="p" rel="prev">1.1</a>, Up: <a href="#g_t1_002e2" accesskey="u" rel="prev">1.2</a>   [<a href="index.html#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+
+
+</section><span class="bottom jump" title="Jump to bottom"><a href="#pagebottom" accesskey="b">⇣</a></span><a id="pagebottom"></a>
+</body>
+</html>

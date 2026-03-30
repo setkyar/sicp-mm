@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="my" lang="my">
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>Structure and Interpretation of Computer Programs, 2e: 2.3</title>
+
+<meta name="description" content="Structure and Interpretation of Computer Programs, 2e: 2.3" />
+<meta name="keywords" content="Structure and Interpretation of Computer Programs, 2e: 2.3" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="Generator" content="texi2any" />
+<meta charset="utf-8" />
+<link href="index.html#Top" rel="start" title="Top" />
+<link href="Term-Index.html#Term-Index" rel="index" title="Term Index" />
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents" />
+<link href="Chapter-2.html#Chapter-2" rel="prev" title="Chapter 2" />
+<link href="2_002e4.html#g_t2_002e4" rel="next" title="2.4" />
+<link href="2_002e2.html#g_t2_002e2_002e4" rel="prev" title="2.2.4" />
+
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/prettify.css" rel="stylesheet" type="text/css" />
+
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/footnotes.js" type="text/javascript"></script>
+<script src="js/browsertest.js" type="text/javascript"></script>
+</head>
+
+<body>
+<section><span class="top jump" title="Jump to top"><a href="#pagetop" accesskey="t">⇡</a></span><a id="pagetop"></a><a id="g_t2_002e3"></a>
+<nav class="header">
+<p>
+Next: <a href="2_002e4.html#g_t2_002e4" accesskey="n" rel="next">2.4</a>, Prev: <a href="2_002e2.html#g_t2_002e2" accesskey="p" rel="prev">2.2</a>, Up: <a href="Chapter-2.html#Chapter-2" accesskey="u" rel="prev">Chapter 2</a>   [<a href="index.html#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+<a id="Symbolic-Data"></a>
+<h3 class="section"><span class="secnum">2.3</span><span class="sectitle">သင်္ကေတအချက်အလက်များ</span></h3>
+
+<p>ယခုအထိ ကျွန်ုပ်တို့ အသုံးပြုခဲ့သော compound data object အားလုံးသည် အခြေခံအားဖြင့် ကိန်းဂဏန်းများမှ တည်ဆောက်ထားခြင်း ဖြစ်သည်။ ဤကဏ္ဍတွင် ကျွန်ုပ်တို့၏ ဘာသာစကား၌ စိတ်ကြိုက်သင်္ကေတများကို data အဖြစ် လုပ်ဆောင်နိုင်စွမ်းကို မိတ်ဆက်ပေးခြင်းဖြင့် ကိုယ်စားပြုနိုင်စွမ်းကို တိုးချဲ့သွားမည်ဖြစ်သည်။
+</p>
+
+<a id="g_t2_002e3_002e1"></a>
+<a id="Quotation"></a>
+<h4 class="subsection"><span class="secnum">2.3.1</span><span class="sectitle">Quotation</span></h4>
+
+<p>အကယ်၍ ကျွန်ုပ်တို့သည် သင်္ကေတများကို အသုံးပြု၍ compound data ကို ဖွဲ့စည်းနိုင်လျှင် အောက်ပါကဲ့သို့ list များကို ရရှိနိုင်သည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">a b c d</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="lit">23</span><span class="pln"> </span><span class="lit">45</span><span class="pln"> </span><span class="lit">17</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">((</span><span class="pln">Norah </span><span class="lit">12</span><span class="clo">)</span><span class="pln"> 
+ </span><span class="opn">(</span><span class="pln">Molly </span><span class="lit">9</span><span class="clo">)</span><span class="pln"> 
+ </span><span class="opn">(</span><span class="pln">Anna </span><span class="lit">7</span><span class="clo">)</span><span class="pln"> 
+ </span><span class="opn">(</span><span class="pln">Lauren </span><span class="lit">6</span><span class="clo">)</span><span class="pln"> 
+ </span><span class="opn">(</span><span class="pln">Charlotte </span><span class="lit">4</span><span class="clo">))</span></pre></div>
+
+<p>သင်္ကေတများ ပါဝင်သော List များသည် ကျွန်ုပ်တို့၏ ဘာသာစကားရှိ expression များနှင့် အသွင်သဏ္ဌာန် တူနိုင်ပါသည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="lit">23</span><span class="pln"> </span><span class="lit">45</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> x </span><span class="lit">9</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">fact n</span><span class="clo">)</span><span class="pln"> 
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> n </span><span class="lit">1</span><span class="clo">)</span><span class="pln"> 
+      </span><span class="lit">1</span><span class="pln"> 
+      </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> n </span><span class="opn">(</span><span class="pln">fact </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> n </span><span class="lit">1</span><span class="clo">)))))</span></pre></div>
+
+<p>သင်္ကေတများကို ကိုင်တွယ်အသုံးပြုရန် ကျွန်ုပ်တို့၏ ဘာသာစကားတွင် အစိတ်အပိုင်းအသစ်တစ်ခု လိုအပ်ပါသည်၊ ၎င်းမှာ <a id="index-quote"></a>
+data object တစ်ခုကို <em>quote</em> လုပ်နိုင်စွမ်း ဖြစ်သည်။ ဥပမာအားဖြင့် ကျွန်ုပ်တို့သည် <code>(a b)</code> ဆိုသည့် list ကို တည်ဆောက်လိုသည် ဆိုပါစို့။ ၎င်းကို <code>(list a b)</code> ဖြင့် လုပ်ဆောင်၍ မရနိုင်ပါ၊ အကြောင်းမှာ ဤ expression သည် သင်္ကေတများကို တိုက်ရိုက်ယူခြင်း မဟုတ်ဘဲ <code>a</code> နှင့် <code>b</code> တို့၏ <a id="index-values"></a>
+<em>values</em> (တန်ဖိုး) များဖြင့် list ကို တည်ဆောက်သောကြောင့် ဖြစ်သည်။ ဤပြဿနာသည် သဘာဝဘာသာစကား (natural languages) များတွင်လည်း လူသိများပြီး၊ စကားလုံးများနှင့် ဝါကျများကို semantic အနှစ်သာရများ သို့မဟုတ် စာလုံးစုများ (syntactic entities) အဖြစ် သတ်မှတ်နိုင်သည်။ သဘာဝဘာသာစကားများတွင် အသုံးများသော နည်းလမ်းမှာ စကားလုံးတစ်လုံး သို့မဟုတ် ဝါကျတစ်ခုကို စာလုံးစုတစ်ခုအနေဖြင့် တိုက်ရိုက်ယူဆရန် quotation mark များကို အသုံးပြုခြင်း ဖြစ်သည်။ ဥပမာအားဖြင့် “John” ၏ ပထမဆုံးစာလုံးမှာ “J” ဖြစ်သည်မှာ ထင်ရှားသည်။ အကယ်၍ ကျွန်ုပ်တို့က တစ်စုံတစ်ယောက်ကို “မင်းနာမည်ကို အသံထွက်ပြောပါ” ဟု ဆိုလျှင်၊ ထိုသူ၏ အမည်ကို ကြားရရန် မျှော်လင့်ပါသည်။ သို့သော် အကယ်၍ ကျွန်ုပ်တို့က “ ‘မင်းနာမည်’ လို့ အသံထွက်ပြောပါ” ဟု ဆိုလျှင် “မင်းနာမည်” ဆိုသည့် စကားလုံးကို ကြားရရန် မျှော်လင့်ပါသည်။ အခြားသူတစ်ဦး ပြောနိုင်သည်ကို ဖော်ပြရန် quotation mark များကို ထပ်ဆင့် (nest) အသုံးပြုရန် လိုအပ်သည်ကို သတိပြုပါ။<a class="footnote_link" id="DOCF98" href="#FOOT98"><sup>98</sup></a>
+</p>
+<p>တွက်ချက်ရမည့် expression များအဖြစ် မဟုတ်ဘဲ data object များအဖြစ် သတ်မှတ်ရမည့် list များနှင့် သင်္ကေတများကို ခွဲခြားရန် ဤနည်းလမ်းအတိုင်းပင် လိုက်နာနိုင်သည်။ သို့သော် ကျွန်ုပ်တို့၏ quote ပြုလုပ်ပုံမှာ သဘာဝဘာသာစကားများနှင့် ကွာခြားသည်၊ ၎င်းမှာ quotation mark (အစဉ်အလာအရ single quote သင်္ကေတ <code>'</code>)<!-- /@w --> ကို quote လုပ်မည့် object ၏ အစတွင်သာ ထားခြင်းဖြစ်သည်။ Scheme ၏ syntax တွင် object များကို ခွဲခြားရန် ကွက်လပ်များနှင့် လက်သည်းကွင်းများကို အသုံးပြုထားသောကြောင့် ဤသို့ ပြုလုပ်နိုင်သည်။ ထို့ကြောင့် single quote စာလုံး၏ အဓိပ္ပာယ်မှာ နောက်တွင်ရှိသော object ကို quote လုပ်ရန် ဖြစ်သည်။<a class="footnote_link" id="DOCF99" href="#FOOT99"><sup>99</sup></a>
+</p>
+<p>ယခုအခါတွင် သင်္ကေတများနှင့် ၎င်းတို့၏ value များကို ခွဲခြားနိုင်ပြီဖြစ်သည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> a </span><span class="lit">1</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> b </span><span class="lit">2</span><span class="clo">)</span><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">list a b</span><span class="clo">)</span><span class="pln">
+</span><i><span class="opn">(</span><span class="lit">1</span><span class="pln"> </span><span class="lit">2</span><span class="clo">)</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">list </span><span class="lit">'a</span><span class="pln"> </span><span class="lit">'b</span><span class="clo">)</span><span class="pln">
+</span><i><span class="opn">(</span><span class="pln">a b</span><span class="clo">)</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">list </span><span class="lit">'a</span><span class="pln"> b</span><span class="clo">)</span><span class="pln">
+</span><i><span class="opn">(</span><span class="pln">a </span><span class="lit">2</span><span class="clo">)</span></i>
+</pre></div>
+
+<p>Quotation သည် list များအတွက် ပုံမှန်ပြသနေကျ ပုံစံကို အသုံးပြု၍ compound object များကို ရိုက်ထည့်နိုင်ရန်လည်း ခွင့်ပြုသည် -<a class="footnote_link" id="DOCF100" href="#FOOT100"><sup>100</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">car</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">a b c</span><span class="clo">))</span><span class="pln">
+</span><i><span class="pln">a</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">a b c</span><span class="clo">))</span><span class="pln">
+</span><i><span class="opn">(</span><span class="pln">b c</span><span class="clo">)</span></i>
+</pre></div>
+
+<p>ဤသို့ လုပ်ဆောင်နိုင်ခြင်းကြောင့် <code>'()</code> ကို evaluate လုပ်ခြင်းဖြင့် empty list ကို ရရှိနိုင်ပြီး <code>nil</code> ဆိုသည့် variable ကို အသုံးမပြုဘဲ နေနိုင်သည်။
+</p>
+<p>သင်္ကေတများကို ကိုင်တွယ်ရာတွင် အသုံးပြုသော ထပ်မံပါဝင်သည့် primitive တစ်ခုမှာ <code>eq?</code> ဖြစ်သည်၊ ၎င်းသည် သင်္ကေတနှစ်ခုကို argument များအဖြစ် ယူပြီး ၎င်းတို့ တူညီခြင်း ရှိမရှိ စစ်ဆေးပေးသည်။<a class="footnote_link" id="DOCF101" href="#FOOT101"><sup>101</sup></a>
+<code>eq?</code> ကို အသုံးပြု၍ <code>memq</code> ဟု ခေါ်သော အသုံးဝင်သည့် procedure တစ်ခုကို ရေးသားနိုင်သည်။ ၎င်းသည် argument နှစ်ခု (သင်္ကေတတစ်ခုနှင့် list တစ်ခု) ကို ယူသည်။ အကယ်၍ ထိုသင်္ကေတသည် list ထဲတွင် မပါဝင်ပါက (ဆိုလိုသည်မှာ list ထဲရှိ မည်သည့် item နှင့်မျှ <code>eq?</code> မဖြစ်ပါက) <code>memq</code> သည် false ကို return ပြန်သည်။ သို့မဟုတ်ပါက ၎င်းသည် ထိုသင်္ကေတ စတင်တွေ့ရှိသည့် နေရာမှစ၍ ကျန်ရှိသော sublist ကို return ပြန်ပေးသည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">memq item x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pln">null? x</span><span class="clo">)</span><span class="pln"> false</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> item </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> x</span><span class="clo">))</span><span class="pln"> x</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> </span><span class="opn">(</span><span class="pln">memq item </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> x</span><span class="clo">)))))</span></pre></div>
+
+<p>ဥပမာအားဖြင့် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">memq </span><span class="lit">'apple</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">pear banana prune</span><span class="clo">))</span></pre></div>
+
+<p>၏ တန်ဖိုးမှာ false ဖြစ်ပြီး၊ အောက်ပါ expression ၏ တန်ဖိုးမှာမူ -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">memq </span><span class="lit">'apple</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">x </span><span class="opn">(</span><span class="pln">apple sauce</span><span class="clo">)</span><span class="pln"> y apple pear</span><span class="clo">))</span></pre></div>
+
+<p>၏ တန်ဖိုးမှာ <code>(apple pear)</code> ဖြစ်သည်။
+</p>
+<blockquote>
+<p><strong><a id="Exercise-2_002e53"></a>လေ့ကျင့်ခန်း ၂.၅၃ -</strong> အောက်ပါ expression တစ်ခုချင်းစီကို evaluate လုပ်ပါက interpreter မှ မည်သို့ ပြန်လည်ဖြေကြားမည်နည်း။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">list </span><span class="lit">'a</span><span class="pln"> </span><span class="lit">'b</span><span class="pln"> </span><span class="lit">'c</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">list </span><span class="opn">(</span><span class="pln">list </span><span class="lit">'george</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> </span><span class="lit">'</span><span class="op">((</span><span class="pln">x1 x2</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">y1 y2</span><span class="clo">)))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">cadr</span><span class="pln"> </span><span class="lit">'</span><span class="op">((</span><span class="pln">x1 x2</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">y1 y2</span><span class="clo">)))</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">pair? </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">a short list</span><span class="clo">)))</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">memq </span><span class="lit">'red</span><span class="pln"> </span><span class="lit">'</span><span class="op">((</span><span class="pln">red shoes</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">blue socks</span><span class="clo">)))</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">memq </span><span class="lit">'red</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">red shoes blue socks</span><span class="clo">))</span></pre></div>
+</blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e54"></a>လေ့ကျင့်ခန်း ၂.၅၄ -</strong> List နှစ်ခုတွင် တူညီသော element များသည် အစီအစဉ်တကျ ပါဝင်နေပါက ၎င်းတို့ကို <code>equal?</code> ဖြစ်သည်ဟု ဆိုနိုင်သည်။ ဥပမာ -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">equal</span><span class="pun">?</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">this is a list</span><span class="clo">)</span><span class="pln"> 
+        </span><span class="lit">'</span><span class="opn">(</span><span class="pln">this is a list</span><span class="clo">))</span></pre></div>
+
+<p>သည် true ဖြစ်သော်လည်း
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">equal</span><span class="pun">?</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">this is a list</span><span class="clo">)</span><span class="pln"> 
+        </span><span class="lit">'</span><span class="opn">(</span><span class="pln">this </span><span class="opn">(</span><span class="pln">is a</span><span class="clo">)</span><span class="pln"> list</span><span class="clo">))</span></pre></div>
+
+<p>သည် false ဖြစ်သည်။ ပိုမို တိကျစွာ ဆိုရလျှင်၊ သင်္ကေတများ၏ အခြေခံ <code>eq?</code> တူညီမှုအပေါ် မူတည်၍ <code>equal?</code> ကို recursive နည်းလမ်းဖြင့် သတ်မှတ်နိုင်သည်။ <code>a</code> နှင့် <code>b</code> တို့သည် သင်္ကေတများဖြစ်ပြီး ၎င်းတို့သည် <code>eq?</code> ဖြစ်နေလျှင် သော်လည်းကောင်း၊ သို့မဟုတ် ၎င်းတို့သည် list များ ဖြစ်ကြပြီး <code>(car a)</code> နှင့် <code>(car b)</code> သည် <code>equal?</code> ဖြစ်ပြီး <code>(cdr a)</code> နှင့် <code>(cdr b)</code> သည်လည်း <code>equal?</code> ဖြစ်နေလျှင် သော်လည်းကောင်း ၎င်းတို့ကို <code>equal?</code> ဖြစ်သည်ဟု သတ်မှတ်မည်။ ဤအယူအဆကို အသုံးပြု၍ <code>equal?</code> ကို procedure တစ်ခုအဖြစ် ရေးသားပါ။<a class="footnote_link" id="DOCF102" href="#FOOT102"><sup>102</sup></a>
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e55"></a>လေ့ကျင့်ခန်း ၂.၅၅ -</strong> Eva Lu Ator သည် interpreter တွင် အောက်ပါ expression ကို ရိုက်ထည့်လိုက်သည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">car</span><span class="pln"> </span><span class="lit">''abracadabra</span><span class="clo">)</span></pre></div>
+
+<p>သူမ အံ့ဩသွားသည်မှာ interpreter က <code>quote</code> ဟု ပြန်လည် ပြသလိုက်ခြင်းပင် ဖြစ်သည်။ ရှင်းပြပါ။
+</p></blockquote>
+
+<a id="g_t2_002e3_002e2"></a>
+<a id="Example_003a-Symbolic-Differentiation"></a>
+<h4 class="subsection"><span class="secnum">2.3.2</span><span class="sectitle">Example: Symbolic Differentiation</span></h4>
+
+<p>သင်္ကေတများအား ကိုင်တွယ်ဖြေရှင်းခြင်း (symbol manipulation) နှင့် data abstraction ၏ နောက်ထပ်သာဓကတစ်ခုအနေဖြင့်၊ အက္ခရာသင်္ချာအသုံးအနှုန်းများ (algebraic expressions) ကို သင်္ကေတနည်းဖြင့် differential ရှာဖွေပေးသည့် procedure တစ်ခုအား ဒီဇိုင်းထုတ်ပုံကို လေ့လာကြည့်ကြပါစို့။ ကျွန်ုပ်တို့အနေဖြင့် ၎င်း procedure ကို အက္ခရာသင်္ချာအသုံးအနှုန်းတစ်ခုနှင့် variable တစ်ခုအား argument များအဖြစ် လက်ခံစေလိုပြီး၊ variable နှင့်သက်ဆိုင်သော derivative ကို return ပြန်ပေးစေလိုပါသည်။ ဥပမာအားဖြင့်၊ procedure သို့ ပေးလိုက်သော argument များမှာ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>a</mi>
+    <msup>
+      <mi>x</mi>
+      <mn>2</mn>
+    </msup>
+    <mo>+</mo>
+    <mi>b</mi>
+    <mi>x</mi>
+    <mo>+</mo>
+    <mi>c</mi>
+  </mrow>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> ဖြစ်ပါက၊ 
+procedure သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>2</mn>
+    <mi>a</mi>
+    <mi>x</mi>
+    <mo>+</mo>
+    <mi>b</mi>
+  </mrow>
+</math> ကို return ပြန်ပေးရမည်ဖြစ်သည်။ သင်္ကေတနည်းဖြင့် differential ရှာဖွေခြင်း (Symbolic differentiation) သည် Lisp ဘာသာစကားတွင် ထူးခြားသော သမိုင်းဝင်အရေးပါမှုရှိသည်။ ၎င်းသည် သင်္ကေတများအား ကိုင်တွယ်ဖြေရှင်းရန်အတွက် ကွန်ပျူတာဘာသာစကားတစ်ခုကို ဖော်ထုတ်ရန် လှုံ့ဆော်ပေးခဲ့သော သာဓကများထဲမှ တစ်ခုဖြစ်သည်။ ထို့အပြင်၊ ၎င်းသည် သင်္ကေတအခြေပြု သင်္ချာလုပ်ငန်းစဉ်များအတွက် အစွမ်းထက်သော စနစ်များပေါ်ထွန်းလာစေရန် ဦးတည်ခဲ့သည့် သုတေသနလမ်းကြောင်း၏ အစပျိုးမှုလည်းဖြစ်ပြီး၊ ယခုအခါတွင် အသုံးချသင်္ချာပညာရှင်များနှင့် ရူပဗေဒပညာရှင် အမြောက်အမြားက ၎င်းစနစ်များကို အသုံးပြုနေကြပြီဖြစ်သည်။
+</p>
+<p>symbolic-differentiation ပရိုဂရမ်ကို ဖော်ထုတ်ရာတွင်၊ <a href="2_002e1.html#g_t2_002e1_002e1">2.1.1</a> တွင် rational-number စနစ်ကို ဖော်ထုတ်ခဲ့စဉ်က အသုံးပြုခဲ့သည့် data abstraction မဟာဗျူဟာအတိုင်းပင် လုပ်ဆောင်သွားမည်ဖြစ်သည်။ ဆိုလိုသည်မှာ၊ “ပေါင်းလဒ်များ” (sums)၊ “မြှောက်လဒ်များ” (products) နှင့် “variable များ” စသည့် abstract object များအပေါ်တွင် အလုပ်လုပ်မည့် differentiation algorithm ကို ၎င်းတို့အား မည်သို့ကိုယ်စားပြုမည်နည်း (representation) ဆိုသည်ကို မပူပန်ဘဲ အရင်ဆုံး အဓိပ္ပာယ်သတ်မှတ်မည်ဖြစ်သည်။ ထို့နောက်မှသာ ကိုယ်စားပြုမှုဆိုင်ရာ ပြဿနာကို ဖြေရှင်းသွားမည်ဖြစ်သည်။
+</p>
+<a id="The-differentiation-program-with-abstract-data"></a>
+<h5 class="subsubheading">The differentiation program with abstract data</h5>
+
+<p>ရိုးရှင်းစေရန်အတွက်၊ argument နှစ်ခုပါဝင်သော ပေါင်းခြင်းနှင့် မြှောက်ခြင်း လုပ်ဆောင်ချက်များကိုသာ အသုံးပြု၍ တည်ဆောက်ထားသော အသုံးအနှုန်းများကို ကိုင်တွယ်နိုင်မည့် အလွန်ရိုးရှင်းသော symbolic-differentiation ပရိုဂရမ်တစ်ခုကို ကျွန်ုပ်တို့ စဉ်းစားပါမည်။ ထိုကဲ့သို့သော အသုံးအနှုန်းများအားလုံး၏ differentiation ကို အောက်ပါ လျှော့ချရေးစည်းမျဉ်းများ (reduction rules) ကို အသုံးပြု၍ လုပ်ဆောင်နိုင်သည်-
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mrow class="MJX-TeXAtom-ORD">
+      <mfrac>
+        <mrow>
+          <mi>d</mi>
+          <mi>c</mi>
+        </mrow>
+        <mrow>
+          <mi>d</mi>
+          <mi>x</mi>
+        </mrow>
+      </mfrac>
+    </mrow>
+    <mspace width="thinmathspace"/>
+    <mo>=</mo>
+    <mspace width="thinmathspace"/>
+    <mn>0</mn>
+    <mo>,</mo>
+  </mrow>
+  <mspace width="1em"/>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mtext>for </mtext>
+    <mi>c</mi>
+    <mtext> a constant </mtext>
+  </mrow>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mtext>or a variable </mtext>
+  </mrow>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mtext>different from </mtext>
+    <mi>x</mi>
+    <mo>,</mo>
+  </mrow>
+</math>
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mtable columnalign="right center left" rowspacing="3pt" columnspacing="thickmathspace">
+    <mtr>
+      <mtd>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mfrac>
+            <mrow>
+              <mi>d</mi>
+              <mi>x</mi>
+            </mrow>
+            <mrow>
+              <mi>d</mi>
+              <mi>x</mi>
+            </mrow>
+          </mfrac>
+        </mrow>
+      </mtd>
+      <mtd>
+        <mo>=</mo>
+      </mtd>
+      <mtd>
+        <mn>1</mn>
+        <mo>,</mo>
+      </mtd>
+    </mtr>
+    <mtr>
+      <mtd>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mfrac>
+            <mrow>
+              <mi>d</mi>
+              <mo stretchy="false">(</mo>
+              <mi>u</mi>
+              <mo>+</mo>
+              <mi>v</mi>
+              <mo stretchy="false">)</mo>
+            </mrow>
+            <mrow>
+              <mi>d</mi>
+              <mi>x</mi>
+            </mrow>
+          </mfrac>
+        </mrow>
+      </mtd>
+      <mtd>
+        <mo>=</mo>
+      </mtd>
+      <mtd>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mfrac>
+            <mrow>
+              <mi>d</mi>
+              <mi>u</mi>
+            </mrow>
+            <mrow>
+              <mi>d</mi>
+              <mi>x</mi>
+            </mrow>
+          </mfrac>
+        </mrow>
+        <mo>+</mo>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mfrac>
+            <mrow>
+              <mi>d</mi>
+              <mi>v</mi>
+            </mrow>
+            <mrow>
+              <mi>d</mi>
+              <mi>x</mi>
+            </mrow>
+          </mfrac>
+        </mrow>
+        <mo>,</mo>
+      </mtd>
+    </mtr>
+    <mtr>
+      <mtd>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mfrac>
+            <mrow>
+              <mi>d</mi>
+              <mo stretchy="false">(</mo>
+              <mi>u</mi>
+              <mi>v</mi>
+              <mo stretchy="false">)</mo>
+            </mrow>
+            <mrow>
+              <mi>d</mi>
+              <mi>x</mi>
+            </mrow>
+          </mfrac>
+        </mrow>
+      </mtd>
+      <mtd>
+        <mo>=</mo>
+      </mtd>
+      <mtd>
+        <mi>u</mi>
+        <mspace width="0.1em"/>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mfrac>
+            <mrow>
+              <mi>d</mi>
+              <mi>v</mi>
+            </mrow>
+            <mrow>
+              <mi>d</mi>
+              <mi>x</mi>
+            </mrow>
+          </mfrac>
+        </mrow>
+        <mo>+</mo>
+        <mi>v</mi>
+        <mspace width="0.1em"/>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mfrac>
+            <mrow>
+              <mi>d</mi>
+              <mi>u</mi>
+            </mrow>
+            <mrow>
+              <mi>d</mi>
+              <mi>x</mi>
+            </mrow>
+          </mfrac>
+        </mrow>
+        <mo>.</mo>
+      </mtd>
+    </mtr>
+  </mtable>
+</math>
+နောက်ဆုံး စည်းမျဉ်းနှစ်ခုသည် recursive သဘောသဘာဝရှိသည်ကို သတိပြုပါ။ ဆိုလိုသည်မှာ၊ ပေါင်းလဒ်တစ်ခု၏ derivative ကို ရရှိရန်အတွက် ဦးစွာ ကိန်းတစ်ခုချင်းစီ၏ derivative များကို ရှာဖွေပြီး ၎င်းတို့ကို ပေါင်းရမည်ဖြစ်သည်။ ကိန်းတစ်ခုချင်းစီသည်လည်း ထပ်မံခွဲခြမ်းစိတ်ဖြာရန် လိုအပ်သော အသုံးအနှုန်းများ ဖြစ်နိုင်ပါသည်။ ပို၍သေးငယ်သော အစိတ်အပိုင်းများအဖြစ် ထပ်ကာထပ်ကာ ခွဲခြမ်းစိတ်ဖြာခြင်းဖြင့် နောက်ဆုံးတွင် derivative သည် 0 သို့မဟုတ် 1 ဖြစ်မည့် ကိန်းသေများ (constants) သို့မဟုတ် variable များကို ရရှိမည်ဖြစ်သည်။
+</p>
+<p>ဤစည်းမျဉ်းများကို procedure တစ်ခုအဖြစ် ဖော်ဆောင်ရန်အတွက်၊ rational-number အကောင်အထည်ဖော်မှုကို ဒီဇိုင်းထုတ်စဉ်ကကဲ့သို့ပင် "ဖြစ်နိုင်ခြေရှိသည်ဟု ယူဆခြင်း" (wishful thinking) နည်းလမ်းကို အသုံးပြုပါမည်။ အကယ်၍ ကျွန်ုပ်တို့တွင် အက္ခရာသင်္ချာအသုံးအနှုန်းများကို ကိုယ်စားပြုရန် နည်းလမ်းတစ်ခုရှိခဲ့ပါက၊ အသုံးအနှုန်းတစ်ခုသည် ပေါင်းလဒ်လား၊ မြှောက်လဒ်လား၊ ကိန်းသေလား သို့မဟုတ် variable လား ဆိုသည်ကို ခွဲခြားနိုင်သင့်သည်။ အသုံးအနှုန်းတစ်ခု၏ အစိတ်အပိုင်းများကိုလည်း ထုတ်ယူနိုင်သင့်သည်။ ဥပမာအားဖြင့် ပေါင်းလဒ်တစ်ခုအတွက် addend (ပထမကိန်း) နှင့် augend (ဒုတိယကိန်း) ကို ထုတ်ယူနိုင်ရန် လိုအပ်သည်။ အစိတ်အပိုင်းများမှ အသုံးအနှုန်းများကိုလည်း တည်ဆောက်နိုင်သင့်သည်။ အောက်ပါ selectors၊ constructors နှင့် predicates များကို အကောင်အထည်ဖော်မည့် procedure များ ကျွန်ုပ်တို့တွင် ရှိနှင့်ပြီးသားဟု ယူဆကြပါစို့-
+</p>
+<div class="example">
+<pre class="example">(variable? e)          <span class="roman"><code>e</code> သည် variable တစ်ခုလား?</span>
+(same-variable? v1 v2) <span class="roman"><code>v1</code> နှင့် <code>v2</code> တို့သည် တူညီသော variable များလား?</span>
+(sum? e)               <span class="roman"><code>e</code> သည် ပေါင်းလဒ်တစ်ခုလား?</span>
+(addend e)             <span class="roman">ပေါင်းလဒ် <code>e</code> ၏ addend (ပထမကိန်း)။</span>
+(augend e)             <span class="roman">ပေါင်းလဒ် <code>e</code> ၏ augend (ဒုတိယကိန်း)။</span>
+(make-sum a1 a2)       <span class="roman"><code>a1</code> နှင့် <code>a2</code> တို့၏ ပေါင်းလဒ်ကို တည်ဆောက်ရန်။</span>
+(product? e)           <span class="roman"><code>e</code> သည် မြှောက်လဒ်တစ်ခုလား?</span>
+(multiplier e)         <span class="roman">မြှောက်လဒ် <code>e</code> ၏ multiplier (မြှောက်ကိန်း)။</span>
+(multiplicand e)       <span class="roman">မြှောက်လဒ် <code>e</code> ၏ multiplicand (အမြှောက်ခံကိန်း)။</span>
+(make-product m1 m2)   <span class="roman"><code>m1</code> နှင့် <code>m2</code> တို့၏ မြှောက်လဒ်ကို တည်ဆောက်ရန်။</span>
+</pre></div>
+
+<p>၎င်းတို့နှင့်အတူ ကိန်းဂဏန်းများကို ခွဲခြားပေးသည့် primitive predicate <code>number?</code> ကို အသုံးပြု၍ differentiation စည်းမျဉ်းများကို အောက်ပါ procedure အဖြစ် ဖော်ပြနိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">deriv exp var</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pln">number? exp</span><span class="clo">)</span><span class="pln"> </span><span class="lit">0</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="pln">variable? exp</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">same-variable? exp var</span><span class="clo">)</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> </span><span class="lit">0</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">((</span><span class="pln">sum? exp</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">make-sum </span><span class="opn">(</span><span class="pln">deriv </span><span class="opn">(</span><span class="pln">addend exp</span><span class="clo">)</span><span class="pln"> var</span><span class="clo">)</span><span class="pln">
+                   </span><span class="opn">(</span><span class="pln">deriv </span><span class="opn">(</span><span class="pln">augend exp</span><span class="clo">)</span><span class="pln"> var</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">((</span><span class="pln">product? exp</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">make-sum
+          </span><span class="opn">(</span><span class="pln">make-product 
+           </span><span class="opn">(</span><span class="pln">multiplier exp</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">deriv </span><span class="opn">(</span><span class="pln">multiplicand exp</span><span class="clo">)</span><span class="pln"> var</span><span class="clo">))</span><span class="pln">
+          </span><span class="opn">(</span><span class="pln">make-product 
+           </span><span class="opn">(</span><span class="pln">deriv </span><span class="opn">(</span><span class="pln">multiplier exp</span><span class="clo">)</span><span class="pln"> var</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">multiplicand exp</span><span class="clo">))))</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"unknown expression 
+                      type: DERIV"</span><span class="pln"> exp</span><span class="clo">))))</span></pre></div>
+
+<p>ဤ <code>deriv</code> procedure တွင် အပြည့်အစုံသော differentiation algorithm ပါဝင်သည်။ ၎င်းကို abstract data များဖြင့် ဖော်ပြထားသောကြောင့်၊ ကျွန်ုပ်တို့သည် သင့်လျော်သော selectors နှင့် constructors အစုအဝေးကို ဒီဇိုင်းထုတ်ထားသရွေ့ အက္ခရာသင်္ချာအသုံးအနှုန်းများကို မည်သို့ပင် ကိုယ်စားပြုစေကာမူ ၎င်းသည် အလုပ်လုပ်မည်ဖြစ်သည်။ ၎င်းသည် ကျွန်ုပ်တို့ နောက်ထပ် ဖြေရှင်းရမည့် ကိစ္စဖြစ်သည်။
+</p>
+<a id="Representing-algebraic-expressions"></a>
+<h5 class="subsubheading">Representing algebraic expressions</h5>
+
+<p>အက္ခရာသင်္ချာအသုံးအနှုန်းများကို ကိုယ်စားပြုရန် list structure ကို အသုံးပြုနိုင်မည့် နည်းလမ်းများစွာကို စိတ်ကူးကြည့်နိုင်သည်။ ဥပမာအားဖြင့်၊ သာမန်အက္ခရာသင်္ချာရေးထုံးအတိုင်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>a</mi>
+    <mi>x</mi>
+    <mo>+</mo>
+    <mi>b</mi>
+  </mrow>
+</math> ကို <code>(a * x + b)</code> ကဲ့သို့ list များဖြင့် ကိုယ်စားပြုနိုင်သည်။ သို့သော်၊ ပို၍ရိုးရှင်းသော ရွေးချယ်မှုတစ်ခုမှာ Lisp တွင် combination များအတွက် အသုံးပြုသည့် လက်သည်းကွင်းပါသော prefix notation ကို အသုံးပြုရန်ဖြစ်သည်။ ဆိုလိုသည်မှာ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>a</mi>
+    <mi>x</mi>
+    <mo>+</mo>
+    <mi>b</mi>
+  </mrow>
+</math> ကို <code>(+ (* a x) b)</code> အဖြစ် ကိုယ်စားပြုရန်ဖြစ်သည်။ ထို့နောက် differentiation ပြဿနာအတွက် ကျွန်ုပ်တို့၏ data representation မှာ အောက်ပါအတိုင်း ဖြစ်ပါသည်-
+</p>
+<ul>
+<li> variable များသည် symbol များဖြစ်သည်။ ၎င်းတို့ကို primitive predicate <code>symbol?</code> ဖြင့် ခွဲခြားသတ်မှတ်သည်-
+
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">variable? x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">symbol? x</span><span class="clo">))</span></pre></div>
+
+</li><li> variable နှစ်ခုသည် ၎င်းတို့ကို ကိုယ်စားပြုသော symbol များ <code>eq?</code> ဖြစ်ပါက တူညီသည်ဟု ယူဆသည်-
+
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">same-variable? v1 v2</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">and</span><span class="pln"> </span><span class="opn">(</span><span class="pln">variable? v1</span><span class="clo">)</span><span class="pln">
+       </span><span class="opn">(</span><span class="pln">variable? v2</span><span class="clo">)</span><span class="pln">
+       </span><span class="opn">(</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> v1 v2</span><span class="clo">)))</span></pre></div>
+
+</li><li> ပေါင်းလဒ်များနှင့် မြှောက်လဒ်များကို list များအဖြစ် တည်ဆောက်သည်-
+
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-sum a1 a2</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">list </span><span class="lit">'</span><span class="pun">+</span><span class="pln"> a1 a2</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-product m1 m2</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">list </span><span class="lit">'</span><span class="pun">*</span><span class="pln"> m1 m2</span><span class="clo">))</span></pre></div>
+
+</li><li> ပေါင်းလဒ်တစ်ခုသည် ပထမဆုံး element မှာ symbol <code>+</code> ဖြစ်သော list တစ်ခုဖြစ်သည်-
+
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sum? x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">and</span><span class="pln"> </span><span class="opn">(</span><span class="pln">pair? x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> x</span><span class="clo">)</span><span class="pln"> </span><span class="lit">'</span><span class="pun">+</span><span class="clo">)))</span></pre></div>
+
+</li><li> addend သည် ပေါင်းလဒ် list ၏ ဒုတိယမြောက် အစိတ်အပိုင်းဖြစ်သည်-
+
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">addend s</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cadr</span><span class="pln"> s</span><span class="clo">))</span></pre></div>
+
+</li><li> augend သည် ပေါင်းလဒ် list ၏ တတိယမြောက် အစိတ်အပိုင်းဖြစ်သည်-
+
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">augend s</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">caddr</span><span class="pln"> s</span><span class="clo">))</span></pre></div>
+
+</li><li> မြှောက်လဒ်တစ်ခုသည် ပထမဆုံး element မှာ symbol <code>*</code> ဖြစ်သော list တစ်ခုဖြစ်သည်-
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">product? x</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">and</span><span class="pln"> </span><span class="opn">(</span><span class="pln">pair? x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> x</span><span class="clo">)</span><span class="pln"> </span><span class="lit">'</span><span class="pun">*</span><span class="clo">)))</span></pre></div>
+
+</li><li> multiplier သည် မြှောက်လဒ် list ၏ ဒုတိယမြောက် အစိတ်အပိုင်းဖြစ်သည်-
+
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">multiplier p</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cadr</span><span class="pln"> p</span><span class="clo">))</span></pre></div>
+
+</li><li> multiplicand သည် မြှောက်လဒ် list ၏ တတိယမြောက် အစိတ်အပိုင်းဖြစ်သည်-
+
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">multiplicand p</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">caddr</span><span class="pln"> p</span><span class="clo">))</span></pre></div>
+
+</li></ul>
+
+<p>ထို့ကြောင့်၊ လုပ်ဆောင်ချက်ရှိသော symbolic-differentiation ပရိုဂရမ်တစ်ခုရရှိရန် ၎င်းတို့ကို <code>deriv</code> တွင်ပါရှိသော algorithm နှင့် ပေါင်းစပ်ရန်သာ လိုအပ်သည်။ ၎င်း၏ လုပ်ဆောင်ပုံ သာဓကအချို့ကို ကြည့်ကြပါစို့-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">deriv </span><span class="lit">'</span><span class="opn">(</span><span class="pun">+</span><span class="pln"> x </span><span class="lit">3</span><span class="clo">)</span><span class="pln"> </span><span class="lit">'x</span><span class="clo">)</span><span class="pln">
+</span><i><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> </span><span class="lit">0</span><span class="clo">)</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">deriv </span><span class="lit">'</span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x y</span><span class="clo">)</span><span class="pln"> </span><span class="lit">'x</span><span class="clo">)</span><span class="pln">
+</span><i><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x </span><span class="lit">0</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> y</span><span class="clo">))</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">deriv </span><span class="lit">'</span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x y</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> x </span><span class="lit">3</span><span class="clo">))</span><span class="pln"> </span><span class="lit">'x</span><span class="clo">)</span><span class="pln">
+</span><i><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x y</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> </span><span class="lit">0</span><span class="clo">))</span></i><span class="pln">
+   </span><i><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x </span><span class="lit">0</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> y</span><span class="clo">))</span></i><span class="pln">
+      </span><i><span class="opn">(</span><span class="pun">+</span><span class="pln">  x </span><span class="lit">3</span><span class="clo">)))</span></i>
+</pre></div>
+
+<p>ပရိုဂရမ်သည် မှန်ကန်သောအဖြေများကို ထုတ်ပေးသော်လည်း ၎င်းတို့သည် ရှင်းလင်းထားခြင်း မရှိသေးပါ (unsimplified)။ ၎င်းသည်
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mfrac>
+      <mrow>
+        <mi>d</mi>
+        <mo stretchy="false">(</mo>
+        <mi>x</mi>
+        <mi>y</mi>
+        <mo stretchy="false">)</mo>
+      </mrow>
+      <mrow>
+        <mi>d</mi>
+        <mi>x</mi>
+      </mrow>
+    </mfrac>
+  </mrow>
+  <mspace width="thinmathspace"/>
+  <mo>=</mo>
+  <mspace width="thinmathspace"/>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>x</mi>
+    <mo>⋅<!-- ⋅ --></mo>
+    <mn>0</mn>
+  </mrow>
+  <mo>+</mo>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>1</mn>
+    <mo>⋅<!-- ⋅ --></mo>
+    <mi>y</mi>
+    <mo>,</mo>
+  </mrow>
+</math>
+ဖြစ်သည်မှာ မှန်သော်လည်း၊ ကျွန်ုပ်တို့သည် ပရိုဂရမ်အား <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>x</mi>
+    <mo>⋅<!-- ⋅ --></mo>
+    <mn>0</mn>
+    <mo>=</mo>
+    <mn>0</mn>
+  </mrow>
+</math>၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>1</mn>
+    <mo>⋅<!-- ⋅ --></mo>
+    <mi>y</mi>
+    <mo>=</mo>
+    <mi>y</mi>
+  </mrow>
+</math>၊ 
+နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>0</mn>
+    <mo>+</mo>
+    <mi>y</mi>
+    <mo>=</mo>
+    <mi>y</mi>
+  </mrow>
+</math> ဖြစ်ကြောင်း သိစေလိုသည်။ ဒုတိယသာဓကအတွက် အဖြေမှာ ရိုးရိုးရှင်းရှင်းပင် <code>y</code> ဖြစ်သင့်သည်။ တတိယသာဓကတွင် တွေ့ရသည့်အတိုင်း၊ အသုံးအနှုန်းများ ရှုပ်ထွေးလာသောအခါ ၎င်းသည် ကြီးမားသော ပြဿနာတစ်ခု ဖြစ်လာပါသည်။
+</p>
+<p>ကျွန်ုပ်တို့၏ အခက်အခဲမှာ rational-number အကောင်အထည်ဖော်မှုတွင် ကြုံတွေ့ခဲ့ရသည်နှင့် တူညီနေသည်- အဖြေများကို အရှင်းဆုံးပုံစံသို့ မလျှော့ချရသေးခြင်းပင်ဖြစ်သည်။ rational-number လျှော့ချမှုကို လုပ်ဆောင်ရန်အတွက်၊ အကောင်အထည်ဖော်မှု၏ constructors နှင့် selectors များကိုသာ ပြောင်းလဲရန် လိုအပ်ခဲ့သည်။ ဤနေရာတွင်လည်း အလားတူ မဟာဗျူဟာကို ကျင့်သုံးနိုင်သည်။ ကျွန်ုပ်တို့သည် <code>deriv</code> ကို လုံးဝပြောင်းလဲမည်မဟုတ်ပါ။ ယင်းအစား၊ <code>make-sum</code> ကို ပေါင်းကိန်းနှစ်ခုလုံးသည် ကိန်းဂဏန်းများဖြစ်ပါက ၎င်းတို့ကို ပေါင်းပြီး ရလဒ်ကို return ပြန်ပေးရန် ပြောင်းလဲပါမည်။ ထို့အပြင်၊ ပေါင်းကိန်းတစ်ခုခုသည် 0 ဖြစ်ပါက <code>make-sum</code> သည် အခြားပေါင်းကိန်းကို return ပြန်ပေးမည်ဖြစ်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-sum a1 a2</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pun">=</span><span class="pln">number? a1 </span><span class="lit">0</span><span class="clo">)</span><span class="pln"> a2</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="pun">=</span><span class="pln">number? a2 </span><span class="lit">0</span><span class="clo">)</span><span class="pln"> a1</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="kwd">and</span><span class="pln"> </span><span class="opn">(</span><span class="pln">number? a1</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">number? a2</span><span class="clo">))</span><span class="pln"> 
+         </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> a1 a2</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> </span><span class="opn">(</span><span class="pln">list </span><span class="lit">'</span><span class="pun">+</span><span class="pln"> a1 a2</span><span class="clo">))))</span></pre></div>
+
+<p>၎င်းသည် အသုံးအနှုန်းတစ်ခုသည် ပေးထားသော ကိန်းဂဏန်းတစ်ခုနှင့် ညီမျှခြင်း ရှိမရှိ စစ်ဆေးပေးသည့် <code>=number?</code> procedure ကို အသုံးပြုထားသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pun">=</span><span class="pln">number? exp num</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">and</span><span class="pln"> </span><span class="opn">(</span><span class="pln">number? exp</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> exp num</span><span class="clo">)))</span></pre></div>
+
+<p>အလားတူပင်၊ 0 နှင့် မြှောက်ပါက 0 ဖြစ်ခြင်းနှင့် 1 နှင့် မြှောက်ပါက မူလကိန်းအတိုင်း ဖြစ်ခြင်းဟူသော စည်းမျဉ်းများကို ထည့်သွင်းရန် <code>make-product</code> ကိုလည်း ပြောင်းလဲပါမည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-product m1 m2</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="kwd">or</span><span class="pln"> </span><span class="opn">(</span><span class="pun">=</span><span class="pln">number? m1 </span><span class="lit">0</span><span class="clo">)</span><span class="pln"> 
+             </span><span class="opn">(</span><span class="pun">=</span><span class="pln">number? m2 </span><span class="lit">0</span><span class="clo">))</span><span class="pln"> 
+         </span><span class="lit">0</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="pun">=</span><span class="pln">number? m1 </span><span class="lit">1</span><span class="clo">)</span><span class="pln"> m2</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="pun">=</span><span class="pln">number? m2 </span><span class="lit">1</span><span class="clo">)</span><span class="pln"> m1</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="kwd">and</span><span class="pln"> </span><span class="opn">(</span><span class="pln">number? m1</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">number? m2</span><span class="clo">))</span><span class="pln"> 
+         </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> m1 m2</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> </span><span class="opn">(</span><span class="pln">list </span><span class="lit">'</span><span class="pun">*</span><span class="pln"> m1 m2</span><span class="clo">))))</span></pre></div>
+
+<p>ဤ version သည် ကျွန်ုပ်တို့၏ သာဓကသုံးခုအပေါ် မည်သို့အလုပ်လုပ်သည်ကို ကြည့်ပါ-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">deriv </span><span class="lit">'</span><span class="opn">(</span><span class="pun">+</span><span class="pln"> x </span><span class="lit">3</span><span class="clo">)</span><span class="pln"> </span><span class="lit">'x</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">1</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">deriv </span><span class="lit">'</span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x y</span><span class="clo">)</span><span class="pln"> </span><span class="lit">'x</span><span class="clo">)</span><span class="pln">
+</span><i><span class="pln">y</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">deriv </span><span class="lit">'</span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x y</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> x </span><span class="lit">3</span><span class="clo">))</span><span class="pln"> </span><span class="lit">'x</span><span class="clo">)</span><span class="pln">
+</span><i><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x y</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> y </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> x </span><span class="lit">3</span><span class="clo">)))</span></i></pre></div>
+
+<p>ဤအဖြေမှာ များစွာတိုးတက်လာသော်လည်း၊ တတိယသာဓကအရ ကျွန်ုပ်တို့ “အရှင်းဆုံး” ဟု သဘောတူနိုင်မည့် ပုံစံသို့ ရောက်ရှိရန် အလှမ်းဝေးနေသေးကြောင်း တွေ့ရသည်။ အက္ခရာသင်္ချာနည်းအရ ရှင်းလင်းခြင်း ပြဿနာသည် အခြားအကြောင်းရင်းများအပြင်၊ ရည်ရွယ်ချက်တစ်ခုအတွက် အရှင်းဆုံးပုံစံသည် အခြားရည်ရွယ်ချက်တစ်ခုအတွက် မဟုတ်နိုင်ခြင်းကြောင့် ရှုပ်ထွေးလှပါသည်။
+</p>
+<blockquote>
+<p><strong><a id="Exercise-2_002e56"></a>Exercise 2.56:</strong> အခြေခံ differentiator အား ပိုမိုများပြားသော အသုံးအနှုန်းအမျိုးအစားများကို ကိုင်တွယ်နိုင်ရန် မည်သို့ချဲ့ထွင်နိုင်ကြောင်း ပြသပါ။ ဥပမာအားဖြင့်၊ differentiation စည်းမျဉ်းဖြစ်သော 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mfrac>
+      <mrow>
+        <mi>d</mi>
+        <mo stretchy="false">(</mo>
+        <msup>
+          <mi>u</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mspace width="0.1ex"/>
+            <mi>n</mi>
+          </mrow>
+        </msup>
+        <mo stretchy="false">)</mo>
+      </mrow>
+      <mrow>
+        <mi>d</mi>
+        <mi>x</mi>
+      </mrow>
+    </mfrac>
+  </mrow>
+  <mspace width="thinmathspace"/>
+  <mo>=</mo>
+  <mspace width="thinmathspace"/>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <msup>
+      <mi>u</mi>
+      <mrow class="MJX-TeXAtom-ORD">
+        <mspace width="0.1ex"/>
+        <mi>n</mi>
+        <mo>−<!-- − --></mo>
+        <mn>1</mn>
+      </mrow>
+    </msup>
+    <mspace width="thinmathspace"/>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mfrac>
+        <mrow>
+          <mi>d</mi>
+          <mi>u</mi>
+        </mrow>
+        <mrow>
+          <mi>d</mi>
+          <mi>x</mi>
+        </mrow>
+      </mfrac>
+    </mrow>
+  </mrow>
+</math>
+ကို <code>deriv</code> ပရိုဂရမ်တွင် clause အသစ်တစ်ခုထည့်သွင်းခြင်းနှင့် သင့်လျော်သော procedure များဖြစ်သော <code>exponentiation?</code>၊ <code>base</code>၊ <code>exponent</code> နှင့် <code>make-exponentiation</code> တို့ကို အဓိပ္ပာယ်သတ်မှတ်ခြင်းဖြင့် အကောင်အထည်ဖော်ပါ။ (ထပ်ညွှန်းတင်ခြင်း (exponentiation) အတွက် <code>**</code> symbol ကို အသုံးပြုနိုင်သည်။) မည်သည့်အရာကိုမဆို ထပ်ညွှန်း 0 တင်ပါက 1 ရရှိပြီး၊ ထပ်ညွှန်း 1 တင်ပါက မူလကိန်းအတိုင်း ရရှိခြင်းဟူသော စည်းမျဉ်းများကိုလည်း ထည့်သွင်းပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e57"></a>Exercise 2.57:</strong> အရေအတွက် ကန့်သတ်ချက်မရှိသော (နှစ်ခု သို့မဟုတ် နှစ်ခုထက်ပိုသော) ကိန်းများပါဝင်သော ပေါင်းလဒ်များနှင့် မြှောက်လဒ်များကို ကိုင်တွယ်နိုင်ရန် differentiation ပရိုဂရမ်ကို ချဲ့ထွင်ပါ။ ထိုအခါ အထက်ပါ နောက်ဆုံးသာဓကကို အောက်ပါအတိုင်း ဖော်ပြနိုင်မည်ဖြစ်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">deriv </span><span class="lit">'</span><span class="opn">(</span><span class="pun">*</span><span class="pln"> x y </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> x </span><span class="lit">3</span><span class="clo">))</span><span class="pln"> </span><span class="lit">'x</span><span class="clo">)</span></pre></div>
+
+<p>၎င်းကို <code>deriv</code> procedure ကို လုံးဝမပြောင်းလဲဘဲ ပေါင်းလဒ်နှင့် မြှောက်လဒ်များ၏ representation ကိုသာ ပြောင်းလဲခြင်းဖြင့် လုပ်ဆောင်ရန် ကြိုးစားပါ။ ဥပမာအားဖြင့်၊ ပေါင်းလဒ်တစ်ခု၏ <code>addend</code> သည် ပထမကိန်းဖြစ်ပြီး၊ <code>augend</code> သည် ကျန်ရှိသော ကိန်းများအားလုံး၏ ပေါင်းလဒ် ဖြစ်ပါလိမ့်မည်။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e58"></a>Exercise 2.58:</strong> differentiation ပရိုဂရမ်ကို သာမန်သင်္ချာရေးထုံးများဖြစ်သော <code>+</code> နှင့် <code>*</code> တို့သည် prefix မဟုတ်ဘဲ infix operator များအဖြစ် အလုပ်လုပ်စေရန် ပြုပြင်လိုသည်ဟု ဆိုပါစို့။ differentiation ပရိုဂရမ်ကို abstract data များဖြင့် အဓိပ္ပာယ်သတ်မှတ်ထားသောကြောင့်၊ differentiator အလုပ်လုပ်မည့် အက္ခရာသင်္ချာအသုံးအနှုန်းများ၏ representation ကို သတ်မှတ်ပေးသော predicates၊ selectors နှင့် constructors များကိုသာ ပြောင်းလဲခြင်းဖြင့် မတူညီသော representation များတွင် အလုပ်လုပ်နိုင်ရန် ပြုပြင်နိုင်သည်။
+</p>
+<ol>
+<li> <code>(x + (3 * (x + (y + 2))))</code> ကဲ့သို့ infix ပုံစံဖြင့် ပေးထားသော အက္ခရာသင်္ချာအသုံးအနှုန်းများကို differential ရှာနိုင်ရန် ၎င်းကို မည်သို့လုပ်ဆောင်ရမည်ကို ပြသပါ။ အလုပ်ပိုမိုရိုးရှင်းစေရန်အတွက် <code>+</code> နှင့် <code>*</code> တို့သည် အမြဲတမ်း argument နှစ်ခုယူပြီး အသုံးအနှုန်းများတွင် လက်သည်းကွင်းများ အပြည့်အစုံပါဝင်သည်ဟု ယူဆပါ။
+
+</li><li> အကယ်၍ မလိုအပ်သော လက်သည်းကွင်းများကို ချန်လှပ်ထားပြီး အပေါင်းထက် အမြှောက်ကို အရင်လုပ်ဆောင်သည်ဟု ယူဆသော <code>(x + 3 * (x + y + 2))</code> ကဲ့သို့သော စံနှုန်းမီ အက္ခရာသင်္ချာရေးထုံးများကို ခွင့်ပြုမည်ဆိုပါက ပြဿနာသည် သိသိသာသာ ပိုမိုခက်ခဲသွားမည်ဖြစ်သည်။ ကျွန်ုပ်တို့၏ derivative ပရိုဂရမ် ဆက်လက်အလုပ်လုပ်နိုင်စေရန်အတွက် ဤရေးထုံးအတွက် သင့်လျော်သော predicates၊ selectors နှင့် constructors များကို သင် ဒီဇိုင်းထုတ်နိုင်မလား?
+
+</li></ol>
+</blockquote>
+
+<a id="g_t2_002e3_002e3"></a>
+<a id="Example_003a-Representing-Sets"></a>
+<h4 class="subsection"><span class="secnum">2.3.3</span><span class="sectitle">Example: Representing Sets</span></h4>
+
+<p>ယခင် ဥပမာများတွင် ကျွန်ုပ်တို့သည် compound data objects နှစ်မျိုးအတွက် ကိုယ်စားပြုပုံများကို တည်ဆောက်ခဲ့သည် - ၎င်းတို့မှာ rational numbers (ရာရှင်နယ် ကိန်းများ) နှင့် algebraic expressions (အက္ခရာသင်္ကေတ ဖော်ပြချက်များ) ဖြစ်ကြသည်။ ဤဥပမာများထဲမှ တစ်ခုတွင် ကျွန်ုပ်တို့သည် ဖော်ပြချက်များကို တည်ဆောက်ချိန် (construction time) သို့မဟုတ် ရွေးချယ်ချိန် (selection time) ၌ ရှင်းလင်းရန် (လျှော့ချရန်) ရွေးချယ်နိုင်ခဲ့သော်လည်း၊ ၎င်းအပြင် အဆိုပါ တည်ဆောက်ပုံများအတွက် list များကို အသုံးပြု၍ ကိုယ်စားပြုပုံကို ရွေးချယ်ခြင်းမှာ ရိုးရှင်းပါသည်။ အစုများ (sets) ကို ကိုယ်စားပြုရန် ကြိုးစားသောအခါတွင်မူ၊ ကိုယ်စားပြုမည့်ပုံစံကို ရွေးချယ်ခြင်းမှာ ထိုမျှ မထင်ရှားတော့ပေ။ အမှန်စင်စစ်အားဖြင့်၊ ဖြစ်နိုင်ခြေရှိသော ကိုယ်စားပြုပုံ အမြောက်အမြားရှိပြီး ၎င်းတို့သည် နည်းလမ်းအမျိုးမျိုးဖြင့် တစ်ခုနှင့်တစ်ခု သိသိသာသာ ကွဲပြားကြသည်။
+</p>
+<p>အလွတ်သဘောအရဆိုလျှင်၊ set တစ်ခုဆိုသည်မှာ ကွဲပြားခြားနားသော အရာဝတ္ထုများ၏ စုစည်းမှုတစ်ခုမျှသာ ဖြစ်သည်။ ပိုမိုတိကျသော အဓိပ္ပာယ်ဖွင့်ဆိုချက် ပေးနိုင်ရန်အတွက် data abstraction နည်းလမ်းကို အသုံးပြုနိုင်သည်။ ဆိုလိုသည်မှာ၊ sets များပေါ်တွင် အသုံးပြုမည့် လုပ်ဆောင်ချက်များကို သတ်မှတ်ပေးခြင်းဖြင့် “set” ကို အဓိပ္ပာယ်ဖွင့်ခြင်း ဖြစ်သည်။ ၎င်းတို့မှာ <code>union-set</code>၊ <code>intersection-set</code>၊ <code>element-of-set?</code> နှင့် <code>adjoin-set</code> တို့ ဖြစ်ကြသည်။ <code>Element-of-set?</code> သည် ပေးထားသော element တစ်ခုသည် set တစ်ခု၏ အဖွဲ့ဝင် ဟုတ်မဟုတ်ကို ဆုံးဖြတ်ပေးသော predicate တစ်ခု ဖြစ်သည်။ <code>Adjoin-set</code> သည် အရာဝတ္ထုတစ်ခုနှင့် set တစ်ခုကို argument များအဖြစ် လက်ခံပြီး၊ မူလ set ထဲရှိ element များအပြင် ထပ်ပေါင်းလိုက်သော element အသစ်လည်း ပါဝင်သည့် set တစ်ခုကို return ပြန်ပေးသည်။ <code>Union-set</code> သည် set နှစ်ခု၏ union ကို တွက်ချက်ပေးပြီး၊ ၎င်းသည် argument နှစ်ခုထဲမှ တစ်ခုခုတွင် ပါဝင်သော element တိုင်း ပါဝင်သည့် set ဖြစ်သည်။ <code>Intersection-set</code> သည် set နှစ်ခု၏ intersection ကို တွက်ချက်ပေးပြီး၊ ၎င်းသည် argument နှစ်ခုစလုံးတွင် ပါဝင်သော element များသာ ပါဝင်သည့် set ဖြစ်သည်။ Data abstraction ၏ အမြင်အရ၊ အထက်ပါ အဓိပ္ပာယ်ဖွင့်ဆိုချက်များနှင့် ကိုက်ညီသော နည်းလမ်းဖြင့် ဤလုပ်ဆောင်ချက်များကို အကောင်အထည်ဖော်နိုင်မည့် မည်သည့် ကိုယ်စားပြုပုံကိုမဆို ကျွန်ုပ်တို့ လွတ်လပ်စွာ ဒီဇိုင်းထုတ်နိုင်သည်။<a class="footnote_link" id="DOCF103" href="#FOOT103"><sup>103</sup></a>
+</p>
+<a id="Sets-as-unordered-lists"></a>
+<h5 class="subsubheading">Sets as unordered lists</h5>
+
+<p>Set တစ်ခုကို ကိုယ်စားပြုနိုင်သော နည်းလမ်းတစ်ခုမှာ element များ တစ်ကြိမ်ထက်ပို၍ မပါဝင်သော list တစ်ခုအဖြစ် ဖော်ပြခြင်း ဖြစ်သည်။ အစုအလွတ် (empty set) ကို list အလွတ် (empty list) ဖြင့် ကိုယ်စားပြုသည်။ ဤကိုယ်စားပြုပုံတွင်၊ <code>element-of-set?</code> သည် <a href="#g_t2_002e3_002e1">2.3.1</a> ပါ <code>memq</code> procedure နှင့် ဆင်တူသည်။ ၎င်းသည် set ၏ element များမှာ symbols များသာ ဖြစ်ရန် မလိုစေရန်အတွက် <code>eq?</code> အစား <code>equal?</code> ကို အသုံးပြုထားသည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">element-of-set? x </span><span class="kwd">set</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pln">null? </span><span class="kwd">set</span><span class="clo">)</span><span class="pln"> false</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="kwd">equal</span><span class="pun">?</span><span class="pln"> x </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> </span><span class="kwd">set</span><span class="clo">))</span><span class="pln"> true</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> </span><span class="opn">(</span><span class="pln">element-of-set? x </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> </span><span class="kwd">set</span><span class="clo">)))))</span></pre></div>
+
+<p>၎င်းကို အသုံးပြု၍ ကျွန်ုပ်တို့ <code>adjoin-set</code> ကို ရေးသားနိုင်သည်။ အကယ်၍ ထည့်သွင်းမည့် အရာဝတ္ထုသည် set ထဲတွင် ရှိနှင့်ပြီးသား ဖြစ်ပါက၊ ထို set ကိုသာ return ပြန်ပေးလိုက်သည်။ သို့မဟုတ်ပါက၊ set ကို ကိုယ်စားပြုသည့် list ထဲသို့ အရာဝတ္ထုကို ထည့်ရန် <code>cons</code> ကို အသုံးပြုသည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">adjoin-set x </span><span class="kwd">set</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">element-of-set? x </span><span class="kwd">set</span><span class="clo">)</span><span class="pln">
+      </span><span class="kwd">set</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> x </span><span class="kwd">set</span><span class="clo">)))</span></pre></div>
+
+<p><code>intersection-set</code> အတွက် recursive နည်းဗျူဟာကို အသုံးပြုနိုင်သည်။ အကယ်၍ ကျွန်ုပ်တို့သည် <code>set2</code> နှင့် <code>set1</code> ၏ <code>cdr</code> တို့၏ intersection ကို မည်သို့ဖော်ဆောင်ရမည်ကို သိပါက၊ <code>set1</code> ၏ <code>car</code> ကို ယင်းထဲတွင် ထည့်မထည့် ဆုံးဖြတ်ရန်သာ လိုအပ်သည်။ သို့သော် ဤအချက်သည် <code>(car set1)</code> သည် <code>set2</code> ထဲတွင်လည်း ရှိမရှိ အပေါ်တွင် မူတည်သည်။ ရလဒ်ထွက်ပေါ်လာသော procedure မှာ အောက်ပါအတိုင်းဖြစ်သည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">intersection-set set1 set2</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="kwd">or</span><span class="pln"> </span><span class="opn">(</span><span class="pln">null? set1</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">null? set2</span><span class="clo">))</span><span class="pln"> 
+         </span><span class="lit">'</span><span class="opn">(</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">((</span><span class="pln">element-of-set? </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> set1</span><span class="clo">)</span><span class="pln"> set2</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> set1</span><span class="clo">)</span><span class="pln">
+               </span><span class="opn">(</span><span class="pln">intersection-set </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> set1</span><span class="clo">)</span><span class="pln"> 
+                                 set2</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> </span><span class="opn">(</span><span class="pln">intersection-set </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> set1</span><span class="clo">)</span><span class="pln"> 
+                                set2</span><span class="clo">))))</span></pre></div>
+
+<p>ကိုယ်စားပြုပုံတစ်ခုကို ဒီဇိုင်းထုတ်ရာတွင်၊ ကျွန်ုပ်တို့ ထည့်သွင်းစဉ်းစားရမည့် အချက်တစ်ခုမှာ ထိရောက်မှု (efficiency) ဖြစ်သည်။ ကျွန်ုပ်တို့၏ set လုပ်ဆောင်ချက်များအတွက် လိုအပ်သော အဆင့်အရေအတွက်ကို စဉ်းစားကြည့်ပါ။ ၎င်းတို့အားလုံးသည် <code>element-of-set?</code> ကို အသုံးပြုသောကြောင့်၊ ဤလုပ်ဆောင်ချက်၏ အမြန်နှုန်းသည် တစ်ခုလုံးအနေဖြင့် set အကောင်အထည်ဖော်မှု၏ ထိရောက်မှုအပေါ် အဓိက သက်ရောက်မှုရှိသည်။ ယခု၊ အရာဝတ္ထုတစ်ခုသည် set တစ်ခု၏ အဖွဲ့ဝင် ဟုတ်မဟုတ် စစ်ဆေးရန်အတွက် <code>element-of-set?</code> သည် set တစ်ခုလုံးကို scan ဖတ်ရနိုင်ပါသည်။ (အဆိုးရွားဆုံး အခြေအနေတွင်၊ ထိုအရာဝတ္ထုသည် set ထဲတွင် မရှိခြင်းပင် ဖြစ်နိုင်သည်။) ထို့ကြောင့်၊ အကယ်၍ set တွင် element အရေအတွက် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ခုရှိလျှင် <code>element-of-set?</code> သည် အဆင့်ပေါင်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ခုအထိ ကြာမြင့်နိုင်ပါသည်။ ထို့ကြောင့် လိုအပ်သော အဆင့်အရေအတွက်သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ</mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> အတိုင်း တိုးတက်လာမည်ဖြစ်သည်။ ဤလုပ်ဆောင်ချက်ကို အသုံးပြုထားသော <code>adjoin-set</code> အတွက် လိုအပ်သော အဆင့်အရေအတွက်သည်လည်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ</mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> အတိုင်း တိုးတက်မည်ဖြစ်သည်။ <code>set1</code> ၏ element တစ်ခုချင်းစီအတွက် <code>element-of-set?</code> စစ်ဆေးမှုကို လုပ်ဆောင်သော <code>intersection-set</code> အတွက်မူ၊ လိုအပ်သော အဆင့်အရေအတွက်သည် ပါဝင်သော set များ၏ အရွယ်အစားများ မြှောက်လဒ်အတိုင်း တိုးတက်မည်ဖြစ်ပြီး၊ အရွယ်အစား <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ရှိသော set နှစ်ခုအတွက် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ</mi>
+    <mo stretchy="false">(</mo>
+    <msup>
+      <mi>n</mi>
+      <mn>2</mn>
+    </msup>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ဖြစ်သည်။ <code>union-set</code> အတွက်လည်း ထိုနည်းတူပင် ဖြစ်လိမ့်မည်။
+</p>
+<blockquote>
+<p><strong><a id="Exercise-2_002e59"></a>Exercise 2.59:</strong> အစီအစဉ်မကျသော list (unordered-list) ဖြင့် set များကို ကိုယ်စားပြုပုံအတွက် <code>union-set</code> လုပ်ဆောင်ချက်ကို အကောင်အထည်ဖော်ပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e60"></a>Exercise 2.60:</strong> Set တစ်ခုကို ပွားနေသော element များ (duplicates) မပါဝင်သည့် list တစ်ခုအဖြစ် ကိုယ်စားပြုရန် ကျွန်ုပ်တို့ သတ်မှတ်ခဲ့သည်။ ယခု ပွားနေသော element များကို ခွင့်ပြုသည်ဟု ယူဆကြည့်ပါ။ ဥပမာအားဖြင့်၊ set <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo fence="false" stretchy="false">{</mo>
+    <mn>1</mn>
+    <mo>,</mo>
+    <mn>2</mn>
+    <mo>,</mo>
+    <mn>3</mn>
+    <mo fence="false" stretchy="false">}</mo>
+  </mrow>
+</math> ကို list <code>(2 3 2 1 3 2 2)</code> အဖြစ် ကိုယ်စားပြုနိုင်သည်။ ဤကိုယ်စားပြုပုံပေါ်တွင် အလုပ်လုပ်သော <code>element-of-set?</code>၊ <code>adjoin-set</code>၊ <code>union-set</code> နှင့် <code>intersection-set</code> procedure များကို ဒီဇိုင်းထုတ်ပါ။ တစ်ခုချင်းစီ၏ ထိရောက်မှုသည် ပွားနေသော element မပါသည့် (non-duplicate) ကိုယ်စားပြုပုံအတွက် သက်ဆိုင်ရာ procedure နှင့် မည်သို့ ကွာခြားသနည်း? ဤကိုယ်စားပြုပုံကို non-duplicate ပုံစံထက် ပိုမိုနှစ်သက်စွာ အသုံးပြုမည့် application များ ရှိပါသလား?
+</p></blockquote>
+
+<a id="Sets-as-ordered-lists"></a>
+<h5 class="subsubheading">Sets as ordered lists</h5>
+
+<p>ကျွန်ုပ်တို့၏ set လုပ်ဆောင်ချက်များကို ပိုမိုမြန်ဆန်စေရန် နည်းလမ်းတစ်ခုမှာ set ၏ element များကို ငယ်စဉ်ကြီးလိုက် (increasing order) ဖော်ပြထားသော ကိုယ်စားပြုပုံသို့ ပြောင်းလဲရန် ဖြစ်သည်။ ဤသို့ပြုလုပ်ရန်၊ မည်သည့်အရာက ပိုကြီးသည်ကို ပြောနိုင်ရန်အတွက် အရာဝတ္ထုနှစ်ခုကို နှိုင်းယှဉ်နိုင်မည့် နည်းလမ်းတစ်ခု လိုအပ်သည်။ ဥပမာအားဖြင့်၊ symbols များကို အက္ခရာစဉ် (lexicographically) အတိုင်း နှိုင်းယှဉ်နိုင်သည်၊ သို့မဟုတ် အရာဝတ္ထုတစ်ခုချင်းစီအတွက် သီးခြားကိန်းဂဏန်းတစ်ခု သတ်မှတ်ပေးပြီး ထိုကိန်းဂဏန်းများကို နှိုင်းယှဉ်ခြင်းဖြင့် element များကို နှိုင်းယှဉ်သည့် နည်းလမ်းတစ်ခုကို သဘောတူသတ်မှတ်နိုင်သည်။ ဆွေးနွေးမှုကို ရိုးရှင်းစေရန်အတွက်၊ set ၏ element များသည် ကိန်းဂဏန်းများဖြစ်သည့် အခြေအနေကိုသာ စဉ်းစားမည်ဖြစ်ရာ <code>&gt;</code> နှင့် <code>&lt;</code> တို့ကို အသုံးပြု၍ element များကို နှိုင်းယှဉ်နိုင်သည်။ ကိန်းဂဏန်း အစုတစ်ခုကို ၎င်း၏ element များကို ငယ်စဉ်ကြီးလိုက် စာရင်းပြုစုခြင်းဖြင့် ကိုယ်စားပြုမည်။ အထက်ပါ ပထမကိုယ်စားပြုပုံတွင် set <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo fence="false" stretchy="false">{</mo>
+    <mn>1</mn>
+    <mo>,</mo>
+    <mn>3</mn>
+    <mo>,</mo>
+    <mn>6</mn>
+    <mo>,</mo>
+    <mn>10</mn>
+    <mo fence="false" stretchy="false">}</mo>
+  </mrow>
+</math> ကို မည်သည့်အစီအစဉ်ဖြင့်မဆို စာရင်းပြုစု၍ ဖော်ပြနိုင်သော်လည်း၊ ကျွန်ုပ်တို့၏ ကိုယ်စားပြုပုံအသစ်တွင်မူ list <code>(1 3 6 10)</code> တစ်မျိုးတည်းကိုသာ ခွင့်ပြုသည်။
+</p>
+<p>အစီအစဉ်ချထားခြင်း၏ အားသာချက်တစ်ခုကို <code>element-of-set?</code> တွင် တွေ့နိုင်သည်။ item တစ်ခု ရှိမရှိ စစ်ဆေးရာတွင်၊ set တစ်ခုလုံးကို scan ဖတ်ရန် မလိုအပ်တော့ပေ။ အကယ်၍ ကျွန်ုပ်တို့ ရှာဖွေနေသော item ထက် ပိုကြီးသော set element တစ်ခုသို့ ရောက်ရှိသွားပါက၊ ထို item သည် set ထဲတွင် မရှိကြောင်း သိနိုင်သည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">element-of-set? x </span><span class="kwd">set</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pln">null? </span><span class="kwd">set</span><span class="clo">)</span><span class="pln"> false</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="pun">=</span><span class="pln"> x </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> </span><span class="kwd">set</span><span class="clo">))</span><span class="pln"> true</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="pun">&lt;</span><span class="pln"> x </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> </span><span class="kwd">set</span><span class="clo">))</span><span class="pln"> false</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> </span><span class="opn">(</span><span class="pln">element-of-set? x </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> </span><span class="kwd">set</span><span class="clo">)))))</span></pre></div>
+
+<p>ဤအချက်က အဆင့်မည်မျှကို သက်သာစေသနည်း? အဆိုးရွားဆုံး အခြေအနေတွင်မူ၊ ကျွန်ုပ်တို့ ရှာဖွေနေသော item သည် set ထဲတွင် အကြီးဆုံး ဖြစ်နေနိုင်သဖြင့် အဆင့်အရေအတွက်မှာ အစီအစဉ်မကျသော ကိုယ်စားပြုပုံနှင့် အတူတူပင် ဖြစ်လိမ့်မည်။ အခြားတစ်ဖက်တွင်မူ၊ အရွယ်အစားအမျိုးမျိုးရှိသော item များကို ရှာဖွေမည်ဆိုပါက တစ်ခါတစ်ရံတွင် list ၏ အစနား၌ပင် ရှာဖွေမှုကို ရပ်တန့်နိုင်မည်ဖြစ်ပြီး၊ အခြားအချိန်များတွင်မူ list ၏ အစိတ်အပိုင်း အတော်များများကို ဆက်လက်စစ်ဆေးရန် လိုအပ်လိမ့်မည်ဟု မျှော်လင့်နိုင်သည်။ ပျမ်းမျှအားဖြင့်ဆိုလျှင် set ထဲရှိ item များ၏ တစ်ဝက်ခန့်ကို စစ်ဆေးရန် လိုအပ်မည်ဟု မျှော်လင့်ရသည်။ ထို့ကြောင့် လိုအပ်သော ပျမ်းမျှ အဆင့်အရေအတွက်မှာ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mo>/</mo>
+    </mrow>
+    <mn>2</mn>
+  </mrow>
+</math> ခန့် ဖြစ်လိမ့်မည်။ ဤသည်မှာ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ</mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> တိုးတက်မှုနှုန်းပင် ဖြစ်နေသေးသော်လည်း၊ ပျမ်းမျှအားဖြင့် ယခင် အကောင်အထည်ဖော်မှုထက် အဆင့်အရေအတွက်တွင် ၂ ဆ (factor of 2) ခန့် သက်သာစေပါသည်။
+</p>
+<p><code>intersection-set</code> တွင်မူ ပို၍ပင် သိသာထင်ရှားသော အရှိန်မြှင့်တင်မှုကို ရရှိသည်။ အစီအစဉ်မကျသော ကိုယ်စားပြုပုံတွင်၊ <code>set1</code> ၏ element တစ်ခုချင်းစီအတွက် <code>set2</code> တစ်ခုလုံးကို အပြည့်အဝ scan ဖတ်ခဲ့သောကြောင့် ဤလုပ်ဆောင်ချက်သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ</mi>
+    <mo stretchy="false">(</mo>
+    <msup>
+      <mi>n</mi>
+      <mn>2</mn>
+    </msup>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> အဆင့်များ လိုအပ်ခဲ့သည်။ သို့သော် အစီအစဉ်ကျသော ကိုယ်စားပြုပုံတွင် ပိုမိုပါးနပ်သော နည်းလမ်းကို အသုံးပြုနိုင်သည်။ အစုနှစ်ခု၏ အစဦး element များဖြစ်သော <code>x1</code> နှင့် <code>x2</code> တို့ကို နှိုင်းယှဉ်ခြင်းဖြင့် စတင်ပါ။ အကယ်၍ <code>x1</code> သည် <code>x2</code> နှင့် ညီပါက၊ ၎င်းသည် intersection ၏ element တစ်ခု ဖြစ်လာပြီး၊ ကျန်ရှိသော intersection မှာ ထိုအစုနှစ်ခုလုံး၏ <code>cdr</code> များ၏ intersection ပင် ဖြစ်သည်။ သို့သော် <code>x1</code> သည် <code>x2</code> ထက် ငယ်သည်ဟု ယူဆကြည့်ပါ။ <code>x2</code> သည် <code>set2</code> ထဲတွင် အငယ်ဆုံး element ဖြစ်သောကြောင့် <code>x1</code> သည် <code>set2</code> ၏ မည်သည့်နေရာတွင်မှ မရှိနိုင်ကြောင်းနှင့် ထို့ကြောင့် intersection ထဲတွင် မပါဝင်နိုင်ကြောင်း ကျွန်ုပ်တို့ ချက်ချင်း ကောက်ချက်ချနိုင်သည်။ ထို့ကြောင့် intersection သည် <code>set2</code> နှင့် <code>set1</code> ၏ <code>cdr</code> တို့၏ intersection နှင့် ညီမျှသည်။ အလားတူပင်၊ အကယ်၍ <code>x2</code> သည် <code>x1</code> ထက် ငယ်ပါက၊ <code>set1</code> နှင့် <code>set2</code> ၏ <code>cdr</code> တို့၏ intersection အဖြစ် ရရှိသည်။ Procedure မှာ အောက်ပါအတိုင်း ဖြစ်သည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">intersection-set set1 set2</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">or</span><span class="pln"> </span><span class="opn">(</span><span class="pln">null? set1</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">null? set2</span><span class="clo">))</span><span class="pln">
+      </span><span class="lit">'</span><span class="opn">(</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">x1 </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> set1</span><span class="clo">))</span><span class="pln"> </span><span class="opn">(</span><span class="pln">x2 </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> set2</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pun">=</span><span class="pln"> x1 x2</span><span class="clo">)</span><span class="pln">
+               </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> x1 </span><span class="opn">(</span><span class="pln">intersection-set 
+                         </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> set1</span><span class="clo">)</span><span class="pln">
+                         </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> set2</span><span class="clo">))))</span><span class="pln">
+              </span><span class="opn">((</span><span class="pun">&lt;</span><span class="pln"> x1 x2</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">intersection-set 
+                          </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> set1</span><span class="clo">)</span><span class="pln"> 
+                          set2</span><span class="clo">))</span><span class="pln">
+              </span><span class="opn">((</span><span class="pun">&lt;</span><span class="pln"> x2 x1</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">intersection-set 
+                          set1 
+                          </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> set2</span><span class="clo">)))))))</span></pre></div>
+
+<p>ဤလုပ်ငန်းစဉ်အတွက် လိုအပ်သော အဆင့်အရေအတွက်ကို ခန့်မှန်းရန်၊ အဆင့်တစ်ခုချင်းစီတွင် intersection ပြဿနာကို သေးငယ်သော set များ၏ intersection များ တွက်ချက်ခြင်းအဖြစ်သို့ လျှော့ချလိုက်သည်ကို သတိပြုပါ - ဆိုလိုသည်မှာ <code>set1</code> သို့မဟုတ် <code>set2</code> သို့မဟုတ် နှစ်ခုစလုံးမှ ပထမဆုံး element ကို ဖယ်ရှားလိုက်ခြင်း ဖြစ်သည်။ ထို့ကြောင့် လိုအပ်သော အဆင့်အရေအတွက်သည် အစီအစဉ်မကျသော ကိုယ်စားပြုပုံကဲ့သို့ အရွယ်အစားများ၏ မြှောက်လဒ်မဟုတ်ဘဲ၊ <code>set1</code> နှင့် <code>set2</code> အရွယ်အစားများ၏ ပေါင်းလဒ်သာ အများဆုံး ဖြစ်လိမ့်မည်။ ဤသည်မှာ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ</mi>
+    <mo stretchy="false">(</mo>
+    <msup>
+      <mi>n</mi>
+      <mn>2</mn>
+    </msup>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> အစား <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ</mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> တိုးတက်မှုနှုန်း ဖြစ်ပြီး၊ အလတ်စား အရွယ်အစားရှိသော set များအတွက်ပင်လျှင် သိသာထင်ရှားသော အရှိန်မြှင့်တင်မှု ဖြစ်သည်။
+</p>
+<blockquote>
+<p><strong><a id="Exercise-2_002e61"></a>Exercise 2.61:</strong> အစီအစဉ်ကျသော ကိုယ်စားပြုပုံကို အသုံးပြု၍ <code>adjoin-set</code> ကို အကောင်အထည်ဖော်ပြပါ။ <code>element-of-set?</code> နှင့် ခိုင်းနှိုင်း၍၊ အစီအစဉ်မကျသော ကိုယ်စားပြုပုံထက် ပျမ်းမျှအားဖြင့် အဆင့်အရေအတွက် တစ်ဝက်ခန့်သာ လိုအပ်သော procedure တစ်ခု ထွက်ပေါ်လာစေရန် အစီအစဉ်ချထားမှုကို မည်သို့ အသုံးချနိုင်ကြောင်း ပြသပါ။
+</p></blockquote>
+<blockquote>
+<p><strong><a id="Exercise-2_002e62"></a>Exercise 2.62:</strong> စီထားသော list များအဖြစ် ဖော်ပြထားသည့် အစု (sets) များအတွက် <code>union-set</code> ၏ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ<!-- Θ --></mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math>
+implementation တစ်ခုကို ဖော်ပြပါ။
+</p></blockquote>
+
+<a id="Sets-as-binary-trees"></a>
+<h5 class="subsubheading">Sets as binary trees</h5>
+
+<p>အစု၏ အစိတ်အပိုင်းများကို သစ်ပင် (tree) ပုံစံဖြင့် စီစဉ်ခြင်းအားဖြင့် စီထားသော list (ordered-list) ဖော်ပြချက်ထက် ပိုမိုကောင်းမွန်အောင် လုပ်ဆောင်နိုင်သည်။ သစ်ပင်၏ node တစ်ခုစီသည် အစု၏ အစိတ်အပိုင်းတစ်ခုကို သိမ်းဆည်းထားပြီး ၎င်းကို ထို node ၏ “entry” ဟု ခေါ်ဆိုသည်။ ထို့ပြင် အခြားသော (ဗလာလည်း ဖြစ်နိုင်သော) node နှစ်ခုစီသို့ ချိတ်ဆက်မှု (link) တစ်ခုစီလည်း ပါရှိသည်။ “ဘယ်ဘက်” (left) ချိတ်ဆက်မှုသည် node ရှိ အစိတ်အပိုင်းထက် ငယ်သော အစိတ်အပိုင်းများကို ညွှန်ပြပြီး၊ “ညာဘက်” (right) ချိတ်ဆက်မှုသည် node ရှိ အစိတ်အပိုင်းထက် ကြီးသော အစိတ်အပိုင်းများကို ညွှန်ပြသည်။ <a href="#Figure-2_002e16">Figure 2.16</a> တွင် အစု <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo fence="false" stretchy="false">{</mo>
+    <mn>1</mn>
+    <mo>,</mo>
+    <mn>3</mn>
+    <mo>,</mo>
+    <mn>5</mn>
+    <mo>,</mo>
+    <mn>7</mn>
+    <mo>,</mo>
+    <mn>9</mn>
+    <mo>,</mo>
+    <mn>11</mn>
+    <mo fence="false" stretchy="false">}</mo>
+  </mrow>
+</math> ကို ဖော်ပြထားသည့် tree အချို့ကို တွေ့နိုင်သည်။ အစုတစ်ခုတည်းကိုပင် tree ပုံစံ အမျိုးမျိုးဖြင့် ဖော်ပြနိုင်သည်။ မှန်ကန်သော ဖော်ပြချက်တစ်ခု ဖြစ်စေရန်အတွက် လိုအပ်ချက်မှာ ဘယ်ဘက် subtree ရှိ အစိတ်အပိုင်းအားလုံးသည် node entry ထက် ငယ်ရမည်ဖြစ်ပြီး၊ ညာဘက် subtree ရှိ အစိတ်အပိုင်းအားလုံးသည် ပိုကြီးရမည် ဖြစ်သည်။
+</p>
+<figure class="float">
+<a id="Figure-2_002e16"></a>
+<object style="width: 45.93ex; height: 21.50ex;" data="fig/chap2/Fig2.16c.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>Figure 2.16:</strong> အစု <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mo fence="false" stretchy="false">{</mo>
+    <mn>1</mn>
+    <mo>,</mo>
+    <mn>3</mn>
+    <mo>,</mo>
+    <mn>5</mn>
+    <mo>,</mo>
+    <mn>7</mn>
+    <mo>,</mo>
+    <mn>9</mn>
+    <mo>,</mo>
+    <mn>11</mn>
+    <mo fence="false" stretchy="false">}</mo>
+  </mrow>
+</math> ကို ဖော်ပြထားသည့် အမျိုးမျိုးသော binary trees များ။</p>
+</figcaption>
+</figure>
+
+<p>Tree ဖြင့် ဖော်ပြခြင်း၏ အားသာချက်မှာ ဤသို့ဖြစ်သည်- ကိန်းဂဏန်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> သည် အစုတစ်ခုအတွင်း ပါဝင်ခြင်း ရှိမရှိ စစ်ဆေးလိုသည်ဆိုပါစို့။ ကျွန်ုပ်တို့သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> ကို ထိပ်ဆုံး node ရှိ entry နှင့် အရင်ဆုံး နှိုင်းယှဉ်ရမည်။ အကယ်၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> သည် ၎င်းထက် ငယ်ပါက ဘယ်ဘက် subtree ကိုသာ ရှာဖွေရန် လိုအပ်ကြောင်း သိရှိနိုင်ပြီး၊ အကယ်၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> သည် ကြီးပါက ညာဘက် subtree ကိုသာ ရှာဖွေရန် လိုအပ်သည်။ ယခု အကယ်၍ tree သည် “မျှခြေရှိနေလျှင်” (balanced) ထို subtree တစ်ခုစီသည် မူလအရွယ်အစား၏ တစ်ဝက်ခန့် ရှိလိမ့်မည်။ ထို့ကြောင့် ခြေလှမ်းတစ်လှမ်းတွင် အရွယ်အစား <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ရှိသော tree တစ်ခုကို ရှာဖွေရသည့် ပြဿနာကို အရွယ်အစား <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mo>/</mo>
+    </mrow>
+    <mn>2</mn>
+  </mrow>
+</math> ရှိသော tree ကို ရှာဖွေရသည့် ပြဿနာအဖြစ် လျှော့ချလိုက်နိုင်သည်။ ခြေလှမ်းတိုင်းတွင် tree ၏ အရွယ်အစားသည် တစ်ဝက်စီ လျော့နည်းသွားသောကြောင့် အရွယ်အစား <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ရှိသော tree တစ်ခုကို ရှာဖွေရန် လိုအပ်သော ခြေလှမ်းအရေအတွက်သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ<!-- Θ --></mi>
+    <mo stretchy="false">(</mo>
+    <mi>log</mi>
+    <mo>⁡<!-- ⁡ --></mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> အတိုင်း တိုးလာမည်ဟု မျှော်လင့်နိုင်သည်။<a class="footnote_link" id="DOCF104" href="#FOOT104"><sup>104</sup></a> အစုကြီးများအတွက်မူ ၎င်းသည် ယခင်ဖော်ပြချက်များထက် သိသာစွာ ပိုမိုမြန်ဆန်လာမည် ဖြစ်သည်။
+</p>
+<p>Tree များကို list များ အသုံးပြု၍ ဖော်ပြနိုင်သည်။ node တစ်ခုစီသည် အချက်အလက် သုံးခုပါဝင်သော list တစ်ခု ဖြစ်လိမ့်မည်- ထို node ရှိ entry၊ ဘယ်ဘက် subtree နှင့် ညာဘက် subtree တို့ ဖြစ်ကြသည်။ ဘယ်ဘက် သို့မဟုတ် ညာဘက် subtree နေရာတွင် ဗလာ list ဖြစ်နေပါက ထိုနေရာတွင် subtree ချိတ်ဆက်ထားခြင်း မရှိကြောင်း ညွှန်ပြသည်။ ဤဖော်ပြချက်ကို အောက်ပါ procedure များဖြင့် ဖော်ပြနိုင်သည်-<a class="footnote_link" id="DOCF105" href="#FOOT105"><sup>105</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">entry tree</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> tree</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">left-branch tree</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cadr</span><span class="pln"> tree</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">right-branch tree</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">caddr</span><span class="pln"> tree</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-tree entry left right</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">list entry left right</span><span class="clo">))</span></pre></div>
+
+<p>ယခု အထက်တွင် ဖော်ပြခဲ့သော နည်းဗျူဟာကို အသုံးပြု၍ <code>element-of-set?</code> procedure ကို ရေးသားနိုင်ပြီဖြစ်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">element-of-set? x </span><span class="kwd">set</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pln">null? </span><span class="kwd">set</span><span class="clo">)</span><span class="pln"> false</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="pun">=</span><span class="pln"> x </span><span class="opn">(</span><span class="pln">entry </span><span class="kwd">set</span><span class="clo">))</span><span class="pln"> true</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="pun">&lt;</span><span class="pln"> x </span><span class="opn">(</span><span class="pln">entry </span><span class="kwd">set</span><span class="clo">))</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">element-of-set? 
+          x 
+          </span><span class="opn">(</span><span class="pln">left-branch </span><span class="kwd">set</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">((</span><span class="pun">&gt;</span><span class="pln"> x </span><span class="opn">(</span><span class="pln">entry </span><span class="kwd">set</span><span class="clo">))</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">element-of-set? 
+          x 
+          </span><span class="opn">(</span><span class="pln">right-branch </span><span class="kwd">set</span><span class="clo">)))))</span></pre></div>
+
+<p>အစုတစ်ခုအတွင်းသို့ အစိတ်အပိုင်းတစ်ခု ထည့်သွင်းခြင်းကိုလည်း အလားတူပင် implementation ပြုလုပ်ထားပြီး <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ<!-- Θ --></mi>
+    <mo stretchy="false">(</mo>
+    <mi>log</mi>
+    <mo>⁡<!-- ⁡ --></mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> ခြေလှမ်းများ လိုအပ်သည်။ အစိတ်အပိုင်း <code>x</code> ကို ထည့်သွင်းရန် <code>x</code> ကို node entry နှင့် နှိုင်းယှဉ်ပြီး <code>x</code> ကို ဘယ်ဘက် သို့မဟုတ် ညာဘက် အကိုင်းအခက်တွင် ထည့်သွင်းရမည်ကို ဆုံးဖြတ်ရမည်။ သင့်တော်ရာ အကိုင်းအခက်တွင် <code>x</code> ကို ထည့်သွင်းပြီးနောက် ထိုအသစ်တည်ဆောက်လိုက်သော အကိုင်းအခက်ကို မူလ entry နှင့် အခြားအကိုင်းအခက်တို့နှင့် ပြန်လည် ပေါင်းစပ်ရမည်။ အကယ်၍ <code>x</code> သည် entry နှင့် တူညီနေပါက node ကိုသာ ပြန်ပေးလိုက်မည်။ အကယ်၍ ဗလာဖြစ်နေသော tree ထဲသို့ <code>x</code> ကို ထည့်သွင်းရန် ဖြစ်ပါက <code>x</code> ကို entry အဖြစ် ထားရှိပြီး ဘယ်ညာ အကိုင်းအခက်များ ဗလာဖြစ်နေသော tree တစ်ခုကို ထုတ်ပေးမည် ဖြစ်သည်။ ၎င်း procedure မှာ အောက်ပါအတိုင်း ဖြစ်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">adjoin-set x </span><span class="kwd">set</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pln">null? </span><span class="kwd">set</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-tree x </span><span class="lit">'</span><span class="opn">(</span><span class="clo">)</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">((</span><span class="pun">=</span><span class="pln"> x </span><span class="opn">(</span><span class="pln">entry </span><span class="kwd">set</span><span class="clo">))</span><span class="pln"> </span><span class="kwd">set</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="pun">&lt;</span><span class="pln"> x </span><span class="opn">(</span><span class="pln">entry </span><span class="kwd">set</span><span class="clo">))</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">make-tree 
+          </span><span class="opn">(</span><span class="pln">entry </span><span class="kwd">set</span><span class="clo">)</span><span class="pln">
+          </span><span class="opn">(</span><span class="pln">adjoin-set x </span><span class="opn">(</span><span class="pln">left-branch </span><span class="kwd">set</span><span class="clo">))</span><span class="pln">
+          </span><span class="opn">(</span><span class="pln">right-branch </span><span class="kwd">set</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">((</span><span class="pun">&gt;</span><span class="pln"> x </span><span class="opn">(</span><span class="pln">entry </span><span class="kwd">set</span><span class="clo">))</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">make-tree
+          </span><span class="opn">(</span><span class="pln">entry </span><span class="kwd">set</span><span class="clo">)</span><span class="pln">
+          </span><span class="opn">(</span><span class="pln">left-branch </span><span class="kwd">set</span><span class="clo">)</span><span class="pln">
+          </span><span class="opn">(</span><span class="pln">adjoin-set x </span><span class="opn">(</span><span class="pln">right-branch </span><span class="kwd">set</span><span class="clo">))))))</span></pre></div>
+
+<p>Tree ကို ရှာဖွေရာတွင် လော့ဂရစ်သမ် (logarithmic) အရေအတွက်ရှိသော ခြေလှမ်းများဖြင့် လုပ်ဆောင်နိုင်သည်ဟူသော အထက်ပါ ပြောဆိုချက်သည် tree သည် “မျှခြေရှိသည်” (balanced) ဟူသော အချက်အပေါ် မူတည်နေသည်။ ဆိုလိုသည်မှာ tree တိုင်း၏ ဘယ်ဘက်နှင့် ညာဘက် subtree များတွင် အစိတ်အပိုင်း အရေအတွက် ခန့်မှန်းခြေ တူညီနေရမည်ဖြစ်ပြီး၊ ထိုအခါ subtree တစ်ခုစီတွင် ၎င်း၏ မိခင် node ရှိ အစိတ်အပိုင်းများ၏ တစ်ဝက်ခန့် ပါဝင်နေမည် ဖြစ်သည်။ သို့သော် ကျွန်ုပ်တို့ တည်ဆောက်လိုက်သော tree များသည် မျှခြေရှိမည်ဟု မည်သို့ သေချာနိုင်မည်နည်း။ မျှခြေရှိသော tree တစ်ခုနှင့် စတင်ခဲ့လျှင်ပင် <code>adjoin-set</code> ဖြင့် အစိတ်အပိုင်းများ ထည့်သွင်းခြင်းသည် မျှခြေမရှိသော ရလဒ်ကို ဖြစ်ပေါ်စေနိုင်သည်။ အသစ်ထည့်သွင်းလိုက်သော အစိတ်အပိုင်း၏ တည်နေရာသည် အစုထဲတွင် ရှိနှင့်ပြီးသား အစိတ်အပိုင်းများနှင့် မည်သို့ နှိုင်းယှဉ်သနည်း အပေါ်တွင် မူတည်သောကြောင့်၊ အစိတ်အပိုင်းများကို “ကျပန်း” ထည့်သွင်းပါက tree သည် ပျမ်းမျှအားဖြင့် မျှခြေရှိနေလိမ့်မည်ဟု မျှော်လင့်နိုင်သည်။ သို့သော် ၎င်းသည် အာမခံချက်တော့ မဟုတ်ပေ။ ဥပမာအားဖြင့်၊ ဗလာအစုတစ်ခုနှင့် စတင်ပြီး ကိန်းဂဏန်း ၁ မှ ၇ အထိကို အစဉ်လိုက် ထည့်သွင်းသွားပါက <a href="#Figure-2_002e17">Figure 2.17</a> တွင် ပြထားသည့်အတိုင်း အလွန်တရာ မျှခြေမရှိသော tree တစ်ခုကို ရရှိမည်ဖြစ်သည်။ ဤ tree တွင် ဘယ်ဘက် subtree အားလုံးသည် ဗလာဖြစ်နေသောကြောင့် ၎င်းသည် ရိုးရှင်းသော စီထားသည့် list ထက် ပို၍ အားသာချက် မရှိတော့ပေ။ ဤပြဿနာကို ဖြေရှင်းနိုင်သည့် နည်းလမ်းတစ်ခုမှာ မည်သည့် tree ကိုမဆို အစိတ်အပိုင်းတူညီပြီး မျှခြေရှိသော tree တစ်ခုအဖြစ် ပြောင်းလဲပေးသည့် operation တစ်ခုကို သတ်မှတ်ခြင်း ဖြစ်သည်။ ထို့နောက် ကျွန်ုပ်တို့၏ အစုကို မျှခြေရှိနေစေရန် <code>adjoin-set</code> အကြိမ်အနည်းငယ် လုပ်ဆောင်ပြီးတိုင်း ဤပြောင်းလဲမှုကို လုပ်ဆောင်နိုင်သည်။ ဤပြဿနာကို ဖြေရှင်းရန် အခြားနည်းလမ်းများလည်း ရှိသေးပြီး၊ ၎င်းတို့ထဲမှ အများစုမှာ ရှာဖွေခြင်းနှင့် ထည့်သွင်းခြင်း နှစ်မျိုးလုံးကို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ<!-- Θ --></mi>
+    <mo stretchy="false">(</mo>
+    <mi>log</mi>
+    <mo>⁡<!-- ⁡ --></mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math>
+ခြေလှမ်းများဖြင့် လုပ်ဆောင်နိုင်သည့် data structure အသစ်များကို ဒီဇိုင်းထုတ်ခြင်းပင် ဖြစ်သည်။<a class="footnote_link" id="DOCF106" href="#FOOT106"><sup>106</sup></a>
+</p>
+<figure class="float">
+<a id="Figure-2_002e17"></a>
+<object style="width: 26.68ex; height: 26.51ex;" data="fig/chap2/Fig2.17a.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>Figure 2.17:</strong> ၁ မှ ၇ အထိ အစဉ်လိုက် ထည့်သွင်းခြင်းကြောင့် ဖြစ်ပေါ်လာသော မျှခြေမရှိသည့် tree။</p>
+</figcaption>
+</figure>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e63"></a>Exercise 2.63:</strong> အောက်ဖော်ပြပါ procedure နှစ်ခုလုံးသည် binary tree တစ်ခုကို list တစ်ခုအဖြစ် ပြောင်းလဲပေးသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">tree-</span><span class="pun">&gt;</span><span class="pln">list-1 tree</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">null? tree</span><span class="clo">)</span><span class="pln">
+      </span><span class="lit">'</span><span class="opn">(</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">append 
+       </span><span class="opn">(</span><span class="pln">tree-</span><span class="pun">&gt;</span><span class="pln">list-1 
+        </span><span class="opn">(</span><span class="pln">left-branch tree</span><span class="clo">))</span><span class="pln">
+       </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> </span><span class="opn">(</span><span class="pln">entry tree</span><span class="clo">)</span><span class="pln">
+             </span><span class="opn">(</span><span class="pln">tree-</span><span class="pun">&gt;</span><span class="pln">list-1 
+              </span><span class="opn">(</span><span class="pln">right-branch tree</span><span class="clo">))))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">tree-</span><span class="pun">&gt;</span><span class="pln">list-2 tree</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">copy-to-list tree result-list</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">null? tree</span><span class="clo">)</span><span class="pln">
+        result-list
+        </span><span class="opn">(</span><span class="pln">copy-to-list 
+         </span><span class="opn">(</span><span class="pln">left-branch tree</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> </span><span class="opn">(</span><span class="pln">entry tree</span><span class="clo">)</span><span class="pln">
+               </span><span class="opn">(</span><span class="pln">copy-to-list 
+                </span><span class="opn">(</span><span class="pln">right-branch tree</span><span class="clo">)</span><span class="pln">
+                result-list</span><span class="clo">)))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">copy-to-list tree </span><span class="lit">'</span><span class="opn">(</span><span class="clo">)))</span></pre></div>
+
+<ol>
+<li> Procedure နှစ်ခုလုံးသည် tree တိုင်းအတွက် တူညီသော ရလဒ်ကို ထုတ်ပေးပါသလား။ မတူညီပါက ရလဒ်များ မည်သို့ ကွဲပြားသနည်း။ <a href="#Figure-2_002e16">Figure 2.16</a> ရှိ tree များအတွက် procedure နှစ်ခုသည် မည်သည့် list များကို ထုတ်ပေးသနည်း။
+
+</li><li> အစိတ်အပိုင်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ခုရှိသော မျှခြေရှိသည့် tree တစ်ခုကို list အဖြစ် ပြောင်းလဲရန် လိုအပ်သော ခြေလှမ်းအရေအတွက်တွင် procedure နှစ်ခုလုံးသည် အဆင့်တူ order of growth ရှိပါသလား။ မတူညီပါက မည်သည့်အရာက ပိုမိုနှေးကွေးစွာ တိုးတက်သနည်း။
+
+</li></ol>
+</blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e64"></a>Exercise 2.64:</strong> အောက်ပါ <code>list-&gt;tree</code> procedure သည် စီထားသော list တစ်ခုကို မျှခြေရှိသော binary tree တစ်ခုအဖြစ် ပြောင်းလဲပေးသည်။ helper procedure ဖြစ်သော <code>partial-tree</code> သည် argument အဖြစ် ကိန်းပြည့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> နှင့် အနည်းဆုံး အစိတ်အပိုင်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ခု ပါဝင်သော list တစ်ခုကို ယူပြီး list ၏ ပထမဆုံး <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> အစိတ်အပိုင်းများ ပါဝင်သော မျှခြေရှိသည့် tree တစ်ခုကို တည်ဆောက်သည်။ <code>partial-tree</code> မှ ပြန်ပေးသော ရလဒ်သည် pair တစ်ခု (<code>cons</code> ဖြင့် တည်ဆောက်ထားသည်) ဖြစ်ပြီး ၎င်း၏ <code>car</code> မှာ တည်ဆောက်လိုက်သော tree ဖြစ်ပြီး ၎င်း၏ <code>cdr</code> မှာ tree ထဲတွင် မပါဝင်သော အစိတ်အပိုင်းများ၏ list ဖြစ်သည်။
+</p>
+</blockquote>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">list-</span><span class="pun">&gt;</span><span class="pln">tree elements</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> </span><span class="opn">(</span><span class="pln">partial-tree 
+        elements </span><span class="opn">(</span><span class="pln">length elements</span><span class="clo">))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">partial-tree elts n</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pun">=</span><span class="pln"> n </span><span class="lit">0</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="clo">)</span><span class="pln"> elts</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">left-size 
+             </span><span class="opn">(</span><span class="pln">quotient </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> n </span><span class="lit">1</span><span class="clo">)</span><span class="pln"> </span><span class="lit">2</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">left-result 
+               </span><span class="opn">(</span><span class="pln">partial-tree 
+                elts left-size</span><span class="clo">)))</span><span class="pln">
+          </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">left-tree 
+                 </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> left-result</span><span class="clo">))</span><span class="pln">
+                </span><span class="opn">(</span><span class="pln">non-left-elts 
+                 </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> left-result</span><span class="clo">))</span><span class="pln">
+                </span><span class="opn">(</span><span class="pln">right-size 
+                 </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> n </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> left-size </span><span class="lit">1</span><span class="clo">))))</span><span class="pln">
+            </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">this-entry 
+                   </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> non-left-elts</span><span class="clo">))</span><span class="pln">
+                  </span><span class="opn">(</span><span class="pln">right-result 
+                   </span><span class="opn">(</span><span class="pln">partial-tree 
+                    </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> non-left-elts</span><span class="clo">)</span><span class="pln">
+                    right-size</span><span class="clo">)))</span><span class="pln">
+              </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">right-tree 
+                     </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> right-result</span><span class="clo">))</span><span class="pln">
+                    </span><span class="opn">(</span><span class="pln">remaining-elts 
+                     </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> right-result</span><span class="clo">)))</span><span class="pln">
+                </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-tree this-entry 
+                                 left-tree 
+                                 right-tree</span><span class="clo">)</span><span class="pln">
+                      remaining-elts</span><span class="clo">))))))))</span></pre></div>
+
+<ol>
+<li> <code>partial-tree</code> မည်သို့အလုပ်လုပ်သည်ကို သင်အတတ်နိုင်ဆုံး ရှင်းလင်းစွာ ရှင်းပြထားသော စာပိုဒ်တိုတစ်ခု ရေးသားပါ။ list <code>(1 3 5 7 9 11)</code> အတွက် <code>list-&gt;tree</code> မှ ထုတ်ပေးသော သစ်ပင်ပုံစံ (tree) ကို ဆွဲပါ။
+
+</li><li> elements အရေအတွက် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ခုပါသော list တစ်ခုကို ပြောင်းလဲရန် <code>list-&gt;tree</code> အတွက် လိုအပ်သော အဆင့်အရေအတွက်၏ order of growth မှာ အဘယ်နည်း?
+
+</li></ol>
+</blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e65"></a>Exercise 2.65:</strong> (မျှခြေရှိသော) binary trees အဖြစ် အကောင်အထည်ဖော်ထားသော set များအတွက် <code>union-set</code> နှင့် <code>intersection-set</code> တို့၏ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi mathvariant="normal">Θ<!-- Θ --></mi>
+    <mo stretchy="false">(</mo>
+    <mi>n</mi>
+    <mo stretchy="false">)</mo>
+  </mrow>
+</math> implementation များကို ပေးရန် <a href="#Exercise-2_002e63">Exercise 2.63</a> 
+နှင့် <a href="#Exercise-2_002e64">Exercise 2.64</a> တို့၏ ရလဒ်များကို အသုံးပြုပါ။<a class="footnote_link" id="DOCF107" href="#FOOT107"><sup>107</sup></a>
+</p></blockquote>
+
+<a id="Sets-and-information-retrieval"></a>
+<h5 class="subsubheading">Set များနှင့် သတင်းအချက်အလက် ရှာဖွေထုတ်ယူခြင်း</h5>
+
+<p>ကျွန်ုပ်တို့သည် set များကို ကိုယ်စားပြုရန် list များကို အသုံးပြုခြင်းဆိုင်ရာ ရွေးချယ်စရာများကို လေ့လာခဲ့ပြီးဖြစ်ကာ၊ ဒေတာအရာဝတ္ထုတစ်ခုအတွက် ကိုယ်စားပြုပုံ (representation) ရွေးချယ်မှုသည် ထိုဒေတာကို အသုံးပြုသည့် ပရိုဂရမ်များ၏ စွမ်းဆောင်ရည်အပေါ် မည်သို့ကြီးမားစွာ သက်ရောက်မှုရှိနိုင်သည်ကို တွေ့ရှိခဲ့ရသည်။ set များအပေါ် အာရုံစိုက်ရခြင်း၏ နောက်ထပ်အကြောင်းရင်းတစ်ခုမှာ ဤနေရာတွင် ဆွေးနွေးထားသော နည်းစနစ်များသည် သတင်းအချက်အလက် ရှာဖွေထုတ်ယူခြင်း (information retrieval) ဆိုင်ရာ အသုံးချပရိုဂရမ်များတွင် ထပ်ခါတလဲလဲ ပါဝင်နေခြင်းကြောင့် ဖြစ်သည်။
+</p>
+<p>ကုမ္ပဏီတစ်ခု၏ ဝန်ထမ်းမှတ်တမ်းများ သို့မဟုတ် စာရင်းကိုင်စနစ်တစ်ခုရှိ အရောင်းအဝယ်မှတ်တမ်းများကဲ့သို့သော တစ်ဦးချင်းစီ၏ မှတ်တမ်း (records) အမြောက်အမြား ပါဝင်သည့် ဒေတာဘေ့စ် (data base) တစ်ခုကို စဉ်းစားကြည့်ပါ။ ပုံမှန် ဒေတာစီမံခန့်ခွဲမှုစနစ် (data-management system) တစ်ခုသည် မှတ်တမ်းများရှိ ဒေတာများကို ရယူခြင်း သို့မဟုတ် ပြုပြင်ခြင်းတို့တွင် အချိန်အမြောက်အမြား အသုံးပြုရသောကြောင့် မှတ်တမ်းများကို ရယူရန် ထိရောက်သောနည်းလမ်းတစ်ခု လိုအပ်ပါသည်။ ၎င်းကို မှတ်တမ်းတစ်ခုစီ၏ အစိတ်အပိုင်းတစ်ခုအား ခွဲခြားသတ်မှတ်ပေးနိုင်သော <a id="index-key"></a>
+<em>key</em> အဖြစ် သတ်မှတ်ခြင်းဖြင့် လုပ်ဆောင်သည်။ key ဆိုသည်မှာ မှတ်တမ်းတစ်ခုကို ထူးခြားစွာ ခွဲခြားနိုင်သည့် မည်သည့်အရာမဆို ဖြစ်နိုင်သည်။ ဝန်ထမ်းမှတ်တမ်းတစ်ခုအတွက် ၎င်းသည် ဝန်ထမ်း၏ ID နံပါတ် ဖြစ်နိုင်သည်။ စာရင်းကိုင်စနစ်တစ်ခုအတွက် ၎င်းသည် အရောင်းအဝယ်နံပါတ် (transaction number) တစ်ခု ဖြစ်နိုင်သည်။ key က မည်သို့ပင်ဖြစ်စေ၊ ကျွန်ုပ်တို့သည် မှတ်တမ်းကို ဒေတာတည်ဆောက်ပုံ (data structure) အဖြစ် သတ်မှတ်သောအခါ ပေးထားသော မှတ်တမ်းနှင့် သက်ဆိုင်သည့် <code>key</code> selector procedure တစ်ခု ပါဝင်သင့်သည်။
+</p>
+<p>ယခု ကျွန်ုပ်တို့သည် ဒေတာဘေ့စ်ကို မှတ်တမ်းများ အစု (set of records) တစ်ခုအဖြစ် ကိုယ်စားပြုမည်။ ပေးထားသော key တစ်ခုဖြင့် မှတ်တမ်းကို ရှာဖွေရန် ကျွန်ုပ်တို့သည် <code>lookup</code> procedure ကို အသုံးပြုသည်။ ၎င်းသည် key နှင့် ဒေတာဘေ့စ်တို့ကို argument များအဖြစ် လက်ခံပြီး၊ ထို key ရှိသော မှတ်တမ်းကို ပြန်ပေးသည်၊ သို့မဟုတ် ထိုကဲ့သို့သော မှတ်တမ်းမရှိပါက false ကို ပြန်ပေးသည်။ <code>Lookup</code> ကို <code>element-of-set?</code> နှင့် နီးပါးတူညီသော နည်းလမ်းဖြင့် အကောင်အထည်ဖော်ထားသည်။ ဥပမာအားဖြင့်၊ မှတ်တမ်းများ အစုကို အစီအစဉ်မကျသော list (unordered list) အဖြစ် အကောင်အထည်ဖော်ထားပါက၊ ကျွန်ုပ်တို့သည် အောက်ပါအတိုင်း အသုံးပြုနိုင်သည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">lookup given-key set-of-records</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pln">null? set-of-records</span><span class="clo">)</span><span class="pln"> false</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="kwd">equal</span><span class="pun">?</span><span class="pln"> given-key 
+                 </span><span class="opn">(</span><span class="pln">key </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> set-of-records</span><span class="clo">)))</span><span class="pln">
+         </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> set-of-records</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> 
+         </span><span class="opn">(</span><span class="pln">lookup given-key 
+                 </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> set-of-records</span><span class="clo">)))))</span></pre></div>
+
+<p>အစီအစဉ်မကျသော list များထက် ကြီးမားသော set များကို ကိုယ်စားပြုရန် ပိုမိုကောင်းမွန်သော နည်းလမ်းများ ရှိပါသည်။ မှတ်တမ်းများကို "randomly accessed" (ကျပန်းရယူခြင်း) ပြုလုပ်ရန် လိုအပ်သော သတင်းအချက်အလက် ရှာဖွေထုတ်ယူရေး စနစ်များကို ယခင်က ဆွေးနွေးခဲ့သည့် binary-tree representation ကဲ့သို့သော သစ်ပင်ပုံစံကို အခြေခံသည့် နည်းလမ်းဖြင့် ပုံမှန်အားဖြင့် အကောင်အထည်ဖော်ကြသည်။ ထိုကဲ့သို့သော စနစ်တစ်ခုကို ဒီဇိုင်းဆွဲရာတွင် ဒေတာ အနှစ်ထုတ်ယူခြင်း (data abstraction) နည်းစနစ်သည် များစွာ အထောက်အကူပြုနိုင်သည်။ ဒီဇိုင်းဆွဲသူသည် အစီအစဉ်မကျသော list များကဲ့သို့ ရိုးရှင်းပြီး တိုက်ရိုက်ကျသော ကိုယ်စားပြုပုံကို အသုံးပြု၍ ကနဦး အကောင်အထည်ဖော်မှုကို ဖန်တီးနိုင်သည်။ ၎င်းသည် နောက်ဆုံးစနစ်အတွက် မသင့်လျော်သော်လည်း စနစ်၏ ကျန်ရှိသော အစိတ်အပိုင်းများကို စမ်းသပ်ရန် "quick and dirty" (မြန်မြန်ဆန်ဆန်နှင့် ရိုးရိုးရှင်းရှင်း) ဒေတာဘေ့စ်ကို ပံ့ပိုးရာတွင် အသုံးဝင်နိုင်သည်။ နောက်ပိုင်းတွင်၊ ဒေတာကိုယ်စားပြုပုံကို ပိုမိုရှုပ်ထွေးပြီး ကောင်းမွန်အောင် ပြုပြင်နိုင်ပါသည်။ အကယ်၍ ဒေတာဘေ့စ်ကို abstract selectors နှင့် constructors များမှတစ်ဆင့် ရယူအသုံးပြုထားပါက၊ ဤကိုယ်စားပြုပုံ ပြောင်းလဲမှုသည် စနစ်၏ ကျန်ရှိသော အစိတ်အပိုင်းများကို ပြောင်းလဲရန် လိုအပ်မည်မဟုတ်ပါ။
+</p>
+<blockquote>
+<p><strong><a id="Exercise-2_002e66"></a>Exercise 2.66:</strong> မှတ်တမ်းများ အစုကို key များ၏ ကိန်းဂဏန်းတန်ဖိုးများအလိုက် စီထားသော binary tree တစ်ခုအဖြစ် တည်ဆောက်ထားသည့် အခြေအနေအတွက် <code>lookup</code> procedure ကို အကောင်အထည်ဖော်ပါ။
+</p></blockquote>
+
+<a id="g_t2_002e3_002e4"></a>
+<a id="Example_003a-Huffman-Encoding-Trees"></a>
+<h4 class="subsection"><span class="secnum">2.3.4</span><span class="sectitle">ဥပမာ- Huffman Encoding Trees</span></h4>
+
+<p>ဤအပိုင်းသည် အစုများ (sets) နှင့် သစ်ပင်များ (trees) ကို ကိုင်တွယ်ဖြေရှင်းရန် စာရင်းတည်ဆောက်ပုံ (list structure) နှင့် ဒေတာ အဆင့်ဆင့်ခွဲထုတ်ခြင်း (data abstraction) ကို အသုံးပြုခြင်းအတွက် လေ့ကျင့်ခန်းတစ်ခု ဖြစ်ပါသည်။ အသုံးချမှုမှာ ဒေတာများကို တစ် နှင့် သုည (bits) အစဉ်လိုက်များအဖြစ် ဖော်ပြသည့် နည်းလမ်းများအတွက် ဖြစ်သည်။ ဥပမာအားဖြင့်၊ ကွန်ပျူတာများတွင် စာသားများကို ကိုယ်စားပြုရန် အသုံးပြုသော ASCII စံနှုန်းသည် စာလုံးတစ်ခုစီကို ခုနစ်ဘစ် (bits) အစဉ်လိုက်အဖြစ် ကုဒ်ပြောင်းသည်။ ခုနစ်ဘစ်ကို အသုံးပြုခြင်းဖြင့် ကျွန်ုပ်တို့သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mn>2</mn>
+    <mn>7</mn>
+  </msup>
+</math>,
+သို့မဟုတ် ၁၂၈ ခုသော မတူညီသော စာလုံးများကို ခွဲခြားနိုင်စေပါသည်။ ယေဘုယျအားဖြင့်၊ ကျွန်ုပ်တို့သည် မတူညီသော သင်္ကေတ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ခုကို ခွဲခြားလိုပါက၊ သင်္ကေတတစ်ခုလျှင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <msub>
+      <mi>log</mi>
+      <mn>2</mn>
+    </msub>
+    <mo>⁡<!-- ⁡ --></mo>
+    <mi>n</mi>
+  </mrow>
+</math> ဘစ်ကို အသုံးပြုရန် လိုအပ်မည်ဖြစ်သည်။ အကယ်၍ ကျွန်ုပ်တို့၏ မက်ဆေ့ဂျ်များအားလုံးကို A, B, C, D, E, F, G နှင့် H ဟူသော သင်္ကေတရှစ်ခုဖြင့် ပြုလုပ်ထားပါက၊ ကျွန်ုပ်တို့သည် စာလုံးတစ်လုံးလျှင် သုံးဘစ်ပါသော ကုဒ်တစ်ခုကို ရွေးချယ်နိုင်သည်၊ ဥပမာ -
+</p>
+<div class="example">
+<pre class="example">A 000  C 010  E 100  G 110
+B 001  D 011  F 101  H 111
+</pre></div>
+
+<p>ဤကုဒ်ဖြင့်၊ မက်ဆေ့ဂျ်
+</p>
+<div class="example">
+<pre class="example">BACADAEAFABBAAAGAH
+</pre></div>
+
+<p>ကို ၅၄ ဘစ်ရှိသော စာသားကြိုး (string) အဖြစ် ကုဒ်ပြောင်းသည်
+</p>
+<div class="example">
+<pre class="example">001000010000011000100000101
+000001001000000000110000111
+</pre></div>
+
+<p>ASCII နှင့် အထက်ပါ A မှ H အထိ ကုဒ်များကဲ့သို့သော ကုဒ်များကို
+<a id="index-fixed_002dlength"></a>
+<em>ပုံသေအလျား (fixed-length)</em> ကုဒ်များဟု ခေါ်သည်၊ အကြောင်းမှာ ၎င်းတို့သည် မက်ဆေ့ဂျ်ရှိ သင်္ကေတတစ်ခုစီကို တူညီသော ဘစ်အရေအတွက်ဖြင့် ကိုယ်စားပြုသောကြောင့်ဖြစ်သည်။ တစ်ခါတစ်ရံတွင် မတူညီသော သင်္ကေတများကို မတူညီသော ဘစ်အရေအတွက်များဖြင့် ကိုယ်စားပြုသည့်
+<a id="index-variable_002dlength"></a>
+<em>ပြောင်းလဲနိုင်သောအလျား (variable-length)</em> ကုဒ်များကို အသုံးပြုခြင်းသည် ပို၍ အကျိုးရှိနိုင်သည်။ ဥပမာအားဖြင့်၊ Morse code သည် အက္ခရာတစ်ခုစီအတွက် စက်ဝိုင်းပြောက် (dots) နှင့် မျဉ်းတို (dashes) အရေအတွက် တူညီစွာ မသုံးပါ။ အထူးသဖြင့်၊ အသုံးအများဆုံး စာလုံးဖြစ်သော E ကို စက်ဝိုင်းပြောက် တစ်ခုတည်းဖြင့် ကိုယ်စားပြုသည်။ ယေဘုယျအားဖြင့်၊ ကျွန်ုပ်တို့၏ မက်ဆေ့ဂျ်များတွင် အချို့သော သင်္ကေတများမှာ အလွန်အသုံးများပြီး အချို့မှာ အလွန်ရှားပါးပါက၊ အသုံးများသော သင်္ကေတများသို့ ပိုတိုသော ကုဒ်များ သတ်မှတ်ပေးခြင်းဖြင့် ဒေတာများကို ပိုမိုထိရောက်စွာ (ဆိုလိုသည်မှာ မက်ဆေ့ဂျ်တစ်ခုလျှင် ဘစ်အရေအတွက် ပိုနည်းစွာ အသုံးပြု၍) ကုဒ်ပြောင်းနိုင်ပါသည်။ အက္ခရာ A မှ H အထိအတွက် အောက်ပါ အစားထိုး ကုဒ်ကို စဉ်းစားကြည့်ပါ -
+</p>
+<div class="example">
+<pre class="example">A 0    C 1010  E 1100  G 1110
+B 100  D 1011  F 1101  H 1111
+</pre></div>
+
+<p>ဤကုဒ်ဖြင့်၊ အထက်ပါ မက်ဆေ့ဂျ်ကိုပင် အောက်ပါအတိုင်း ကုဒ်ပြောင်းပါသည်
+</p>
+<div class="example">
+<pre class="example">100010100101101100011
+010100100000111001111
+</pre></div>
+
+<p>ဤစာသားကြိုးတွင် ၄၂ ဘစ် ပါဝင်သောကြောင့် အထက်တွင် ဖော်ပြထားသော ပုံသေအလျား ကုဒ်နှင့် နှိုင်းယှဉ်ပါက နေရာလွတ် ၂၀% ကျော် သက်သာစေပါသည်။
+</p>
+<p>ပြောင်းလဲနိုင်သောအလျား ကုဒ်ကို အသုံးပြုရာတွင် တွေ့ရသည့် အခက်အခဲတစ်ခုမှာ သုညနှင့် တစ် အစဉ်လိုက်များကို ဖတ်နေစဉ် သင်္ကေတတစ်ခု၏ အဆုံးသို့ မည်သည့်အချိန်တွင် ရောက်သည်ကို သိရှိရန် ဖြစ်သည်။ Morse code သည် အက္ခရာတစ်ခုစီအတွက် စက်ဝိုင်းပြောက်နှင့် မျဉ်းတိုများ အစဉ်လိုက်ပြီးနောက် အထူး <a id="index-separator-code"></a>
+<em>ခွဲခြားမှုကုဒ် (separator code)</em> (ဤကိစ္စတွင် ခေတ္တရပ်နားမှု) ကို အသုံးပြုခြင်းဖြင့် ဤပြဿနာကို ဖြေရှင်းသည်။ အခြားသော ဖြေရှင်းနည်းတစ်ခုမှာ သင်္ကေတတစ်ခုခုအတွက် ပြည့်စုံသော ကုဒ်တစ်ခုသည် အခြားသင်္ကေတတစ်ခု၏ ကုဒ်၏ အစ (သို့မဟုတ် <a id="index-prefix"></a>
+<em>ရှေ့ဆက် (prefix)</em>) မဖြစ်စေရန် ကုဒ်ကို ဒီဇိုင်းထုတ်ခြင်း ဖြစ်သည်။ ထိုသို့သော ကုဒ်ကို <a id="index-prefix-code"></a>
+<em>ရှေ့ဆက်ကုဒ် (prefix code)</em> ဟု ခေါ်သည်။ အထက်ပါ ဥပမာတွင် A ကို 0 ဖြင့် ကုဒ်ပြောင်းထားပြီး B ကို 100 ဖြင့် ကုဒ်ပြောင်းထားသောကြောင့် အခြား မည်သည့်သင်္ကေတမျှ 0 သို့မဟုတ် 100 ဖြင့် စတင်သော ကုဒ် မရှိနိုင်ပါ။
+</p>
+<p>ယေဘုယျအားဖြင့်၊ ကုဒ်ပြောင်းမည့် မက်ဆေ့ဂျ်များရှိ သင်္ကေတများ၏ နှိုင်းယှဉ်ချက် အကြိမ်ရေများ (relative frequencies) ကို အသုံးချသည့် ပြောင်းလဲနိုင်သောအလျား ရှေ့ဆက်ကုဒ်များကို အသုံးပြုပါက သိသာထင်ရှားသော သက်သာမှုများကို ရရှိနိုင်သည်။ ဤသို့ပြုလုပ်ရန် အထူးအစီအစဉ်တစ်ခုကို ၎င်းကို ရှာဖွေတွေ့ရှိသူ David Huffman ကို အမည်ပေးထားသည့် Huffman encoding method ဟု ခေါ်သည်။ Huffman ကုဒ်ကို ၎င်း၏ သစ်ရွက်များ (leaves) သည် ကုဒ်ပြောင်းထားသော သင်္ကေတများဖြစ်သည့် binary tree အဖြစ် ဖော်ပြနိုင်သည်။ သစ်ပင်၏ သစ်ရွက်မဟုတ်သော node တစ်ခုစီတွင် ၎င်း node ၏ အောက်တွင်ရှိသော သစ်ရွက်များရှိ သင်္ကေတများအားလုံး ပါဝင်သော အစုတစ်ခု ရှိသည်။ ထို့အပြင်၊ သစ်ရွက်ရှိ သင်္ကေတတစ်ခုစီတွင် အလေးချိန် (weight) (၎င်း၏ နှိုင်းယှဉ်ချက် အကြိမ်ရေ ဖြစ်သည်) တစ်ခုစီ သတ်မှတ်ထားပြီး၊ သစ်ရွက်မဟုတ်သော node တစ်ခုစီတွင် ၎င်း၏ အောက်ရှိ သစ်ရွက်အားလုံး၏ အလေးချိန်များ စုစုပေါင်းဖြစ်သော အလေးချိန်တစ်ခု ပါရှိသည်။ ဤအလေးချိန်များကို ကုဒ်ပြောင်းခြင်း (encoding) သို့မဟုတ် ကုဒ်ပြန်ဖော်ခြင်း (decoding) လုပ်ငန်းစဉ်များတွင် အသုံးမပြုပါ။ ၎င်းတို့ကို သစ်ပင် တည်ဆောက်ရာတွင် မည်သို့အကူအညီပေးသည်ကို အောက်တွင် တွေ့ရပါမည်။
+</p>
+<p><a href="#Figure-2_002e18">ပုံ ၂.၁၈</a> တွင် အထက်ပါ A မှ H အထိ ကုဒ်အတွက် Huffman tree ကို ပြထားသည်။ သစ်ရွက်များရှိ အလေးချိန်များအရ ဤသစ်ပင်ကို A သည် နှိုင်းယှဉ်ချက် အကြိမ်ရေ ၈ ဖြင့်လည်းကောင်း၊ B သည် နှိုင်းယှဉ်ချက် အကြိမ်ရေ ၃ ဖြင့်လည်းကောင်း၊ အခြား အက္ခရာများမှာ အကြိမ်ရေ ၁ စီဖြင့်လည်းကောင်း ပါဝင်သော မက်ဆေ့ဂျ်များအတွက် ဒီဇိုင်းထုတ်ထားခြင်း ဖြစ်ကြောင်း ဖော်ပြနေသည်။
+</p>
+<figure class="float">
+<a id="Figure-2_002e18"></a>
+<object style="width: 53.01ex; height: 35.23ex;" data="fig/chap2/Fig2.18a.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>ပုံ ၂.၁၈:</strong> Huffman encoding tree တစ်ခု။</p>
+</figcaption>
+</figure>
+
+<p>Huffman tree တစ်ခု ပေးထားပါက၊ မည်သည့်သင်္ကေတ၏ ကုဒ်ကိုမဆို ရင်းမြစ် (root) မှ စတင်၍ ၎င်းသင်္ကေတရှိသည့် သစ်ရွက်သို့ ရောက်သည်အထိ အောက်သို့ ဆင်းခြင်းဖြင့် ရှာဖွေနိုင်သည်။ ဘယ်ဘက် အကိုင်းအခက်သို့ ဆင်းသည့် အကြိမ်တိုင်းတွင် ကုဒ်သို့ 0 တစ်ခု ထည့်ပြီး၊ ညာဘက် အကိုင်းအခက်သို့ ဆင်းသည့် အကြိမ်တိုင်းတွင် 1 တစ်ခု ထည့်သည်။ (မည်သည့် အကိုင်းအခက်သို့ ဆက်သွားရမည်ကို ဆုံးဖြတ်ရန်အတွက် မည်သည့်အကိုင်းအခက်သည် သင်္ကေတအတွက် သစ်ရွက် node ဖြစ်သည် သို့မဟုတ် ၎င်း၏ အစုထဲတွင် သင်္ကေတ ပါဝင်သည်ကို စစ်ဆေးခြင်းဖြင့် ဆုံးဖြတ်သည်။) ဥပမာအားဖြင့်၊ <a href="#Figure-2_002e18">ပုံ ၂.၁၈</a> ရှိ သစ်ပင်၏ ရင်းမြစ်မှ စတင်ကာ ညာဘက်အကိုင်း၊ ထို့နောက် ဘယ်ဘက်အကိုင်း၊ ထို့နောက် ညာဘက်အကိုင်း၊ ထို့နောက် ညာဘက်အကိုင်းအတိုင်း သွားခြင်းဖြင့် D ၏ သစ်ရွက်သို့ ရောက်ရှိသည်၊ ထို့ကြောင့် D အတွက် ကုဒ်မှာ 1011 ဖြစ်သည်။
+</p>
+<p>Huffman tree ကို အသုံးပြု၍ ဘစ်အစဉ်လိုက်တစ်ခုကို ကုဒ်ပြန်ဖော်ရန်၊ ကျွန်ုပ်တို့သည် ရင်းမြစ်မှ စတင်ပြီး ဘစ်အစဉ်လိုက်ရှိ သုညနှင့် တစ်များကို ဆက်တိုက် အသုံးပြုကာ ဘယ်ဘက် သို့မဟုတ် ညာဘက် အကိုင်းသို့ ဆင်းရန် ဆုံးဖြတ်သည်။ သစ်ရွက်တစ်ခုသို့ ရောက်သည့် အကြိမ်တိုင်းတွင် မက်ဆေ့ဂျ်ရှိ သင်္ကေတအသစ်တစ်ခုကို ထုတ်ပေးပြီး ဖြစ်သည်၊ ထိုအခါ နောက်သင်္ကေတကို ရှာရန် သစ်ပင်၏ ရင်းမြစ်မှ ပြန်လည် စတင်သည်။ ဥပမာအားဖြင့်၊ ကျွန်ုပ်တို့အား အထက်ပါ သစ်ပင်နှင့် 10001010 အစဉ်လိုက်ကို ပေးထားသည် ဆိုပါစို့။ ရင်းမြစ်မှ စတင်ကာ (စာသားကြိုး၏ ပထမဘစ်မှာ 1 ဖြစ်သောကြောင့်) ညာဘက်အကိုင်းသို့ ဆင်းသည်၊ ထို့နောက် (ဒုတိယဘစ်မှာ 0 ဖြစ်သောကြောင့်) ဘယ်ဘက်အကိုင်းသို့ ဆင်းသည်၊ ထို့နောက် (တတိယဘစ်မှာလည်း 0 ဖြစ်သောကြောင့်) ဘယ်ဘက်အကိုင်းသို့ ဆင်းသည်။ ၎င်းသည် ကျွန်ုပ်တို့ကို B ၏ သစ်ရွက်သို့ ပို့ဆောင်ပေးသည်၊ ထို့ကြောင့် ကုဒ်ပြန်ဖော်ထားသော မက်ဆေ့ဂျ်၏ ပထမသင်္ကေတမှာ B ဖြစ်သည်။ ယခု ရင်းမြစ်မှ ပြန်လည်စတင်ပြီး စာသားကြိုး၏ နောက်ဘစ်မှာ 0 ဖြစ်သောကြောင့် ဘယ်ဘက်သို့ ရွေ့သည်။ ၎င်းသည် ကျွန်ုပ်တို့ကို A ၏ သစ်ရွက်သို့ ပို့ဆောင်ပေးသည်။ ထို့နောက် ကျန်ရှိသော စာသားကြိုး 1010 ဖြင့် ရင်းမြစ်မှ ပြန်စသည်၊ ထို့ကြောင့် ညာ၊ ဘယ်၊ ညာ၊ ဘယ် ရွေ့လျားပြီး C သို့ ရောက်ရှိသည်။ ထို့ကြောင့် မက်ဆေ့ဂျ် တစ်ခုလုံးမှာ BAC ဖြစ်သည်။
+</p>
+<a id="Generating-Huffman-trees"></a>
+<h5 class="subsubheading">Huffman trees များ ထုတ်လုပ်ခြင်း</h5>
+
+<p>သင်္ကေတများ၏ “အက္ခရာစဉ်” (alphabet) နှင့် ၎င်းတို့၏ နှိုင်းယှဉ်ချက် အကြိမ်ရေများ ပေးထားပါက၊ “အကောင်းဆုံး” ကုဒ်ကို မည်သို့ တည်ဆောက်မည်နည်း။ (တစ်နည်းအားဖြင့်၊ မည်သည့်သစ်ပင်က မက်ဆေ့ဂျ်များကို ဘစ်အရေအတွက် အနည်းဆုံးဖြင့် ကုဒ်ပြောင်းပေးမည်နည်း။) Huffman သည် ဤသို့ပြုလုပ်ရန် algorithm တစ်ခုကို ပေးခဲ့ပြီး သင်္ကေတများ၏ နှိုင်းယှဉ်ချက် အကြိမ်ရေသည် ကုဒ်တည်ဆောက်ခဲ့သည့် အကြိမ်ရေများနှင့် ကိုက်ညီသော မက်ဆေ့ဂျ်များအတွက် ထွက်ပေါ်လာသော ကုဒ်သည် အမှန်တကယ်ပင် အကောင်းဆုံး ပြောင်းလဲနိုင်သောအလျား ကုဒ်ဖြစ်ကြောင်း ပြသခဲ့သည်။ ကျွန်ုပ်တို့သည် ဤနေရာတွင် Huffman ကုဒ်များ၏ အကောင်းဆုံးဖြစ်မှု (optimality) ကို သက်သေပြမည်မဟုတ်သော်လည်း၊ Huffman trees များကို မည်သို့ တည်ဆောက်သည်ကို ပြသပါမည်။<a class="footnote_link" id="DOCF108" href="#FOOT108"><sup>108</sup></a>
+</p>
+<p>Huffman tree ထုတ်လုပ်ရန် algorithm မှာ အလွန်ရိုးရှင်းပါသည်။ အကြံဉာဏ်မှာ အနိမ့်ဆုံး အကြိမ်ရေရှိသော သင်္ကေတများကို ရင်းမြစ်နှင့် အဝေးဆုံးတွင် ရှိစေရန် သစ်ပင်ကို စီစဉ်ရန် ဖြစ်သည်။ ကုဒ်တည်ဆောက်မည့် ကနဦးဒေတာအရ သတ်မှတ်ထားသော သင်္ကေတများနှင့် ၎င်းတို့၏ အကြိမ်ရေများ ပါဝင်သော သစ်ရွက် node များအစုဖြင့် စတင်ပါ။ ယခု အလေးချိန် အနည်းဆုံးဖြစ်သော သစ်ရွက်နှစ်ခုကို ရှာပြီး ၎င်းတို့ကို ပေါင်းစည်းကာ ဤ node နှစ်ခုကို ၎င်း၏ ဘယ်နှင့် ညာ အကိုင်းအခက်များအဖြစ် ထားရှိသော node တစ်ခုကို ထုတ်လုပ်ပါ။ node အသစ်၏ အလေးချိန်သည် ထိုအလေးချိန် နှစ်ခု၏ ပေါင်းလဒ် ဖြစ်သည်။ မူလအစုမှ ထိုသစ်ရွက်နှစ်ခုကို ဖယ်ရှားပြီး ၎င်းတို့နေရာတွင် ဤ node အသစ်ဖြင့် အစားထိုးပါ။ ယခု ဤလုပ်ငန်းစဉ်ကို ဆက်လက် လုပ်ဆောင်ပါ။ အဆင့်တစ်ခုစီတွင် အလေးချိန် အသေးဆုံးဖြစ်သော node နှစ်ခုကို ပေါင်းစည်းပါ၊ ၎င်းတို့ကို အစုမှ ဖယ်ရှားပြီး ၎င်းတို့နှစ်ခုကို ဘယ်နှင့် ညာ အကိုင်းအခက်များအဖြစ် ထားရှိသော node တစ်ခုဖြင့် အစားထိုးပါ။ node တစ်ခုတည်းသာ ကျန်ရှိတော့သည့် အခါတွင် လုပ်ငန်းစဉ် ရပ်တန့်သွားပြီး၊ ၎င်းသည် သစ်ပင်တစ်ခုလုံး၏ ရင်းမြစ် ဖြစ်သည်။ <a href="#Figure-2_002e18">ပုံ ၂.၁၈</a> ၏ Huffman tree ကို မည်သို့ ထုတ်လုပ်ခဲ့သည်ကို အောက်တွင် ဖော်ပြထားသည် -
+</p>
+<div class="example">
+<pre class="example">Initial {(A 8) (B 3) (C 1) (D 1) 
+leaves   (E 1) (F 1) (G 1) (H 1)}
+
+Merge   {(A 8) (B 3) ({C D} 2) 
+         (E 1) (F 1) (G 1) (H 1)}
+
+Merge   {(A 8) (B 3) ({C D} 2) 
+         ({E F} 2) (G 1) (H 1)}
+
+Merge   {(A 8) (B 3) ({C D} 2) 
+         ({E F} 2) ({G H} 2)}
+
+Merge   {(A 8) (B 3) ({C D} 2) 
+         ({E F G H} 4)}
+
+Merge   {(A 8) ({B C D} 5) 
+         ({E F G H} 4)}
+
+Merge   {(A 8) ({B C D E F G H} 9)}
+
+Final   {({A B C D E F G H} 17)}
+merge    
+</pre></div>
+
+<p>အဆင့်တစ်ခုစီတွင် အလေးချိန် အသေးဆုံး node များမှာ တစ်ခုတည်း မက ရှိနေနိုင်သောကြောင့် ဤ algorithm သည် ထူးခြားသော (unique) သစ်ပင်တစ်ခုကို အမြဲတမ်း မသတ်မှတ်ပေးနိုင်ပါ။ ထို့အပြင်၊ node နှစ်ခုကို ပေါင်းစည်းရာတွင် မည်သည့်အစီအစဉ်ဖြင့် ပေါင်းစည်းမည် (ဆိုလိုသည်မှာ မည်သည်က ညာဘက်အကိုင်းဖြစ်မည်၊ မည်သည်က ဘယ်ဘက်အကိုင်းဖြစ်မည်) ကို ရွေးချယ်ခြင်းသည်လည်း မိမိစိတ်ကြိုက် ဖြစ်သည်။
+</p>
+<a id="Representing-Huffman-trees"></a>
+<h5 class="subsubheading">Huffman trees များကို ဖော်ပြခြင်း</h5>
+
+<p>အောက်ပါ လေ့ကျင့်ခန်းများတွင် ကျွန်ုပ်တို့သည် မက်ဆေ့ဂျ်များကို ကုဒ်ပြောင်းရန်နှင့် ကုဒ်ပြန်ဖော်ရန် Huffman trees များကို အသုံးပြုသည့် စနစ်တစ်ခုနှင့် အထက်တွင် ဖော်ပြထားသော algorithm အတိုင်း Huffman trees များကို ထုတ်လုပ်သော စနစ်တစ်ခုဖြင့် လုပ်ဆောင်ပါမည်။ သစ်ပင်များကို မည်သို့ ဖော်ပြသည်ကို ဆွေးနွေးခြင်းဖြင့် စတင်ပါမည်။
+</p>
+<p>သစ်ပင်၏ သစ်ရွက်များကို <code>leaf</code> ဟူသော သင်္ကေတ၊ သစ်ရွက်ရှိ သင်္ကေတ နှင့် အလေးချိန် တို့ပါဝင်သော စာရင်း (list) တစ်ခုဖြင့် ဖော်ပြသည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-leaf symbol weight</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">list </span><span class="lit">'leaf</span><span class="pln"> symbol weight</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">leaf? object</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> object</span><span class="clo">)</span><span class="pln"> </span><span class="lit">'leaf</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">symbol-leaf x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cadr</span><span class="pln"> x</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">weight-leaf x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">caddr</span><span class="pln"> x</span><span class="clo">))</span></pre></div>
+
+<p>ယေဘုယျ သစ်ပင် (general tree) တစ်ခုသည် ဘယ်ဘက်အကိုင်း၊ ညာဘက်အကိုင်း၊ သင်္ကေတများအစု နှင့် အလေးချိန် တို့ပါဝင်သော စာရင်းတစ်ခု ဖြစ်ပါမည်။ သင်္ကေတများအစုမှာ ပိုမိုရှုပ်ထွေးသော အစုဖော်ပြချက်ထက် သင်္ကေတများ၏ စာရင်းမျှသာ ဖြစ်ပါလိမ့်မည်။ node နှစ်ခုကို ပေါင်းစည်းခြင်းဖြင့် သစ်ပင်တစ်ခုကို ပြုလုပ်သောအခါ၊ သစ်ပင်၏ အလေးချိန်ကို node များ၏ အလေးချိန်များ ပေါင်းလဒ်အဖြစ် ရရှိပြီး၊ သင်္ကေတများအစုကို node များ၏ သင်္ကေတများအစုများကို ပေါင်းစပ်ခြင်း (union) အဖြစ် ရရှိသည်။ ကျွန်ုပ်တို့၏ သင်္ကေတအစုများကို စာရင်းများအဖြစ် ဖော်ပြထားသောကြောင့်၊ <a href="2_002e2.html#g_t2_002e2_002e1">2.2.1</a> တွင် ကျွန်ုပ်တို့ အဓိပ္ပာယ်ဖွင့်ဆိုခဲ့သော <code>append</code> procedure ကို အသုံးပြု၍ ပေါင်းစပ်မှုကို ပြုလုပ်နိုင်သည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-code-tree left right</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">list left
+        right
+        </span><span class="opn">(</span><span class="pln">append </span><span class="opn">(</span><span class="pln">symbols left</span><span class="clo">)</span><span class="pln"> 
+                </span><span class="opn">(</span><span class="pln">symbols right</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">weight left</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">weight right</span><span class="clo">))))</span></pre></div>
+
+<p>အကယ်၍ ကျွန်ုပ်တို့သည် ဤနည်းလမ်းဖြင့် သစ်ပင်တစ်ပင်ကို ပြုလုပ်ပါက၊ ကျွန်ုပ်တို့တွင် အောက်ပါ ရွေးချယ်မှုပေးသော လုပ်ဆောင်ချက်များ (selectors) ရှိပါမည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">left-branch tree</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> tree</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">right-branch tree</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cadr</span><span class="pln"> tree</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">symbols tree</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">leaf? tree</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">list </span><span class="opn">(</span><span class="pln">symbol-leaf tree</span><span class="clo">))</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">caddr</span><span class="pln"> tree</span><span class="clo">)))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">weight tree</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">leaf? tree</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">weight-leaf tree</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">cadddr</span><span class="pln"> tree</span><span class="clo">)))</span></pre></div>
+
+<p><code>symbols</code> နှင့် <code>weight</code> procedure များသည် ၎င်းတို့ကို သစ်ရွက် သို့မဟုတ် ယေဘုယျသစ်ပင်ဖြင့် ခေါ်ဆိုခြင်းအပေါ် မူတည်၍ အနည်းငယ် ကွဲပြားသော အရာများကို လုပ်ဆောင်ရပါမည်။ ဤအရာများသည် ဒေတာ အမျိုးအစား တစ်ခုထက်မကကို ကိုင်တွယ်နိုင်သော <a id="index-generic-procedures"></a>
+<em>generic procedures</em> များ၏ ရိုးရှင်းသော ဥပမာများ ဖြစ်ပြီး၊ ၎င်းတို့အကြောင်းကို <a href="2_002e4.html#g_t2_002e4">2.4</a> နှင့် <a href="2_002e5.html#g_t2_002e5">2.5</a> တို့တွင် အများကြီး ပိုမို ပြောဆိုသွားပါမည်။
+</p>
+<a id="The-decoding-procedure"></a>
+<h5 class="subsubheading">ကုဒ်ပြန်ဖော်ခြင်း လုပ်ထုံးလုပ်နည်း</h5>
+
+<p>အောက်ပါ procedure သည် ကုဒ်ပြန်ဖော်ခြင်း algorithm ကို အကောင်အထည်ဖော်သည်။ ၎င်းသည် argument များအဖြစ် သုညနှင့် တစ်များ၏ စာရင်းနှင့်အတူ Huffman tree တစ်ခုကို ယူသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">decode bits tree</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">decode-1 bits current-branch</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">null? bits</span><span class="clo">)</span><span class="pln">
+        </span><span class="lit">'</span><span class="opn">(</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">next-branch
+               </span><span class="opn">(</span><span class="pln">choose-branch 
+                </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> bits</span><span class="clo">)</span><span class="pln"> 
+                current-branch</span><span class="clo">)))</span><span class="pln">
+          </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">leaf? next-branch</span><span class="clo">)</span><span class="pln">
+              </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> 
+               </span><span class="opn">(</span><span class="pln">symbol-leaf next-branch</span><span class="clo">)</span><span class="pln">
+               </span><span class="opn">(</span><span class="pln">decode-1 </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> bits</span><span class="clo">)</span><span class="pln"> tree</span><span class="clo">))</span><span class="pln">
+              </span><span class="opn">(</span><span class="pln">decode-1 </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> bits</span><span class="clo">)</span><span class="pln"> 
+                        next-branch</span><span class="clo">)))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">decode-1 bits tree</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">choose-branch bit branch</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pun">=</span><span class="pln"> bit </span><span class="lit">0</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">left-branch branch</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">((</span><span class="pun">=</span><span class="pln"> bit </span><span class="lit">1</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">right-branch branch</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"bad bit: 
+               CHOOSE-BRANCH"</span><span class="pln"> bit</span><span class="clo">))))</span></pre></div>
+
+<p><code>decode-1</code> procedure သည် argument နှစ်ခုကို ယူသည်- ကျန်ရှိသော bits များစာရင်းနှင့် သစ်ပင်အတွင်းရှိ လက်ရှိတည်နေရာ။ ၎င်းသည် စာရင်းရှိ နောက်ဘစ်မှာ သုည သို့မဟုတ် တစ် ဖြစ်သည်အပေါ် မူတည်၍ ဘယ်ဘက် သို့မဟုတ် ညာဘက် အကိုင်းကို ရွေးချယ်ကာ သစ်ပင်၏ "အောက်" သို့ ဆက်လက် ရွေ့လျားသည်။ (၎င်းကို <code>choose-branch</code> procedure ဖြင့် လုပ်ဆောင်သည်။) သစ်ရွက်တစ်ခုသို့ ရောက်သောအခါ၊ ၎င်းသည် ထိုသစ်ရွက်ရှိ သင်္ကေတကို မက်ဆေ့ဂျ်၏ နောက်သင်္ကေတအဖြစ် ပြန်ပေးပြီး၊ ကျန်ရှိသော မက်ဆေ့ဂျ်ကို သစ်ပင်၏ ရင်းမြစ်မှ ပြန်လည်စတင်၍ ကုဒ်ပြန်ဖော်သည့် ရလဒ်နှင့် <code>cons</code> တွဲပေးသည်။ <code>choose-branch</code> ၏ နောက်ဆုံး clause ရှိ error စစ်ဆေးမှုကို သတိပြုပါ၊ ၎င်းသည် procedure မှ input data တွင် သုည သို့မဟုတ် တစ် မဟုတ်သော အခြားတစ်ခုခုကို တွေ့ရှိပါက အသိပေးတိုင်ကြားမည် ဖြစ်သည်။
+</p>
+<a id="Sets-of-weighted-elements"></a>
+<h5 class="subsubheading">အလေးချိန်သတ်မှတ်ထားသော အစိတ်အပိုင်းများ၏ အစုများ</h5>
+
+<p>ကျွန်ုပ်တို့၏ သစ်ပင်များကို ဖော်ပြချက်တွင်၊ သစ်ရွက်မဟုတ်သော node တစ်ခုစီတွင် ကျွန်ုပ်တို့က ရိုးရှင်းသောစာရင်းအဖြစ် ဖော်ပြထားသော သင်္ကေတများအစု တစ်ခုစီ ပါဝင်သည်။ သို့သော်၊ အထက်တွင် ဆွေးနွေးခဲ့သော သစ်ပင်ထုတ်လုပ်သည့် algorithm သည် သစ်ရွက်များနှင့် သစ်ပင်များ၏ အစုများနှင့်လည်း လုပ်ဆောင်ရန် လိုအပ်ပြီး၊ အသေးဆုံး အစိတ်အပိုင်းနှစ်ခုကို ဆက်တိုက် ပေါင်းစည်းရန် လိုအပ်သည်။ ကျွန်ုပ်တို့သည် အစုတစ်ခုအတွင်းရှိ အသေးဆုံး အစိတ်အပိုင်းကို ထပ်ခါတလဲလဲ ရှာဖွေရန် လိုအပ်သောကြောင့်၊ ဤကဲ့သို့သော အစုအမျိုးအစားအတွက် အစဉ်လိုက်စီထားသော ဖော်ပြချက် (ordered representation) ကို အသုံးပြုခြင်းသည် အဆင်ပြေပါသည်။
+</p>
+<p>ကျွန်ုပ်တို့သည် သစ်ရွက်များနှင့် သစ်ပင်များ၏ အစုတစ်ခုကို အလေးချိန်တိုးလာသည့် အစီအစဉ်အတိုင်း စီထားသော အစိတ်အပိုင်းများ၏ စာရင်းတစ်ခုအဖြစ် ဖော်ပြပါမည်။ အစုများ တည်ဆောက်ရန်အတွက် အောက်ပါ <code>adjoin-set</code> procedure သည် <a href="#Exercise-2_002e61">လေ့ကျင့်ခန်း ၂.၆၁</a> တွင် ဖော်ပြထားသော နည်းလမ်းနှင့် ဆင်တူသည်၊ သို့သော် အစိတ်အပိုင်းများကို ၎င်းတို့၏ အလေးချိန်များဖြင့် နှိုင်းယှဉ်ပြီး၊ အစုထဲသို့ ထည့်မည့် အစိတ်အပိုင်းသည် အစုထဲတွင် ရှိနှင့်ပြီးသား မဖြစ်နိုင်ပါ။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">adjoin-set x </span><span class="kwd">set</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pln">null? </span><span class="kwd">set</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">list x</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">((</span><span class="pun">&lt;</span><span class="pln"> </span><span class="opn">(</span><span class="pln">weight x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">weight </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> </span><span class="kwd">set</span><span class="clo">)))</span><span class="pln"> 
+         </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> x </span><span class="kwd">set</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> 
+         </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> </span><span class="kwd">set</span><span class="clo">)</span><span class="pln">
+               </span><span class="opn">(</span><span class="pln">adjoin-set x </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> </span><span class="kwd">set</span><span class="clo">))))))</span></pre></div>
+
+<p>အောက်ပါ procedure သည် <code>((A 4) (B 2) (C 1) (D 1))</code> ကဲ့သို့သော သင်္ကေတ-အကြိမ်ရေ တွဲများ၏ စာရင်းကို ယူပြီး၊ Huffman algorithm အတိုင်း ပေါင်းစည်းရန် အသင့်ဖြစ်နေသော ကနဦး အစဉ်လိုက်စီထားသော သစ်ရွက်များအစုကို တည်ဆောက်သည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-leaf-set pairs</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">null? pairs</span><span class="clo">)</span><span class="pln">
+      </span><span class="lit">'</span><span class="opn">(</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">pair </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> pairs</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">adjoin-set 
+         </span><span class="opn">(</span><span class="pln">make-leaf </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> pair</span><span class="clo">)</span><span class="pln">    </span><span class="roman"><span class="com">; symbol</span></span><span class="pln">
+                    </span><span class="opn">(</span><span class="kwd">cadr</span><span class="pln"> pair</span><span class="clo">))</span><span class="pln">  </span><span class="roman"><span class="com">; frequency</span></span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">make-leaf-set </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> pairs</span><span class="clo">))))))</span></pre></div>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e67"></a>လေ့ကျင့်ခန်း ၂.၆၇:</strong> ကုဒ်ပြောင်းလဲမှုသစ်ပင် (encoding tree) တစ်ခုနှင့် နမူနာ မက်ဆေ့ဂျ်တစ်ခုကို အဓိပ္ပာယ်ဖွင့်ဆိုပါ -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define sample-tree
+  </span><span class="opn">(</span><span class="pln">make-code-tree 
+   </span><span class="opn">(</span><span class="pln">make-leaf </span><span class="lit">'A</span><span class="pln"> </span><span class="lit">4</span><span class="clo">)</span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">make-code-tree
+    </span><span class="opn">(</span><span class="pln">make-leaf </span><span class="lit">'B</span><span class="pln"> </span><span class="lit">2</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">make-code-tree 
+     </span><span class="opn">(</span><span class="pln">make-leaf </span><span class="lit">'D</span><span class="pln"> </span><span class="lit">1</span><span class="clo">)</span><span class="pln">
+     </span><span class="opn">(</span><span class="pln">make-leaf </span><span class="lit">'C</span><span class="pln"> </span><span class="lit">1</span><span class="clo">)))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> sample-message 
+  </span><span class="lit">'</span><span class="opn">(</span><span class="lit">0</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> </span><span class="lit">0</span><span class="pln"> </span><span class="lit">0</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> </span><span class="lit">0</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> </span><span class="lit">0</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> </span><span class="lit">0</span><span class="clo">))</span></pre></div>
+
+<p>မက်ဆေ့ဂျ်ကို ကုဒ်ပြန်ဖော်ရန် <code>decode</code> procedure ကို အသုံးပြုပြီး၊ ရလဒ်ကို ဖော်ပြပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e68"></a>လေ့ကျင့်ခန်း ၂.၆၈:</strong> <code>encode</code> procedure သည် argument များအဖြစ် မက်ဆေ့ဂျ်တစ်ခုနှင့် သစ်ပင်တစ်ပင်ကို ယူပြီး၊ ကုဒ်ပြောင်းထားသော မက်ဆေ့ဂျ်ကို ပေးသည့် bits များစာရင်းကို ထုတ်ပေးသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">encode message tree</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">null? message</span><span class="clo">)</span><span class="pln">
+      </span><span class="lit">'</span><span class="opn">(</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">append 
+       </span><span class="opn">(</span><span class="pln">encode-symbol </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> message</span><span class="clo">)</span><span class="pln"> 
+                      tree</span><span class="clo">)</span><span class="pln">
+       </span><span class="opn">(</span><span class="pln">encode </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> message</span><span class="clo">)</span><span class="pln"> tree</span><span class="clo">))))</span></pre></div>
+
+<p><code>Encode-symbol</code> သည် သင်ကိုယ်တိုင် ရေးသားရမည့် procedure တစ်ခုဖြစ်ပြီး၊ ပေးထားသော သစ်ပင်အရ ပေးထားသော သင်္ကေတတစ်ခုကို ကုဒ်ပြောင်းသည့် bits စာရင်းကို ပြန်ပေးသည်။ သင်္ကေတသည် သစ်ပင်ထဲတွင် လုံးဝမရှိပါက <code>encode-symbol</code> သည် အမှားတစ်ခု (error) ကို အသိပေးရန် ဒီဇိုင်းထုတ်ရမည်။ သင်၏ procedure ကို <a href="#Exercise-2_002e67">လေ့ကျင့်ခန်း ၂.၆၇</a> မှ ရရှိသော ရလဒ်အား နမူနာသစ်ပင်ဖြင့် ကုဒ်ပြောင်းကြည့်ခြင်းဖြင့် စမ်းသပ်ပြီး မူလနမူနာမက်ဆေ့ဂျ်နှင့် တူမတူ စစ်ဆေးပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e69"></a>လေ့ကျင့်ခန်း ၂.၆၉:</strong> အောက်ပါ procedure သည် ၎င်း၏ argument အဖြစ် သင်္ကေတ-အကြိမ်ရေ တွဲများစာရင်း (သင်္ကေတတစ်ခုသည် တစ်ခုထက်ပိုသော တွဲများတွင် မပါဝင်ပါ) ကို ယူပြီး Huffman algorithm အတိုင်း Huffman encoding tree တစ်ခုကို ထုတ်လုပ်ပေးသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">generate-huffman-tree pairs</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">successive-merge 
+   </span><span class="opn">(</span><span class="pln">make-leaf-set pairs</span><span class="clo">)))</span></pre></div>
+
+<p><code>Make-leaf-set</code> သည် တွဲများစာရင်းကို အစဉ်လိုက်စီထားသော သစ်ရွက်များအစုအဖြစ် ပြောင်းလဲပေးသည့် အထက်တွင် ပေးထားသော procedure ဖြစ်သည်။ <code>Successive-merge</code> သည် သင်ကိုယ်တိုင် ရေးသားရမည့် procedure ဖြစ်ပြီး၊ ၎င်းသည် အစုထဲတွင် အစိတ်အပိုင်း တစ်ခုတည်းသာ ကျန်တော့သည်အထိ အလေးချိန် အသေးဆုံး အစိတ်အပိုင်းများကို <code>make-code-tree</code> ကို အသုံးပြု၍ အစဉ်လိုက် ပေါင်းစည်းရမည်ဖြစ်ပြီး၊ ၎င်းသည် လိုချင်သော Huffman tree ဖြစ်သည်။ (ဤ procedure သည် အနည်းငယ် လှည့်ကွက်ရှိသော်လည်း အမှန်တကယ် မရှုပ်ထွေးပါ။ အကယ်၍ သင်သည် ရှုပ်ထွေးသော procedure တစ်ခုကို ဒီဇိုင်းထုတ်နေမိပါက၊ သင် တစ်ခုခု မှားယွင်းနေပြီမှာ သေချာသလောက် ရှိပါသည်။ ကျွန်ုပ်တို့သည် အစဉ်လိုက်စီထားသော အစုဖော်ပြချက်ကို အသုံးပြုနေခြင်းကို အဓိက အခွင့်ကောင်းယူနိုင်သည်။)
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e70"></a>လေ့ကျင့်ခန်း ၂.၇၀:</strong> ၁၉၅၀ ပြည့်လွန်နှစ်များက ရော့ခ်သီချင်းစာသားများကို ထိရောက်စွာ ကုဒ်ပြောင်းရန်အတွက် ဆက်စပ်နှိုင်းယှဉ်ချက် အကြိမ်ရေများပါဝင်သော အောက်ပါ သင်္ကေတရှစ်ခုပါ အက္ခရာစဉ်ကို ဒီဇိုင်းထုတ်ထားသည်။ ("အက္ခရာစဉ်" ၏ "သင်္ကေတများ" သည် အက္ခရာတစ်ခုချင်းစီ ဖြစ်ရန် မလိုကြောင်း သတိပြုပါ။)
+</p>
+<div class="example">
+<pre class="example">
+A    2    NA  16
+BOOM 1    SHA  3
+GET  2    YIP  9
+JOB  2    WAH  1
+</pre></div>
+
+<p>သက်ဆိုင်ရာ Huffman tree ကို ထုတ်လုပ်ရန် <code>generate-huffman-tree</code> (<a href="#Exercise-2_002e69">လေ့ကျင့်ခန်း ၂.၆၉</a>) ကို အသုံးပြုပြီး၊ အောက်ပါ မက်ဆေ့ဂျ်ကို ကုဒ်ပြောင်းရန် <code>encode</code> (<a href="#Exercise-2_002e68">လေ့ကျင့်ခန်း ၂.၆၈</a>) ကို အသုံးပြုပါ -
+</p>
+<div class="example">
+<pre class="example">Get a job
+Sha na na na na na na na na
+
+Get a job
+Sha na na na na na na na na
+
+Wah yip yip yip yip 
+yip yip yip yip yip
+Sha boom
+</pre></div>
+
+<p>ကုဒ်ပြောင်းရန် ဘစ်မည်မျှ လိုအပ်သနည်း။ အကယ်၍ ကျွန်ုပ်တို့သည် သင်္ကေတရှစ်ခုပါသော အက္ခရာစဉ်အတွက် ပုံသေအလျား ကုဒ်ကို အသုံးပြုခဲ့ပါက ဤသီချင်းကို ကုဒ်ပြောင်းရန် လိုအပ်မည့် အနည်းဆုံး ဘစ်အရေအတွက်မှာ မည်မျှနည်း။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e71"></a>လေ့ကျင့်ခန်း ၂.၇၁:</strong> သင်္ကေတ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ခုပါသော အက္ခရာစဉ်တစ်ခုအတွက် Huffman tree တစ်ခု ရှိသည် ဆိုပါစို့၊ သင်္ကေတများ၏ နှိုင်းယှဉ်ချက် အကြိမ်ရေများမှာ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>1</mn>
+    <mo>,</mo>
+    <mn>2</mn>
+    <mo>,</mo>
+    <mn>4</mn>
+    <mo>,</mo>
+    <mo>…<!-- … --></mo>
+    <mo>,</mo>
+    <msup>
+      <mn>2</mn>
+      <mrow class="MJX-TeXAtom-ORD">
+        <mi>n</mi>
+        <mo>−<!-- − --></mo>
+        <mn>1</mn>
+      </mrow>
+    </msup>
+  </mrow>
+</math> ဖြစ်သည်။ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <mo>=</mo>
+    <mn>5</mn>
+  </mrow>
+</math> အတွက် သစ်ပင်ကို ဆွဲကြည့်ပါ၊ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <mo>=</mo>
+    <mn>10</mn>
+  </mrow>
+</math> အတွက်လည်း ဆွဲကြည့်ပါ။ ထိုသို့သော သစ်ပင်တွင် (ယေဘုယျ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> အတွက်) အသုံးအများဆုံး သင်္ကေတကို ကုဒ်ပြောင်းရန် ဘစ်မည်မျှ လိုအပ်သနည်း။ အသုံးအနည်းဆုံး သင်္ကေတအတွက်ကော။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e72"></a>လေ့ကျင့်ခန်း ၂.၇၂:</strong> <a href="#Exercise-2_002e68">လေ့ကျင့်ခန်း ၂.၆၈</a> တွင် သင်ဒီဇိုင်းထုတ်ခဲ့သော encoding procedure ကို ပြန်စဉ်းစားကြည့်ပါ။ သင်္ကေတတစ်ခုကို ကုဒ်ပြောင်းရန် လိုအပ်သော အဆင့်အရေအတွက်၏ တိုးတက်မှုနှုန်း (order of growth) မှာ မည်မျှနည်း။ တွေ့ရှိရသော node တစ်ခုစီတွင် သင်္ကေတစာရင်းကို ရှာဖွေရန် လိုအပ်သော အဆင့်အရေအတွက်ကိုလည်း ထည့်သွင်းစဉ်းစားပါ။ ဤမေးခွန်းကို ယေဘုယျအားဖြင့် ဖြေဆိုရန် ခက်ခဲသည်။ သင်္ကေတ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ခု၏ နှိုင်းယှဉ်ချက် အကြိမ်ရေများကို <a href="#Exercise-2_002e71">လေ့ကျင့်ခန်း ၂.၇၁</a> တွင် ဖော်ပြထားသည့်အတိုင်း အထူးကိစ္စရပ်တစ်ခုအဖြစ် စဉ်းစားပြီး၊ အက္ခရာစဉ်တွင် အသုံးအများဆုံးနှင့် အသုံးအနည်းဆုံး သင်္ကေတများကို ကုဒ်ပြောင်းရန် လိုအပ်သော အဆင့်အရေအတွက်၏ (<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ၏ function တစ်ခုအဖြစ်) တိုးတက်မှုနှုန်းကို ဖော်ပြပါ။
+</p></blockquote>
+
+<div class="footnote">
+<h4 class="footnotes-heading">အောက်ခြေမှတ်စုများ</h4>
+
+<div id="FOOT98"><p><a class="footnote_backlink" href="#DOCF98"><sup>98</sup></a>
+ဘာသာစကားတစ်ခုတွင် quotation (ကိုးကားချက်) ကို ခွင့်ပြုခြင်းသည် ထိုဘာသာစကားအကြောင်း ရိုးရှင်းသော အသုံးအနှုန်းများဖြင့် ဆင်ခြင်သုံးသပ်နိုင်စွမ်းကို များစွာအနှောင့်အယှက်ဖြစ်စေသည်၊ အကြောင်းမှာ ၎င်းသည် "တူညီသောအရာများကို အစားထိုးနိုင်သည်" ဆိုသည့် အယူအဆကို ပျက်ပြားစေသောကြောင့်ဖြစ်သည်။ ဥပမာအားဖြင့်၊ သုံး (three) သည် တစ် (one) နှင့် နှစ် (two) ပေါင်းခြင်းဖြစ်သော်လည်း၊ "သုံး" (three) ဟူသော စကားလုံးသည် "တစ် နှင့် နှစ် ပေါင်းခြင်း" (one plus two) ဟူသော စကားစု မဟုတ်ပါ။ Quotation သည် အခြားသော expression များကို ကိုင်တွယ်အသုံးပြုနိုင်သည့် expression များ တည်ဆောက်ရန် နည်းလမ်းပေးသောကြောင့် အစွမ်းထက်လှသည် (၎င်းကို <a href="Chapter-4.html#Chapter-4">Chapter 4</a> တွင် interpreter တစ်ခု ရေးသားသောအခါ တွေ့မြင်ရမည်ဖြစ်သည်)။ သို့သော် ဘာသာစကားတစ်ခုအတွင်းရှိ အခြားဖော်ပြချက်များအကြောင်း ပြောဆိုသည့် ဖော်ပြချက်များကို ခွင့်ပြုခြင်းသည် “တူညီသောအရာများကို အစားထိုးနိုင်သည်” ဆိုသည့် မူက မည်သည့်အရာကို ဆိုလိုသင့်သနည်းဟူသော ညီညွတ်သည့် မူဝါဒကို ထိန်းသိမ်းရန် အလွန်ခက်ခဲစေသည်။ ဥပမာအားဖြင့်၊ ညနေခင်းကြယ် (evening star) သည် မိုးသောက်ကြယ် (morning star) ဖြစ်ကြောင်း ကျွန်ုပ်တို့ သိရှိလျှင် “ညနေခင်းကြယ်သည် Venus ဖြစ်သည်” ဟူသော ဖော်ပြချက်မှ “မိုးသောက်ကြယ်သည် Venus ဖြစ်သည်” ဟု ကျွန်ုပ်တို့ ဆုံးဖြတ်နိုင်သည်။ သို့သော်လည်း “John သိသည်မှာ ညနေခင်းကြယ်သည် Venus ဖြစ်သည်” ဆိုလျှင် “John သိသည်မှာ မိုးသောက်ကြယ်သည် Venus ဖြစ်သည်” ဟု ကျွန်ုပ်တို့ ကောက်ချက်မချနိုင်ပါ။</p>
+</div>
+<div id="FOOT99"><p><a class="footnote_backlink" href="#DOCF99"><sup>99</sup></a>
+single quote သည် ကျွန်ုပ်တို့ ရိုက်နှိပ်ရန် character string များကို ဝန်းရံရန် အသုံးပြုနေသော double quote နှင့် ကွဲပြားပါသည်။ single quote ကို list များ သို့မဟုတ် symbol များကို ဖော်ပြရန် အသုံးပြုနိုင်သော်လည်း၊ double quote ကို character string များအတွက်သာ အသုံးပြုပါသည်။ ဤစာအုပ်တွင် character string များအတွက် တစ်ခုတည်းသော အသုံးပြုမှုမှာ ရိုက်နှိပ်ရမည့် အရာများအဖြစ်သာ ဖြစ်သည်။</p>
+</div>
+<div id="FOOT100"><p><a class="footnote_backlink" href="#DOCF100"><sup>100</sup></a>
+တိတိကျကျပြောရလျှင်၊ ကျွန်ုပ်တို့၏ quotation mark အသုံးပြုမှုသည် ကျွန်ုပ်တို့၏ဘာသာစကားရှိ compound expression အားလုံးကို လက်သည်းကွင်းများဖြင့် ဝန်းရံရမည်ဖြစ်ပြီး list များကဲ့သို့ ဖြစ်ရမည်ဟူသော ယေဘုယျစည်းမျဉ်းကို ချိုးဖောက်နေပါသည်။ ဤကိုက်ညီမှုကို quotation mark နှင့် တူညီသော ရည်ရွယ်ချက်ကို ဆောင်ရွက်သည့် special form <code>quote</code> ကို မိတ်ဆက်ခြင်းဖြင့် ပြန်လည်ရယူနိုင်ပါသည်။ ထို့ကြောင့် ကျွန်ုပ်တို့သည် <code>'a</code> အစား <code>(quote a)</code> ကို ရိုက်နှိပ်မည်ဖြစ်ပြီး၊ <code>'(a b c)</code> အစား <code>(quote (a b c))</code> ကို ရိုက်နှိပ်မည်ဖြစ်သည်။ ဤသည်မှာ interpreter အလုပ်လုပ်ပုံ အတိအကျပင် ဖြစ်သည်။ quotation mark သည် နောက်လာမည့် ပြည့်စုံသော expression ကို <code>quote</code> ဖြင့် ဝန်းရံကာ <code>(quote ⟨<var>expression</var>⟩)</code> ဖြစ်လာစေရန် ပြုလုပ်ပေးသည့် စာလုံးတစ်လုံးတည်းပါဝင်သော အတိုကောက်သင်္ကေတမျှသာ ဖြစ်သည်။ ဤသည်မှာ အရေးကြီးပါသည်၊ အကြောင်းမှာ ၎င်းသည် interpreter မှ မြင်တွေ့ရသော မည်သည့် expression ကိုမဆို data object တစ်ခုအဖြစ် ကိုင်တွယ်နိုင်သည်ဟူသော မူဝါဒကို ထိန်းသိမ်းပေးသောကြောင့်ဖြစ်သည်။ ဥပမာအားဖြင့်၊ ကျွန်ုပ်တို့သည် <code>(list 'car (list 'quote '(a b c)))</code> ကို evaluate လုပ်ခြင်းဖြင့် <code>(car (quote (a b c)))</code> နှင့် အတူတူပင်ဖြစ်သော <code>(car '(a b c))</code> expression ကို တည်ဆောက်နိုင်ပါသည်။</p>
+</div>
+<div id="FOOT101"><p><a class="footnote_backlink" href="#DOCF101"><sup>101</sup></a>
+symbol နှစ်ခုတွင် တူညီသော စာလုံးများ တူညီသော အစီအစဉ်အတိုင်း ပါဝင်နေလျှင် ၎င်းတို့ကို “အတူတူပင်” ဟု သတ်မှတ်နိုင်သည်။ ထိုသို့သော အဓိပ္ပါယ်ဖွင့်ဆိုချက်သည် ကျွန်ုပ်တို့ မဖြေရှင်းရသေးသော နက်နဲသည့် ကိစ္စရပ်တစ်ခုကို ရှောင်လွှဲသွားသည်- ၎င်းမှာ ပရိုဂရမ်မင်းဘာသာစကားတစ်ခုရှိ “တူညီမှု” (sameness) ၏ အဓိပ္ပါယ်ပင် ဖြစ်သည်။ ၎င်းကို ကျွန်ုပ်တို့ <a href="Chapter-3.html#Chapter-3">Chapter 3</a> (<a href="3_002e1.html#g_t3_002e1_002e3">3.1.3</a>) တွင် ပြန်လည် ဆွေးနွေးပါမည်။</p>
+</div>
+<div id="FOOT102"><p><a class="footnote_backlink" href="#DOCF102"><sup>102</sup></a>
+လက်တွေ့တွင်၊ ပရိုဂရမ်မာများသည် symbol များသာမက ကိန်းဂဏန်းများပါ ပါဝင်သော list များကို နှိုင်းယှဉ်ရန် <code>equal?</code> ကို အသုံးပြုကြသည်။ ကိန်းဂဏန်းများကို symbol များအဖြစ် မသတ်မှတ်ပါ။ (<code>=</code> ဖြင့် စမ်းသပ်သည့်အခါ) သင်္ချာနည်းအရ တူညီသော ကိန်းဂဏန်းနှစ်ခုသည် <code>eq?</code> လည်း ဖြစ်မဖြစ်ဟူသော မေးခွန်းမှာ implementation ပေါ်တွင် များစွာ မူတည်နေပါသည်။ <code>equal?</code> ၏ ပိုကောင်းသော အဓိပ္ပါယ်ဖွင့်ဆိုချက်တစ်ခု (Scheme တွင် primitive အဖြစ် ပါဝင်သော အရာကဲ့သို့) တွင် <code>a</code> နှင့် <code>b</code> နှစ်ခုလုံးသည် ကိန်းဂဏန်းများဖြစ်လျှင် ၎င်းတို့သည် သင်္ချာနည်းအရ တူညီပါက <code>a</code> နှင့် <code>b</code> သည် <code>equal?</code> ဖြစ်သည်ဟုလည်း သတ်မှတ်ပေးသင့်သည်။</p>
+</div>
+<div id="FOOT103"><p><a class="footnote_backlink" href="#DOCF103"><sup>103</sup></a>
+ကျွန်ုပ်တို့ ပိုမို တရားဝင် ဖြစ်စေလိုလျှင်၊ “အထက်ပါ အဓိပ္ပါယ်ဖွင့်ဆိုချက်များနှင့် ကိုက်ညီသည်” ဆိုသည်မှာ operation များသည် အောက်ပါကဲ့သို့သော စည်းမျဉ်းများကို လိုက်နာခြင်းကို ဆိုလိုကြောင်း သတ်မှတ်နိုင်သည်-
+</p>
+<ul>
+<li> မည်သည့် set <code>S</code> နှင့် မည်သည့် object <code>x</code> အတွက်မဆို၊
+<code>(element-of-set? x (adjoin-set x S))</code>
+သည် true ဖြစ်သည် (အလွတ်သဘောအားဖြင့်: “object တစ်ခုကို set တစ်ခုထဲသို့ ပေါင်းထည့်ခြင်းသည် ထို object ပါဝင်သော set တစ်ခုကို ဖြစ်ပေါ်စေသည်”)။
+
+</li><li> မည်သည့် set <code>S</code> နှင့် <code>T</code>၊ မည်သည့် object <code>x</code> အတွက်မဆို၊
+<code>(element-of-set? x (union-set S T))</code>
+သည်
+<code>(or (element-of-set? x S) (element-of-set? x T))</code>
+နှင့် တူညီသည် (အလွတ်သဘောအားဖြင့်: “<code>(union S T)</code> ၏ element များသည် <code>S</code> သို့မဟုတ် <code>T</code> ထဲတွင် ပါဝင်သော element များဖြစ်သည်”)။
+
+</li><li> မည်သည့် object <code>x</code> အတွက်မဆို၊
+<code>(element-of-set? x '())</code>
+သည် false ဖြစ်သည် (အလွတ်သဘောအားဖြင့်: “မည်သည့် object မှ အစုအလွတ် (empty set) ၏ element မဟုတ်ပါ”)။
+
+</li></ul>
+</div>
+<div id="FOOT104"><p><a class="footnote_backlink" href="#DOCF104"><sup>104</sup></a>
+အဆင့်တိုင်းတွင် ပြဿနာ၏ အရွယ်အစားကို တစ်ဝက်စီ လျှော့ချခြင်းသည် <a href="1_002e2.html#g_t1_002e2_002e4">1.2.4</a> မှ fast-exponentiation algorithm နှင့် <a href="1_002e3.html#g_t1_002e3_002e3">1.3.3</a> မှ half-interval search method တို့တွင် တွေ့မြင်ခဲ့ရသည့်အတိုင်း logarithmic growth ၏ ထူးခြားသော ဝိသေသလက္ခဏာ ဖြစ်သည်။</p>
+</div>
+<div id="FOOT105"><p><a class="footnote_backlink" href="#DOCF105"><sup>105</sup></a>
+ကျွန်ုပ်တို့သည် set များကို tree များဖြင့် ဖော်ပြနေပြီး tree များကို list များဖြင့် ဖော်ပြနေသည်—လက်တွေ့တွင် data abstraction တစ်ခုအပေါ်တွင် တည်ဆောက်ထားသော အခြား data abstraction တစ်ခုဖြစ်သည်။ ကျွန်ုပ်တို့သည် <code>entry</code>၊ <code>left-branch</code>၊ <code>right-branch</code> နှင့် <code>make-tree</code> procedure များကို “binary tree” ၏ abstraction ကို ထိုကဲ့သို့သော tree တစ်ခုအား list structure ဖြင့် ဖော်ပြလိုသည့် သီးခြားနည်းလမ်းမှ ခွဲထုတ်လိုက်သည့် နည်းလမ်းတစ်ခုအဖြစ် ယူဆနိုင်သည်။</p>
+</div>
+<div id="FOOT106"><p><a class="footnote_backlink" href="#DOCF106"><sup>106</sup></a>
+ထိုကဲ့သို့သော structure များ၏ ဥပမာများတွင် <a id="index-B_002dtrees"></a>
+<em>B-trees</em> နှင့်
+<a id="index-red_002dblack-trees"></a>
+<em>red-black trees</em> တို့ ပါဝင်သည်။ ဤပြဿနာအတွက် ရည်ရွယ်သော data structure ဆိုင်ရာ စာပေများစွာ ရှိပါသည်။ <a href="References.html#Cormen-et-al_002e-1990">Cormen et al. 1990</a> ကို ကြည့်ပါ။</p>
+</div>
+<div id="FOOT107"><p><a class="footnote_backlink" href="#DOCF107"><sup>107</sup></a>
+<a href="#Exercise-2_002e63">Exercise 2.63</a> မှ <a href="#Exercise-2_002e65">Exercise 2.65</a> အထိမှာ Paul Hilfinger ၏ ဖန်တီးမှုများဖြစ်သည်။</p>
+</div>
+<div id="FOOT108"><p><a class="footnote_backlink" href="#DOCF108"><sup>108</sup></a>
+Huffman codes များ၏ သင်္ချာဆိုင်ရာ ဂုဏ်သတ္တိများ ဆွေးနွေးချက်အတွက် <a href="References.html#Hamming-1980">Hamming 1980</a> ကို ကြည့်ပါ။</p>
+</div>
+</div>
+<nav class="header">
+<p>
+Next: <a href="2_002e4.html#g_t2_002e4" accesskey="n" rel="next">2.4</a>, Prev: <a href="2_002e2.html#g_t2_002e2" accesskey="p" rel="prev">2.2</a>, Up: <a href="#g_t2_002e3" accesskey="u" rel="prev">2.3</a>   [<a href="index.html#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+
+
+</section><span class="bottom jump" title="Jump to bottom"><a href="#pagebottom" accesskey="b">⇣</a></span><a id="pagebottom"></a>
+</body>
+</html>

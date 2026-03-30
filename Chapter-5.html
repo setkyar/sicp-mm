@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="my" lang="my">
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>Structure and Interpretation of Computer Programs, 2e: Chapter 5</title>
+
+<meta name="description" content="Structure and Interpretation of Computer Programs, 2e: Chapter 5" />
+<meta name="keywords" content="Structure and Interpretation of Computer Programs, 2e: Chapter 5" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="Generator" content="texi2any" />
+<meta charset="utf-8" />
+<link href="index.html#Top" rel="start" title="Top" />
+<link href="Term-Index.html#Term-Index" rel="index" title="Term Index" />
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents" />
+<link href="index.html#Top" rel="prev" title="Top" />
+<link href="5_002e1.html#g_t5_002e1" rel="next" title="5.1" />
+<link href="4_002e4.html#g_t4_002e4_002e4_002e8" rel="prev" title="4.4.4.8" />
+
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/prettify.css" rel="stylesheet" type="text/css" />
+
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/footnotes.js" type="text/javascript"></script>
+<script src="js/browsertest.js" type="text/javascript"></script>
+</head>
+
+<body>
+<section><span class="top jump" title="Jump to top"><a href="#pagetop" accesskey="t">⇡</a></span><a id="pagetop"></a><a id="Chapter-5"></a>
+<nav class="header">
+<p>
+Next: <a href="5_002e1.html#g_t5_002e1" accesskey="n" rel="next">5.1</a>, Prev: <a href="4_002e4.html#g_t4_002e4" accesskey="p" rel="prev">4.4</a>, Up: <a href="index.html#Top" accesskey="u" rel="prev">Top</a>   [<a href="index.html#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+<a id="Computing-with-Register-Machines"></a>
+<h2 class="chapter"><span class="chapnum">5</span><span class="chaptitle">Register Machine များဖြင့် တွက်ချက်ခြင်း</span></h2>
+
+<blockquote>
+<p>ကျွန်ုပ်၏ ရည်ရွယ်ချက်မှာ ကောင်းကင်ယံရှိ စက်ယန္တရားကြီးသည် မြင့်မြတ်သော သက်ရှိ သတ္တဝါတစ်ဦး မဟုတ်ဘဲ နာရီစက်ကဲ့သို့ (နာရီတွင် ဝိညာဉ်ရှိသည်ဟု ယုံကြည်သူသည် ဖန်တီးရှင်၏ ဂုဏ်ကျေးဇူးကို ဖန်တီးမှုအပေါ်တွင် ပုံချခြင်းသာ ဖြစ်သည်) စက်ယန္တရားတစ်ခုမျှသာ ဖြစ်ကြောင်း ပြသရန် ဖြစ်ပါသည်။ နာရီ၏ လှုပ်ရှားမှု အားလုံးသည် အလေးမတစ်ခုတည်းကြောင့် ဖြစ်ပေါ်လာသကဲ့သို့ပင်၊ စကြဝဠာ၏ များပြားလှသော လှုပ်ရှားမှု အားလုံးနီးပါးသည်လည်း အရိုးရှင်းဆုံးနှင့် ရုပ်ဝတ္ထုဆိုင်ရာ အင်အားတစ်ခုကြောင့် ဖြစ်ပေါ်လာခြင်း ဖြစ်ပါသည်။
+</p>
+<p>—Johannes Kepler (Herwart von Hohenburg ထံသို့ ပေးပို့သောစာ၊ 1605)
+</p></blockquote>
+
+
+<p>ကျွန်ုပ်တို့သည် ဤစာအုပ်ကို လုပ်ငန်းစဉ် (processes) များအကြောင်း လေ့လာခြင်းနှင့် Lisp ဖြင့် ရေးသားထားသော လုပ်ထုံးလုပ်နည်း (procedures) များဖြင့် ထိုလုပ်ငန်းစဉ်များကို ဖော်ပြခြင်းဖြင့် စတင်ခဲ့ပါသည်။  ဤလုပ်ထုံးလုပ်နည်းများ၏ အဓိပ္ပာယ်ကို ရှင်းပြရန်အတွက် ကျွန်ုပ်တို့သည် တန်ဖိုးဖြတ်ခြင်းဆိုင်ရာ ပုံစံငယ် (models of evaluation) အဆင့်ဆင့်ကို အသုံးပြုခဲ့ကြသည်- အခန်း ၁ ရှိ substitution model၊ အခန်း ၃ ရှိ environment model နှင့် အခန်း ၄ ရှိ metacircular evaluator တို့ ဖြစ်ကြသည်။  အထူးသဖြင့် metacircular evaluator ကို စစ်ဆေးလေ့လာခြင်းက Lisp ကဲ့သို့သော ဘာသာစကားများကို မည်သို့ အနက်ဖွင့်ဆို (interpret) သည်ဟူသော လျှို့ဝှက်ချက်အများစုကို ရှင်းလင်းပေးနိုင်ခဲ့ပါသည်။  သို့သော် metacircular evaluator ပင်လျှင် အရေးကြီးသော မေးခွန်းများကို အဖြေမပေးနိုင်သေးပါ၊ အဘယ်ကြောင့်ဆိုသော် ၎င်းသည် Lisp စနစ်တစ်ခု၏ ထိန်းချုပ်မှု ယန္တရား (mechanisms of control) များကို ရှင်းရှင်းလင်းလင်း ဖော်ပြရန် ပျက်ကွက်သောကြောင့် ဖြစ်သည်။  ဥပမာအားဖြင့်၊ evaluator သည် subexpression တစ်ခုကို တန်ဖိုးဖြတ်ခြင်း (evaluation) က ထိုတန်ဖိုးကို အသုံးပြုမည့် expression ထံသို့ တန်ဖိုးပြန်ပေးရန် မည်သို့ စီမံသည်ကို ရှင်းမပြနိုင်သလို၊ အချို့သော recursive procedures များသည် အဘယ်ကြောင့် iterative processes များအဖြစ် (ဆိုလိုသည်မှာ ကိန်းသေနေရာလပ် (constant space) ကိုသာ အသုံးပြု၍ တန်ဖိုးဖြတ်ခြင်း) ဖြစ်ပေါ်လာပြီး အခြား recursive procedures များမှာမူ recursive processes များ ဖြစ်ပေါ်စေသည်ကိုလည်း ရှင်းမပြနိုင်ပါ။  ဤမေးခွန်းများသည် အဖြေမရှိဘဲ ကျန်ရှိနေခြင်း ဖြစ်သည်၊ အဘယ်ကြောင့်ဆိုသော် metacircular evaluator သည် ကိုယ်တိုင်က Lisp ပရိုဂရမ်တစ်ခု ဖြစ်နေပြီး အခြေခံ Lisp စနစ်၏ control structure ကို ဆက်ခံထားသောကြောင့် ဖြစ်သည်။  Lisp evaluator ၏ control structure အကြောင်း ပိုမိုပြည့်စုံသော ဖော်ပြချက်ကို ပေးနိုင်ရန်အတွက် ကျွန်ုပ်တို့သည် Lisp ထက် ပို၍ အခြေခံကျသော (more primitive) အဆင့်တွင် လုပ်ဆောင်ရမည် ဖြစ်သည်။
+</p>
+<p>ဤအခန်းတွင် ကျွန်ုပ်တို့သည် လုပ်ငန်းစဉ်များကို ရိုးရာ ကွန်ပျူတာတစ်လုံး၏ အဆင့်ဆင့် လုပ်ဆောင်ချက်များဖြင့် ဖော်ပြပါမည်။  ထိုသို့သော ကွန်ပျူတာ သို့မဟုတ် <a id="index-register-machine"></a>
+<em>register machine</em> သည် 
+registers ဟုခေါ်သော သတ်မှတ်ထားသော သိုလှောင်မှု အစိတ်အပိုင်းများအတွင်းရှိ အကြောင်းအရာများကို ကိုင်တွယ်အသုံးပြုသည့် <a id="index-instructions"></a>
+<em>instructions</em> များကို အစီအစဉ်တကျ လုပ်ဆောင်ပါသည်။  ပုံမှန် register-machine instruction တစ်ခုသည် အချို့သော registers များရှိ အကြောင်းအရာများအပေါ် အခြေခံ လုပ်ဆောင်ချက် (primitive operation) တစ်ခုကို သက်ရောက်စေပြီး ရလဒ်ကို အခြား register တစ်ခုသို့ သတ်မှတ်ပေးပါသည်။  register machines များက လုပ်ဆောင်သော လုပ်ငန်းစဉ်များအပေါ် ကျွန်ုပ်တို့၏ ဖော်ပြချက်များသည် ရိုးရာ ကွန်ပျူတာများအတွက် "machine-language" ပရိုဂရမ်များနှင့် များစွာ တူညီပါလိမ့်မည်။  သို့သော်လည်း သတ်မှတ်ထားသော ကွန်ပျူတာတစ်လုံး၏ machine language အပေါ်တွင်သာ အာရုံစိုက်မည့်အစား၊ ကျွန်ုပ်တို့သည် Lisp procedures အချို့ကို လေ့လာပြီး procedure တစ်ခုစီကို လုပ်ဆောင်ရန် သီးခြား register machine တစ်ခုစီကို ဒီဇိုင်းထုတ်ပါမည်။  ထို့ကြောင့် ကျွန်ုပ်တို့သည် ဤလုပ်ငန်းကို machine-language ကွန်ပျူတာ ပရိုဂရမ်မာတစ်ဦး၏ အမြင်ထက် hardware architect တစ်ဦး၏ အမြင်မှ ချဉ်းကပ်သွားမည် ဖြစ်ပါသည်။  register machines များကို ဒီဇိုင်းထုတ်ရာတွင် recursion ကဲ့သို့သော အရေးကြီးသည့် programming constructs များကို အကောင်အထည်ဖော်ရန် ယန္တရားများကို ဖော်ထုတ်သွားမည် ဖြစ်သည်။  register machines များအတွက် ဒီဇိုင်းများကို ဖော်ပြရန် ဘာသာစကားတစ်ခုကိုလည်း တင်ပြပါမည်။  <a href="5_002e2.html#g_t5_002e2">5.2</a> တွင် ကျွန်ုပ်တို့ ဒီဇိုင်းထုတ်ထားသော စက်များကို ပုံတူကူး (simulate) ရန် ဤဖော်ပြချက်များကို အသုံးပြုသည့် Lisp ပရိုဂရမ်တစ်ခုကို အကောင်အထည်ဖော်ပါမည်။
+</p>
+<p>ကျွန်ုပ်တို့၏ register machines များမှ အခြေခံ လုပ်ဆောင်ချက် အများစုသည် အလွန် ရိုးရှင်းပါသည်။  ဥပမာအားဖြင့်၊ လုပ်ဆောင်ချက်တစ်ခုသည် registers နှစ်ခုမှ ရရှိလာသော ကိန်းဂဏန်းများကို ပေါင်းနိုင်ပြီး ရလဒ်ကို တတိယမြောက် register တစ်ခုတွင် သိုလှောင်နိုင်ပါသည်။  ထိုကဲ့သို့သော လုပ်ဆောင်ချက်ကို အလွယ်တကူ ဖော်ပြနိုင်သည့် hardware ဖြင့် လုပ်ဆောင်နိုင်ပါသည်။  သို့သော်လည်း list structure များကို ကိုင်တွယ်ရန်အတွက် ကျွန်ုပ်တို့သည် memory operations <code>car</code>၊
+<code>cdr</code> နှင့် <code>cons</code> များကိုလည်း အသုံးပြုပါမည်၊ ယင်းတို့သည် ရှုပ်ထွေးသော storage-allocation mechanism တစ်ခု လိုအပ်ပါသည်။  <a href="5_002e3.html#g_t5_002e3">5.3</a> တွင် ၎င်းတို့ကို ပိုမိုအခြေခံကျသော လုပ်ဆောင်ချက်များဖြင့် အကောင်အထည်ဖော်ခြင်းကို လေ့လာပါမည်။
+</p>
+<p>
+<a href="5_002e4.html#g_t5_002e4">5.4</a> တွင်၊ ရိုးရှင်းသော procedures များကို register machines များအဖြစ် ဖော်ဆောင်ခြင်းတွင် အတွေ့အကြုံများ ရရှိပြီးနောက်၊ <a href="4_002e1.html#g_t4_002e1">4.1</a> ရှိ metacircular evaluator က ဖော်ပြထားသော algorithm ကို လုပ်ဆောင်ပေးမည့် စက်တစ်ခုကို ဒီဇိုင်းထုတ်ပါမည်။  ဤအချက်သည် evaluator အတွင်းရှိ ထိန်းချုပ်မှု ယန္တရားများအတွက် ရှင်းလင်းသော ပုံစံငယ်တစ်ခုကို ပေးခြင်းဖြင့် Scheme expressions များကို မည်သို့ အနက်ဖွင့်ဆိုသည်ဟူသော ကျွန်ုပ်တို့၏ နားလည်မှုတွင် ရှိနေသော ကွက်လပ်ကို ဖြည့်ဆည်းပေးပါလိမ့်မည်။  <a href="5_002e5.html#g_t5_002e5">5.5</a> တွင် Scheme ပရိုဂရမ်များကို evaluator register machine ၏ registers နှင့် operations များဖြင့် တိုက်ရိုက် လုပ်ဆောင်နိုင်သည့် sequences of instructions များအဖြစ် ဘာသာပြန်ပေးသော ရိုးရှင်းသည့် compiler တစ်ခုကို လေ့လာပါမည်။
+</p>
+
+<nav class="header">
+<p>
+Next: <a href="5_002e1.html#g_t5_002e1" accesskey="n" rel="next">5.1</a>, Prev: <a href="4_002e4.html#g_t4_002e4" accesskey="p" rel="prev">4.4</a>, Up: <a href="index.html#Top" accesskey="u" rel="prev">Top</a>   [<a href="index.html#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+
+
+</section><span class="bottom jump" title="Jump to bottom"><a href="#pagebottom" accesskey="b">⇣</a></span><a id="pagebottom"></a>
+</body>
+</html>

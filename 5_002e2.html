@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="my" lang="my">
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>Structure and Interpretation of Computer Programs, 2e: 5.2</title>
+
+<meta name="description" content="Structure and Interpretation of Computer Programs, 2e: 5.2" />
+<meta name="keywords" content="Structure and Interpretation of Computer Programs, 2e: 5.2" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="Generator" content="texi2any" />
+<meta charset="utf-8" />
+<link href="index.html#Top" rel="start" title="Top" />
+<link href="Term-Index.html#Term-Index" rel="index" title="Term Index" />
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents" />
+<link href="Chapter-5.html#Chapter-5" rel="prev" title="Chapter 5" />
+<link href="5_002e3.html#g_t5_002e3" rel="next" title="5.3" />
+<link href="5_002e1.html#g_t5_002e1_002e5" rel="prev" title="5.1.5" />
+
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/prettify.css" rel="stylesheet" type="text/css" />
+
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/footnotes.js" type="text/javascript"></script>
+<script src="js/browsertest.js" type="text/javascript"></script>
+</head>
+
+<body>
+<section><span class="top jump" title="Jump to top"><a href="#pagetop" accesskey="t">⇡</a></span><a id="pagetop"></a><a id="g_t5_002e2"></a>
+<nav class="header">
+<p>
+Next: <a href="5_002e3.html#g_t5_002e3" accesskey="n" rel="next">5.3</a>, Prev: <a href="5_002e1.html#g_t5_002e1" accesskey="p" rel="prev">5.1</a>, Up: <a href="Chapter-5.html#Chapter-5" accesskey="u" rel="prev">Chapter 5</a>   [<a href="index.html#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+<a id="A-Register_002dMachine-Simulator"></a>
+<h3 class="section"><span class="secnum">5.2</span><span class="sectitle">Register-Machine Simulator တစ်ခု</span></h3>
+
+<p>Register machine များ၏ ဒီဇိုင်းကို ကောင်းစွာနားလည်သဘောပေါက်ရန်အတွက် ကျွန်ုပ်တို့ဒီဇိုင်းထုတ်ထားသော machine များသည် မျှော်မှန်းထားသည့်အတိုင်း လုပ်ဆောင်ခြင်း ရှိ၊ မရှိ စမ်းသပ်ကြည့်ရပါမည်။ ဒီဇိုင်းတစ်ခုကို စမ်းသပ်ရန် နည်းလမ်းတစ်ခုမှာ <a href="5_002e1.html#Exercise-5_002e5">Exercise 5.5</a> တွင်ပါရှိသည့်အတိုင်း controller ၏ လုပ်ဆောင်ချက်ကို လက်ဖြင့် လိုက်လံတွက်ချက်ခြင်း (hand-simulate) ဖြစ်သည်။ သို့သော် အလွန်ရိုးရှင်းသော machine များမှလွဲ၍ ကျန် machine များအတွက် ဤသို့လုပ်ဆောင်ရန်မှာ အလွန်ငြီးငွေ့ဖွယ်ကောင်းပါသည်။ ဤကဏ္ဍတွင် ကျွန်ုပ်တို့သည် register-machine language ဖြင့် ဖော်ပြထားသော machine များအတွက် simulator တစ်ခုကို တည်ဆောက်ပါမည်။ simulator သည် interface procedure လေးခုပါရှိသော Scheme program တစ်ခုဖြစ်သည်။ ပထမတစ်ခုသည် register machine ၏ ဖော်ပြချက်ကို အသုံးပြု၍ machine ၏ model တစ်ခု (စမ်းသပ်မည့် machine ၏ အစိတ်အပိုင်းများနှင့် ကိုက်ညီသော အစိတ်အပိုင်းများပါဝင်သည့် data structure တစ်ခု) ကို တည်ဆောက်သည်။ အခြားသုံးခုမှာ ထို model ကို ကိုင်တွယ်အသုံးပြုခြင်းဖြင့် machine ကို simulate လုပ်ရန် ခွင့်ပြုသည်-
+</p>
+<blockquote>
+
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">make-machine ⟨</span><var><span class="pln">register-names</span></var><span class="pln">⟩
+              ⟨</span><var><span class="pln">operations</span></var><span class="pln">⟩
+              ⟨</span><var><span class="pln">controller</span></var><span class="pln">⟩</span><span class="clo">)</span></pre></div>
+
+<p>ပေးထားသော register များ၊ operation များနှင့် controller တို့ပါဝင်သည့် machine ၏ model တစ်ခုကို တည်ဆောက်ပြီး ပြန်ပေးသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">set-register-contents! ⟨</span><var><span class="pln">machine-model</span></var><span class="pln">⟩ 
+                        ⟨</span><var><span class="pln">register-name</span></var><span class="pln">⟩ 
+                        ⟨</span><var><span class="pln">value</span></var><span class="pln">⟩</span><span class="clo">)</span></pre></div>
+
+<p>ပေးထားသော machine အတွင်းရှိ simulate လုပ်ထားသော register တစ်ခုတွင် တန်ဖိုးတစ်ခုကို သိမ်းဆည်းပေးသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">get-register-contents ⟨</span><var><span class="pln">machine-model</span></var><span class="pln">⟩
+                       ⟨</span><var><span class="pln">register-name</span></var><span class="pln">⟩</span><span class="clo">)</span></pre></div>
+
+<p>ပေးထားသော machine အတွင်းရှိ simulate လုပ်ထားသော register တစ်ခု၏ ပါဝင်သည့်အကြောင်းအရာကို ပြန်ပေးသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">start ⟨</span><var><span class="pln">machine-model</span></var><span class="pln">⟩</span><span class="clo">)</span></pre></div>
+
+<p>ပေးထားသော machine ၏ လုပ်ဆောင်ချက်ကို controller sequence ၏ အစမှ စတင်၍ sequence ၏ အဆုံးသို့ ရောက်သောအခါ ရပ်တန့်သည်အထိ simulate လုပ်ပေးသည်။
+</p></blockquote>
+
+<p>ဤ procedure များကို မည်သို့အသုံးပြုရသည်ဟူသော ဥပမာအနေဖြင့်၊ <a href="5_002e1.html#g_t5_002e1_002e1">5.1.1</a> မှ <abbr>GCD</abbr> machine ၏ model တစ်ခုအဖြစ် <code>gcd-machine</code> ကို အောက်ပါအတိုင်း သတ်မှတ်နိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> gcd-machine
+  </span><span class="opn">(</span><span class="pln">make-machine
+   </span><span class="lit">'</span><span class="opn">(</span><span class="pln">a b t</span><span class="clo">)</span><span class="pln">
+   </span><span class="opn">(</span><span class="pln">list </span><span class="opn">(</span><span class="pln">list </span><span class="lit">'rem</span><span class="pln"> remainder</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">list </span><span class="lit">'</span><span class="pun">=</span><span class="pln"> </span><span class="pun">=</span><span class="clo">))</span><span class="pln">
+   </span><span class="lit">'</span><span class="opn">(</span><span class="pln">test-b
+       </span><span class="opn">(</span><span class="pln">test </span><span class="opn">(</span><span class="pln">op </span><span class="pun">=</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg b</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">const </span><span class="lit">0</span><span class="clo">))</span><span class="pln">
+       </span><span class="opn">(</span><span class="pln">branch </span><span class="opn">(</span><span class="pln">label gcd-done</span><span class="clo">))</span><span class="pln">
+       </span><span class="opn">(</span><span class="pln">assign t </span><span class="opn">(</span><span class="pln">op rem</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg a</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg b</span><span class="clo">))</span><span class="pln">
+       </span><span class="opn">(</span><span class="pln">assign a </span><span class="opn">(</span><span class="pln">reg b</span><span class="clo">))</span><span class="pln">
+       </span><span class="opn">(</span><span class="pln">assign b </span><span class="opn">(</span><span class="pln">reg t</span><span class="clo">))</span><span class="pln">
+       </span><span class="opn">(</span><span class="pln">goto </span><span class="opn">(</span><span class="pln">label test-b</span><span class="clo">))</span><span class="pln">
+     gcd-done</span><span class="clo">)))</span></pre></div>
+
+<p><code>make-machine</code> သို့ ပေးရသော ပထမဆုံး argument မှာ register အမည်များ၏ list ဖြစ်သည်။ နောက် argument မှာ operation အမည်တစ်ခုစီကို ထို operation ကို အကောင်အထည်ဖော်သော (ဆိုလိုသည်မှာ တူညီသော input value များပေးလျှင် တူညီသော output value ကို ထုတ်ပေးသော) Scheme procedure နှင့် တွဲပေးထားသည့် table (အစိတ်အပိုင်းနှစ်ခုပါသော list များ၏ list) ဖြစ်သည်။ နောက်ဆုံး argument မှာ <a href="5_002e1.html#g_t5_002e1">5.1</a> တွင်ပါရှိသည့်အတိုင်း label များနှင့် machine instruction များ၏ list အဖြစ် controller ကို ဖော်ပြခြင်းဖြစ်သည်။
+</p>
+<p>ဤ machine ဖြင့် <abbr>GCD</abbr> များကို တွက်ချက်ရန်၊ ကျွန်ုပ်တို့သည် input register များကို သတ်မှတ်ပေးပြီး၊ machine ကို စတင်ကာ၊ simulation ပြီးဆုံးသောအခါ ရလဒ်ကို စစ်ဆေးရပါမည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">set-register-contents! gcd-machine </span><span class="lit">'a</span><span class="pln"> </span><span class="lit">206</span><span class="clo">)</span><span class="pln">
+</span><i><span class="pln">done</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">set-register-contents! gcd-machine </span><span class="lit">'b</span><span class="pln"> </span><span class="lit">40</span><span class="clo">)</span><span class="pln">
+</span><i><span class="pln">done</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">start gcd-machine</span><span class="clo">)</span><span class="pln">
+</span><i><span class="pln">done</span></i><span class="pln">
+
+</span><span class="opn">(</span><span class="pln">get-register-contents gcd-machine </span><span class="lit">'a</span><span class="clo">)</span><span class="pln">
+</span><i><span class="lit">2</span></i>
+</pre></div>
+
+<p>ဤတွက်ချက်မှုသည် Scheme ဖြင့် ရေးသားထားသော <code>gcd</code> procedure ထက် ပို၍နှေးကွေးပါလိမ့်မည်။ အကြောင်းမှာ ကျွန်ုပ်တို့သည် <code>assign</code> ကဲ့သို့သော low-level machine instruction များကို ပိုမိုရှုပ်ထွေးသော operation များဖြင့် simulate လုပ်ဆောင်မည်ဖြစ်သောကြောင့်ဖြစ်သည်။
+</p>
+<blockquote>
+<p><strong><a id="Exercise-5_002e7"></a>Exercise 5.7:</strong> <a href="5_002e1.html#Exercise-5_002e4">Exercise 5.4</a> တွင် သင်ဒီဇိုင်းထုတ်ခဲ့သော machine များကို စမ်းသပ်ရန် ဤ simulator ကို အသုံးပြုပါ။
+</p></blockquote>
+
+
+<a id="g_t5_002e2_002e1"></a>
+<a id="The-Machine-Model"></a>
+<h4 class="subsection"><span class="secnum">5.2.1</span><span class="sectitle">စက်ပုံစံငယ်</span></h4>
+
+<p><code>make-machine</code> မှ ထုတ်လုပ်လိုက်သော စက်ပုံစံငယ် (machine model) ကို
+<a href="Chapter-3.html#Chapter-3">Chapter 3</a> တွင် ဖော်ပြခဲ့သည့် message-passing နည်းပညာများကို အသုံးပြုထားသော local state ရှိသည့်
+procedure တစ်ခုအဖြစ် ဖော်ပြသည်။ ဤပုံစံငယ်ကို တည်ဆောက်ရန်အတွက် <code>make-machine</code> သည် register machine အားလုံးတွင်
+တူညီသော စက်ပုံစံငယ်၏ အစိတ်အပိုင်းများကို တည်ဆောက်ရန် <code>make-new-machine</code> procedure ကို စတင်ခေါ်ယူသည်။
+<code>make-new-machine</code> မှ တည်ဆောက်လိုက်သော ဤအခြေခံ စက်ပုံစံငယ်သည် အခြေခံအားဖြင့် register အချို့နှင့် stack တစ်ခုအတွက်
+ထည့်စရာ (container) တစ်ခု ဖြစ်ပြီး၊ ၎င်းနှင့်အတူ controller instruction များကို တစ်ခုပြီးတစ်ခု လုပ်ဆောင်ပေးသော
+execution mechanism တစ်ခု ပါဝင်သည်။
+</p>
+<p>ထို့နောက် <code>Make-machine</code> သည် ဤအခြေခံပုံစံငယ်ကို (၎င်းထံသို့ message များ ပေးပို့ခြင်းဖြင့်) သတ်မှတ်ထားသော စက်၏
+register များ၊ operation များ နှင့် controller တို့ ပါဝင်စေရန် တိုးချဲ့သည်။ ပထမဦးစွာ ၎င်းသည် ပေးထားသော register အမည်တစ်ခုစီအတွက်
+စက်အသစ်တွင် register တစ်ခု သတ်မှတ်ပေးပြီး (allocate)၊ သတ်မှတ်ထားသော operation များကို စက်ထဲသို့ ထည့်သွင်းပေးသည်။
+ထို့နောက် ၎င်းသည် <a id="index-assembler"></a>
+<em>assembler</em> (အောက်ရှိ <a href="#g_t5_002e2_002e2">5.2.2</a> တွင် ဖော်ပြထားသည်) ကို အသုံးပြု၍ controller list ကို
+စက်အသစ်အတွက် instruction များအဖြစ် ပြောင်းလဲပြီး၊ ၎င်းတို့ကို စက်၏ instruction sequence အဖြစ် ထည့်သွင်းပေးသည်။
+<code>Make-machine</code> သည် ပြုပြင်မွမ်းမံထားသော စက်ပုံစံငယ်ကို ရလဒ်တန်ဖိုးအဖြစ် ပြန်ပေးသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-machine register-names 
+                      ops 
+                      controller-text</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">machine </span><span class="opn">(</span><span class="pln">make-new-machine</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">for-each </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">register-name</span><span class="clo">)</span><span class="pln">
+                </span><span class="opn">((</span><span class="pln">machine </span><span class="lit">'allocate-register</span><span class="clo">)</span><span class="pln"> 
+                 register-name</span><span class="clo">))</span><span class="pln">
+              register-names</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">((</span><span class="pln">machine </span><span class="lit">'install-operations</span><span class="clo">)</span><span class="pln"> ops</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">((</span><span class="pln">machine </span><span class="lit">'install-instruction-sequence</span><span class="clo">)</span><span class="pln">
+     </span><span class="opn">(</span><span class="pln">assemble controller-text machine</span><span class="clo">))</span><span class="pln">
+    machine</span><span class="clo">))</span></pre></div>
+
+<a id="Registers"></a>
+<h5 class="subsubheading">Register များ</h5>
+
+<p>ကျွန်ုပ်တို့သည် register တစ်ခုကို <a href="Chapter-3.html#Chapter-3">Chapter 3</a> တွင်ကဲ့သို့ပင် local state ရှိသော
+procedure တစ်ခုအဖြစ် ဖော်ပြပါမည်။ <code>make-register</code> procedure သည် ရယူနိုင်သော သို့မဟုတ်
+ပြောင်းလဲနိုင်သော တန်ဖိုးတစ်ခုကို ထိန်းသိမ်းထားသည့် register တစ်ခုကို ဖန်တီးပေးသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-register name</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">contents </span><span class="lit">'</span><span class="pun">*</span><span class="pln">unassigned</span><span class="pun">*</span><span class="clo">))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">dispatch message</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> message </span><span class="lit">'get</span><span class="clo">)</span><span class="pln"> contents</span><span class="clo">)</span><span class="pln">
+            </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> message </span><span class="lit">'set</span><span class="clo">)</span><span class="pln">
+             </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">value</span><span class="clo">)</span><span class="pln"> 
+               </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> contents value</span><span class="clo">)))</span><span class="pln">
+            </span><span class="opn">(</span><span class="kwd">else</span><span class="pln">
+             </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Unknown request: 
+                     REGISTER"</span><span class="pln">
+                    message</span><span class="clo">))))</span><span class="pln">
+    dispatch</span><span class="clo">))</span></pre></div>
+
+<p>အောက်ပါ procedure များကို register များသို့ ဝင်ရောက်အသုံးပြုရန် အသုံးပြုသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">get-contents register</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">register </span><span class="lit">'get</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">set-contents! register value</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">((</span><span class="pln">register </span><span class="lit">'set</span><span class="clo">)</span><span class="pln"> value</span><span class="clo">))</span></pre></div>
+
+<a id="The-stack"></a>
+<h5 class="subsubheading">Stack</h5>
+
+<p>ကျွန်ုပ်တို့သည် stack တစ်ခုကိုလည်း local state ရှိသော procedure တစ်ခုအဖြစ် ဖော်ပြနိုင်သည်။
+<code>make-stack</code> procedure သည် stack ပေါ်ရှိ item များ၏ list တစ်ခုဖြင့် ဖွဲ့စည်းထားသော local state ရှိသည့်
+stack တစ်ခုကို ဖန်တီးပေးသည်။ Stack တစ်ခုသည် item တစ်ခုကို stack ပေါ်သို့ <code>push</code> လုပ်ရန်၊
+stack ထိပ်ဆုံးမှ item ကို <code>pop</code> လုပ်ပြီး ပြန်ပေးရန်နှင့် stack ကို အလွတ်အဖြစ် <code>initialize</code> လုပ်ရန်
+တောင်းဆိုချက်များကို လက်ခံသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-stack</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">s </span><span class="lit">'</span><span class="opn">(</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">push x</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> s </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> x s</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">pop</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">null? s</span><span class="clo">)</span><span class="pln">
+          </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Empty stack: POP"</span><span class="clo">)</span><span class="pln">
+          </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">top </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> s</span><span class="clo">)))</span><span class="pln">
+            </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> s </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> s</span><span class="clo">))</span><span class="pln">
+            top</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">initialize</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> s </span><span class="lit">'</span><span class="opn">(</span><span class="clo">))</span><span class="pln">
+      </span><span class="lit">'done</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">dispatch message</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> message </span><span class="lit">'push</span><span class="clo">)</span><span class="pln"> push</span><span class="clo">)</span><span class="pln">
+            </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> message </span><span class="lit">'pop</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">pop</span><span class="clo">))</span><span class="pln">
+            </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> message </span><span class="lit">'initialize</span><span class="clo">)</span><span class="pln"> 
+             </span><span class="opn">(</span><span class="pln">initialize</span><span class="clo">))</span><span class="pln">
+            </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> 
+             </span><span class="op!">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Unknown request: STACK"</span><span class="pln">
+                    message</span><span class="clo">))))</span><span class="pln">
+    dispatch</span><span class="clo">))</span></pre></div>
+
+<p>အောက်ပါ procedure များကို stack များသို့ ဝင်ရောက်အသုံးပြုရန် အသုံးပြုသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">pop stack</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">stack </span><span class="lit">'pop</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">push stack value</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">((</span><span class="pln">stack </span><span class="lit">'push</span><span class="clo">)</span><span class="pln"> value</span><span class="clo">))</span></pre></div>
+
+<a id="The-basic-machine"></a>
+<h5 class="subsubheading">အခြေခံ စက်</h5>
+
+<p><a href="#Figure-5_002e13">ပုံ ၅.၁၃</a> တွင် ပြထားသော <code>make-new-machine</code> procedure သည် object တစ်ခုကို
+တည်ဆောက်ပေးပြီး၊ ၎င်း၏ local state တွင် stack တစ်ခု၊ အစပိုင်းတွင် အလွတ်ဖြစ်သော instruction sequence တစ်ခု၊
+stack ကို အစပြု (initialize) ပေးသည့် operation တစ်ခု စတင်ပါဝင်သော operation များ၏ list တစ်ခုနှင့်
+<code>flag</code> နှင့် <code>pc</code> (“program counter” အတွက်) ဟု အမည်ပေးထားသော register နှစ်ခု စတင်ပါဝင်သည့်
+<a id="index-register-table"></a>
+<em>register table</em> တစ်ခုတို့ ပါဝင်သည်။ အတွင်းပိုင်း procedure ဖြစ်သော <code>allocate-register</code> သည်
+register table ထဲသို့ entry အသစ်များကို ပေါင်းထည့်ပေးပြီး၊ အတွင်းပိုင်း procedure ဖြစ်သော
+<code>lookup-register</code> သည် table ထဲတွင် register များကို ရှာဖွေပေးသည်။
+</p>
+<p><strong><a id="Figure-5_002e13"></a>ပုံ ၅.၁၃:</strong> <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mo stretchy="false">↓<!-- ↓ --></mo>
+</math> အခြေခံ စက်ပုံစံငယ်ကို အကောင်အထည်ဖော်ထားသော <code>make-new-machine</code> procedure။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-new-machine</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">pc </span><span class="opn">(</span><span class="pln">make-register </span><span class="lit">'pc</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">flag </span><span class="opn">(</span><span class="pln">make-register </span><span class="lit">'flag</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">stack </span><span class="opn">(</span><span class="pln">make-stack</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">the-instruction-sequence </span><span class="lit">'</span><span class="opn">(</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">the-ops
+           </span><span class="opn">(</span><span class="pln">list 
+            </span><span class="opn">(</span><span class="pln">list </span><span class="lit">'initialize-stack</span><span class="pln">
+                  </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln"> 
+                    </span><span class="opn">(</span><span class="pln">stack </span><span class="lit">'initialize</span><span class="clo">)))))</span><span class="pln">
+          </span><span class="opn">(</span><span class="pln">register-table
+           </span><span class="opn">(</span><span class="pln">list </span><span class="opn">(</span><span class="pln">list </span><span class="lit">'pc</span><span class="pln"> pc</span><span class="clo">)</span><span class="pln"> 
+                 </span><span class="opn">(</span><span class="pln">list </span><span class="lit">'flag</span><span class="pln"> flag</span><span class="clo">))))</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">allocate-register name</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">assoc name register-table</span><span class="clo">)</span><span class="pln">
+            </span><span class="opn">(</span><span class="err">error</span><span class="pln"> 
+             </span><span class="str">"Multiply defined register: "</span><span class="pln"> 
+             name</span><span class="clo">)</span><span class="pln">
+            </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> register-table
+                  </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> 
+                   </span><span class="opn">(</span><span class="pln">list name 
+                         </span><span class="opn">(</span><span class="pln">make-register name</span><span class="clo">))</span><span class="pln">
+                   register-table</span><span class="clo">)))</span><span class="pln">
+        </span><span class="lit">'register-allocated</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">lookup-register name</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">val 
+               </span><span class="opn">(</span><span class="pln">assoc name register-table</span><span class="clo">)))</span><span class="pln">
+          </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> val
+              </span><span class="opn">(</span><span class="kwd">cadr</span><span class="pln"> val</span><span class="clo">)</span><span class="pln">
+              </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Unknown register:"</span><span class="pln"> 
+                     name</span><span class="clo">))))</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">execute</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">insts </span><span class="opn">(</span><span class="pln">get-contents pc</span><span class="clo">)))</span><span class="pln">
+          </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">null? insts</span><span class="clo">)</span><span class="pln">
+              </span><span class="lit">'done</span><span class="pln">
+              </span><span class="opn">(</span><span class="kwd">begin</span><span class="pln">
+                </span><span class="opn">((</span><span class="pln">instruction-execution-proc 
+                  </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> insts</span><span class="clo">)))</span><span class="pln">
+                </span><span class="opn">(</span><span class="pln">execute</span><span class="clo">)))))</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">dispatch message</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> message </span><span class="lit">'start</span><span class="clo">)</span><span class="pln">
+               </span><span class="opn">(</span><span class="pln">set-contents! 
+                pc
+                the-instruction-sequence</span><span class="clo">)</span><span class="pln">
+               </span><span class="opn">(</span><span class="pln">execute</span><span class="clo">))</span><span class="pln">
+              </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> 
+                message 
+                </span><span class="lit">'install-instruction-sequence</span><span class="clo">)</span><span class="pln">
+               </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">seq</span><span class="clo">)</span><span class="pln"> 
+                 </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> 
+                  the-instruction-sequence 
+                  seq</span><span class="clo">)))</span><span class="pln">
+              </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> message 
+                    </span><span class="lit">'allocate-register</span><span class="clo">)</span><span class="pln"> 
+               allocate-register</span><span class="clo">)</span><span class="pln">
+              </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> message </span><span class="lit">'get-register</span><span class="clo">)</span><span class="pln"> 
+               lookup-register</span><span class="clo">)</span><span class="pln">
+              </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> message 
+                    </span><span class="lit">'install-operations</span><span class="clo">)</span><span class="pln">
+               </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">ops</span><span class="clo">)</span><span class="pln"> 
+                 </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> the-ops 
+                       </span><span class="opn">(</span><span class="pln">append the-ops ops</span><span class="clo">))))</span><span class="pln">
+              </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> message </span><span class="lit">'stack</span><span class="clo">)</span><span class="pln"> stack</span><span class="clo">)</span><span class="pln">
+              </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> message </span><span class="lit">'operations</span><span class="clo">)</span><span class="pln"> 
+               the-ops</span><span class="clo">)</span><span class="pln">
+              </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Unknown request: 
+                            MACHINE"</span><span class="pln">
+                           message</span><span class="clo">))))</span><span class="pln">
+      dispatch</span><span class="clo">)))</span></pre></div>
+
+<p><code>flag</code> register ကို simulation ပြုလုပ်ထားသော စက်အတွင်း branching များကို ထိန်းချုပ်ရန် အသုံးပြုသည်။
+<code>Test</code> instruction များသည် <code>flag</code> ၏ အကြောင်းအရာကို test ၏ ရလဒ် (မှန် သို့မဟုတ် မှား) အဖြစ် သတ်မှတ်ပေးသည်။
+<code>Branch</code> instruction များသည် <code>flag</code> ၏ အကြောင်းအရာကို စစ်ဆေးခြင်းဖြင့် branch လုပ်မလား မလုပ်ဘူးလားဆိုသည်ကို ဆုံးဖြတ်သည်။
+</p>
+<p><code>pc</code> register သည် စက်လည်ပတ်နေစဉ် instruction များ၏ အစီအစဉ်ကို ဆုံးဖြတ်ပေးသည်။ ဤအစီအစဉ်အတိုင်း လုပ်ဆောင်ခြင်းကို
+အတွင်းပိုင်း procedure ဖြစ်သော <code>execute</code> ဖြင့် အကောင်အထည်ဖော်ထားသည်။ Simulation model တွင်၊ စက်၏ instruction တစ်ခုစီသည်
+<a id="index-instruction-execution-procedure"></a>
+<em>instruction execution procedure</em> ဟု ခေါ်သော argument မပါသည့် procedure တစ်ခု ပါဝင်သည့် data structure တစ်ခု ဖြစ်ပြီး၊
+ထို procedure ကို ခေါ်ယူခြင်းသည် instruction ကို လုပ်ဆောင်ခြင်းကို ပုံတူကူးပေးသည်။ Simulation လည်ပတ်နေစဉ်တွင် <code>pc</code> သည်
+နောက်ထပ်လုပ်ဆောင်ရမည့် instruction မှ စတင်သော instruction sequence ထဲရှိ နေရာကို ညွှန်ပြနေသည်။
+<code>Execute</code> သည် ထို instruction ကို ရယူပြီး၊ instruction execution procedure ကို ခေါ်ယူခြင်းဖြင့် ၎င်းကို လုပ်ဆောင်ကာ၊
+လုပ်ဆောင်ရန် instruction မရှိတော့သည်အထိ (ဆိုလိုသည်မှာ <code>pc</code> သည် instruction sequence ၏ အဆုံးကို ညွှန်ပြသည်အထိ)
+ဤစက်ဝန်းကို ထပ်ခါတလဲလဲ လုပ်ဆောင်သည်။
+</p>
+<p>၎င်း၏ လုပ်ဆောင်ချက် အစိတ်အပိုင်းတစ်ခုအနေဖြင့် instruction execution procedure တစ်ခုစီသည် နောက်ထပ်လုပ်ဆောင်ရမည့် instruction ကို
+ညွှန်ပြရန် <code>pc</code> ကို ပြုပြင်ပြောင်းလဲသည်။ <code>Branch</code> နှင့် <code>goto</code> instruction များသည် <code>pc</code> ကို
+ပန်းတိုင်အသစ်သို့ ညွှန်ပြရန် ပြောင်းလဲပေးသည်။ ကျန်ရှိသော instruction အားလုံးသည် sequence ထဲရှိ နောက်ထပ် instruction သို့ ညွှန်ပြစေရန်
+<code>pc</code> ကို ရှေ့သို့ တိုးပေးရုံသာ လုပ်ဆောင်သည်။ <code>execute</code> ကို ခေါ်ယူတိုင်း <code>execute</code> ကို ထပ်မံခေါ်ယူသည်ကို
+သတိပြုပါ၊ သို့သော် instruction execution procedure ကို လည်ပတ်ခြင်းက <code>pc</code> ၏ အကြောင်းအရာကို ပြောင်းလဲပေးသောကြောင့်
+၎င်းသည် အဆုံးမရှိပတ်လမ်း (infinite loop) ကို မဖြစ်ပေါ်စေပါ။
+</p>
+<p><code>Make-new-machine</code> သည် အတွင်းပိုင်း state သို့ message-passing ဖြင့် ဝင်ရောက်အသုံးပြုခြင်းကို အကောင်အထည်ဖော်ပေးသည့်
+<code>dispatch</code> procedure ကို ပြန်ပေးသည်။ စက်ကို စတင်ခြင်းကို <code>pc</code> ကို instruction sequence ၏ အစသို့
+သတ်မှတ်ပေးခြင်းနှင့် <code>execute</code> ကို ခေါ်ယူခြင်းတို့ဖြင့် ဆောင်ရွက်ကြောင်း သတိပြုပါ။
+</p>
+<p>အဆင်ပြေစေရန်အတွက်၊ <a href="#g_t5_002e2">5.2</a> ၏ အစတွင် ဖော်ပြထားသည့်အတိုင်း စက်၏ <code>start</code> လုပ်ဆောင်ချက်အတွက်
+အခြားရွေးချယ်စရာ procedural interface တစ်ခုနှင့် register အကြောင်းအရာများကို သတ်မှတ်ရန်နှင့် စစ်ဆေးရန် procedure များကို
+ကျွန်ုပ်တို့ ပံ့ပိုးပေးထားသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">start machine</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">machine </span><span class="lit">'start</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">get-register-contents 
+         machine register-name</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">get-contents 
+   </span><span class="opn">(</span><span class="pln">get-register machine register-name</span><span class="clo">)))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">set-register-contents! 
+         machine register-name value</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">set-contents! 
+   </span><span class="opn">(</span><span class="pln">get-register machine register-name</span><span class="clo">)</span><span class="pln"> 
+   value</span><span class="clo">)</span><span class="pln">
+  </span><span class="lit">'done</span><span class="clo">)</span></pre></div>
+
+<p>ဤ procedure များ (နှင့် <a href="#g_t5_002e2_002e2">5.2.2</a> နှင့် <a href="#g_t5_002e2_002e3">5.2.3</a> တို့ရှိ procedure အများအပြား) သည်
+ပေးထားသော စက်တစ်ခုတွင် ပေးထားသော အမည်ဖြင့် register ကို ရှာဖွေရန် အောက်ပါတို့ကို အသုံးပြုသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">get-register machine reg-name</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">((</span><span class="pln">machine </span><span class="lit">'get-register</span><span class="clo">)</span><span class="pln"> reg-name</span><span class="clo">))</span></pre></div>
+
+<a id="g_t5_002e2_002e2"></a>
+<a id="The-Assembler"></a>
+<h4 class="subsection"><span class="secnum">5.2.2</span><span class="sectitle">The Assembler</span></h4>
+
+<p>Assembler သည် စက်တစ်ခုအတွက် controller expression အစီအစဉ်များကို ၎င်းနှင့် သက်ဆိုင်သော machine instruction စာရင်းအဖြစ် ပြောင်းလဲပေးသည်။ instruction တစ်ခုစီတွင် ၎င်း၏ execution procedure ကိုယ်စီ ပါရှိသည်။ ခြုံငုံကြည့်လျှင် assembler သည် <a href="Chapter-4.html#Chapter-4">Chapter 4</a> တွင် ကျွန်ုပ်တို့ လေ့လာခဲ့သော evaluator များနှင့် များစွာ ဆင်တူသည်—၎င်းတွင် input language တစ်ခု (ဤနေရာတွင် register-machine language) ရှိပြီး ၎င်း language ရှိ expression အမျိုးအစား တစ်ခုစီအတွက် သင့်လျော်သော လုပ်ဆောင်ချက်ကို ကျွန်ုပ်တို့ လုပ်ဆောင်ရမည် ဖြစ်သည်။
+</p>
+<p>instruction တစ်ခုစီအတွက် execution procedure တစ်ခု ထုတ်လုပ်သည့် နည်းလမ်းသည် <a href="4_002e1.html#g_t4_002e1_002e7">4.1.7</a> တွင် analysis နှင့် runtime execution ကို သီးခြားစီ ခွဲထုတ်ခြင်းဖြင့် evaluator ၏ အမြန်နှုန်းကို မြှင့်တင်ရန် ကျွန်ုပ်တို့ အသုံးပြုခဲ့သည့် နည်းလမ်းပင် ဖြစ်သည်။ <a href="Chapter-4.html#Chapter-4">Chapter 4</a> တွင် တွေ့ခဲ့ရသည့်အတိုင်း Scheme expression များကို ခွဲခြမ်းစိတ်ဖြာရာတွင် variable များ၏ တကယ့် တန်ဖိုးများကို မသိဘဲ များစွာသော အသုံးဝင်သည့် analysis များကို လုပ်ဆောင်နိုင်သည်။ ဤနေရာတွင်လည်း ထို့အတူပင် machine register များ၏ တကယ့် ပါဝင်သည့် အချက်အလက်များကို မသိဘဲ register-machine-language expression များကို အသုံးဝင်သော ခွဲခြမ်းစိတ်ဖြာမှုများ ပြုလုပ်နိုင်သည်။ ဥပမာအားဖြင့် register များကို ရည်ညွှန်းခြင်းများအစား register object များဆီသို့ ညွှန်ပြသော pointer များဖြင့် အစားထိုးနိုင်ပြီး၊ label များကို ရည်ညွှန်းခြင်းများအစား label သတ်မှတ်ထားသော instruction sequence ထဲမှ နေရာသို့ ညွှန်ပြသော pointer များဖြင့် အစားထိုးနိုင်သည်။
+</p>
+<p>instruction execution procedure များကို မထုတ်လုပ်မီ assembler သည် label များအားလုံး ဘာကို ရည်ညွှန်းသည်ကို သိရှိထားရန် လိုအပ်သည်။ ထို့ကြောင့် ၎င်းသည် instruction များမှ label များကို ခွဲထုတ်ရန် controller text ကို scanning ဖတ်ခြင်းဖြင့် စတင်သည်။ text ကို scan ဖတ်နေစဉ်အတွင်း instruction စာရင်း တစ်ခုနှင့် label တစ်ခုစီကို ထိုစာရင်းထဲရှိ နေရာတစ်ခုနှင့် ချိတ်ဆက်ပေးထားသော table တစ်ခုကို တည်ဆောက်သည်။ ထို့နောက် assembler သည် instruction တစ်ခုစီအတွက် execution procedure ကို ထည့်သွင်းခြင်းဖြင့် instruction စာရင်းကို ဖြည့်စွက်ပေးသည်။
+</p>
+<p><code>assemble</code> procedure သည် assembler ၏ အဓိက entry point ဖြစ်သည်။ ၎င်းသည် controller text နှင့် machine model တို့ကို argument များအဖြစ် လက်ခံပြီး model တွင် သိမ်းဆည်းမည့် instruction sequence ကို ပြန်ပေးသည်။ <code>Assemble</code> သည် ပေးထားသော controller text မှ ကနဦး instruction စာရင်းနှင့် label table ကို တည်ဆောက်ရန် <code>extract-labels</code> ကို ခေါ်ယူသည်။ <code>extract-labels</code> သို့ ပေးရသော ဒုတိယမြောက် argument သည် ရရှိလာသော ရလဒ်များကို လုပ်ဆောင်ရန် ခေါ်ယူရမည့် procedure တစ်ခု ဖြစ်သည်။ ဤ procedure သည် instruction execution procedure များကို ထုတ်လုပ်ရန်နှင့် ၎င်းတို့ကို instruction စာရင်းထဲသို့ ထည့်သွင်းရန် <code>update-insts!</code> ကို အသုံးပြုပြီးနောက် ပြုပြင်ထားသော စာရင်းကို ပြန်ပေးသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">assemble controller-text machine</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">extract-labels controller-text
+    </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">insts labels</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">update-insts! insts labels machine</span><span class="clo">)</span><span class="pln">
+      insts</span><span class="clo">)))</span></pre></div>
+
+<p><code>Extract-labels</code> သည် argument များအဖြစ် <code>text</code> စာရင်း (controller instruction expression များ အစီအစဉ်) နှင့် <code>receive</code> procedure တစ်ခုကို လက်ခံသည်။ <code>Receive</code> ကို တန်ဖိုးနှစ်ခုဖြင့် ခေါ်ယူမည် ဖြစ်သည်- (၁) <code>text</code> မှ instruction တစ်ခုစီ ပါဝင်သော instruction data structure များ၏ <code>insts</code> စာရင်း၊ နှင့် (၂) <code>text</code> မှ label တစ်ခုစီကို <code>insts</code> စာရင်းထဲရှိ label ရည်ညွှန်းထားသော နေရာနှင့် ချိတ်ဆက်ပေးသည့် <code>labels</code> ဟု ခေါ်သော table တစ်ခုတို့ ဖြစ်သည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">extract-labels text receive</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">null? text</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">receive </span><span class="lit">'</span><span class="opn">(</span><span class="clo">)</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="clo">))</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">extract-labels 
+       </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> text</span><span class="clo">)</span><span class="pln">
+       </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">insts labels</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">next-inst </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> text</span><span class="clo">)))</span><span class="pln">
+           </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">symbol? next-inst</span><span class="clo">)</span><span class="pln">
+               </span><span class="opn">(</span><span class="pln">receive 
+                   insts
+                   </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> 
+                    </span><span class="opn">(</span><span class="pln">make-label-entry 
+                     next-inst
+                     insts</span><span class="clo">)</span><span class="pln">
+                    labels</span><span class="clo">))</span><span class="pln">
+               </span><span class="opn">(</span><span class="pln">receive 
+                   </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-instruction 
+                          next-inst</span><span class="clo">)</span><span class="pln">
+                         insts</span><span class="clo">)</span><span class="pln">
+                   labels</span><span class="clo">)))))))</span></pre></div>
+
+<p><code>Extract-labels</code> သည် <code>text</code> ၏ element များကို အစဉ်လိုက် scan ဖတ်ပြီး <code>insts</code> နှင့် <code>labels</code> တို့ကို စုဆောင်းခြင်းဖြင့် အလုပ်လုပ်သည်။ အကယ်၍ element တစ်ခုသည် symbol (ထို့ကြောင့် label) ဖြစ်ပါက သင့်လျော်သော entry တစ်ခုကို <code>labels</code> table ထဲသို့ ထည့်သွင်းသည်။ သို့မဟုတ်ပါက ထို element ကို <code>insts</code> စာရင်းထဲသို့ ထည့်သွင်းသည်။<a class="footnote_link" id="DOCF289" href="#FOOT289"><sup>289</sup></a>
+</p>
+<p><code>Update-insts!</code> သည် ကနဦးတွင် instruction များ၏ text သာ ပါဝင်သော instruction စာရင်းကို သက်ဆိုင်ရာ execution procedure များ ပါဝင်စေရန် ပြုပြင်ပြောင်းလဲပေးသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">update-insts! insts labels machine</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">pc </span><span class="opn">(</span><span class="pln">get-register machine </span><span class="lit">'pc</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">flag </span><span class="opn">(</span><span class="pln">get-register machine </span><span class="lit">'flag</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">stack </span><span class="opn">(</span><span class="pln">machine </span><span class="lit">'stack</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">ops </span><span class="opn">(</span><span class="pln">machine </span><span class="lit">'operations</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">for-each
+     </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">inst</span><span class="clo">)</span><span class="pln">
+       </span><span class="opn">(</span><span class="pln">set-instruction-execution-proc!
+        inst
+        </span><span class="opn">(</span><span class="pln">make-execution-procedure
+         </span><span class="opn">(</span><span class="pln">instruction-text inst</span><span class="clo">)</span><span class="pln"> 
+         labels
+         machine
+         pc
+         flag
+         stack
+         ops</span><span class="clo">)))</span><span class="pln">
+     insts</span><span class="clo">)))</span></pre></div>
+
+<p>machine instruction data structure သည် instruction text နှင့် ၎င်းနှင့် သက်ဆိုင်သော execution procedure ကို ရိုးရိုးရှင်းရှင်းပင် တွဲဖက်ပေးထားခြင်း ဖြစ်သည်။ <code>extract-labels</code> က instruction ကို တည်ဆောက်ချိန်တွင် execution procedure ကို မရရှိသေးဘဲ၊ နောက်ပိုင်းတွင်မှ <code>update-insts!</code> က ထည့်သွင်းပေးခြင်း ဖြစ်သည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-instruction text</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> text </span><span class="lit">'</span><span class="opn">(</span><span class="clo">)))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">instruction-text inst</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> inst</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">instruction-execution-proc inst</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> inst</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">set-instruction-execution-proc!
+         inst
+         proc</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">set-cdr! inst proc</span><span class="clo">))</span></pre></div>
+
+<p>instruction text ကို ကျွန်ုပ်တို့၏ simulator တွင် အသုံးမပြုသော်လည်း debugging ပြုလုပ်ရန်အတွက် သိမ်းဆည်းထားခြင်းမှာ အဆင်ပြေစေသည် (<a href="#Exercise-5_002e16">Exercise 5.16</a> ကို ကြည့်ပါ)။
+</p>
+<p>label table ၏ element များမှာ pair များ ဖြစ်ကြသည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-label-entry label-name insts</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> label-name insts</span><span class="clo">))</span></pre></div>
+
+<p>table ထဲရှိ entry များကို အောက်ပါအတိုင်း ရှာဖွေနိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">lookup-label labels label-name</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">val </span><span class="opn">(</span><span class="pln">assoc label-name labels</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> val
+        </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> val</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Undefined label: ASSEMBLE"</span><span class="pln"> 
+               label-name</span><span class="clo">))))</span></pre></div>
+
+<blockquote>
+<p><strong><a id="Exercise-5_002e8"></a>Exercise 5.8:</strong> အောက်ပါ register-machine ကုဒ်သည် ရှုပ်ထွေးနိုင်သည် (ambiguous ဖြစ်သည်)၊ အကြောင်းမှာ label <code>here</code> ကို တစ်ကြိမ်ထက်မက သတ်မှတ်ထားသောကြောင့် ဖြစ်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="pln">start
+  </span><span class="opn">(</span><span class="pln">goto </span><span class="opn">(</span><span class="pln">label here</span><span class="clo">))</span><span class="pln">
+here
+  </span><span class="opn">(</span><span class="pln">assign a </span><span class="opn">(</span><span class="pln">const </span><span class="lit">3</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">goto </span><span class="opn">(</span><span class="pln">label there</span><span class="clo">))</span><span class="pln">
+here
+  </span><span class="opn">(</span><span class="pln">assign a </span><span class="opn">(</span><span class="pln">const </span><span class="lit">4</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">goto </span><span class="opn">(</span><span class="pln">label there</span><span class="clo">))</span><span class="pln">
+there</span></pre></div>
+
+<p>ရေးသားထားသော simulator အရ control သည် <code>there</code> သို့ ရောက်ရှိသည့်အခါ register <code>a</code> ၏ ပါဝင်သည့် တန်ဖိုးမှာ အဘယ်နည်း? တူညီသော label အမည်ကို မတူညီသော နေရာနှစ်ခုအတွက် အသုံးပြုထားပါက assembler က error ပြနိုင်ရန်အတွက် <code>extract-labels</code> procedure ကို ပြုပြင်ပါ။
+</p></blockquote>
+
+<a id="g_t5_002e2_002e3"></a>
+<a id="Generating-Execution-Procedures-for-Instructions"></a>
+<h4 class="subsection"><span class="secnum">5.2.3</span><span class="sectitle">Instruction များအတွက် လုပ်ဆောင်ချက် လုပ်ငန်းစဉ် (Execution Procedures) များ ထုတ်လုပ်ခြင်း</span></h4>
+
+<p>assembler သည် instruction တစ်ခုအတွက် execution procedure ကို ထုတ်လုပ်ရန် <code>make-execution-procedure</code> ကို ခေါ်ယူပါသည်။ <a href="4_002e1.html#g_t4_002e1_002e7">4.1.7</a> ရှိ evaluator မှ <code>analyze</code> လုပ်ငန်းစဉ်ကဲ့သို့ပင်၊ ၎င်းသည် သင့်လျော်သော execution procedure ကို ထုတ်လုပ်ရန် instruction အမျိုးအစားအပေါ် မူတည်၍ ခွဲခြားလုပ်ဆောင်ပါသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-execution-procedure 
+         inst labels machine pc flag stack ops</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> inst</span><span class="clo">)</span><span class="pln"> </span><span class="lit">'assign</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">make-assign 
+          inst machine labels ops pc</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> inst</span><span class="clo">)</span><span class="pln"> </span><span class="lit">'test</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">make-test 
+          inst machine labels ops flag pc</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> inst</span><span class="clo">)</span><span class="pln"> </span><span class="lit">'branch</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">make-branch 
+          inst machine labels flag pc</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> inst</span><span class="clo">)</span><span class="pln"> </span><span class="lit">'goto</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">make-goto inst machine labels pc</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> inst</span><span class="clo">)</span><span class="pln"> </span><span class="lit">'save</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">make-save inst machine stack pc</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> inst</span><span class="clo">)</span><span class="pln"> </span><span class="lit">'restore</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">make-restore inst machine stack pc</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> inst</span><span class="clo">)</span><span class="pln"> </span><span class="lit">'perform</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">make-perform
+          inst machine labels ops pc</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Unknown instruction 
+                      type: ASSEMBLE"</span><span class="pln">
+                     inst</span><span class="clo">))))</span></pre></div>
+
+<p>register-machine language ရှိ instruction အမျိုးအစားတစ်ခုစီအတွက် သင့်လျော်သော execution procedure ကို တည်ဆောက်ပေးသည့် generator တစ်ခုစီ ရှိပါသည်။ ဤလုပ်ငန်းစဉ်များ၏ အသေးစိတ်အချက်အလက်များသည် register-machine language ရှိ instruction တစ်ခုချင်းစီ၏ syntax နှင့် အဓိပ္ပာယ်ကို သတ်မှတ်ပေးပါသည်။ ကျွန်ုပ်တို့သည် <a href="4_002e1.html#g_t4_002e1_002e2">4.1.2</a> ရှိ evaluator များတွင် လုပ်ဆောင်ခဲ့သကဲ့သို့ပင်၊ instruction တစ်ခု၏ အစိတ်အပိုင်းများကို ထုတ်ယူရန်နှင့် ခွဲခြားရန် syntax procedures များကို အသုံးပြုခြင်းဖြင့် register-machine expressions များ၏ အသေးစိတ် syntax ကို ယေဘုယျ execution mechanism မှ သီးခြားခွဲထုတ်ရန် data abstraction ကို အသုံးပြုပါသည်။
+</p>
+<a id="Assign-instructions"></a>
+<h5 class="subsubheading"><code>Assign</code> instruction များ</h5>
+
+<p><code>make-assign</code> လုပ်ငန်းစဉ်သည် <code>assign</code> instruction များကို ကိုင်တွယ်ဖြေရှင်းပေးပါသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-assign 
+         inst machine labels operations pc</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">target 
+         </span><span class="opn">(</span><span class="pln">get-register 
+          machine 
+          </span><span class="opn">(</span><span class="pln">assign-reg-name inst</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">value-exp </span><span class="opn">(</span><span class="pln">assign-value-exp inst</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">value-proc
+           </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">operation-exp? value-exp</span><span class="clo">)</span><span class="pln">
+               </span><span class="opn">(</span><span class="pln">make-operation-exp
+                value-exp 
+                machine
+                labels
+                operations</span><span class="clo">)</span><span class="pln">
+               </span><span class="opn">(</span><span class="pln">make-primitive-exp
+                </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> value-exp</span><span class="clo">)</span><span class="pln">
+                machine
+                labels</span><span class="clo">))))</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln">   </span><span class="roman"><span class="com">; execution procedure</span></span><span class="pln">
+                   </span><span class="roman"><span class="com">; for </span><code><span class="com">assign</span></code></span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">set-contents! target </span><span class="opn">(</span><span class="pln">value-proc</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">advance-pc pc</span><span class="clo">)))))</span></pre></div>
+
+<p><code>Make-assign</code> သည် selector များကို အသုံးပြု၍ <code>assign</code> instruction မှ target register အမည် (instruction ၏ ဒုတိယမြောက် အစိတ်အပိုင်း) နှင့် value expression (instruction ကို ဖွဲ့စည်းထားသော စာရင်း၏ ကျန်ရှိသော အစိတ်အပိုင်း) တို့ကို ထုတ်ယူပါသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">assign-reg-name assign-instruction</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cadr</span><span class="pln"> assign-instruction</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">assign-value-exp assign-instruction</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cddr</span><span class="pln"> assign-instruction</span><span class="clo">))</span></pre></div>
+
+<p>register အမည်ကို target register object ထုတ်ပေးရန် <code>get-register</code> ဖြင့် ရှာဖွေပါသည်။ တန်ဖိုးသည် operation တစ်ခု၏ ရလဒ်ဖြစ်ပါက value expression ကို <code>make-operation-exp</code> သို့ ပေးပို့ပြီး၊ မဟုတ်ပါက <code>make-primitive-exp</code> သို့ ပေးပို့ပါသည်။ (အောက်တွင် ဖော်ပြထားသော) ဤလုပ်ငန်းစဉ်များသည် value expression ကို parse လုပ်ပြီး တန်ဖိုးအတွက် execution procedure တစ်ခုကို ထုတ်လုပ်ပေးပါသည်။ ၎င်းသည် <code>value-proc</code> ဟုခေါ်သော argument မပါသည့် လုပ်ငန်းစဉ်တစ်ခုဖြစ်ပြီး၊ simulation ပြုလုပ်နေစဉ်အတွင်း register ထံသို့ သတ်မှတ်ပေးမည့် အမှန်တကယ်တန်ဖိုးကို ထုတ်လုပ်ရန် တွက်ချက်မည်ဖြစ်ပါသည်။ register အမည်ကို ရှာဖွေခြင်းနှင့် value expression ကို parse လုပ်ခြင်းတို့ကို instruction ကို simulation လုပ်တိုင်းတွင် မဟုတ်ဘဲ assembly time တွင် တစ်ကြိမ်သာ လုပ်ဆောင်ခြင်းဖြစ်သည်ကို သတိပြုပါ။ ဤသို့ အလုပ်သက်သာခြင်းသည် ကျွန်ုပ်တို့ execution procedures များကို အသုံးပြုရခြင်း၏ အကြောင်းရင်းဖြစ်ပြီး၊ <a href="4_002e1.html#g_t4_002e1_002e7">4.1.7</a> ရှိ evaluator တွင် program analysis နှင့် execution ကို သီးခြားခွဲထုတ်ခြင်းဖြင့် ရရှိခဲ့သော အလုပ်သက်သာမှုနှင့် တိုက်ရိုက်သက်ဆိုင်ပါသည်။
+</p>
+<p><code>make-assign</code> မှ ပြန်ပေးသော ရလဒ်မှာ <code>assign</code> instruction အတွက် execution procedure ဖြစ်ပါသည်။ ဤလုပ်ငန်းစဉ်ကို ခေါ်ယူသောအခါ (machine model ၏ <code>execute</code> လုပ်ငန်းစဉ်မှ ခေါ်ယူခြင်းဖြစ်သည်)၊ ၎င်းသည် target register ၏ အကြောင်းအရာကို <code>value-proc</code> ကို execution လုပ်ခြင်းဖြင့် ရရှိလာသော ရလဒ်သို့ သတ်မှတ်ပေးပါသည်။ ထို့နောက် ၎င်းသည် အောက်ပါလုပ်ငန်းစဉ်ကို လုပ်ဆောင်ခြင်းဖြင့် <code>pc</code> ကို နောက်ထပ် instruction တစ်ခုသို့ တိုးမြှင့်ပေးပါသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">advance-pc pc</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">set-contents! pc </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> </span><span class="opn">(</span><span class="pln">get-contents pc</span><span class="clo">))))</span></pre></div>
+
+<p><code>Advance-pc</code> သည် <code>branch</code> နှင့် <code>goto</code> မှလွဲ၍ ကျန်ရှိသော instruction အားလုံးအတွက် ပုံမှန် အဆုံးသတ်ခြင်း ဖြစ်ပါသည်။
+</p>
+<a id="Test_002c-branch_002c-and-goto-instructions"></a>
+<h5 class="subsubheading"><code>Test</code>၊ <code>branch</code> နှင့် <code>goto</code> instruction များ</h5>
+
+<p><code>Make-test</code> သည် <code>test</code> instruction များကို အလားတူပင် ကိုင်တွယ်ပါသည်။ ၎င်းသည် စမ်းသပ်ရမည့် အခြေအနေ (condition) ကို သတ်မှတ်ပေးသည့် expression ကို ထုတ်ယူပြီး ၎င်းအတွက် execution procedure တစ်ခုကို ထုတ်လုပ်ပေးပါသည်။ simulation အချိန်တွင် ထို condition အတွက် လုပ်ငန်းစဉ်ကို ခေါ်ယူပြီး၊ ရလဒ်ကို <code>flag</code> register သို့ သတ်မှတ်ကာ <code>pc</code> ကို တိုးမြှင့်ပေးပါသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> 
+  </span><span class="opn">(</span><span class="pln">make-test 
+   inst machine labels operations flag pc</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">condition </span><span class="opn">(</span><span class="pln">test-condition inst</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">operation-exp? condition</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">condition-proc
+               </span><span class="opn">(</span><span class="pln">make-operation-exp
+                condition 
+                machine
+                labels
+                operations</span><span class="clo">)))</span><span class="pln">
+          </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln"> 
+            </span><span class="opn">(</span><span class="pln">set-contents! 
+             flag </span><span class="opn">(</span><span class="pln">condition-proc</span><span class="clo">))</span><span class="pln">
+            </span><span class="opn">(</span><span class="pln">advance-pc pc</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Bad TEST instruction: 
+                ASSEMBLE"</span><span class="pln"> inst</span><span class="clo">))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">test-condition test-instruction</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> test-instruction</span><span class="clo">))</span></pre></div>
+
+<p><code>branch</code> instruction အတွက် execution procedure သည် <code>flag</code> register ၏ အကြောင်းအရာကို စစ်ဆေးပြီး <code>pc</code> ၏ အကြောင်းအရာကို branch destination သို့ သတ်မှတ်ပေးခြင်း (branch သို့ သွားရန်ဖြစ်ပါက) သို့မဟုတ် <code>pc</code> ကို တိုးမြှင့်ပေးခြင်း (branch သို့ မသွားပါက) ကို လုပ်ဆောင်ပါသည်။ <code>branch</code> instruction တွင် ဖော်ပြထားသော destination သည် label တစ်ခု ဖြစ်ရမည်ဖြစ်ပြီး <code>make-branch</code> လုပ်ငန်းစဉ်က ၎င်းကို အတင်းအကျပ် သတ်မှတ်ထားသည်ကို သတိပြုပါ။ ထို့အပြင် label ကို <code>branch</code> instruction ကို simulation လုပ်တိုင်းတွင် မဟုတ်ဘဲ assembly time တွင် ရှာဖွေထားခြင်းဖြစ်သည်ကိုလည်း သတိပြုပါ။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> 
+  </span><span class="opn">(</span><span class="pln">make-branch 
+   inst machine labels flag pc</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">dest </span><span class="opn">(</span><span class="pln">branch-dest inst</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">label-exp? dest</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">insts
+               </span><span class="opn">(</span><span class="pln">lookup-label 
+                labels 
+                </span><span class="opn">(</span><span class="pln">label-exp-label dest</span><span class="clo">))))</span><span class="pln">
+          </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln">
+            </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">get-contents flag</span><span class="clo">)</span><span class="pln">
+                </span><span class="opn">(</span><span class="pln">set-contents! pc insts</span><span class="clo">)</span><span class="pln">
+                </span><span class="opn">(</span><span class="pln">advance-pc pc</span><span class="clo">))))</span><span class="pln">
+        </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Bad BRANCH instruction: 
+                ASSEMBLE"</span><span class="pln">
+               inst</span><span class="clo">))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">branch-dest branch-instruction</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cadr</span><span class="pln"> branch-instruction</span><span class="clo">))</span></pre></div>
+
+<p><code>goto</code> instruction သည် branch နှင့် ဆင်တူသော်လည်း၊ destination ကို label အဖြစ် သော်လည်းကောင်း၊ register အဖြစ် သော်လည်းကောင်း သတ်မှတ်နိုင်ပြီး စစ်ဆေးရန် condition မရှိခြင်းသာ ကွာခြားပါသည်။ <code>pc</code> ကို အမြဲတမ်း destination အသစ်သို့ သတ်မှတ်ပေးပါသည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-goto inst machine labels pc</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">dest </span><span class="opn">(</span><span class="pln">goto-dest inst</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pln">label-exp? dest</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">insts
+                  </span><span class="opn">(</span><span class="pln">lookup-label 
+                   labels
+                   </span><span class="opn">(</span><span class="pln">label-exp-label dest</span><span class="clo">))))</span><span class="pln">
+             </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln"> 
+               </span><span class="opn">(</span><span class="pln">set-contents! pc insts</span><span class="clo">))))</span><span class="pln">
+          </span><span class="opn">((</span><span class="pln">register-exp? dest</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">reg
+                  </span><span class="opn">(</span><span class="pln">get-register 
+                   machine
+                   </span><span class="opn">(</span><span class="pln">register-exp-reg dest</span><span class="clo">))))</span><span class="pln">
+             </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln">
+               </span><span class="opn">(</span><span class="pln">set-contents! 
+                pc
+                </span><span class="opn">(</span><span class="pln">get-contents reg</span><span class="clo">)))))</span><span class="pln">
+          </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Bad GOTO instruction: 
+                        ASSEMBLE"</span><span class="pln">
+                       inst</span><span class="clo">)))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">goto-dest goto-instruction</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cadr</span><span class="pln"> goto-instruction</span><span class="clo">))</span></pre></div>
+
+<a id="Other-instructions"></a>
+<h5 class="subsubheading">အခြား instruction များ</h5>
+
+<p>Stack instruction များဖြစ်သော <code>save</code> နှင့် <code>restore</code> တို့သည် သတ်မှတ်ထားသော register နှင့်အတူ stack ကို ရိုးရှင်းစွာ အသုံးပြုပြီး <code>pc</code> ကို ရှေ့တိုးစေသည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-save inst machine stack pc</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">reg </span><span class="opn">(</span><span class="pln">get-register 
+              machine
+              </span><span class="opn">(</span><span class="pln">stack-inst-reg-name inst</span><span class="clo">))))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">push stack </span><span class="opn">(</span><span class="pln">get-contents reg</span><span class="clo">))</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">advance-pc pc</span><span class="clo">))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-restore inst machine stack pc</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">reg </span><span class="opn">(</span><span class="pln">get-register
+              machine
+              </span><span class="opn">(</span><span class="pln">stack-inst-reg-name inst</span><span class="clo">))))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">set-contents! reg </span><span class="opn">(</span><span class="pln">pop stack</span><span class="clo">))</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">advance-pc pc</span><span class="clo">))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">stack-inst-reg-name 
+         stack-instruction</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cadr</span><span class="pln"> stack-instruction</span><span class="clo">))</span></pre></div>
+
+<p>နောက်ဆုံး instruction အမျိုးအစားမှာ <code>make-perform</code> မှ ကိုင်တွယ်ဆောင်ရွက်ပေးပြီး ဆောင်ရွက်ရမည့် action အတွက် execution procedure တစ်ခုကို ထုတ်ပေးသည်။ Simulation ပြုလုပ်ချိန်တွင် action procedure ကို execute လုပ်ပြီး <code>pc</code> ကို ရှေ့တိုးစေသည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-perform 
+         inst machine labels operations pc</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">action </span><span class="opn">(</span><span class="pln">perform-action inst</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">operation-exp? action</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">action-proc
+               </span><span class="opn">(</span><span class="pln">make-operation-exp
+                action
+                machine
+                labels
+                operations</span><span class="clo">)))</span><span class="pln">
+          </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln">
+            </span><span class="opn">(</span><span class="pln">action-proc</span><span class="clo">)</span><span class="pln">
+            </span><span class="opn">(</span><span class="pln">advance-pc pc</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Bad PERFORM instruction: 
+                ASSEMBLE"</span><span class="pln">
+               inst</span><span class="clo">))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">perform-action inst</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> inst</span><span class="clo">))</span></pre></div>
+
+<a id="Execution-procedures-for-subexpressions"></a>
+<h5 class="subsubheading">Subexpression များအတွက် Execution procedure များ</h5>
+
+<p><code>reg</code>၊ <code>label</code> သို့မဟုတ် <code>const</code> expression တစ်ခု၏ တန်ဖိုးကို register တစ်ခုသို့ assign လုပ်ရန် (<code>make-assign</code>) သို့မဟုတ် operation တစ်ခုအတွက် input အဖြစ် (အောက်တွင် ဖော်ပြထားသော <code>make-operation-exp</code>) လိုအပ်နိုင်သည်။ အောက်ပါ procedure သည် simulation ပြုလုပ်နေစဉ်အတွင်း ဤ expression များအတွက် တန်ဖိုးများ ထုတ်ပေးရန် execution procedure များကို ထုတ်ပေးသည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-primitive-exp exp machine labels</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pln">constant-exp? exp</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">c </span><span class="opn">(</span><span class="pln">constant-exp-value exp</span><span class="clo">)))</span><span class="pln">
+           </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln"> c</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">((</span><span class="pln">label-exp? exp</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">insts
+                </span><span class="opn">(</span><span class="pln">lookup-label 
+                 labels
+                 </span><span class="opn">(</span><span class="pln">label-exp-label exp</span><span class="clo">))))</span><span class="pln">
+           </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln"> insts</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">((</span><span class="pln">register-exp? exp</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">r </span><span class="opn">(</span><span class="pln">get-register
+                   machine
+                   </span><span class="opn">(</span><span class="pln">register-exp-reg exp</span><span class="clo">))))</span><span class="pln">
+           </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">get-contents r</span><span class="clo">))))</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Unknown expression type: 
+                      ASSEMBLE"</span><span class="pln">
+                     exp</span><span class="clo">))))</span></pre></div>
+
+<p><code>reg</code>၊ <code>label</code> နှင့် <code>const</code> expression များ၏ syntax ကို အောက်ပါအတိုင်း သတ်မှတ်သည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">register-exp? exp</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">tagged-list? exp </span><span class="lit">'reg</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">register-exp-reg exp</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cadr</span><span class="pln"> exp</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">constant-exp? exp</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">tagged-list? exp </span><span class="lit">'const</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">constant-exp-value exp</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cadr</span><span class="pln"> exp</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">label-exp? exp</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">tagged-list? exp </span><span class="lit">'label</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">label-exp-label exp</span><span class="clo">)</span><span class="pln"> 
+  </span><span class="opn">(</span><span class="kwd">cadr</span><span class="pln"> exp</span><span class="clo">))</span></pre></div>
+
+<p><code>Assign</code>၊ <code>perform</code> နှင့် <code>test</code> instruction များတွင် machine operation တစ်ခု (<code>op</code> expression ဖြင့် သတ်မှတ်ထားသော) ကို operand အချို့ (<code>reg</code> နှင့် <code>const</code> expression များဖြင့် သတ်မှတ်ထားသော) အပေါ်သို့ apply လုပ်ခြင်း ပါဝင်နိုင်သည်။ အောက်ပါ procedure သည် “operation expression” — instruction မှ operation နှင့် operand expression များ ပါဝင်သော list တစ်ခုအတွက် execution procedure တစ်ခုကို ထုတ်ပေးသည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-operation-exp
+         exp machine labels operations</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">op </span><span class="opn">(</span><span class="pln">lookup-prim 
+             </span><span class="opn">(</span><span class="pln">operation-exp-op exp</span><span class="clo">)</span><span class="pln">
+             operations</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">aprocs
+         </span><span class="opn">(</span><span class="pln">map </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">e</span><span class="clo">)</span><span class="pln">
+                </span><span class="opn">(</span><span class="pln">make-primitive-exp 
+                 e machine labels</span><span class="clo">))</span><span class="pln">
+              </span><span class="opn">(</span><span class="pln">operation-exp-operands exp</span><span class="clo">))))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="op)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">apply op </span><span class="opn">(</span><span class="pln">map </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">p</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">p</span><span class="clo">))</span><span class="pln">
+                              aprocs</span><span class="clo">)))))</span></pre></div>
+
+<p>Operation expression များ၏ syntax ကို အောက်ပါအတိုင်း သတ်မှတ်သည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">operation-exp? exp</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">and</span><span class="pln"> </span><span class="opn">(</span><span class="pln">pair? exp</span><span class="clo">)</span><span class="pln">
+       </span><span class="opn">(</span><span class="pln">tagged-list? </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> exp</span><span class="clo">)</span><span class="pln"> </span><span class="lit">'op</span><span class="clo">)))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">operation-exp-op operation-exp</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cadr</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> operation-exp</span><span class="clo">)))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">operation-exp-operands operation-exp</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> operation-exp</span><span class="clo">))</span></pre></div>
+
+<p>Operation expression များကို ကိုင်တွယ်ပုံသည် <a href="4_002e1.html#g_t4_002e1_002e7">4.1.7</a> ရှိ evaluator မှ <code>analyze-application</code> procedure ၏ procedure application များ ကိုင်တွယ်ပုံနှင့် အလွန်ဆင်တူသည်ကို သတိပြုပါ။ အကြောင်းမှာ ကျွန်ုပ်တို့သည် operand တစ်ခုချင်းစီအတွက် execution procedure တစ်ခုကို ထုတ်ပေးသောကြောင့် ဖြစ်သည်။ Simulation ပြုလုပ်ချိန်တွင် operand procedure များကို ခေါ်ယူပြီး ရရှိလာသော တန်ဖိုးများအပေါ် operation ကို simulate လုပ်သည့် Scheme procedure ကို apply လုပ်သည်။ Simulation procedure ကို machine ၏ operation table ထဲတွင် operation အမည်ကို ရှာဖွေခြင်းဖြင့် တွေ့ရှိနိုင်သည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">lookup-prim symbol operations</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">val </span><span class="opn">(</span><span class="pln">assoc symbol operations</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> val
+        </span><span class="opn">(</span><span class="kwd">cadr</span><span class="pln"> val</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Unknown operation: ASSEMBLE"</span><span class="pln">
+               symbol</span><span class="clo">))))</span></pre></div>
+
+<blockquote>
+<p><strong><a id="Exercise-5_002e9"></a>လေ့ကျင့်ခန်း ၅.၉ -</strong> အထက်ပါ machine operation များကို ကိုင်တွယ်ပုံအရ ၎င်းတို့ကို constant များ၊ register များ၏ contents များသာမက label များအပေါ်တွင်လည်း အလုပ်လုပ်ခွင့် ပြုထားသည်။ Operation များကို register များ နှင့် constant များဖြင့်သာ အသုံးပြုနိုင်သည်ဟူသော အခြေအနေကို ကန့်သတ်ရန် expression-processing procedure များကို ပြင်ဆင်ပါ။
+</p></blockquote>
+<blockquote>
+<p><strong><a id="Exercise-5_002e10"></a>Exercise 5.10:</strong> register-machine instruction များအတွက် syntax အသစ်တစ်ခုကို ဒီဇိုင်းထုတ်ပြီး ၎င်း syntax အသစ်ကို အသုံးပြုရန် simulator ကို ပြုပြင်မွမ်းမံပါ။ ဤအပိုင်းရှိ syntax procedure များမှအပ simulator ၏ အခြားမည်သည့်အစိတ်အပိုင်းကိုမျှ မပြောင်းလဲဘဲ သင်၏ syntax အသစ်ကို အကောင်အထည်ဖော်နိုင်သလား?
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-5_002e11"></a>Exercise 5.11:</strong> ကျွန်ုပ်တို့သည် <a href="5_002e1.html#g_t5_002e1_002e4">5.1.4</a> တွင် <code>save</code> နှင့် <code>restore</code> တို့ကို စတင်မိတ်ဆက်စဉ်က၊ အောက်ပါ sequence တွင်ကဲ့သို့ နောက်ဆုံးသိမ်းဆည်းထားခြင်းမရှိသော register တစ်ခုကို restore လုပ်ရန် ကြိုးစားပါက မည်သို့ဖြစ်မည်ကို အတိအကျမဖော်ပြခဲ့ပေ။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">save y</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">save x</span><span class="clo">)</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">restore y</span><span class="clo">)</span></pre></div>
+
+<p><code>restore</code> ၏ အဓိပ္ပာယ်အတွက် ဖြစ်နိုင်ခြေရှိသော ယုတ္တိတန်သည့် အချက်များစွာရှိသည်-
+</p>
+<ol>
+<li> <code>(restore y)</code> သည် ထိုတန်ဖိုး မည်သည့် register မှ လာသည်ဖြစ်စေ stack ပေါ်တွင် နောက်ဆုံးသိမ်းဆည်းခဲ့သော တန်ဖိုးကို <code>y</code> ထဲသို့ ထည့်ပေးသည်။ ၎င်းသည် ကျွန်ုပ်တို့ simulator ၏ လုပ်ဆောင်ပုံဖြစ်သည်။ ဤလုပ်ဆောင်ပုံကို အခွင့်ကောင်းယူ၍ <a href="5_002e1.html#g_t5_002e1_002e4">5.1.4</a> (<a href="5_002e1.html#Figure-5_002e12">Figure 5.12</a>) ရှိ Fibonacci machine မှ instruction တစ်ခုကို မည်သို့ဖယ်ရှားနိုင်ကြောင်း ပြသပါ။
+
+</li><li> <code>(restore y)</code> သည် stack ပေါ်တွင် နောက်ဆုံးသိမ်းဆည်းခဲ့သော တန်ဖိုးကို <code>y</code> ထဲသို့ ထည့်ပေးသည်၊ သို့သော် ထိုတန်ဖိုးသည် <code>y</code> မှ သိမ်းဆည်းခဲ့ခြင်းဖြစ်မှသာ ဖြစ်သည်။ သို့မဟုတ်ပါက error ဟု အချက်ပြမည်ဖြစ်သည်။ ဤသို့လုပ်ဆောင်ရန် simulator ကို ပြုပြင်မွမ်းမံပါ။ တန်ဖိုးနှင့်အတူ register အမည်ကိုပါ stack ပေါ်သို့တင်ရန် <code>save</code> ကို သင်ပြောင်းလဲရပါလိမ့်မည်။
+
+</li><li> <code>(restore y)</code> သည် <code>y</code> နောက်ပိုင်းတွင် အခြားမည်သည့် register များကို သိမ်းဆည်းခဲ့ပြီး restore မလုပ်သေးသည်ဖြစ်စေ <code>y</code> မှ နောက်ဆုံးသိမ်းဆည်းခဲ့သော တန်ဖိုးကို <code>y</code> ထဲသို့ ထည့်ပေးသည်။ ဤသို့လုပ်ဆောင်ရန် simulator ကို ပြုပြင်မွမ်းမံပါ။ Register တစ်ခုချင်းစီအတွက် သီးခြား stack တစ်ခုစီ ထားရှိရပါမည်။ <code>initialize-stack</code> operation သည် register stack များအားလုံးကို initialize လုပ်ပေးရန် သင်ဆောင်ရွက်သင့်သည်။
+
+</li></ol>
+</blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-5_002e12"></a>Exercise 5.12:</strong> ပေးထားသော controller တစ်ခုဖြင့် machine တစ်ခုကို အကောင်အထည်ဖော်ရန် လိုအပ်သော data path များကို ဆုံးဖြတ်ရာတွင် simulator ကို အသုံးပြုနိုင်သည်။ အောက်ပါအချက်အလက်များကို machine model တွင် သိမ်းဆည်းရန် assembler ကို တိုးချဲ့ပါ-
+</p>
+<ul>
+<li> instruction အမျိုးအစားအလိုက် (<code>assign</code>၊ <code>goto</code> စသည်ဖြင့်) စီထားသော၊ ထပ်နေသည်များကို ဖယ်ရှားထားသည့် instruction အားလုံး၏ list တစ်ခု၊
+
+</li><li> entry point များကို သိမ်းဆည်းရန် အသုံးပြုသော register များ၏ (ထပ်နေခြင်းမရှိသော) list တစ်ခု (၎င်းတို့သည် <code>goto</code> instruction များမှ ညွှန်းဆိုထားသော register များ ဖြစ်သည်)၊
+
+</li><li> <code>save</code> သို့မဟုတ် <code>restore</code> လုပ်ထားသော register များ၏ (ထပ်နေခြင်းမရှိသော) list တစ်ခု၊
+
+</li><li> register တစ်ခုချင်းစီအတွက် ၎င်းကို assign လုပ်ထားသော source များ၏ (ထပ်နေခြင်းမရှိသော) list တစ်ခု (ဥပမာအားဖြင့် <a href="5_002e1.html#Figure-5_002e11">Figure 5.11</a> ရှိ factorial machine မှ <code>val</code> register အတွက် source များမှာ <code>(const 1)</code> နှင့် <code>((op *) (reg n) (reg val))</code> တို့ ဖြစ်ကြသည်)။
+
+</li></ul>
+
+<p>ဤအချက်အလက်အသစ်များကို ရယူနိုင်ရန် machine ၏ message-passing interface ကို တိုးချဲ့ပါ။ သင်၏ analyzer ကို စမ်းသပ်ရန် <a href="5_002e1.html#Figure-5_002e12">Figure 5.12</a> မှ Fibonacci machine ကို သတ်မှတ်ပြီး သင်တည်ဆောက်ထားသော list များကို စစ်ဆေးကြည့်ပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-5_002e13"></a>Exercise 5.13:</strong> <code>make-machine</code> သို့ argument အဖြစ် register list တစ်ခု ပေးရန် လိုအပ်မည့်အစား၊ machine တွင် မည်သည့် register များ ရှိသည်ကို ဆုံးဖြတ်ရန် controller sequence ကို အသုံးပြုရန် simulator ကို ပြုပြင်မွမ်းမံပါ။ <code>make-machine</code> တွင် register များကို ကြိုတင်သတ်မှတ်ထားမည့်အစား instruction များကို assembly လုပ်နေစဉ်အတွင်း ၎င်းတို့ကို ပထမဆုံးတွေ့ရှိသည့်အခါမှ တစ်ခုချင်းစီ သတ်မှတ်ပေးနိုင်သည်။
+</p></blockquote>
+
+<a id="g_t5_002e2_002e4"></a>
+<a id="Monitoring-Machine-Performance"></a>
+<h4 class="subsection"><span class="secnum">5.2.4</span><span class="sectitle">စက်၏ စွမ်းဆောင်ရည်ကို စောင့်ကြည့်စစ်ဆေးခြင်း (Monitoring Machine Performance)</span></h4>
+
+<p>Simulation သည် အဆိုပြုထားသော စက်ဒီဇိုင်းတစ်ခု၏ မှန်ကန်မှုကို စစ်ဆေးရန်အတွက်သာမက စက်၏ စွမ်းဆောင်ရည်ကို တိုင်းတာရန်အတွက်လည်း အသုံးဝင်ပါသည်။ ဥပမာအားဖြင့်၊ တွက်ချက်မှုတစ်ခုတွင် အသုံးပြုသည့် stack လုပ်ဆောင်ချက်အရေအတွက်ကို တိုင်းတာသည့် “မီတာ” တစ်ခုကို ကျွန်ုပ်တို့၏ simulation ပရိုဂရမ်တွင် ထည့်သွင်းနိုင်သည်။ ဤသို့လုပ်ဆောင်ရန်အတွက်၊ registers များကို stack ပေါ်တွင် သိမ်းဆည်းသည့် အကြိမ်အရေအတွက်နှင့် stack ၏ အမြင့်ဆုံးရောက်ရှိသွားသော အနက် (maximum depth) တို့ကို မှတ်သားထားနိုင်ရန် ကျွန်ုပ်တို့၏ simulated stack ကို ပြင်ဆင်ပြီး၊ အောက်တွင် ဖော်ပြထားသည့်အတိုင်း စာရင်းအင်းအချက်အလက်များကို ပုံနှိပ်ထုတ်ပေးသည့် message တစ်ခုကို stack ၏ interface တွင် ထည့်သွင်းပါမည်။ ထို့အပြင် <code>make-new-machine</code> ရှိ <code>the-ops</code> ကို အောက်ပါအတိုင်း အစပြု (initialize) ပေးခြင်းဖြင့် stack ၏ စာရင်းအင်းအချက်အလက်များကို ပုံနှိပ်ထုတ်ပေးရန် basic machine model တွင် operation တစ်ခုကို ထည့်သွင်းပါမည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">list </span><span class="opn">(</span><span class="pln">list </span><span class="lit">'initialize-stack</span><span class="pln">
+            </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln"> 
+              </span><span class="opn">(</span><span class="pln">stack </span><span class="lit">'initialize</span><span class="clo">)))</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">list </span><span class="lit">'print-stack-statistics</span><span class="pln">
+            </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="clo">)</span><span class="pln"> 
+              </span><span class="opn">(</span><span class="pln">stack </span><span class="lit">'print-statistics</span><span class="clo">))))</span></pre></div>
+
+<p>ဤသည်မှာ <code>make-stack</code> ၏ ဗားရှင်းအသစ် ဖြစ်သည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-stack</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">s </span><span class="lit">'</span><span class="opn">(</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">number-pushes </span><span class="lit">0</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">max-depth </span><span class="lit">0</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">current-depth </span><span class="lit">0</span><span class="clo">))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">push x</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> s </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> x s</span><span class="clo">))</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> number-pushes </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> number-pushes</span><span class="clo">))</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> current-depth </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> current-depth</span><span class="clo">))</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> max-depth 
+            </span><span class="opn">(</span><span class="pln">max current-depth max-depth</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">pop</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">null? s</span><span class="clo">)</span><span class="pln">
+          </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Empty stack: POP"</span><span class="clo">)</span><span class="pln">
+          </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">top </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> s</span><span class="clo">)))</span><span class="pln">
+            </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> s </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> s</span><span class="clo">))</span><span class="pln">
+            </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> current-depth
+                  </span><span class="opn">(</span><span class="pun">-</span><span class="pln"> current-depth </span><span class="lit">1</span><span class="clo">))</span><span class="pln">
+            top</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">initialize</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> s </span><span class="lit">'</span><span class="opn">(</span><span class="clo">))</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> number-pushes </span><span class="lit">0</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> max-depth </span><span class="lit">0</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">set</span><span class="pun">!</span><span class="pln"> current-depth </span><span class="lit">0</span><span class="clo">)</span><span class="pln">
+      </span><span class="lit">'done</span><span class="clo">)</span><span class="pln">
+
+    </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">print-statistics</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">newline</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">display </span><span class="opn">(</span><span class="pln">list </span><span class="lit">'total-pushes</span><span class="pln"> 
+                     </span><span class="lit">'</span><span class="pun">=</span><span class="pln"> 
+                     number-pushes
+                     </span><span class="lit">'maximum-depth</span><span class="pln">
+                     </span><span class="lit">'</span><span class="pun">=</span><span class="pln">
+                     max-depth</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">dispatch message</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> message </span><span class="lit">'push</span><span class="clo">)</span><span class="pln"> push</span><span class="clo">)</span><span class="pln">
+            </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> message </span><span class="lit">'pop</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">pop</span><span class="clo">))</span><span class="pln">
+            </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> message </span><span class="lit">'initialize</span><span class="clo">)</span><span class="pln">
+             </span><span class="opn">(</span><span class="pln">initialize</span><span class="clo">))</span><span class="pln">
+            </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> message </span><span class="lit">'print-statistics</span><span class="clo">)</span><span class="pln">
+             </span><span class="opn">(</span><span class="pln">print-statistics</span><span class="clo">))</span><span class="pln">
+            </span><span class="opn">(</span><span class="kwd">else</span><span class="pln">
+             </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Unknown request: STACK"</span><span class="pln">
+                    message</span><span class="clo">))))</span><span class="pln">
+    dispatch</span><span class="clo">))</span></pre></div>
+
+<p><a href="#Exercise-5_002e15">လေ့ကျင့်ခန်း ၅.၁၅</a> မှ <a href="#Exercise-5_002e19">လေ့ကျင့်ခန်း ၅.၁၉</a> အထိတွင် register-machine simulator ၌ ထည့်သွင်းနိုင်သည့် အခြားအသုံးဝင်သော စောင့်ကြည့်စစ်ဆေးခြင်းနှင့် အမှားရှာပြင်ခြင်း (monitoring and debugging) လုပ်ဆောင်ချက်များကို ဖော်ပြထားပါသည်။
+</p>
+<blockquote>
+<p><strong><a id="Exercise-5_002e14"></a>လေ့ကျင့်ခန်း ၅.၁၄:</strong> <a href="5_002e1.html#Figure-5_002e11">ပုံ ၅.၁၁</a> တွင် ပြထားသော factorial စက်ကို အသုံးပြု၍ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ၏ တန်ဖိုးအနည်းငယ် အမျိုးမျိုးအတွက် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <mo>!</mo>
+  </mrow>
+</math> ကို တွက်ချက်ရန် လိုအပ်သော push အရေအတွက်နှင့် အမြင့်ဆုံး stack depth ကို တိုင်းတာပါ။ သင်ရရှိသော အချက်အလက်များမှတစ်ဆင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <mo>&gt;</mo>
+    <mn>1</mn>
+  </mrow>
+</math> ဖြစ်သော မည်သည့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+  </mrow>
+</math> အတွက်မဆို <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <mo>!</mo>
+  </mrow>
+</math> ကို တွက်ချက်ရာတွင် အသုံးပြုသည့် စုစုပေါင်း push လုပ်ဆောင်ချက်အရေအတွက်နှင့် အမြင့်ဆုံး stack depth တို့အတွက် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ကို အခြေခံသော ဖော်မြူလာများကို ဖော်ထုတ်ပါ။ ၎င်းတို့ တစ်ခုစီသည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> ၏ linear function များ ဖြစ်ကြသဖြင့် ကိန်းသေ (constants) နှစ်ခုဖြင့် သတ်မှတ်နိုင်ကြောင်း သတိပြုပါ။ စာရင်းအင်းအချက်အလက်များကို ပုံနှိပ်ထုတ်ယူနိုင်ရန်အတွက် factorial စက်တွင် stack ကို အစပြုရန်နှင့် စာရင်းအင်းများကို ပုံနှိပ်ရန် ညွှန်ကြားချက်များ (instructions) ကို ထပ်မံဖြည့်စွက်ရပါမည်။ (<a href="5_002e1.html#Figure-5_002e4">ပုံ ၅.၄</a> ရှိ <abbr>GCD</abbr> စက်တွင် လုပ်ဆောင်ခဲ့သလိုပင်) <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>n</mi>
+</math> အတွက် တန်ဖိုးကို ထပ်တလဲလဲ ဖတ်ယူခြင်း၊ factorial ကို တွက်ချက်ခြင်းနှင့် ရလဒ်ကို ပုံနှိပ်ခြင်းတို့ ပြုလုပ်နိုင်ရန် စက်ကို ပြင်ဆင်လိုပေမည်။ သို့မှသာ <code>get-register-contents</code>၊ <code>set-register-contents!</code> နှင့် <code>start</code> တို့ကို ထပ်တလဲလဲ ခေါ်ယူရန် မလိုတော့မည် ဖြစ်သည်။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-5_002e15"></a>လေ့ကျင့်ခန်း ၅.၁၅:</strong> <a id="index-instruction-counting"></a>
+register machine simulation တွင် <em>instruction counting</em> ကို ထည့်သွင်းပါ။ ဆိုလိုသည်မှာ machine model သည် လုပ်ဆောင်ပြီးခဲ့သော ညွှန်ကြားချက် (instructions) အရေအတွက်ကို မှတ်သားထားစေရမည်။ Instruction count တန်ဖိုးကို ပုံနှိပ်ပြီး count ကို သုညသို့ ပြန်လည်သတ်မှတ် (reset) ပေးမည့် message အသစ်တစ်ခုကို လက်ခံနိုင်ရန် machine model ၏ interface ကို တိုးချဲ့ပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-5_002e16"></a>လေ့ကျင့်ခန်း ၅.၁၆:</strong> <em>instruction tracing</em> ပြုလုပ်နိုင်ရန် simulator ကို အဆင့်မြှင့်တင်ပါ။ ဆိုလိုသည်မှာ ညွှန်ကြားချက်တစ်ခုစီကို မလုပ်ဆောင်မီ simulator သည် ထိုညွှန်ကြားချက်၏ စာသားကို ပုံနှိပ်ဖော်ပြရမည်။ Tracing ကို အဖွင့်အပိတ် ပြုလုပ်နိုင်ရန် <code>trace-on</code> နှင့် <code>trace-off</code> message များကို machine model က လက်ခံနိုင်အောင် ပြုလုပ်ပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-5_002e17"></a>လေ့ကျင့်ခန်း ၅.၁၇:</strong> <a href="#Exercise-5_002e16">လေ့ကျင့်ခန်း ၅.၁၆</a> ၏ instruction tracing ကို တိုးချဲ့ပါ။ သို့မှသာ ညွှန်ကြားချက်တစ်ခုကို မပုံနှိပ်မီ simulator သည် controller sequence တွင် ထိုညွှန်ကြားချက်၏ အရှေ့တည့်တည့်၌ ရှိနေသော မည်သည့် labels များကိုမဆို ပုံနှိပ်ဖော်ပြမည် ဖြစ်သည်။ ဤသို့လုပ်ဆောင်ရာတွင် instruction counting (<a href="#Exercise-5_002e15">လေ့ကျင့်ခန်း ၅.၁၅</a>) ကို မထိခိုက်စေရန် သတိပြုပါ။ လိုအပ်သော label အချက်အလက်များကို သိမ်းဆည်းထားနိုင်ရန် simulator ကို ပြုပြင်ရပါမည်။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-5_002e18"></a>လေ့ကျင့်ခန်း ၅.၁၈:</strong> Registers များကို trace လုပ်နိုင်ရန် <a href="#g_t5_002e2_002e1">၅.၂.၁</a> ရှိ <code>make-register</code> procedure ကို ပြင်ဆင်ပါ။ Registers များသည် tracing အဖွင့်အပိတ်လုပ်ရန် message များကို လက်ခံနိုင်ရမည်။ Register တစ်ခုကို trace လုပ်ထားချိန်တွင် register ထံ တန်ဖိုးတစ်ခု သတ်မှတ်ပေးလိုက်ပါက register ၏ အမည်၊ register ၏ အကြောင်းအရာဟောင်းနှင့် အသစ်သတ်မှတ်လိုက်သော အကြောင်းအရာတို့ကို ပုံနှိပ်ဖော်ပြရမည်။ သတ်မှတ်ထားသော machine registers များအတွက် tracing ကို အဖွင့်အပိတ် လုပ်နိုင်ရန် machine model ၏ interface ကို တိုးချဲ့ပါ။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-5_002e19"></a>လေ့ကျင့်ခန်း ၅.၁၉:</strong> Alyssa P. Hacker သည် သူမ၏ စက်ဒီဇိုင်းများကို အမှားရှာပြင်ရာတွင် ကူညီရန် simulator ၌ <a id="index-breakpoint"></a>
+<em>breakpoint</em> လုပ်ဆောင်ချက်တစ်ခု ပါဝင်စေချင်သည်။ သူမအတွက် ဤလုပ်ဆောင်ချက်ကို ထည့်သွင်းပေးရန် သင့်ကို ငှားရမ်းထားသည်။ Controller sequence တွင် simulator ရပ်တန့်သွားပြီး စက်၏ အခြေအနေကို သူမအား စစ်ဆေးခွင့်ပြုမည့် နေရာတစ်ခုကို သတ်မှတ်နိုင်ရန် သူမ အလိုရှိသည်။ သင်သည် အောက်ပါ procedure ကို ရေးသားရမည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">set-breakpoint ⟨</span><var><span class="pln">machine</span></var><span class="pln">⟩ ⟨</span><var><span class="pln">label</span></var><span class="pln">⟩ ⟨</span><var><span class="pln">n</span></var><span class="pln">⟩</span><span class="clo">)</span></pre></div>
+
+<p>၎င်းသည် ပေးထားသော label ၏ နောက်တွင် ရှိသော <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mi>n</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mtext>th</mtext>
+    </mrow>
+  </msup>
+</math> မြောက် ညွှန်ကြားချက်၏ အရှေ့တည့်တည့်၌ breakpoint တစ်ခုကို သတ်မှတ်ပေးသည်။ ဥပမာအားဖြင့် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">set-breakpoint gcd-machine </span><span class="lit">'test-b</span><span class="pln"> </span><span class="lit">4</span><span class="clo">)</span></pre></div>
+
+<p>၎င်းသည် <code>gcd-machine</code> ရှိ register <code>a</code> ထံ တန်ဖိုးသတ်မှတ်ခြင်း (assignment) မပြုလုပ်မီလေးတွင် breakpoint တစ်ခုကို ထည့်သွင်းပေးသည်။ Simulator သည် breakpoint သို့ ရောက်ရှိသောအခါ label နှင့် breakpoint ၏ offset ကို ပုံနှိပ်ဖော်ပြပြီး ညွှန်ကြားချက်များ လုပ်ဆောင်ခြင်းကို ရပ်တန့်ရမည်။ Alyssa သည် <code>get-register-contents</code> နှင့် <code>set-register-contents!</code> တို့ကို အသုံးပြု၍ simulated machine ၏ အခြေအနေကို စီမံခန့်ခွဲနိုင်သည်။ ထို့နောက် သူမသည် အောက်ပါအတိုင်း ပြောခြင်းဖြင့် လုပ်ဆောင်ချက်ကို ဆက်လက်လုပ်ဆောင်နိုင်ရမည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">proceed-machine ⟨</span><var><span class="pln">machine</span></var><span class="pln">⟩</span><span class="clo">)</span></pre></div>
+
+<p>သူမသည် သတ်မှတ်ထားသော breakpoint တစ်ခုကို အောက်ပါအတိုင်း ပြန်လည်ဖယ်ရှားနိုင်ရမည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">cancel-breakpoint ⟨</span><var><span class="pln">machine</span></var><span class="pln">⟩ ⟨</span><var><span class="pln">label</span></var><span class="pln">⟩ ⟨</span><var><span class="pln">n</span></var><span class="pln">⟩</span><span class="clo">)</span></pre></div>
+
+<p>သို့မဟုတ် breakpoint အားလုံးကို အောက်ပါအတိုင်း ပြန်လည်ဖယ်ရှားနိုင်ရမည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">cancel-all-breakpoints ⟨</span><var><span class="pln">machine</span></var><span class="pln">⟩</span><span class="clo">)</span></pre></div>
+</blockquote>
+
+<div class="footnote">
+<h4 class="footnotes-heading">အောက်ခြေမှတ်စုများ</h4>
+
+<div id="FOOT289"><p><a class="footnote_backlink" href="#DOCF289"><sup>289</sup></a>
+ဒီနေရာမှာ <code>receive</code> procedure ကို သုံးတာဟာ <code>extract-labels</code> ကို <code>labels</code> နဲ့
+<code>insts</code> ဆိုတဲ့ တန်ဖိုးနှစ်ခုကို သိမ်းဆည်းဖို့ compound data structure တစ်ခု အတိအလင်း မဖန်တီးဘဲ
+ထိရောက်စွာ ပြန်ပေးနိုင်အောင် လုပ်ဆောင်တဲ့ နည်းလမ်းတစ်ခု ဖြစ်ပါတယ်။ တန်ဖိုးအစုံကို အတိအလင်း ပြန်ပေးတဲ့ အခြား အကောင်အထည်ဖော်မှု တစ်ခုကတော့
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">extract-labels text</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">null? text</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="clo">)</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="clo">))</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">result 
+             </span><span class="opn">(</span><span class="pln">extract-labels </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> text</span><span class="clo">))))</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">insts </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> result</span><span class="clo">))</span><span class="pln">
+              </span><span class="opn">(</span><span class="pln">labels </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> result</span><span class="clo">)))</span><span class="pln">
+          </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">next-inst </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> text</span><span class="clo">)))</span><span class="pln">
+            </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">symbol? next-inst</span><span class="clo">)</span><span class="pln">
+                </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> 
+                 insts
+                 </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> 
+                  </span><span class="opn">(</span><span class="pln">make-label-entry 
+                   next-inst insts</span><span class="clo">)</span><span class="pln"> 
+                  labels</span><span class="clo">))</span><span class="pln">
+                </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> 
+                 </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> 
+                  </span><span class="opn">(</span><span class="pln">make-instruction next-inst</span><span class="clo">)</span><span class="pln"> 
+                  insts</span><span class="clo">)</span><span class="pln">
+                 labels</span><span class="clo">)))))))</span></pre></div>
+
+<p>၎င်းကို <code>assemble</code> က အောက်ပါအတိုင်း ခေါ်ယူမှာ ဖြစ်ပါတယ်:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">assemble controller-text machine</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">result 
+         </span><span class="opn">(</span><span class="pln">extract-labels controller-text</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">insts </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> result</span><span class="clo">))</span><span class="pln">
+          </span><span class="opn">(</span><span class="pln">labels </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> result</span><span class="clo">)))</span><span class="pln">
+      </span><span class="opn">(</span><span class="pln">update-insts! insts labels machine</span><span class="clo">)</span><span class="pln">
+      insts</span><span class="clo">)))</span></pre></div>
+
+<p>ကျွန်ုပ်တို့ <code>receive</code> ကို အသုံးပြုထားခြင်းကို တန်ဖိုးအများအပြား ပြန်ပေးတဲ့ သေသပ်တဲ့ နည်းလမ်းတစ်ခုကို ပြသခြင်းလို့ သော်လည်းကောင်း၊ သို့မဟုတ် programming trick တစ်ခုကို ပြသခြင်းလို့ သော်လည်းကောင်း ယူဆနိုင်ပါတယ်။ နောက်ထပ် ဆက်လက် ခေါ်ယူရမယ့် procedure တစ်ခု ဖြစ်တဲ့ <code>receive</code> ကဲ့သို့သော argument တစ်ခုကို “continuation” လို့ ခေါ်ပါတယ်။ အပိုင်း <a href="4_002e3.html#g_t4_002e3_002e3">4.3.3</a> ရှိ <code>amb</code> evaluator ထဲက backtracking control structure ကို အကောင်အထည်ဖော်ဖို့ continuation တွေကို အသုံးပြုခဲ့တာကို ပြန်ပြောင်း သတိရပါ။</p>
+</div>
+</div>
+<nav class="header">
+<p>
+Next: <a href="5_002e3.html#g_t5_002e3" accesskey="n" rel="next">5.3</a>, Prev: <a href="5_002e1.html#g_t5_002e1" accesskey="p" rel="prev">5.1</a>, Up: <a href="#g_t5_002e2" accesskey="u" rel="prev">5.2</a>   [<a href="index.html#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+
+
+</section><span class="bottom jump" title="Jump to bottom"><a href="#pagebottom" accesskey="b">⇣</a></span><a id="pagebottom"></a>
+</body>
+</html>

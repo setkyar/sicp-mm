@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="my" lang="my">
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>Structure and Interpretation of Computer Programs, 2e: 5.3</title>
+
+<meta name="description" content="Structure and Interpretation of Computer Programs, 2e: 5.3" />
+<meta name="keywords" content="Structure and Interpretation of Computer Programs, 2e: 5.3" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="Generator" content="texi2any" />
+<meta charset="utf-8" />
+<link href="index.html#Top" rel="start" title="Top" />
+<link href="Term-Index.html#Term-Index" rel="index" title="Term Index" />
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents" />
+<link href="Chapter-5.html#Chapter-5" rel="prev" title="Chapter 5" />
+<link href="5_002e4.html#g_t5_002e4" rel="next" title="5.4" />
+<link href="5_002e2.html#g_t5_002e2_002e4" rel="prev" title="5.2.4" />
+
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/prettify.css" rel="stylesheet" type="text/css" />
+
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/footnotes.js" type="text/javascript"></script>
+<script src="js/browsertest.js" type="text/javascript"></script>
+</head>
+
+<body>
+<section><span class="top jump" title="Jump to top"><a href="#pagetop" accesskey="t">⇡</a></span><a id="pagetop"></a><a id="g_t5_002e3"></a>
+<nav class="header">
+<p>
+Next: <a href="5_002e4.html#g_t5_002e4" accesskey="n" rel="next">5.4</a>, Prev: <a href="5_002e2.html#g_t5_002e2" accesskey="p" rel="prev">5.2</a>, Up: <a href="Chapter-5.html#Chapter-5" accesskey="u" rel="prev">Chapter 5</a>   [<a href="index.html#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+<a id="Storage-Allocation-and-Garbage-Collection"></a>
+<h3 class="section"><span class="secnum">5.3</span><span class="sectitle">သိမ်းဆည်းမှု နေရာချထားခြင်းနှင့် Garbage Collection</span></h3>
+
+<p>အပိုင်း <a href="5_002e4.html#g_t5_002e4">5.4</a> တွင် Scheme evaluator တစ်ခုကို register machine တစ်ခုအဖြစ် မည်သို့ အကောင်အထည်ဖော်ရမည်ကို ကျွန်ုပ်တို့ ပြသပါမည်။ ဆွေးနွေးမှုကို ရိုးရှင်းစေရန်အတွက် ကျွန်ုပ်တို့၏ register machine များတွင် <a id="index-list_002dstructured-memory"></a>
+<em>စာရင်းပုံစံ ဖွဲ့စည်းထားသော မှတ်ဉာဏ် (list-structured memory)</em> တစ်ခု ပါရှိသည်ဟု ယူဆပါမည်။ ယင်းမှတ်ဉာဏ်တွင် စာရင်းပုံစံ ဒေတာများကို ကိုင်တွယ်ဖြေရှင်းရန် အခြေခံ လုပ်ဆောင်ချက်များသည် primitive များ ဖြစ်ကြသည်။ ထိုကဲ့သို့သော မှတ်ဉာဏ်တစ်ခု ရှိသည်ဟု ယူဆခြင်းသည် Scheme interpreter တစ်ခု၏ ထိန်းချုပ်မှု လုပ်ငန်းစဉ်များအပေါ် အာရုံစိုက်နေချိန်တွင် အသုံးဝင်သော abstraction တစ်ခု ဖြစ်သော်လည်း၊ ၎င်းသည် ခေတ်ပေါ် ကွန်ပျူတာများ၏ အမှန်တကယ် ဖြစ်ပျက်နေသော အခြေခံ ဒေတာ လုပ်ဆောင်ချက်များကို ထင်ဟပ်ခြင်း မရှိပေ။ Lisp စနစ်တစ်ခု မည်သို့ အလုပ်လုပ်ပုံကို ပိုမို ပြည့်စုံစွာ နားလည်စေရန်အတွက်၊ list structure များကို သာမန် ကွန်ပျူတာ မှတ်ဉာဏ်များနှင့် ကိုက်ညီသော နည်းလမ်းဖြင့် မည်သို့ ဖော်ပြနိုင်သည်ကို ကျွန်ုပ်တို့ လေ့လာစုံစမ်းရမည် ဖြစ်သည်။
+</p>
+<p>list structure ကို အကောင်အထည်ဖော်ရာတွင် ထည့်သွင်းစဉ်းစားရမည့် အချက် နှစ်ချက် ရှိသည်။ ပထမအချက်မှာ ဖော်ပြခြင်း (representation) ဆိုင်ရာ ကိစ္စရပ်သက်သက် ဖြစ်သည်- သာမန် ကွန်ပျူတာ မှတ်ဉာဏ်များ၏ သိမ်းဆည်းနိုင်စွမ်းနှင့် လိပ်စာသတ်မှတ်နိုင်စွမ်း (addressing capabilities) များကိုသာ အသုံးပြု၍ Lisp pairs များ၏ “box-and-pointer” ဖွဲ့စည်းပုံကို မည်သို့ ဖော်ပြမည်နည်း ဟူသည့် အချက်ဖြစ်သည်။ ဒုတိယအချက်မှာ တွက်ချက်မှုများ လုပ်ဆောင်နေစဉ်အတွင်း မှတ်ဉာဏ်ကို စီမံခန့်ခွဲခြင်းနှင့် သက်ဆိုင်သည်။ Lisp စနစ်တစ်ခု၏ လုပ်ဆောင်ချက်သည် ဒေတာ အရာဝတ္ထု (data objects) အသစ်များကို အဆက်မပြတ် ဖန်တီးနိုင်စွမ်းပေါ်တွင် များစွာ မူတည်နေသည်။ ၎င်းတို့တွင် interpret လုပ်ခြင်း ခံနေရသည့် Lisp procedures များမှ တိုက်ရိုက် ဖန်တီးလိုက်သော အရာဝတ္ထုများသာမက environments နှင့် argument lists များကဲ့သို့ interpreter ကိုယ်တိုင်မှ ဖန်တီးသော တည်ဆောက်ပုံများလည်း ပါဝင်သည်။ ဒေတာ အရာဝတ္ထု အသစ်များကို အဆက်မပြတ် ဖန်တီးနေခြင်းသည် အကန့်အသတ်မရှိသော၊ လျင်မြန်စွာ အသုံးပြုနိုင်သော မှတ်ဉာဏ်ရှိသည့် ကွန်ပျူတာတစ်လုံးတွင် ပြဿနာ မရှိနိုင်သော်လည်း၊ ကွန်ပျူတာ မှတ်ဉာဏ်များသည် အကန့်အသတ်ရှိသော အရွယ်အစားဖြင့်သာ ရရှိနိုင်ပါသည် (စိတ်မကောင်းစရာပင်)။ ထို့ကြောင့် Lisp စနစ်များသည် အကန့်အသတ်မရှိသော မှတ်ဉာဏ်ရှိသည်ဟု ထင်ယောင်ထင်မှား ဖြစ်စေရန်အတွက် <a id="index-automatic-storage-allocation"></a>
+<em>အလိုအလျောက် သိမ်းဆည်းမှု နေရာချထားခြင်း (automatic storage allocation)</em> စနစ်ကို ထောက်ပံ့ပေးထားသည်။ ဒေတာ အရာဝတ္ထုတစ်ခုကို အသုံးမလိုတော့သည့် အခါတွင်၊ ၎င်းအတွက် ဖယ်ထားသော မှတ်ဉာဏ်ကို အလိုအလျောက် ပြန်လည် သိမ်းဆည်းပြီး ဒေတာ အရာဝတ္ထု အသစ်များ တည်ဆောက်ရန်အတွက် အသုံးပြုသည်။ ထိုကဲ့သို့သော အလိုအလျောက် သိမ်းဆည်းမှု နေရာချထားပေးခြင်းအတွက် နည်းလမ်း အမျိုးမျိုး ရှိသည်။ ဤအပိုင်းတွင် ကျွန်ုပ်တို့ ဆွေးနွေးမည့် နည်းလမ်းကို <a id="index-garbage-collection"></a>
+<em>garbage collection</em> ဟု ခေါ်ဆိုသည်။
+</p>
+<a id="g_t5_002e3_002e1"></a>
+<a id="Memory-as-Vectors"></a>
+<h4 class="subsection"><span class="secnum">5.3.1</span><span class="sectitle">ဗက်တာများအဖြစ် မှတ်ဉာဏ် (Memory as Vectors)</span></h4>
+
+<p>ရိုးရိုး ကွန်ပျူတာ မှတ်ဉာဏ် (memory) တစ်ခုကို သတင်းအချက်အလက် တစ်ခုစီ သိမ်းဆည်းထားနိုင်သည့် အခန်းငယ်များစွာ ပါဝင်သော array တစ်ခုအဖြစ် ယူဆနိုင်သည်။ အခန်းငယ် တစ်ခုစီတွင် သီးခြား အမည်တစ်ခုစီ ရှိပြီး ၎င်းကို <a id="index-address"></a>
+<em>address</em> သို့မဟုတ် <a id="index-location"></a>
+<em>location</em> ဟု ခေါ်သည်။ ပုံမှန် memory စနစ်များသည် အခြေခံ လုပ်ဆောင်ချက် နှစ်ခုကို ပံ့ပိုးပေးသည်- တစ်ခုမှာ သတ်မှတ်ထားသော တည်နေရာတွင် သိမ်းဆည်းထားသည့် ဒေတာကို ဆွဲထုတ်ယူခြင်း (fetch) ဖြစ်ပြီး နောက်တစ်ခုမှာ သတ်မှတ်ထားသော တည်နေရာတွင် ဒေတာ အသစ်တစ်ခုကို ထည့်သွင်း သတ်မှတ်ခြင်း (assign) ဖြစ်သည်။
+Memory address များကို အခန်းငယ်များ၏ အစုအဝေးတစ်ခုကို အစဉ်လိုက် အသုံးပြုနိုင်ရန် (sequential access) အတွက် တစ်ဆင့်ချင်း တိုးမြှင့်နိုင်သည်။ ပို၍ ယေဘုယျအားဖြင့် ဆိုရလျှင် အရေးကြီးသော ဒေတာ လုပ်ဆောင်ချက် အများအပြားသည် memory address များကို ဒေတာများသဖွယ် သဘောထားရန် လိုအပ်ပြီး ၎င်းတို့ကို memory တည်နေရာများတွင် သိမ်းဆည်းနိုင်ကာ machine register များတွင် ကိုင်တွယ် အသုံးပြုနိုင်သည်။ List structure ကို ကိုယ်စားပြု ဖော်ပြခြင်းသည် ထိုကဲ့သို့သော <a id="index-address-arithmetic"></a>
+<em>address arithmetic</em> ကို အသုံးပြုသည့် နယ်ပယ်တစ်ခု ဖြစ်သည်။
+</p>
+<p>ကွန်ပျူတာ memory ကို ပုံဖော်ရန်အတွက် ကျွန်ုပ်တို့သည် <a id="index-vector"></a>
+<em>vector</em> ဟုခေါ်သော ဒေတာ တည်ဆောက်ပုံ (data structure) အမျိုးအစားသစ် တစ်ခုကို အသုံးပြုသည်။ သဘောတရားအရ vector ဆိုသည်မှာ ၎င်း၏ အစိတ်အပိုင်း တစ်ခုချင်းစီကို index ကိန်းပြည့်တစ်ခု အသုံးပြု၍ index ပေါ်တွင် မူတည်ခြင်းမရှိသော အချိန်အတွင်း ဝင်ရောက်ကြည့်ရှုနိုင်သည့် ပေါင်းစပ် ဒေတာ အရာဝတ္ထု (compound data object) တစ်ခု ဖြစ်သည်။<a class="footnote_link" id="DOCF290" href="#FOOT290"><sup>290</sup></a> Memory လုပ်ဆောင်ချက်များကို ဖော်ပြရန်အတွက် ကျွန်ုပ်တို့သည် vector များကို ကိုင်တွယ်ရန် အခြေခံ Scheme procedure နှစ်ခုကို အသုံးပြုသည်-
+</p>
+<ul>
+<li> <code>(vector-ref ⟨<var>vector</var>⟩ ⟨<var>n</var>⟩)</code> သည် vector ၏ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mi>n</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mtext>ခုမြောက်</mtext>
+    </mrow>
+  </msup>
+</math>
+အစိတ်အပိုင်းကို ပြန်ပေးသည်။
+
+</li><li> <code>(vector-set! ⟨<var>vector</var>⟩ ⟨<var>n</var>⟩ ⟨<var>value</var>⟩)</code>
+သည် vector ၏ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mi>n</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mtext>ခုမြောက်</mtext>
+    </mrow>
+  </msup>
+</math> အစိတ်အပိုင်းကို သတ်မှတ်ထားသော တန်ဖိုးသို့ ပြောင်းလဲပေးသည်။
+
+</li></ul>
+
+<p>ဥပမာအားဖြင့် <code>v</code> သည် vector တစ်ခု ဖြစ်ပါက <code>(vector-ref v 5)</code> သည်
+vector <code>v</code> ၏ ပဉ္စမမြောက် အစိတ်အပိုင်းကို ရယူပြီး <code>(vector-set! v 5 7)</code> သည်
+vector <code>v</code> ၏ ပဉ္စမမြောက် အစိတ်အပိုင်း၏ တန်ဖိုးကို 7 သို့ ပြောင်းလဲပေးသည်။<a class="footnote_link" id="DOCF291" href="#FOOT291"><sup>291</sup></a> ကွန်ပျူတာ memory အတွက်မူ ဤကဲ့သို့ ဝင်ရောက်ကြည့်ရှုခြင်းကို memory ထဲရှိ vector ၏ အစ တည်နေရာကို သတ်မှတ်သည့် <a id="index-base-address"></a>
+<em>base address</em> နှင့် vector ၏ သီးခြား အစိတ်အပိုင်း တစ်ခု၏ offset ကို သတ်မှတ်သည့်
+<a id="index-index"></a>
+<em>index</em> တို့ကို လိပ်စာ သင်္ချာ (address arithmetic) အသုံးပြုကာ ပေါင်းစပ်ခြင်းဖြင့် အကောင်အထည်ဖော်နိုင်သည်။
+</p>
+<a id="Representing-Lisp-data"></a>
+<h5 class="subsubheading">Representing Lisp data</h5>
+
+<p>ကျွန်ုပ်တို့သည် list-structured memory အတွက် လိုအပ်သော အခြေခံ pair တည်ဆောက်ပုံများကို အကောင်အထည်ဖော်ရန် vector များကို အသုံးပြုနိုင်သည်။ ကွန်ပျူတာ memory ကို <code>the-cars</code> နှင့် <code>the-cdrs</code> ဟူသော vector နှစ်ခုအဖြစ် ပိုင်းခြားထားသည်ဟု မြင်ယောင်ကြည့်ပါ။ ကျွန်ုပ်တို့သည် list structure ကို အောက်ပါအတိုင်း ကိုယ်စားပြုပါမည်- pair တစ်ခုသို့ ညွှန်ပြသော ပွိုင်တာ (pointer) ဆိုသည်မှာ အဆိုပါ vector နှစ်ခုလုံး၏ index တစ်ခု ဖြစ်သည်။
+<code>car</code> သည် သတ်မှတ်ထားသော index ဖြင့် <code>the-cars</code> ထဲရှိ အစိတ်အပိုင်း ဖြစ်ပြီး၊ pair ၏ <code>cdr</code> သည် အဆိုပါ index ဖြင့်ပင် <code>the-cdrs</code> ထဲရှိ အစိတ်အပိုင်း ဖြစ်သည်။ ကျွန်ုပ်တို့သည် pair များ မဟုတ်သော အရာဝတ္ထုများ (ဥပမာ- ကိန်းဂဏန်းများနှင့် သင်္ကေတများ) အတွက် ကိုယ်စားပြုချက် တစ်ခုနှင့် ဒေတာ အမျိုးအစား တစ်ခုကို တစ်ခုနှင့်တစ်ခု ခွဲခြားရန် နည်းလမ်းတစ်ခုလည်း လိုအပ်ပါသည်။ ဤအရာကို လုပ်ဆောင်နိုင်သည့် နည်းလမ်းများစွာ ရှိသော်လည်း ၎င်းတို့အားလုံးသည် <a id="index-typed-pointers"></a>
+<em>typed pointers</em> များကို အသုံးပြုခြင်းသို့သာ ဦးတည်သွားပါသည်၊ ဆိုလိုသည်မှာ “pointer” ဆိုသည့် အယူအဆတွင် ဒေတာ အမျိုးအစားဆိုင်ရာ သတင်းအချက်အလက်များကိုပါ ထည့်သွင်း ချဲ့ထွင်ခြင်း ဖြစ်သည်။<a class="footnote_link" id="DOCF292" href="#FOOT292"><sup>292</sup></a> ဒေတာ အမျိုးအစားသည် pair တစ်ခုသို့ ညွှန်ပြသော ပွိုင်တာ (၎င်းတွင် “pair” ဒေတာ အမျိုးအစားနှင့် memory vector များထဲသို့ ညွှန်းဆိုသည့် index တစ်ခု ပါဝင်သည်) နှင့် အခြားသော ဒေတာ အမျိုးအစားများသို့ ညွှန်ပြသော ပွိုင်တာများ (၎င်းတို့တွင် အခြားသော ဒေတာ အမျိုးအစားနှင့် ထိုအမျိုးအစားကို ကိုယ်စားပြုရန် အသုံးပြုသည့် အရာတစ်ခုခု ပါဝင်သည်) ကို စနစ်က ခွဲခြားနိုင်စေသည်။ ဒေတာ အရာဝတ္ထု နှစ်ခု၏ ပွိုင်တာများသည် ထပ်တူညီနေပါက ၎င်းတို့ကို တူညီသည် (<code>eq?</code>) ဟု သတ်မှတ်သည်။<a class="footnote_link" id="DOCF293" href="#FOOT293"><sup>293</sup></a> 
+<a href="#Figure-5_002e14">Figure 5.14</a> တွင် list <code>((1 2) 3 4)</code> ကို ကိုယ်စားပြုရန် ဤနည်းလမ်းကို အသုံးပြုပုံနှင့် box-and-pointer diagram ကို ပြသထားသည်။ ဒေတာ အမျိုးအစား သတင်းအချက်အလက်ကို ဖော်ပြရန် အက္ခရာ ရှေ့ဆက် (letter prefix) များကို အသုံးပြုသည်။ ထို့ကြောင့် index 5 ရှိသော pair သို့ ညွှန်ပြသည့် ပွိုင်တာကို <code>p5</code> ဟု ဖော်ပြပြီး၊ လစ်ဟာနေသော list ကို pointer <code>e0</code> ဖြင့် လည်းကောင်း၊ ကိန်းဂဏန်း 4 သို့ ညွှန်ပြသည့် ပွိုင်တာကို <code>n4</code> ဟု လည်းကောင်း ဖော်ပြသည်။ Box-and-pointer diagram တွင် pair တစ်ခုစီ၏ <code>car</code> နှင့် <code>cdr</code> တို့ကို မည်သည့်နေရာတွင် သိမ်းဆည်းထားသည်ကို ဖော်ပြသည့် vector index ကို pair တစ်ခုစီ၏ ဘယ်ဘက် အောက်ခြေတွင် ဖော်ပြထားသည်။ <code>the-cars</code> နှင့် <code>the-cdrs</code> ရှိ လွတ်နေသော တည်နေရာများတွင် အခြားသော list structure များ၏ အစိတ်အပိုင်းများ ရှိနေနိုင်သည် (ဤနေရာတွင် ထည့်သွင်းစဉ်းစားရန် မလိုပါ)။
+</p>
+<figure class="float">
+<a id="Figure-5_002e14"></a>
+<object style="width: 53.44ex; height: 41.96ex;" data="fig/chap5/Fig5.14b.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>Figure 5.14:</strong> list <code>((1 2) 3 4)</code> ၏ Box-and-pointer နှင့် memory-vector ကိုယ်စားပြုချက်များ။</p>
+</figcaption>
+</figure>
+
+<p><code>n4</code> ကဲ့သို့သော ကိန်းဂဏန်း တစ်ခုသို့ ညွှန်ပြသည့် ပွိုင်တာတွင် ကိန်းဂဏန်း ဒေတာ ဖြစ်ကြောင်း ဖော်ပြသည့် အမျိုးအစားနှင့်အတူ ကိန်းဂဏန်း 4 ၏ အမှန်တကယ် ကိုယ်စားပြုချက်တို့ ပါဝင်နိုင်သည်။<a class="footnote_link" id="DOCF294" href="#FOOT294"><sup>294</sup></a> ပွိုင်တာ တစ်ခုအတွက် သတ်မှတ်ထားသော ကန့်သတ် နေရာလွတ်အတွင်း ကိုယ်စားမပြုနိုင်လောက်အောင် ကြီးမားသော ကိန်းဂဏန်းများအတွက်မူ <a id="index-bignum"></a>
+<em>bignum</em> ဟုခေါ်သော သီးခြား ဒေတာ အမျိုးအစား တစ်ခုကို အသုံးပြုနိုင်ပြီး၊ ထိုအခါ ပွိုင်တာသည် ကိန်းဂဏန်း၏ အစိတ်အပိုင်းများကို သိမ်းဆည်းထားသည့် list တစ်ခုကို ညွှန်ပြမည် ဖြစ်သည်။<a class="footnote_link" id="DOCF295" href="#FOOT295"><sup>295</sup></a>
+</p>
+<p>သင်္ကေတ (symbol) တစ်ခုကို symbol ၏ ပုံနှိပ် ဖော်ပြချက် ဖြစ်စေသည့် စာလုံး အစဉ်အတန်း တစ်ခုကို ညွှန်ပြသော typed pointer တစ်ခုအဖြစ် ကိုယ်စားပြုနိုင်သည်။ ဤစာလုံး အစဉ်အတန်းကို input တွင် character string အား စတင် တွေ့ရှိသည့်အခါ Lisp reader က တည်ဆောက်သည်။ Symbol တစ်ခု၏ ဖြစ်ရပ် (instance) နှစ်ခုကို <code>eq?</code> အသုံးပြု၍ “တူညီသော” symbol များအဖြစ် အသိအမှတ်ပြုစေလိုပြီး <code>eq?</code> ကို ပွိုင်တာများ တူညီမှု ရှိမရှိ စစ်ဆေးသည့် ရိုးရှင်းသော စမ်းသပ်ချက် တစ်ခုအဖြစ် အသုံးပြုလိုသောကြောင့်၊ reader သည် တူညီသော character string ကို နှစ်ကြိမ် တွေ့ရှိပါက ဖြစ်ရပ် နှစ်ခုလုံးအတွက် (တူညီသော စာလုံး အစဉ်အတန်းသို့ ညွှန်ပြသည့်) တူညီသော ပွိုင်တာကို အသုံးပြုရန် သေချာအောင် လုပ်ဆောင်ရမည်။ ဤအရာကို လုပ်ဆောင်နိုင်ရန် reader သည် ၎င်းတွေ့ရှိခဲ့ဖူးသမျှသော symbol အားလုံး၏ ဇယားတစ်ခုကို ထိန်းသိမ်းထားပြီး ၎င်းကို ထုံးစံအားဖြင့် <a id="index-obarray"></a>
+<em>obarray</em> ဟု ခေါ်သည်။ Reader သည် character string တစ်ခုကို တွေ့ရှိပြီး symbol တစ်ခု တည်ဆောက်တော့မည့်အခါ အဆိုပါ character string ကို ယခင်က တွေ့ရှိခဲ့ဖူးခြင်း ရှိမရှိ obarray တွင် စစ်ဆေးသည်။ မတွေ့ဖူးသေးပါက ၎င်းစာလုံးများကို အသုံးပြု၍ symbol အသစ်တစ်ခု (စာလုံး အစဉ်အတန်း အသစ်သို့ ညွှန်ပြသည့် typed pointer တစ်ခု) ကို တည်ဆောက်ပြီး ဤပွိုင်တာကို obarray ထဲသို့ ထည့်သွင်းသည်။ Reader သည် အဆိုပါ string ကို ယခင်က တွေ့ဖူးပြီးသား ဖြစ်ပါက obarray တွင် သိမ်းဆည်းထားသော symbol pointer ကို ပြန်ပေးသည်။ Character string များကို သီးခြား ပွိုင်တာများဖြင့် အစားထိုးသည့် ဤလုပ်ငန်းစဉ်ကို symbol များကို <a id="index-interning"></a>
+<em>interning</em> လုပ်ခြင်းဟု ခေါ်သည်။
+</p>
+<a id="Implementing-the-primitive-list-operations"></a>
+<h5 class="subsubheading">Implementing the primitive list operations</h5>
+
+<p>အထက်ဖော်ပြပါ ကိုယ်စားပြု နည်းစနစ်ကို အသုံးပြု၍ register machine တစ်ခု၏ “အခြေခံ” (primitive) list လုပ်ဆောင်ချက် တစ်ခုစီကို အခြေခံ vector လုပ်ဆောင်ချက် တစ်ခု သို့မဟုတ် တစ်ခုထက်ပိုသော လုပ်ဆောင်ချက်များဖြင့် အစားထိုးနိုင်သည်။ Memory vector များကို ခွဲခြားသတ်မှတ်ရန် <code>the-cars</code> နှင့် <code>the-cdrs</code> ဟူသော register နှစ်ခုကို အသုံးပြုမည်ဖြစ်ပြီး <code>vector-ref</code> နှင့် <code>vector-set!</code> တို့ကို အခြေခံ လုပ်ဆောင်ချက်များအဖြစ် အသုံးပြုနိုင်သည်ဟု ယူဆပါမည်။ ပွိုင်တာများပေါ်တွင် လုပ်ဆောင်သော ကိန်းဂဏန်း လုပ်ဆောင်ချက်များ (ဥပမာ- ပွိုင်တာတစ်ခုကို တိုးမြှင့်ခြင်း၊ vector တစ်ခုကို ညွှန်းဆိုရန် pair pointer ကို အသုံးပြုခြင်း သို့မဟုတ် ကိန်းဂဏန်း နှစ်ခုကို ပေါင်းခြင်း) သည် typed pointer ၏ index အစိတ်အပိုင်းကိုသာ အသုံးပြုသည်ဟုလည်း ယူဆပါမည်။
+</p>
+<p>ဥပမာအားဖြင့် ကျွန်ုပ်တို့သည် register machine တစ်ခုကို အောက်ပါ ညွှန်ကြားချက်များ (instructions) လုပ်ဆောင်နိုင်ရန် ဖန်တီးနိုင်သည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">assign ⟨</span><var><span class="pln">reg</span><span class="pun">₁</span></var><span class="pln">⟩ </span><span class="opn">(</span><span class="pln">op </span><span class="kwd">car</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg ⟨</span><var><span class="pln">reg</span><span class="pun">₂</span></var><span class="pln">⟩</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">assign ⟨</span><var><span class="pln">reg</span><span class="pun">₁</span></var><span class="pln">⟩ </span><span class="opn">(</span><span class="pln">op </span><span class="kwd">cdr</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg ⟨</span><var><span class="pln">reg</span><span class="pun">₂</span></var><span class="pln">⟩</span><span class="clo">))</span></pre></div>
+
+<p>အကယ်၍ ၎င်းတို့ကို အသီးသီး အောက်ပါအတိုင်း အကောင်အထည်ဖော်ပါက -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">assign ⟨</span><var><span class="pln">reg</span><span class="pun">₁</span></var><span class="pln">⟩ 
+        </span><span class="opn">(</span><span class="pln">op vector-ref</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">reg the-cars</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">reg ⟨</span><var><span class="pln">reg</span><span class="pun">₂</span></var><span class="pln">⟩</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">assign ⟨</span><var><span class="pln">reg</span><span class="pun">₁</span></var><span class="pln">⟩
+        </span><span class="opn">(</span><span class="pln">op vector-ref</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">reg the-cdrs</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">reg ⟨</span><var><span class="pln">reg</span><span class="pun">₂</span></var><span class="pln">⟩</span><span class="clo">))</span></pre></div>
+
+<p>အောက်ပါ ညွှန်ကြားချက်များကို
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">perform </span><span class="opn">(</span><span class="pln">op set-car!</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg ⟨</span><var><span class="pln">reg</span><span class="pun">₁</span></var><span class="pln">⟩</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg ⟨</span><var><span class="pln">reg</span><span class="pun">₂</span></var><span class="pln">⟩</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">perform </span><span class="opn">(</span><span class="pln">op set-cdr!</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg ⟨</span><var><span class="pln">reg</span><span class="pun">₁</span></var><span class="pln">⟩</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg ⟨</span><var><span class="pln">reg</span><span class="pun">₂</span></var><span class="pln">⟩</span><span class="clo">))</span></pre></div>
+
+<p>အောက်ပါအတိုင်း အကောင်အထည်ဖော်သည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">perform </span><span class="opn">(</span><span class="pln">op vector-set!</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">reg the-cars</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">reg ⟨</span><var><span class="pln">reg</span><span class="pun">₁</span></var><span class="pln">⟩</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">reg ⟨</span><var><span class="pln">reg</span><span class="pun">₂</span></var><span class="pln">⟩</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">perform </span><span class="opn">(</span><span class="pln">op vector-set!</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">reg the-cdrs</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">reg ⟨</span><var><span class="pln">reg</span><span class="pun">₁</span></var><span class="pln">⟩</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">reg ⟨</span><var><span class="pln">reg</span><span class="pun">₂</span></var><span class="pln">⟩</span><span class="clo">))</span></pre></div>
+
+<p><code>Cons</code> လုပ်ဆောင်ချက်ကို အသုံးမပြုရသေးသော index တစ်ခုကို သတ်မှတ်ခြင်း (allocating) နှင့် <code>cons</code> ၏ argument များကို <code>the-cars</code> နှင့် <code>the-cdrs</code> ရှိ အဆိုပါ index ရှိသော vector တည်နေရာတွင် သိမ်းဆည်းခြင်းဖြင့် လုပ်ဆောင်သည်။ နောက်ထပ် ရရှိနိုင်မည့် index ပါဝင်သော pair pointer ကို အမြဲတမ်း သိမ်းဆည်းထားသည့် <code>free</code> ဟုခေါ်သော အထူး register တစ်ခု ရှိသည်ဟု ကျွန်ုပ်တို့ ယူဆပြီး နောက်ထပ် လွတ်နေသော တည်နေရာကို ရှာဖွေရန် ထိုပွိုင်တာ၏ index အစိတ်အပိုင်းကို တိုးမြှင့်နိုင်သည်ဟု ယူဆသည်။<a class="footnote_link" id="DOCF296" href="#FOOT296"><sup>296</sup></a> ဥပမာအားဖြင့် ညွှန်ကြားချက်
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">assign ⟨</span><var><span class="pln">reg</span><span class="pun">₁</span></var><span class="pln">⟩
+        </span><span class="opn">(</span><span class="pln">op </span><span class="kwd">cons</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">reg ⟨</span><var><span class="pln">reg</span><span class="pun">₂</span></var><span class="pln">⟩</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">reg ⟨</span><var><span class="pln">reg</span><span class="pun">₃</span></var><span class="pln">⟩</span><span class="clo">))</span></pre></div>
+
+<p>ကို အောက်ပါ vector လုပ်ဆောင်ချက် အစီအစဉ်အတိုင်း အကောင်အထည်ဖော်သည် -<a class="footnote_link" id="DOCF297" href="#FOOT297"><sup>297</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">perform </span><span class="opn">(</span><span class="pln">op vector-set!</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">reg the-cars</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">reg free</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">reg ⟨</span><var><span class="pln">reg</span><span class="pun">₂</span></var><span class="pln">⟩</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">perform </span><span class="opn">(</span><span class="pln">op vector-set!</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">reg the-cdrs</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">reg free</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">reg ⟨</span><var><span class="pln">reg</span><span class="pun">₃</span></var><span class="pln">⟩</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">assign ⟨</span><var><span class="pln">reg</span><span class="pun">₁</span></var><span class="pln">⟩ </span><span class="opn">(</span><span class="pln">reg free</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">assign free </span><span class="opn">(</span><span class="pln">op </span><span class="pun">+</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg free</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">const </span><span class="lit">1</span><span class="clo">))</span></pre></div>
+
+<p><code>eq?</code> လုပ်ဆောင်ချက်
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">op </span><span class="kwd">eq</span><span class="pun">?</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg ⟨</span><var><span class="pln">reg</span><span class="pun">₁</span></var><span class="pln">⟩</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg ⟨</span><var><span class="pln">reg</span><span class="pun">₂</span></var><span class="pln">⟩</span><span class="clo">)</span></pre></div>
+
+<p>သည် register များရှိ field အားလုံး တူညီမှု ရှိမရှိကိုသာ စမ်းသပ်ပြီး <code>pair?</code>, <code>null?</code>, <code>symbol?</code> နှင့် <code>number?</code> ကဲ့သို့သော predicate များသည် type field ကိုသာ စစ်ဆေးရန် လိုအပ်သည်။
+</p>
+<a id="Implementing-stacks"></a>
+<h5 class="subsubheading">Implementing stacks</h5>
+
+<p>ကျွန်ုပ်တို့၏ register machine များသည် stack များကို အသုံးပြုသော်လည်း stack များကို list များဖြင့် ပုံဖော်နိုင်သောကြောင့် ဤနေရာတွင် ထူးထူးခြားခြား လုပ်ဆောင်ရန် မလိုပါ။ Stack သည် သိမ်းဆည်းထားသော တန်ဖိုးများ၏ list တစ်ခု ဖြစ်နိုင်ပြီး ၎င်းကို အထူး register ဖြစ်သော <code>the-stack</code> က ညွှန်ပြထားမည်။ ထို့ကြောင့် 
+<code>(save ⟨<var>reg</var>⟩)</code> ကို အောက်ပါအတိုင်း အကောင်အထည်ဖော်နိုင်သည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">assign the-stack 
+        </span><span class="opn">(</span><span class="pln">op </span><span class="kwd">cons</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">reg ⟨</span><var><span class="pln">reg</span></var><span class="pln">⟩</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">reg the-stack</span><span class="clo">))</span></pre></div>
+
+<p>အလားတူပင် <code>(restore ⟨<var>reg</var>⟩)</code> ကို အောက်ပါအတိုင်း အကောင်အထည်ဖော်နိုင်သည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">assign ⟨</span><var><span class="pln">reg</span></var><span class="pln">⟩ </span><span class="opn">(</span><span class="pln">op </span><span class="kwd">car</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg the-stack</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="pln">assign the-stack </span><span class="opn">(</span><span class="pln">op </span><span class="kwd">cdr</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg the-stack</span><span class="clo">))</span></pre></div>
+
+<p>နှင့် <code>(perform (op initialize-stack))</code> ကို အောက်ပါအတိုင်း အကောင်အထည်ဖော်နိုင်သည် -
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">assign the-stack </span><span class="opn">(</span><span class="pln">const </span><span class="opn">(</span><span class="clo">)))</span></pre></div>
+
+<p>ဤလုပ်ဆောင်ချက်များကို အထက်တွင် ဖော်ပြထားသော vector လုပ်ဆောင်ချက်များဖြင့် ထပ်မံ ချဲ့ထွင်နိုင်သည်။ သို့သော် ပုံမှန် ကွန်ပျူတာ တည်ဆောက်ပုံများ (computer architectures) တွင်မူ stack ကို သီးခြား vector တစ်ခုအဖြစ် သတ်မှတ်ခြင်းက ပို၍ အကျိုးရှိလေ့ ရှိသည်။ ထိုအခါ stack ထဲသို့ ထည့်ခြင်း (pushing) နှင့် stack ထဲမှ ထုတ်ခြင်း (popping) တို့ကို အဆိုပါ vector ၏ index ကို တိုးမြှင့်ခြင်း သို့မဟုတ် လျှော့ချခြင်းဖြင့် လုပ်ဆောင်နိုင်သည်။
+</p>
+<blockquote>
+<p><strong><a id="Exercise-5_002e20"></a>Exercise 5.20:</strong> <code>free</code> pointer သည် အစတွင် <code>p1</code> ဖြစ်သည်ဟု ယူဆ၍
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> x </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> </span><span class="lit">2</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> y </span><span class="opn">(</span><span class="pln">list x x</span><span class="clo">))</span></pre></div>
+
+<p>မှ ထွက်ပေါ်လာသော list structure ၏ box-and-pointer ကိုယ်စားပြုချက်နှင့် memory-vector ကိုယ်စားပြုချက် (ပုံ <a href="#Figure-5_002e14">5.14</a> တွင် ပါရှိသည့်အတိုင်း) ကို ဆွဲပါ။ <code>free</code> ၏ နောက်ဆုံး တန်ဖိုးမှာ အဘယ်နည်း။ <code>x</code> နှင့် <code>y</code> တို့၏ တန်ဖိုးများကို မည်သည့် ပွိုင်တာများက ကိုယ်စားပြုသနည်း။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-5_002e21"></a>Exercise 5.21:</strong> အောက်ပါ procedure များအတွက် register machine များကို အကောင်အထည်ဖော်ပါ။ list-structure memory လုပ်ဆောင်ချက်များကို machine primitives များအဖြစ် အသုံးပြုနိုင်သည်ဟု ယူဆပါ။
+</p>
+<ol>
+<li> Recursive <code>count-leaves</code>:
+
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">count-leaves tree</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pln">null? tree</span><span class="clo">)</span><span class="pln"> </span><span class="lit">0</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="pln">not </span><span class="opn">(</span><span class="pln">pair? tree</span><span class="clo">))</span><span class="pln"> </span><span class="lit">1</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> 
+         </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">count-leaves </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> tree</span><span class="clo">))</span><span class="pln">
+            </span><span class="opn">(</span><span class="pln">count-leaves </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> tree</span><span class="clo">))))))</span></pre></div>
+
+</li><li> explicit counter ပါဝင်သော Recursive <code>count-leaves</code>:
+
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">count-leaves tree</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">count-iter tree n</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pln">null? tree</span><span class="clo">)</span><span class="pln"> n</span><span class="clo">)</span><span class="pln">
+          </span><span class="opn">((</span><span class="pln">not </span><span class="opn">(</span><span class="pln">pair? tree</span><span class="clo">))</span><span class="pln"> </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> n </span><span class="lit">1</span><span class="clo">))</span><span class="pln">
+          </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> 
+           </span><span class="opn">(</span><span class="pln">count-iter 
+            </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> tree</span><span class="clo">)</span><span class="pln">
+            </span><span class="opn">(</span><span class="pln">count-iter </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> tree</span><span class="clo">)</span><span class="pln"> 
+                        n</span><span class="clo">)))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">count-iter tree </span><span class="lit">0</span><span class="clo">))</span></pre></div>
+</li></ol>
+</blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-5_002e22"></a>Exercise 5.22:</strong> <a href="3_002e3.html#g_t3_002e3_002e1">3.3.1</a> ရှိ <a href="3_002e3.html#Exercise-3_002e12">လေ့ကျင့်ခန်း ၃.၁၂ (Exercise 3.12)</a> တွင် list နှစ်ခုကို ပေါင်းစည်း၍ list အသစ်တစ်ခု ဖန်တီးပေးသည့် <code>append</code> procedure နှင့် list နှစ်ခုကို တစ်ခုနှင့်တစ်ခု ဆက်လိုက်သည့် <code>append!</code> procedure တို့ကို တင်ပြခဲ့သည်။ အဆိုပါ procedure တစ်ခုစီကို အကောင်အထည်ဖော်ရန် register machine တစ်ခုစီ ရေးဆွဲပါ။ list-structure memory လုပ်ဆောင်ချက်များကို အခြေခံ လုပ်ဆောင်ချက်များ (primitive operations) အဖြစ် အသုံးပြုနိုင်သည်ဟု ယူဆပါ။
+</p></blockquote>
+
+<a id="g_t5_002e3_002e2"></a>
+<a id="Maintaining-the-Illusion-of-Infinite-Memory"></a>
+<h4 class="subsection"><span class="secnum">5.3.2</span><span class="sectitle">အကန့်အသတ်မဲ့ memory ရှိနေသယောင် ဖန်တီးထိန်းသိမ်းခြင်း</span></h4>
+
+<p><a href="#g_t5_002e3_002e1">၅.၃.၁</a> တွင် ဖော်ပြထားသော ကိုယ်စားပြုပုံစံသည် ကျွန်ုပ်တို့တွင် အကန့်အသတ်မဲ့ memory ပမာဏ ရှိနေပါက list structure ကို အကောင်အထည်ဖော်ခြင်း ပြဿနာကို ဖြေရှင်းပေးသည်။ လက်တွေ့ ကွန်ပျူတာတစ်လုံးတွင်မူ pair အသစ်များ တည်ဆောက်ရန်အတွက် လွတ်လပ်သောနေရာ (free space) နောက်ဆုံးတွင် ကုန်ဆုံးသွားလိမ့်မည်။<a class="footnote_link" id="DOCF298" href="#FOOT298"><sup>298</sup></a> သို့သော်လည်း၊ ပုံမှန် တွက်ချက်မှုတစ်ခုတွင် ထွက်ပေါ်လာသော pair အများစုသည် ကြားဖြတ်ရလဒ်များကို သိမ်းဆည်းရန်အတွက်သာ အသုံးပြုခြင်းဖြစ်သည်။ ဤရလဒ်များကို အသုံးပြုပြီးနောက်၊ အဆိုပါ pair များသည် ဆက်လက် မလိုအပ်တော့ပေ — ၎င်းတို့ကို <a id="index-garbage"></a>
+<em>garbage</em> ဟု ခေါ်သည်။ ဥပမာအားဖြင့်၊ အောက်ပါ တွက်ချက်မှုသည်
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">accumulate 
+ </span><span class="pun">+</span><span class="pln"> 
+ </span><span class="lit">0</span><span class="pln">
+ </span><span class="opn">(</span><span class="pln">filter odd? </span><span class="opn">(</span><span class="pln">enumerate-interval </span><span class="lit">0</span><span class="pln"> n</span><span class="clo">)))</span></pre></div>
+
+<p>list နှစ်ခုကို တည်ဆောက်သည်- enumeration တစ်ခုနှင့် enumeration ကို စစ်ထုတ်ထားသော (filtering) ရလဒ် တစ်ခု ဖြစ်သည်။ accumulation ပြီးဆုံးသွားသောအခါ၊ ဤ list များသည် ဆက်လက် မလိုအပ်တော့ဘဲ၊ သတ်မှတ်ပေးထားသော memory များကို ပြန်လည် သိမ်းယူနိုင်သည်။ အကယ်၍ ကျွန်ုပ်တို့သည် garbage အားလုံးကို အချိန်မှန် စုဆောင်းနိုင်ပြီး၊ ဤသို့ ပြုလုပ်ခြင်းဖြင့် pair အသစ်များ တည်ဆောက်သည့် နှုန်းထားနှင့် နီးပါးတူညီစွာ memory ကို ပြန်လည်အသုံးပြုနိုင်မည်ဆိုလျှင်၊ အကန့်အသတ်မဲ့ memory ရှိနေသည်ဟူသော အသွင်အပြင်ကို ထိန်းသိမ်းထားနိုင်မည် ဖြစ်သည်။
+</p>
+<p>pair များကို ပြန်လည်အသုံးပြုနိုင်ရန်အတွက် (၎င်းတို့၏ အကြောင်းအရာများသည် တွက်ချက်မှု၏ အနာဂတ်အပေါ် သက်ရောက်မှု မရှိတော့သည့် သဘောဖြင့်) မည်သည့် pair များသည် မလိုအပ်တော့ကြောင်း ဆုံးဖြတ်ရန် နည်းလမ်းတစ်ခု လိုအပ်သည်။ ဤအရာကို လုပ်ဆောင်ရန် ကျွန်ုပ်တို့ လေ့လာမည့် နည်းလမ်းကို <a id="index-garbage-collection-1"></a>
+<em>garbage collection</em> ဟု ခေါ်သည်။ Garbage collection သည် Lisp interpretation တစ်ခု၏ မည်သည့်အချိန်တွင်မဆို၊ တွက်ချက်မှု၏ အနာဂတ်အပေါ် သက်ရောက်မှုရှိနိုင်သော object များမှာ စက်၏ register များရှိ pointer များမှစတင်၍ <code>car</code> နှင့် <code>cdr</code> လုပ်ဆောင်ချက်များ အဆင့်ဆင့်ဖြင့် ရောက်ရှိနိုင်သော အရာများသာ ဖြစ်သည်ဟူသော လေ့လာတွေ့ရှိချက်အပေါ် အခြေခံထားသည်။<a class="footnote_link" id="DOCF299" href="#FOOT299"><sup>299</sup></a>
+ထိုသို့ ရောက်ရှိနိုင်ခြင်း မရှိသော မည်သည့် memory cell ကိုမဆို ပြန်လည် အသုံးပြုနိုင်သည်။
+</p>
+<p>garbage collection လုပ်ဆောင်ရန် နည်းလမ်းများစွာ ရှိပါသည်။ ယခု ကျွန်ုပ်တို့ လေ့လာမည့် နည်းလမ်းကို <a id="index-stop_002dand_002dcopy"></a>
+<em>stop-and-copy</em> ဟု ခေါ်သည်။ အခြေခံ အယူအဆမှာ memory ကို "working memory" နှင့် "free memory" ဟူ၍ နှစ်ပိုင်းခွဲရန် ဖြစ်သည်။ <code>cons</code> က pair များကို တည်ဆောက်သောအခါ၊ ၎င်းတို့ကို working memory ထဲတွင် နေရာချပေးသည်။ Working memory ပြည့်သွားသောအခါ၊ working memory ထဲရှိ အသုံးဝင်သော pair အားလုံးကို ရှာဖွေပြီး ၎င်းတို့ကို free memory ထဲရှိ ဆက်တိုက်တည်ရှိသော နေရာများသို့ ကူးယူခြင်းဖြင့် garbage collection ကို လုပ်ဆောင်သည်။ (အသုံးဝင်သော pair များကို စက်၏ register များမှ စတင်ကာ <code>car</code> နှင့် <code>cdr</code> pointer များအားလုံးကို လိုက်လံရှာဖွေခြင်းဖြင့် ရှာဖွေတွေ့ရှိနိုင်သည်။) ကျွန်ုပ်တို့သည် garbage များကို မကူးယူသောကြောင့်၊ pair အသစ်များအတွက် အသုံးပြုနိုင်မည့် နောက်ထပ် free memory များ ရရှိလာမည် ဖြစ်သည်။ ထို့အပြင်၊ working memory ထဲရှိ အသုံးဝင်သော pair အားလုံးကို ကူးယူပြီး ဖြစ်သောကြောင့် ၎င်းထဲရှိ မည်သည့်အရာမှ ဆက်လက် မလိုအပ်တော့ပေ။ ထို့ကြောင့်၊ working memory နှင့် free memory တို့၏ အခန်းကဏ္ဍကို အပြန်အလှန် လဲလှယ်လိုက်ပါက၊ ကျွန်ုပ်တို့သည် ဆက်လက် လုပ်ဆောင်နိုင်မည် ဖြစ်သည်; pair အသစ်များကို working memory အသစ် (ယခင် free memory ဖြစ်ခဲ့သော နေရာ) တွင် နေရာချပေးမည် ဖြစ်သည်။ ၎င်း ပြည့်သွားသောအခါ၊ အသုံးဝင်သော pair များကို free memory အသစ် (ယခင် working memory ဖြစ်ခဲ့သော နေရာ) သို့ ကူးယူနိုင်သည်။<a class="footnote_link" id="DOCF300" href="#FOOT300"><sup>300</sup></a>
+</p>
+<a id="Implementation-of-a-stop_002dand_002dcopy-garbage-collector"></a>
+<h5 class="subsubheading">stop-and-copy garbage collector တစ်ခုကို ဖော်ဆောင်ခြင်း</h5>
+
+<p>ယခု ကျွန်ုပ်တို့၏ register-machine ဘာသာစကားကို အသုံးပြု၍ stop-and-copy algorithm ကို အသေးစိတ် ဖော်ပြပါမည်။ ရောက်ရှိနိုင်သော (accessible) data အားလုံးကို နောက်ဆုံးတွင် ညွှန်ပြမည့် structure တစ်ခုသို့ pointer သိမ်းဆည်းထားသော <code>root</code> ဟုခေါ်သည့် register တစ်ခု ရှိသည်ဟု ကျွန်ုပ်တို့ ယူဆပါမည်။ Garbage collection မစတင်မီ စက်၏ register အားလုံးရှိ အကြောင်းအရာများကို <code>root</code> က ညွှန်ပြနေသော ကြိုတင်သတ်မှတ်ထားသည့် list တစ်ခုတွင် သိမ်းဆည်းခြင်းဖြင့် ဤအစီအစဉ်ကို လုပ်ဆောင်နိုင်သည်။<a class="footnote_link" id="DOCF301" href="#FOOT301"><sup>301</sup></a> လက်ရှိ working memory အပြင်၊ အသုံးဝင်သော data များကို ကူးယူနိုင်ရန်အတွက် ရရှိနိုင်သော free memory ရှိသည်ဟုလည်း ကျွန်ုပ်တို့ ယူဆသည်။ လက်ရှိ working memory တွင် base address များကို <code>the-cars</code> နှင့် <code>the-cdrs</code> ဟုခေါ်သော register များတွင် သိမ်းဆည်းထားသည့် vector များ ပါဝင်ပြီး၊ free memory မှာ <code>new-cars</code> နှင့် <code>new-cdrs</code> ဟုခေါ်သော register များတွင် ရှိသည်။
+</p>
+<p>လက်ရှိ working memory ထဲရှိ free cell များ ကုန်ဆုံးသွားသောအခါ၊ ဆိုလိုသည်မှာ <code>cons</code> လုပ်ဆောင်ချက်သည် <code>free</code> pointer ကို memory vector ၏ အဆုံးထက် ကျော်လွန်၍ တိုးမြှင့်ရန် ကြိုးပမ်းသောအခါ garbage collection စတင်လုပ်ဆောင်သည်။ Garbage-collection ဖြစ်စဉ် ပြီးဆုံးသောအခါ၊ <code>root</code> pointer သည် memory အသစ်ထဲသို့ ညွှန်ပြနေမည်ဖြစ်ပြီး၊ <code>root</code> မှတစ်ဆင့် ရောက်ရှိနိုင်သော object အားလုံးကို memory အသစ်သို့ ပြောင်းရွှေ့ပြီး ဖြစ်လိမ့်မည်၊ ထို့ပြင် <code>free</code> pointer သည် memory အသစ်တွင် pair အသစ်တစ်ခု နေရာချပေးနိုင်မည့် နောက်ထပ်နေရာကို ညွှန်ပြနေမည် ဖြစ်သည်။ ထို့အပြင်၊ working memory နှင့် memory အသစ်တို့၏ အခန်းကဏ္ဍများကို အပြန်အလှန် လဲလှယ်ပြီး ဖြစ်လိမ့်မည် — pair အသစ်များကို memory အသစ်တွင် <code>free</code> က ညွှန်ပြသော နေရာမှ စတင်၍ တည်ဆောက်မည်ဖြစ်ပြီး၊ (ယခင်) working memory သည် နောက်တစ်ကြိမ် garbage collection အတွက် memory အသစ်အဖြစ် အသုံးပြုနိုင်မည် ဖြစ်သည်။ <a href="#Figure-5_002e15">ပုံ ၅.၁၅</a> တွင် garbage collection မတိုင်မီနှင့် ပြီးနောက် memory စီစဉ်ပုံကို ပြသထားသည်။
+</p>
+<figure class="float">
+<a id="Figure-5_002e15"></a>
+<object style="width: 57.59ex; height: 44.47ex;" data="fig/chap5/Fig5.15c.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>ပုံ ၅.၁၅:</strong> Garbage-collection ဖြစ်စဉ်ကြောင့် memory ကို ပြန်လည်ဖွဲ့စည်းပုံ။</p>
+</figcaption>
+</figure>
+
+<p>Garbage-collection ဖြစ်စဉ်၏ အခြေအနေကို <code>free</code> နှင့် <code>scan</code> ဟူသော pointer နှစ်ခုကို ထိန်းသိမ်းခြင်းဖြင့် ထိန်းချုပ်သည်။ ၎င်းတို့ကို memory အသစ်၏ အစသို့ ညွှန်ပြရန် အစပျိုး (initialize) သတ်မှတ်သည်။ Algorithm သည် <code>root</code> က ညွှန်ပြနေသော pair ကို memory အသစ်၏ အစသို့ ပြောင်းရွှေ့ခြင်းဖြင့် စတင်သည်။ Pair ကို ကူးယူသည်၊ <code>root</code> pointer ကို နေရာအသစ်သို့ ညွှန်ပြရန် ညှိနှိုင်းသည်၊ ထို့နောက် <code>free</code> pointer ကို တိုးမြှင့်သည်။ ထို့အပြင်၊ pair ၏ မူလနေရာကို ၎င်း၏ အကြောင်းအရာများ ရွှေ့ပြောင်းပြီးဖြစ်ကြောင်း ပြသရန် အမှတ်အသား ပြုလုပ်သည်။ ဤအမှတ်အသားကို အောက်ပါအတိုင်း ပြုလုပ်သည်- <code>car</code> တည်နေရာတွင်၊ ဤအရာသည် ရွှေ့ပြောင်းပြီးသား object တစ်ခုဖြစ်ကြောင်း အချက်ပြသည့် အထူး tag တစ်ခုကို ထားရှိသည်။ (ထိုသို့သော object ကို ထုံးစံအားဖြင့် <a id="index-broken-heart"></a>
+<em>broken heart</em> ဟု ခေါ်သည်။)<a class="footnote_link" id="DOCF302" href="#FOOT302"><sup>302</sup></a> <code>cdr</code> တည်နေရာတွင်မူ object ကို ရွှေ့ပြောင်းထားသည့် နေရာသို့ ညွှန်ပြသော <a id="index-forwarding-address"></a>
+<em>forwarding address</em> ကို ထားရှိသည်။
+</p>
+<p>Root ကို ပြောင်းရွှေ့ပြီးနောက်၊ garbage collector သည် ၎င်း၏ အခြေခံ စက်ဝန်း (cycle) ထဲသို့ ဝင်ရောက်သည်။ Algorithm ၏ အဆင့်တိုင်းတွင်၊ <code>scan</code> pointer (အစပိုင်းတွင် ပြောင်းရွှေ့ထားသော root ကို ညွှန်ပြနေသည်) သည် memory အသစ်သို့ ပြောင်းရွှေ့ထားသော်လည်း ၎င်း၏ <code>car</code> နှင့် <code>cdr</code> pointer များသည် memory အဟောင်းထဲရှိ object များကို ညွှန်ပြနေဆဲဖြစ်သော pair တစ်ခုကို ညွှန်ပြနေသည်။ ဤ object တစ်ခုစီကို ပြောင်းရွှေ့ပြီး <code>scan</code> pointer ကို တိုးမြှင့်သည်။ Object တစ်ခုကို ပြောင်းရွှေ့ရန် (ဥပမာ၊ ကျွန်ုပ်တို့ scan ဖတ်နေသော pair ၏ <code>car</code> pointer က ညွှန်ပြသော object) ၎င်း object သည် ရွှေ့ပြောင်းပြီးသား ဟုတ်မဟုတ် စစ်ဆေးသည် (object ၏ <code>car</code> တည်နေရာတွင် broken-heart tag ရှိမရှိကို ကြည့်၍ စစ်ဆေးခြင်းဖြစ်သည်)။ အကယ်၍ object သည် မရွှေ့ပြောင်းရသေးပါက၊ ၎င်းကို <code>free</code> က ညွှန်ပြသော နေရာသို့ ကူးယူသည်၊ <code>free</code> ကို update လုပ်သည်၊ object ၏ မူလနေရာတွင် broken heart တစ်ခု သတ်မှတ်သည်၊ ထို့နောက် object ဆီသို့ ညွှန်ပြသော pointer ကို (ဤဥပမာတွင် ကျွန်ုပ်တို့ scan ဖတ်နေသော pair ၏ <code>car</code> pointer) နေရာအသစ်သို့ ညွှန်ပြရန် update လုပ်သည်။ အကယ်၍ object သည် ရွှေ့ပြောင်းပြီးသားဖြစ်ပါက၊ ၎င်း၏ forwarding address ကို (broken heart ၏ <code>cdr</code> တည်နေရာတွင် တွေ့ရသည်) scan ဖတ်နေသော pair ရှိ pointer ၏ အစားထိုးမှုအဖြစ် အသုံးပြုသည်။ နောက်ဆုံးတွင်၊ ရောက်ရှိနိုင်သော object အားလုံးကို ပြောင်းရွှေ့ပြီး scan ဖတ်ပြီးဖြစ်လိမ့်မည်၊ ထိုအချိန်တွင် <code>scan</code> pointer သည် <code>free</code> pointer ကို ကျော်လွန်သွားပြီး ဖြစ်စဉ် ပြီးဆုံးသွားမည် ဖြစ်သည်။
+</p>
+<p>stop-and-copy algorithm ကို register machine အတွက် ညွှန်ကြားချက်များ အစီအစဉ်တစ်ခုအဖြစ် ဖော်ပြနိုင်သည်။ Object တစ်ခုကို ပြောင်းရွှေ့ခြင်း၏ အခြေခံအဆင့်ကို <code>relocate-old-result-in-new</code> ဟုခေါ်သော subroutine တစ်ခုက လုပ်ဆောင်သည်။ ဤ subroutine သည် ပြောင်းရွှေ့ရမည့် object သို့ pointer ဖြစ်သော ၎င်း၏ argument ကို <code>old</code> ဟုခေါ်သော register မှ ရယူသည်။ ၎င်းသည် သတ်မှတ်ထားသော object ကို ပြောင်းရွှေ့သည် (ထိုဖြစ်စဉ်တွင် <code>free</code> ကို တိုးမြှင့်သည်)၊ ပြောင်းရွှေ့ထားသော object သို့ pointer ကို <code>new</code> ဟုခေါ်သော register ထဲသို့ ထည့်သည်၊ ထို့နောက် <code>relocate-continue</code> register ထဲတွင် သိမ်းဆည်းထားသော entry point သို့ ခုန်ကူးခြင်းဖြင့် ပြန်သွားသည်။ Garbage collection စတင်ရန်၊ <code>free</code> နှင့် <code>scan</code> ကို အစပျိုးပြီးနောက် <code>root</code> pointer ကို ပြောင်းရွှေ့ရန်အတွက် ဤ subroutine ကို ခေါ်ယူသည်။ <code>root</code> ကို ပြောင်းရွှေ့ခြင်း ပြီးဆုံးသောအခါ၊ pointer အသစ်ကို <code>root</code> အသစ်အဖြစ် သတ်မှတ်ပြီး garbage collector ၏ main loop ထဲသို့ ဝင်ရောက်သည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="pln">begin-garbage-collection
+  </span><span class="opn">(</span><span class="pln">assign free </span><span class="opn">(</span><span class="pln">const </span><span class="lit">0</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">assign scan </span><span class="opn">(</span><span class="pln">const </span><span class="lit">0</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">assign old </span><span class="opn">(</span><span class="pln">reg root</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">assign relocate-continue 
+          </span><span class="opn">(</span><span class="pln">label reassign-root</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">goto </span><span class="opn">(</span><span class="pln">label relocate-old-result-in-new</span><span class="clo">))</span><span class="pln">
+reassign-root
+  </span><span class="opn">(</span><span class="pln">assign root </span><span class="opn">(</span><span class="pln">reg new</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">goto </span><span class="opn">(</span><span class="pln">label gc-loop</span><span class="clo">))</span></pre></div>
+
+<p>Garbage collector ၏ main loop တွင် scan ဖတ်ရန် object များ ကျန်ရှိသေးသလားဆိုသည်ကို ကျွန်ုပ်တို့ ဆုံးဖြတ်ရမည်။ <code>scan</code> pointer နှင့် <code>free</code> pointer တို့ တူညီနေသလားဆိုသည်ကို စမ်းသပ်ခြင်းဖြင့် ဤအရာကို လုပ်ဆောင်သည်။ အကယ်၍ pointer များ တူညီနေပါက၊ ရောက်ရှိနိုင်သော object အားလုံးကို ပြောင်းရွှေ့ပြီးဖြစ်သည်၊ ထို့ကြောင့် ရပ်တန့်ထားသော တွက်ချက်မှုကို ဆက်လက်လုပ်ဆောင်နိုင်ရန် ရှင်းလင်းရေးလုပ်ဆောင်သည့် <code>gc-flip</code> သို့ ခုန်ကူးသည်။ Scan ဖတ်ရန် pair များ ကျန်ရှိနေသေးပါက၊ နောက်ထပ် pair ၏ <code>car</code> ကို ပြောင်းရွှေ့ရန်အတွက် relocate subroutine ကို ခေါ်သည် (<code>car</code> pointer ကို <code>old</code> ထဲသို့ ထည့်သွင်းခြင်းဖြင့် ဖြစ်သည်)။ <code>relocate-continue</code> register ကို သတ်မှတ်ထားသောကြောင့် subroutine သည် <code>car</code> pointer ကို update လုပ်ရန် ပြန်လာမည် ဖြစ်သည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="pln">gc-loop
+  </span><span class="opn">(</span><span class="pln">test </span><span class="opn">(</span><span class="pln">op </span><span class="pun">=</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg scan</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg free</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">branch </span><span class="opn">(</span><span class="pln">label gc-flip</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">assign old 
+          </span><span class="opn">(</span><span class="pln">op vector-ref</span><span class="clo">)</span><span class="pln">
+          </span><span class="opn">(</span><span class="pln">reg new-cars</span><span class="clo">)</span><span class="pln">
+          </span><span class="opn">(</span><span class="pln">reg scan</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">assign relocate-continue 
+          </span><span class="opn">(</span><span class="pln">label update-car</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">goto </span><span class="opn">(</span><span class="pln">label relocate-old-result-in-new</span><span class="clo">))</span></pre></div>
+
+<p><code>update-car</code> တွင်၊ ကျွန်ုပ်တို့သည် scan ဖတ်နေသော pair ၏ <code>car</code> pointer ကို ပြင်ဆင်ပြီး၊ ထို pair ၏ <code>cdr</code> ကို ပြောင်းရွှေ့ရန် ဆက်လက် လုပ်ဆောင်သည်။ ထိုသို့ ပြောင်းရွှေ့ခြင်း ပြီးဆုံးသောအခါ <code>update-cdr</code> သို့ ပြန်လာသည်။ <code>cdr</code> ကို ပြောင်းရွှေ့ပြီး update လုပ်ပြီးနောက်၊ ထို pair ကို scan ဖတ်ခြင်း ပြီးဆုံးပြီဖြစ်သဖြင့် main loop ကို ဆက်လက် လုပ်ဆောင်သည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="pln">update-car
+  </span><span class="opn">(</span><span class="pln">perform </span><span class="opn">(</span><span class="pln">op vector-set!</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">reg new-cars</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">reg scan</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">reg new</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">assign  old 
+           </span><span class="opn">(</span><span class="pln">op vector-ref</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">reg new-cdrs</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">reg scan</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">assign  relocate-continue
+           </span><span class="opn">(</span><span class="pln">label update-cdr</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">goto </span><span class="opn">(</span><span class="pln">label relocate-old-result-in-new</span><span class="clo">))</span><span class="pln">
+update-cdr
+  </span><span class="opn">(</span><span class="pln">perform </span><span class="opn">(</span><span class="pln">op vector-set!</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">reg new-cdrs</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">reg scan</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">reg new</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">assign  scan </span><span class="opn">(</span><span class="pln">op </span><span class="pun">+</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg scan</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">const </span><span class="lit">1</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">goto </span><span class="opn">(</span><span class="pln">label gc-loop</span><span class="clo">))</span></pre></div>
+
+<p><code>relocate-old-result-in-new</code> subroutine သည် object များကို အောက်ပါအတိုင်း ပြောင်းရွှေ့သည်-
+အကယ်၍ ပြောင်းရွှေ့ရမည့် object (<code>old</code> က ညွှန်ပြထားသော) သည် pair တစ်ခု မဟုတ်ပါက၊ ၎င်း object သို့ မူလ pointer ကိုပင် မပြောင်းလဲဘဲ (<code>new</code> ထဲတွင်) ပြန်ပေးသည်။ (ဥပမာအားဖြင့်၊ ကျွန်ုပ်တို့သည် <code>car</code> တွင် ကိန်းဂဏန်း ၄ ရှိသော pair တစ်ခုကို scan ဖတ်နေသည်ဆိုပါစို့။ <a href="#g_t5_002e3_002e1">၅.၃.၁</a> တွင် ဖော်ပြထားသည့်အတိုင်း <code>car</code> ကို <code>n4</code> ဖြင့် ကိုယ်စားပြုပါက၊ "ပြောင်းရွှေ့ထားသော" <code>car</code> pointer သည်လည်း <code>n4</code> သာ ဖြစ်စေလိုသည်။) သို့မဟုတ်ပါက၊ ပြောင်းရွှေ့ခြင်းကို လုပ်ဆောင်ရမည်။ အကယ်၍ ပြောင်းရွှေ့ရမည့် pair ၏ <code>car</code> တည်နေရာတွင် broken-heart tag ပါရှိနေပါက၊ ထို pair သည် အမှန်တကယ်ပင် ရွှေ့ပြောင်းပြီးဖြစ်သောကြောင့် forwarding address ကို (broken heart ၏ <code>cdr</code> တည်နေရာမှ) ရယူပြီး <code>new</code> ထဲတွင် ပြန်ပေးသည်။ အကယ်၍ <code>old</code> ရှိ pointer သည် မရွှေ့ရသေးသော pair တစ်ခုကို ညွှန်ပြနေပါက၊ ၎င်း pair ကို memory အသစ်ရှိ ပထမဆုံး လွတ်နေသော cell (<code>free</code> က ညွှန်ပြသောနေရာ) သို့ ရွှေ့ပြောင်းပြီး၊ မူလနေရာတွင် broken-heart tag နှင့် forwarding address တို့ကို သိမ်းဆည်းခြင်းဖြင့် broken heart တစ်ခုကို သတ်မှတ်လိုက်သည်။
+<code>Relocate-old-result-in-new</code> သည် <code>old</code> က ညွှန်ပြသော object ၏ <code>car</code> သို့မဟုတ် <code>cdr</code> ကို သိမ်းဆည်းရန် <code>oldcr</code> ဟုခေါ်သော register တစ်ခုကို အသုံးပြုသည်။<a class="footnote_link" id="DOCF303" href="#FOOT303"><sup>303</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="pln">relocate-old-result-in-new
+  </span><span class="opn">(</span><span class="pln">test </span><span class="opn">(</span><span class="pln">op pointer-to-pair?</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg old</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">branch </span><span class="opn">(</span><span class="pln">label pair</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">assign new </span><span class="opn">(</span><span class="pln">reg old</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">goto </span><span class="opn">(</span><span class="pln">reg relocate-continue</span><span class="clo">))</span><span class="pln">
+pair
+  </span><span class="opn">(</span><span class="pln">assign  oldcr 
+           </span><span class="opn">(</span><span class="pln">op vector-ref</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">reg the-cars</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">reg old</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">test </span><span class="opn">(</span><span class="pln">op broken-heart?</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg oldcr</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">branch  </span><span class="opn">(</span><span class="pln">label already-moved</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">assign  new </span><span class="opn">(</span><span class="pln">reg free</span><span class="clo">))</span><span class="pln"> </span><span class="roman"><span class="com">; new location for pair</span></span><span class="pln">
+  </span><span class="roman"><span class="com">;; Update </span><code><span class="com">free</span></code><span class="com"> pointer.</span></span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">assign free </span><span class="opn">(</span><span class="pln">op </span><span class="pun">+</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">reg free</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">const </span><span class="lit">1</span><span class="clo">))</span><span class="pln">
+  </span><span class="roman"><span class="com">;; Copy the </span><code><span class="com">car</span></code><span class="com"> and </span><code><span class="com">cdr</span></code><span class="com"> to new memory.</span></span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">perform </span><span class="opn">(</span><span class="pln">op vector-set!</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">reg new-cars</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">reg new</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">reg oldcr</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">assign  oldcr 
+           </span><span class="opn">(</span><span class="pln">op vector-ref</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">reg the-cdrs</span><span class="clo">)</span><span class="pln">
+           </span><span class="reg old">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">perform </span><span class="opn">(</span><span class="pln">op vector-set!</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">reg new-cdrs</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">reg new</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">reg oldcr</span><span class="clo">))</span><span class="pln">
+  </span><span class="roman"><span class="com">;; Construct the broken heart.</span></span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">perform </span><span class="opn">(</span><span class="pln">op vector-set!</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">reg the-cars</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">reg old</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">const broken-heart</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">perform </span><span class="opn">(</span><span class="pln">op vector-set!</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">reg the-cdrs</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">reg old</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">reg new</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">goto </span><span class="opn">(</span><span class="pln">reg relocate-continue</span><span class="clo">))</span><span class="pln">
+already-moved
+  </span><span class="opn">(</span><span class="pln">assign  new
+           </span><span class="opn">(</span><span class="pln">op vector-ref</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">reg the-cdrs</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">reg old</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">goto </span><span class="opn">(</span><span class="pln">reg relocate-continue</span><span class="clo">))</span></pre></div>
+
+<p>Garbage-collection ဖြစ်စဉ်၏ အဆုံးသတ်တွင်၊ pointer များကို အပြန်အလှန် လဲလှယ်ခြင်းဖြင့် memory အဟောင်းနှင့် အသစ်တို့၏ အခန်းကဏ္ဍကို လဲလှယ်လိုက်သည်- <code>the-cars</code> ကို <code>new-cars</code> နှင့်လည်းကောင်း၊ <code>the-cdrs</code> ကို <code>new-cdrs</code> နှင့်လည်းကောင်း အပြန်အလှန် လဲလှယ်ခြင်း ဖြစ်သည်။ ထိုအခါ နောက်တစ်ကြိမ် memory ကုန်သွားသည့်အခါ နောက်ထပ် garbage collection တစ်ခုကို လုပ်ဆောင်ရန် အသင့်ဖြစ်နေလိမ့်မည်။
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="pln">gc-flip
+  </span><span class="opn">(</span><span class="pln">assign temp </span><span class="opn">(</span><span class="pln">reg the-cdrs</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">assign the-cdrs </span><span class="opn">(</span><span class="pln">reg new-cdrs</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">assign new-cdrs </span><span class="opn">(</span><span class="pln">reg temp</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">assign temp </span><span class="opn">(</span><span class="pln">reg the-cars</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">assign the-cars </span><span class="opn">(</span><span class="pln">reg new-cars</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">assign new-cars </span><span class="opn">(</span><span class="pln">reg temp</span><span class="clo">))</span></pre></div>
+
+<div class="footnote">
+<h4 class="footnotes-heading">အောက်ခြေမှတ်စုများ</h4>
+
+<div id="FOOT290"><p><a class="footnote_backlink" href="#DOCF290"><sup>290</sup></a>
+ကျွန်ုပ်တို့သည် မှတ်ဉာဏ် (memory) ကို အရာဝတ္ထုများ၏ စာရင်း (lists) များအဖြစ် ကိုယ်စားပြုနိုင်သည်။ သို့သော်၊ စာရင်းတစ်ခု၏ <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mi>n</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mtext>th</mtext>
+    </mrow>
+  </msup>
+</math> အစိတ်အပိုင်းကို ရယူရန် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>n</mi>
+    <mo>−<!-- − --></mo>
+    <mn>1</mn>
+  </mrow>
+</math>
+<code>cdr</code> လုပ်ဆောင်ချက်များ လိုအပ်သောကြောင့်၊ ရယူအသုံးပြုချိန် (access time) သည် အညွှန်းကိန်း (index) အပေါ်တွင် မှီခိုမှုမရှိဘဲ ဖြစ်နေမည်မဟုတ်ပေ။</p>
+</div>
+<div id="FOOT291"><p><a class="footnote_backlink" href="#DOCF291"><sup>291</sup></a>
+ပြည့်စုံစေရန်အတွက်၊ vector များကို တည်ဆောက်ပေးသည့် <code>make-vector</code> လုပ်ဆောင်ချက်ကို ကျွန်ုပ်တို့ သတ်မှတ်သင့်သည်။ သို့သော်၊ ယခုအသုံးချမှုတွင် ကျွန်ုပ်တို့သည် vector များကို ကွန်ပျူတာမှတ်ဉာဏ်၏ သတ်မှတ်ထားသော အပိုင်းအခြားများကို ပုံစံဖော်ရန်အတွက်သာ အသုံးပြုမည်ဖြစ်သည်။</p>
+</div>
+<div id="FOOT292"><p><a class="footnote_backlink" href="#DOCF292"><sup>292</sup></a>
+ဒါဟာ ယေဘုယျလုပ်ဆောင်ချက်တွေကို ကိုင်တွယ်ဖို့အတွက် <a href="Chapter-2.html#Chapter-2">Chapter 2</a> မှာ ကျွန်ုပ်တို့ မိတ်ဆက်ခဲ့တဲ့ “tagged data” အယူအဆနဲ့ အတိအကျတူညီပါတယ်။ သို့သော် ဤနေရာတွင် ဒေတာအမျိုးအစားများကို စာရင်းများအသုံးပြု၍ တည်ဆောက်မည့်အစား အခြေခံစက်အဆင့် (primitive machine level) တွင် ထည့်သွင်းထားပါသည်။</p>
+</div>
+<div id="FOOT293"><p><a class="footnote_backlink" href="#DOCF293"><sup>293</sup></a>
+အမျိုးအစား အချက်အလက် (type information) ကို Lisp စနစ် အကောင်အထည်ဖော်မည့် စက်၏ အသေးစိတ်အချက်အလက်များအပေါ် မူတည်၍ နည်းလမ်းအမျိုးမျိုးဖြင့် ကုဒ်ရေးသွင်းနိုင်သည်။ Lisp ပရိုဂရမ်များ၏ လုပ်ဆောင်မှု စွမ်းဆောင်ရည်သည် ဤရွေးချယ်မှုကို မည်မျှ လိမ္မာပါးနပ်စွာ ပြုလုပ်သည်ဆိုသည့်အပေါ်တွင် များစွာမူတည်လိမ့်မည်ဖြစ်သော်လည်း၊ ကောင်းမွန်သော ရွေးချယ်မှုများအတွက် ယေဘုယျ ဒီဇိုင်းစည်းမျဉ်းများကို ဖော်ထုတ်ရန် ခက်ခဲပါသည်။ အမျိုးအစားသတ်မှတ်ထားသော pointer (typed pointers) များကို အကောင်အထည်ဖော်ရန် အရိုးရှင်းဆုံးနည်းလမ်းမှာ ဒေတာအမျိုးအစားကို ကုဒ်အဖြစ်ပြောင်းလဲပေးသည့် <a id="index-type-field"></a>
+<em>type field</em> တစ်ခုအဖြစ် pointer တစ်ခုစီတွင် သတ်မှတ်ထားသော bit အရေအတွက်တစ်ခုကို ခွဲဝေပေးရန်ဖြစ်သည်။ ထိုသို့သော ကိုယ်စားပြုမှုကို ဒီဇိုင်းဆွဲရာတွင် ဖြေရှင်းရမည့် အရေးကြီးသော မေးခွန်းများတွင် အောက်ပါတို့ ပါဝင်သည်- အမျိုးအစား bit မည်မျှ လိုအပ်သနည်း? vector အညွှန်းကိန်း (indices) များ မည်မျှ ကြီးမားရမည်နည်း? pointer များ၏ type field များကို ကိုင်တွယ်ရန် အခြေခံ စက်ညွှန်ကြားချက် (primitive machine instructions) များကို မည်မျှ ထိရောက်စွာ အသုံးပြုနိုင်သနည်း? type field များကို ထိရောက်စွာ ကိုင်တွယ်ရန်အတွက် အထူး ဟာ့ဒ်ဝဲများ ပါဝင်သော စက်များကို <a id="index-tagged-architectures"></a>
+<em>tagged architectures</em> ရှိသည်ဟု ဆိုကြသည်။</p>
+</div>
+<div id="FOOT294"><p><a class="footnote_backlink" href="#DOCF294"><sup>294</sup></a>
+ကိန်းဂဏန်းများကို ကိုယ်စားပြုဖော်ပြပုံနှင့် ပတ်သက်သည့် ဤဆုံးဖြတ်ချက်သည် pointer များ တူညီမှုကို စစ်ဆေးသော <code>eq?</code> ကို ကိန်းဂဏန်းများ တူညီမှု ရှိမရှိ စစ်ဆေးရန် အသုံးပြုနိုင်ခြင်း ရှိ၊ မရှိကို ဆုံးဖြတ်ပေးသည်။ အကယ်၍ pointer တွင် ကိန်းဂဏန်းကိုယ်တိုင် ပါဝင်နေပါက၊ တူညီသော ကိန်းဂဏန်းများတွင် တူညီသော pointer ရှိလိမ့်မည်။ သို့သော် အကယ်၍ pointer တွင် ကိန်းဂဏန်း သိမ်းဆည်းထားသည့် နေရာ၏ အညွှန်းကိန်း (index) ပါဝင်နေပါက၊ တူညီသော ကိန်းဂဏန်းများကို နေရာတစ်ခုထက်ပို၍ မသိမ်းဆည်းမိစေရန် ကျွန်ုပ်တို့ ဂရုမစိုက်ပါက တူညီသော ကိန်းဂဏန်းများတွင် တူညီသော pointer ရှိရန် အာမမခံနိုင်ပါ။</p>
+</div>
+<div id="FOOT295"><p><a class="footnote_backlink" href="#DOCF295"><sup>295</sup></a>
+ဒါဟာ ကိန်းဂဏန်းတစ်ခုကို ဂဏန်းအစဉ်အတန်းတစ်ခုအဖြစ် ရေးသားခြင်းနဲ့ ဆင်တူပါတယ်၊ ဒါပေမယ့် “ဂဏန်း” တစ်ခုစီဟာ 0 နဲ့ pointer တစ်ခုတည်းမှာ သိမ်းဆည်းနိုင်တဲ့ အကြီးဆုံးကိန်းဂဏန်းကြားက ကိန်းဂဏန်းတစ်ခု ဖြစ်နေတာပဲ ကွာခြားပါတယ်။</p>
+</div>
+<div id="FOOT296"><p><a class="footnote_backlink" href="#DOCF296"><sup>296</sup></a>
+လွတ်လပ်သော သိမ်းဆည်းရာနေရာ (free storage) ကို ရှာဖွေရန် အခြားနည်းလမ်းများလည်း ရှိပါသည်။ ဥပမာအားဖြင့်၊ အသုံးမပြုရသေးသော pair အားလုံးကို <a id="index-free-list"></a>
+<em>free list</em> တစ်ခုအဖြစ် ချိတ်ဆက်ထားနိုင်သည်။ ကျွန်ုပ်တို့၏ လွတ်လပ်သောနေရာများသည် တစ်ခုနှင့်တစ်ခု ဆက်တိုက်ဖြစ်နေသည် (ထို့ကြောင့် pointer တစ်ခုကို တိုးမြှင့်ခြင်းဖြင့် ၎င်းတို့ကို ရယူနိုင်သည်)၊ အကြောင်းမှာ ကျွန်ုပ်တို့သည် <a href="#g_t5_002e3_002e2">5.3.2</a> တွင် တွေ့ရမည့်အတိုင်း compacting garbage collector ကို အသုံးပြုနေသောကြောင့် ဖြစ်ပါသည်။</p>
+</div>
+<div id="FOOT297"><p><a class="footnote_backlink" href="#DOCF297"><sup>297</sup></a>
+ဒါဟာ အခြေခံအားဖြင့် <a href="3_002e3.html#g_t3_002e3_002e1">3.3.1</a> တွင် ဖော်ပြထားသည့်အတိုင်း <code>cons</code> ကို <code>set-car!</code> နှင့် <code>set-cdr!</code> တို့ဖြင့် အကောင်အထည်ဖော်ခြင်း ဖြစ်သည်။ ထိုအကောင်အထည်ဖော်မှုတွင် အသုံးပြုထားသော <code>get-new-pair</code> လုပ်ဆောင်ချက်ကို ဤနေရာတွင် <code>free</code> pointer ဖြင့် ဖော်ဆောင်ထားပါသည်။</p>
+</div>
+<div id="FOOT298"><p><a class="footnote_backlink" href="#DOCF298"><sup>298</sup></a>
+မှတ်ဉာဏ်များ (memories) သည် ကွန်ပျူတာ၏ သက်တမ်းတစ်လျှောက်တွင် လွတ်လပ်သော မှတ်ဉာဏ်ကုန်သွားရန် မဖြစ်နိုင်လောက်အောင် ကြီးမားလာနိုင်သောကြောင့် ရေရှည်တွင် ဤအချက်သည် မှန်ကန်ချင်မှ မှန်ကန်ပါလိမ့်မည်။ ဥပမာအားဖြင့်၊ တစ်နှစ်တွင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mn>3</mn>
+    <mo>⋅<!-- ⋅ --></mo>
+    <msup>
+      <mn>10</mn>
+      <mrow class="MJX-TeXAtom-ORD">
+        <mn>13</mn>
+      </mrow>
+    </msup>
+  </mrow>
+</math> မိုက်ခရိုစက္ကန့် ခန့် ရှိသည်၊ ထို့ကြောင့် ကျွန်ုပ်တို့သည် တစ်မိုက်ခရိုစက္ကန့်လျှင် တစ်ကြိမ် <code>cons</code> ပြုလုပ်မည်ဆိုပါက၊ မှတ်ဉာဏ်မကုန်ဘဲ နှစ်ပေါင်း 30 ခန့် လည်ပတ်နိုင်သော စက်တစ်လုံး တည်ဆောက်ရန် မှတ်ဉာဏ်ဆဲလ် (cells) ပေါင်း <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mn>10</mn>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mn>15</mn>
+    </mrow>
+  </msup>
+</math> ခန့် လိုအပ်မည်ဖြစ်သည်။ ထိုမျှလောက်သော မှတ်ဉာဏ်ပမာဏသည် ယနေ့ခေတ် စံနှုန်းများအရ အဓိပ္ပာယ်မရှိလောက်အောင် ကြီးမားသည်ဟု ထင်ရသော်လည်း၊ ၎င်းသည် ရုပ်ပိုင်းဆိုင်ရာအရ မဖြစ်နိုင်သည်တော့ မဟုတ်ပါ။ အခြားတစ်ဖက်တွင်မူ၊ ပရိုဆက်ဆာများသည် ပိုမိုမြန်ဆန်လာပြီး အနာဂတ်ကွန်ပျူတာတစ်လုံးတွင် မှတ်ဉာဏ်တစ်ခုတည်းအပေါ် ပြိုင်တူ (parallel) အလုပ်လုပ်သော ပရိုဆက်ဆာအမြောက်အမြား ရှိလာနိုင်သောကြောင့်၊ ကျွန်ုပ်တို့ ခန့်မှန်းထားသည်ထက် ပိုမိုမြန်ဆန်စွာ မှတ်ဉာဏ်ကို အသုံးပြုပစ်နိုင်ခြေ ရှိပါသည်။</p>
+</div>
+<div id="FOOT299"><p><a class="footnote_backlink" href="#DOCF299"><sup>299</sup></a>
+ကျွန်ုပ်တို့သည် ဤနေရာတွင် stack ကို <a href="#g_t5_002e3_002e1">5.3.1</a> တွင် ဖော်ပြထားသည့်အတိုင်း စာရင်း (list) တစ်ခုအဖြစ် ကိုယ်စားပြုထားသည်ဟု ယူဆပါသည်၊ ထို့ကြောင့် stack ပေါ်ရှိ အရာဝတ္ထုများကို stack register ရှိ pointer မှတစ်ဆင့် ရယူနိုင်သည်။</p>
+</div>
+<div id="FOOT300"><p><a class="footnote_backlink" href="#DOCF300"><sup>300</sup></a>
+ဤအယူအဆကို Minsky မှ စတင်ဖော်ထုတ်ခဲ့ပြီး <abbr>MIT</abbr> Research Laboratory of Electronics ရှိ PDP-1 အတွက် Lisp အကောင်အထည်ဖော်မှု၏ အစိတ်အပိုင်းတစ်ခုအဖြစ် ပထမဆုံး စတင်အသုံးပြုခဲ့သည်။ ၎င်းကို Multics time-sharing system အတွက် Lisp အကောင်အထည်ဖော်မှုတွင် အသုံးပြုရန် <a href="References.html#Fenichel-and-Yochelson-_00281969_0029">Fenichel and Yochelson (1969)</a> မှ ထပ်မံ တိုးတက်အောင် ပြုလုပ်ခဲ့သည်။ နောက်ပိုင်းတွင် <a href="References.html#Baker-_00281978_0029">Baker (1978)</a> သည် garbage collection လုပ်ဆောင်နေစဉ်အတွင်း တွက်ချက်မှုများ ရပ်တန့်ရန် မလိုသော ဤနည်းလမ်း၏ “real-time” ဗားရှင်းကို ဖော်ထုတ်ခဲ့သည်။ Baker ၏ အယူအဆကို အချို့သော တည်ဆောက်ပုံများသည် ပိုမိုပျက်စီးလွယ်ပြီး အခြားတည်ဆောက်ပုံများသည် ပိုမိုခိုင်မြဲသည်ဟူသော အချက်ကို အသုံးချနိုင်ရန် Hewitt, Lieberman, နှင့် Moon (ကြည့်ပါ <a href="References.html#Lieberman-and-Hewitt-1983">Lieberman and Hewitt 1983</a>) တို့မှ ထပ်မံတိုးချဲ့ခဲ့သည်။
+</p>
+<p>အခြား အသုံးများသော garbage-collection နည်းလမ်းတစ်ခုမှာ <a id="index-mark_002dsweep"></a>
+<em>mark-sweep</em> နည်းလမ်း ဖြစ်သည်။ ၎င်းတွင် စက်၏ register များမှ ရယူနိုင်သော တည်ဆောက်ပုံအားလုံးကို လိုက်လံစစ်ဆေးခြင်း (tracing) နှင့် ကျွန်ုပ်တို့ရောက်ရှိသည့် pair တစ်ခုစီကို မှတ်သားခြင်း (marking) တို့ ပါဝင်သည်။ ထို့နောက် ကျွန်ုပ်တို့သည် မှတ်ဉာဏ်အားလုံးကို စကင်ဖတ် (scan) ပြီး၊ အမှတ်အသားမပါသော မည်သည့်နေရာကိုမဆို အမှိုက် (garbage) အဖြစ် "သိမ်းကျုံးယူငင်" (swept up) ကာ ပြန်လည်အသုံးပြုနိုင်ရန် ပြုလုပ်ပေးပါသည်။ mark-sweep နည်းလမ်းအကြောင်း အပြည့်အစုံကို <a href="References.html#Allen-1978">Allen 1978</a> တွင် ဖတ်ရှုနိုင်သည်။
+</p>
+<p>Minsky-Fenichel-Yochelson algorithm သည် မှတ်ဉာဏ်၏ အသုံးဝင်သော အစိတ်အပိုင်းကိုသာ စစ်ဆေးသောကြောင့် မှတ်ဉာဏ်အများအပြားရှိသော စနစ်များတွင် အဓိကအသုံးပြုသည့် algorithm ဖြစ်သည်။ ၎င်းသည် sweep အဆင့်တွင် မှတ်ဉာဏ်အားလုံးကို စစ်ဆေးရသည့် mark-sweep နှင့် ကွာခြားပါသည်။ stop-and-copy ၏ ဒုတိယမြောက် အားသာချက်မှာ ၎င်းသည် <a id="index-compacting"></a>
+<em>compacting</em> garbage collector တစ်ခု ဖြစ်ခြင်းပင် ဖြစ်သည်။ ဆိုလိုသည်မှာ garbage-collection အဆင့်၏ အဆုံးတွင် အသုံးဝင်သော ဒေတာများကို အမှိုက် pair များအားလုံး ဖယ်ရှားလျက် ဆက်တိုက်ဖြစ်သော မှတ်ဉာဏ်နေရာများသို့ ရွှေ့ပြောင်းပေးမည် ဖြစ်သည်။ အလွန်ဝေးကွာသော မှတ်ဉာဏ်လိပ်စာများကို ရယူခြင်းအတွက် အပို paging လုပ်ဆောင်ချက်များ လိုအပ်နိုင်သော virtual memory ရှိသည့် စက်များတွင် ၎င်းသည် အလွန်အရေးကြီးသော စွမ်းဆောင်ရည်ဆိုင်ရာ ထည့်သွင်းစဉ်းစားစရာ ဖြစ်နိုင်ပါသည်။</p>
+</div>
+<div id="FOOT301"><p><a class="footnote_backlink" href="#DOCF301"><sup>301</sup></a>
+ဤ register စာရင်းတွင် storage-allocation စနစ်မှ အသုံးပြုသော register များ ဖြစ်သည့် — <code>root</code>၊ <code>the-cars</code>၊ <code>the-cdrs</code> နှင့် ဤကဏ္ဍတွင် မိတ်ဆက်မည့် အခြား register များ မပါဝင်ပါ။</p>
+</div>
+<div id="FOOT302"><p><a class="footnote_backlink" href="#DOCF302"><sup>302</sup></a>
+<em>broken heart</em> ဟူသော ဝေါဟာရကို David Cressey က စတင်သုံးစွဲခဲ့ခြင်းဖြစ်ပြီး၊ သူသည် ၁၉၇၀ ပြည့်လွန်နှစ်များ အစောပိုင်းက <abbr>MIT</abbr> တွင် ဖော်ထုတ်ခဲ့သော Lisp ၏ dialect တစ်ခုဖြစ်သည့် MDL အတွက် garbage collector ကို ရေးသားခဲ့သူဖြစ်သည်။</p>
+</div>
+<div id="FOOT303"><p><a class="footnote_backlink" href="#DOCF303"><sup>303</sup></a>
+Garbage collector သည် စာရင်းတည်ဆောက်ပုံဆိုင်ရာ <code>pair?</code> လုပ်ဆောင်ချက်အစား အနိမ့်တန်း ပရီဒီကိတ် (low-level predicate) <code>pointer-to-pair?</code> ကို အသုံးပြုပါသည်၊ အကြောင်းမှာ အစစ်အမှန် စနစ်တစ်ခုတွင် garbage-collection ရည်ရွယ်ချက်အတွက် pair များအဖြစ် သတ်မှတ်ထားသော အရာမျိုးစုံ ရှိနိုင်သောကြောင့် ဖြစ်သည်။ ဥပမာအားဖြင့်၊ <abbr>IEEE</abbr> စံနှုန်းနှင့် ကိုက်ညီသော Scheme စနစ်တစ်ခုတွင် procedure object တစ်ခုကို <code>pair?</code> ပရီဒီကိတ်နှင့် မကိုက်ညီသော အထူး “pair” အမျိုးအစားတစ်ခုအဖြစ် အကောင်အထည်ဖော်နိုင်သည်။ စမ်းသပ်တုပမှု (simulation) ရည်ရွယ်ချက်အတွက် <code>pointer-to-pair?</code> ကို <code>pair?</code> အဖြစ် အကောင်အထည်ဖော်နိုင်သည်။</p>
+</div>
+</div>
+<nav class="header">
+<p>
+Next: <a href="5_002e4.html#g_t5_002e4" accesskey="n" rel="next">5.4</a>, Prev: <a href="5_002e2.html#g_t5_002e2" accesskey="p" rel="prev">5.2</a>, Up: <a href="#g_t5_002e3" accesskey="u" rel="prev">5.3</a>   [<a href="index.html#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+
+
+</section><span class="bottom jump" title="Jump to bottom"><a href="#pagebottom" accesskey="b">⇣</a></span><a id="pagebottom"></a>
+</body>
+</html>

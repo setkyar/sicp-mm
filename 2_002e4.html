@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="my" lang="my">
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>Structure and Interpretation of Computer Programs, 2e: 2.4</title>
+
+<meta name="description" content="Structure and Interpretation of Computer Programs, 2e: 2.4" />
+<meta name="keywords" content="Structure and Interpretation of Computer Programs, 2e: 2.4" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="Generator" content="texi2any" />
+<meta charset="utf-8" />
+<link href="index.html#Top" rel="start" title="Top" />
+<link href="Term-Index.html#Term-Index" rel="index" title="Term Index" />
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents" />
+<link href="Chapter-2.html#Chapter-2" rel="prev" title="Chapter 2" />
+<link href="2_002e5.html#g_t2_002e5" rel="next" title="2.5" />
+<link href="2_002e3.html#g_t2_002e3_002e4" rel="prev" title="2.3.4" />
+
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/prettify.css" rel="stylesheet" type="text/css" />
+
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/footnotes.js" type="text/javascript"></script>
+<script src="js/browsertest.js" type="text/javascript"></script>
+</head>
+
+<body>
+<section><span class="top jump" title="Jump to top"><a href="#pagetop" accesskey="t">⇡</a></span><a id="pagetop"></a><a id="g_t2_002e4"></a>
+<nav class="header">
+<p>
+Next: <a href="2_002e5.html#g_t2_002e5" accesskey="n" rel="next">2.5</a>, Prev: <a href="2_002e3.html#g_t2_002e3" accesskey="p" rel="prev">2.3</a>, Up: <a href="Chapter-2.html#Chapter-2" accesskey="u" rel="prev">Chapter 2</a>   [<a href="index.html#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+<a id="Multiple-Representations-for-Abstract-Data"></a>
+<h3 class="section"><span class="secnum">2.4</span><span class="sectitle">Abstract Data အတွက် ကိုယ်စားပြုပုံ အမျိုးမျိုး</span></h3>
+
+<p>ကျွန်ုပ်တို့သည် data abstraction ဟုခေါ်သော စနစ်များကို ဖွဲ့စည်းသည့် နည်းစနစ်တစ်ခုကို မိတ်ဆက်ပေးခဲ့ပြီး ဖြစ်ပါသည်။ ဤနည်းစနစ်သည် ပရိုဂရမ်တစ်ခုမှ ကိုင်တွယ်အသုံးပြုမည့် ဒေတာအရာဝတ္ထု (data objects) များကို ဖော်ဆောင်ရာတွင် အသုံးပြုသည့် နည်းလမ်းများပေါ်တွင် မမှီခိုဘဲ ပရိုဂရမ်၏ အစိတ်အပိုင်း အတော်များများကို သတ်မှတ်နိုင်ရန် လုပ်ဆောင်ပေးပါသည်။ ဥပမာအားဖြင့်၊ ရာရှင်နယ်ကိန်း (rational numbers) များကို အသုံးပြုသည့် ပရိုဂရမ်တစ်ခုကို ဒီဇိုင်းထုတ်သည့် လုပ်ငန်းနှင့် ရာရှင်နယ်ကိန်းများကို ကွန်ပျူတာဘာသာစကား၏ အခြေခံယန္တရားများဖြင့် ဖော်ဆောင်သည့် လုပ်ငန်းတို့ကို မည်သို့ခွဲခြားရမည်ကို <a href="2_002e1.html#g_t2_002e1_002e1">2.1.1</a> တွင် မြင်တွေ့ခဲ့ရပါသည်။ အဓိက အယူအဆမှာ abstraction barrier တစ်ခု တည်ဆောက်ရန် ဖြစ်သည်။ ဤနေရာတွင် ရာရှင်နယ်ကိန်းများအတွက် selectors နှင့် constructors များ (<code>make-rat</code>၊ <code>numer</code>၊ <code>denom</code>) သည် ရာရှင်နယ်ကိန်းများကို အသုံးပြုပုံနှင့် ၎င်းတို့ကို list structure ဖြင့် ဖော်ဆောင်ထားပုံတို့အကြား သီးခြားစီ ဖြစ်အောင် ခွဲခြားပေးထားပါသည်။ အလားတူ abstraction barrier တစ်ခုသည် ရာရှင်နယ်ကိန်း သင်္ချာလုပ်ဆောင်ချက်များ (<code>add-rat</code>၊ <code>sub-rat</code>၊ <code>mul-rat</code> နှင့် <code>div-rat</code>) ၏ အသေးစိတ်များကို ရာရှင်နယ်ကိန်းများကို အသုံးပြုသည့် “အဆင့်မြင့်” procedures များမှ ခွဲခြားပေးထားသည်။ ရရှိလာသော ပရိုဂရမ်၏ ဖွဲ့စည်းပုံကို <a href="2_002e1.html#Figure-2_002e1">Figure 2.1</a> တွင် ပြသထားသည်။
+</p>
+<p>ဤ data-abstraction barrier များသည် ရှုပ်ထွေးမှုများကို ထိန်းချုပ်ရန်အတွက် အားကောင်းသော ကိရိယာများ ဖြစ်ကြသည်။ ဒေတာအရာဝတ္ထုများ၏ အောက်ခြေဖော်ဆောင်မှုများကို သီးခြားခွဲထုတ်လိုက်ခြင်းဖြင့်၊ ကြီးမားသော ပရိုဂရမ်တစ်ခုကို ဒီဇိုင်းထုတ်သည့် လုပ်ငန်းစဉ်ကို သီးခြားစီ လုပ်ဆောင်နိုင်သော သေးငယ်သည့် လုပ်ငန်းစဉ်များအဖြစ် ခွဲခြမ်းနိုင်ပါသည်။ သို့သော် ဤကဲ့သို့သော data abstraction မျိုးသည် လုံလောက်စွာ အားမကောင်းသေးပါ။ အကြောင်းမှာ ဒေတာအရာဝတ္ထုတစ်ခုအတွက် “အောက်ခြေဖော်ဆောင်မှု” (the underlying representation) တစ်ခုတည်းအကြောင်း ပြောဆိုရန် အမြဲတမ်း မဖြစ်နိုင်သောကြောင့် ဖြစ်သည်။
+</p>
+<p>အကြောင်းတစ်ခုမှာ ဒေတာအရာဝတ္ထုတစ်ခုအတွက် အသုံးဝင်သော ကိုယ်စားပြုပုံ (representation) တစ်ခုထက်မက ရှိနိုင်ပြီး၊ ကိုယ်စားပြုပုံ အမျိုးမျိုး (multiple representations) ကို ကိုင်တွယ်နိုင်သော စနစ်များကို ကျွန်ုပ်တို့ ဒီဇိုင်းထုတ်လိုနိုင်သောကြောင့် ဖြစ်သည်။ ရိုးရှင်းသော ဥပမာတစ်ခုအနေဖြင့်၊ complex numbers (ကိန်းရှုပ်များ) ကို နည်းလမ်းနှစ်မျိုးဖြင့် ဖော်ပြနိုင်သည်- rectangular form (ကိန်းစစ်နှင့် စိတ်ကူးယဉ် အစိတ်အပိုင်းများ) နှင့် polar form (magnitude နှင့် angle) တို့ ဖြစ်ကြသည်။ အချို့သော အခြေအနေများတွင် rectangular form က ပို၍ သင့်လျော်ပြီး အချို့သော အခြေအနေများတွင် polar form က ပို၍ သင့်လျော်ပါသည်။ အမှန်စင်စစ်၊ complex numbers များကို နည်းလမ်းနှစ်မျိုးလုံးဖြင့် ဖော်ပြထားပြီး၊ ၎င်းတို့ကို ကိုင်တွယ်အသုံးပြုသည့် procedures များသည် မည်သည့်ဖော်ပြချက်မျိုးဖြင့်မဆို အလုပ်လုပ်နိုင်သော စနစ်တစ်ခုကို စိတ်ကူးကြည့်ရန်မှာ ဖြစ်နိုင်ခြေ အပြည့်အဝ ရှိပါသည်။
+</p>
+<p>ပို၍အရေးကြီးသည်မှာ ပရိုဂရမ်ရေးဆွဲသည့် စနစ်များကို လူအများအပြားက အချိန်ကြာမြင့်စွာ ဒီဇိုင်းထုတ်ကြရပြီး အချိန်နှင့်အမျှ ပြောင်းလဲလာသော လိုအပ်ချက်များ ရှိတတ်ခြင်း ဖြစ်သည်။ ထိုသို့သော ပတ်ဝန်းကျင်တွင် လူတိုင်းက ဒေတာဖော်ဆောင်ပုံ (data representation) ကို ကြိုတင်၍ သဘောတူညီချက် ရယူထားရန်မှာ မဖြစ်နိုင်ပါ။ ထို့ကြောင့် ဖော်ဆောင်ပုံနှင့် အသုံးပြုပုံကို သီးခြားခွဲထုတ်ထားသော data-abstraction barrier များအပြင်၊ ကွဲပြားသော ဒီဇိုင်းရွေးချယ်မှုများကို တစ်ခုနှင့်တစ်ခု သီးခြားဖြစ်စေပြီး ပရိုဂရမ်တစ်ခုတည်းတွင် ကွဲပြားသော ရွေးချယ်မှုများကို အတူတကွ တည်ရှိခွင့်ပြုသည့် abstraction barrier များလည်း လိုအပ်ပါသည်။ ထို့အပြင်၊ ကြီးမားသော ပရိုဂရမ်များကို သီးခြားစီ ဒီဇိုင်းထုတ်ထားသော ရှိနှင့်ပြီးသား modules များကို ပေါင်းစပ်၍ ဖန်တီးလေ့ရှိသောကြောင့်၊ ပရိုဂရမ်မာများအနေဖြင့် ထို modules များကို ပြန်လည်ဒီဇိုင်းထုတ်ရန် သို့မဟုတ် ပြန်လည်ဖော်ဆောင်ရန် မလိုဘဲ ကြီးမားသော စနစ်များအတွင်းသို့ <a id="index-additively-1"></a>
+<em>ဖြည့်စွက်ကာ</em> (additively) ထည့်သွင်းနိုင်မည့် လုပ်ထုံးလုပ်နည်းများ လိုအပ်ပါသည်။
+</p>
+<p>ဤကဏ္ဍတွင်၊ ပရိုဂရမ်၏ မတူညီသော အစိတ်အပိုင်းများမှ မတူညီသော နည်းလမ်းများဖြင့် ဖော်ပြထားသည့် ဒေတာများကို မည်သို့ကိုင်တွယ်ရမည်ကို လေ့လာကြမည် ဖြစ်သည်။ ဤသည်မှာ <a id="index-generic-procedures-1"></a>
+<em>generic procedures</em>—ဆိုလိုသည်မှာ နည်းလမ်းတစ်ခုထက်မက ဖော်ပြထားသော ဒေတာများအပေါ်တွင် အလုပ်လုပ်နိုင်သော procedures များ တည်ဆောက်ရန် လိုအပ်သည်။ Generic procedures များ တည်ဆောက်ရန် ကျွန်ုပ်တို့၏ အဓိက နည်းပညာမှာ <a id="index-type-tags"></a>
+<em>type tags</em>—ဆိုလိုသည်မှာ ၎င်းတို့ကို မည်သို့ ကိုင်တွယ်ရမည်ဆိုသည့် တိကျသော အချက်အလက်များ ပါဝင်သော ဒေတာအရာဝတ္ထုများကို အသုံးပြုခြင်း ဖြစ်သည်။ ကျွန်ုပ်တို့သည် <a id="index-data_002ddirected"></a>
+<em>data-directed</em> programming ဟုခေါ်သော generic လုပ်ဆောင်ချက်များပါရှိသော စနစ်များကို ဖြည့်စွက်စုစည်းရန်အတွက် အားကောင်းပြီး အဆင်ပြေသော နည်းဗျူဟာတစ်ခုအကြောင်းကိုလည်း ဆွေးနွေးပါမည်။
+</p>
+<p>ကျွန်ုပ်တို့သည် ရိုးရှင်းသော complex-number ဥပမာဖြင့် စတင်ပါမည်။ Type tags များနှင့် data-directed ပုံစံများက complex numbers များအတွက် abstract “complex-number” ဒေတာအရာဝတ္ထုဟူသော အယူအဆကို ထိန်းသိမ်းထားစဉ်မှာပင်၊ သီးခြားစီဖြစ်သော rectangular နှင့် polar ဖော်ဆောင်မှုများကို မည်သို့ ဒီဇိုင်းထုတ်နိုင်သည်ကို မြင်တွေ့ရမည် ဖြစ်သည်။ ကျွန်ုပ်တို့သည် ကိန်းရှုပ်များ (complex numbers) အတွက် သင်္ချာလုပ်ဆောင်ချက်များကို (<code>add-complex</code>၊ <code>sub-complex</code>၊ <code>mul-complex</code> နှင့် <code>div-complex</code>)၊ ကိန်းရှုပ်တစ်ခုကို မည်သို့ပင် ဖော်ပြထားစေကာမူ ၎င်း၏ အစိတ်အပိုင်းများကို ရယူနိုင်သော generic selectors များကို အသုံးပြု၍ သတ်မှတ်ခြင်းဖြင့် ဤအရာကို လုပ်ဆောင်ပါမည်။ ရရှိလာသော complex-number စနစ်တွင်၊ <a href="#Figure-2_002e19">Figure 2.19</a> ၌ ပြထားသည့်အတိုင်း မတူညီသော abstraction barrier အမျိုးအစား နှစ်မျိုး ပါဝင်ပါသည်။ “ရေပြင်ညီ” abstraction barrier များသည် <a href="2_002e1.html#Figure-2_002e1">Figure 2.1</a> ရှိ အတားအဆီးများကဲ့သို့ပင် တူညီသော အခန်းကဏ္ဍမှ ပါဝင်ပါသည်။ ၎င်းတို့သည် “အဆင့်မြင့်” လုပ်ဆောင်ချက်များကို “အောက်ခြေ” ဖော်ဆောင်မှုများမှ သီးခြားခွဲထုတ်ပေးပါသည်။ ထို့အပြင်၊ အခြားသော ဖော်ဆောင်မှုများကို သီးခြားစီ ဒီဇိုင်းထုတ်ရန်နှင့် ထည့်သွင်းရန် အခွင့်အရေးပေးသည့် “ဒေါင်လိုက်” အတားအဆီးတစ်ခုလည်း ရှိပါသည်။
+</p>
+<figure class="float">
+<a id="Figure-2_002e19"></a>
+<object style="width: 40.41ex; height: 33.41ex;" data="fig/chap2/Fig2.19a.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>Figure 2.19:</strong> Complex-number စနစ်ရှိ Data-abstraction barrier များ။</p>
+</figcaption>
+</figure>
+
+<p><a href="2_002e5.html#g_t2_002e5">2.5</a> တွင်၊ generic arithmetic package တစ်ခုကို တည်ဆောက်ရန် type tags နှင့် data-directed ပုံစံကို မည်သို့ အသုံးပြုရမည်ကို ပြသပါမည်။ ဤသည်က “ကိန်းဂဏန်း” အမျိုးမျိုးကို ကိုင်တွယ်ရန် အသုံးပြုနိုင်ပြီး၊ ကိန်းဂဏန်း အမျိုးအစားသစ် လိုအပ်လာပါက လွယ်ကူစွာ တိုးချဲ့နိုင်သော procedures များ (<code>add</code>၊ <code>mul</code> စသည်ဖြင့်) ကို ပံ့ပိုးပေးပါသည်။ <a href="2_002e5.html#g_t2_002e5_002e3">2.5.3</a> တွင်၊ symbolic algebra လုပ်ဆောင်သော စနစ်တစ်ခုတွင် generic arithmetic ကို မည်သို့ အသုံးပြုရမည်ကို ပြသပါမည်။
+</p>
+
+<a id="g_t2_002e4_002e1"></a>
+<a id="Representations-for-Complex-Numbers"></a>
+<h4 class="subsection"><span class="secnum">2.4.1</span><span class="sectitle">ကိန်းရှုပ်များကို ကိုယ်စားပြုခြင်းများ</span></h4>
+
+<p>ကျွန်ုပ်တို့သည် generic operations ကို အသုံးပြုသော ပရိုဂရမ်တစ်ခု၏ ရိုးရှင်းသော်လည်း လက်တွေ့မကျသော ဥပမာတစ်ခုအနေဖြင့် ကိန်းရှုပ်များအပေါ် သင်္ချာဆိုင်ရာ လုပ်ဆောင်ချက်များ (arithmetic operations) ကို လုပ်ဆောင်ပေးသည့် စနစ်တစ်ခုကို တည်ဆောက်ပါမည်။
+ကျွန်ုပ်တို့သည် ကိန်းရှုပ်များကို အစဉ်လိုက်စုံ (ordered pairs) များအဖြစ် ကိုယ်စားပြုနိုင်သော ဖြစ်နိုင်ခြေရှိသည့် ပုံစံနှစ်မျိုးဖြင့် စတင်ဆွေးနွေးပါမည်။ ၎င်းတို့မှာ rectangular form (ကိန်းစစ်အပိုင်းနှင့် စိတ်ကူးယဉ်အပိုင်း) နှင့် polar form (magnitude နှင့် angle) တို့ ဖြစ်ကြသည်။<a class="footnote_link" id="DOCF109" href="#FOOT109"><sup>109</sup></a>  
+အပိုင်း <a href="#g_t2_002e4_002e2">2.4.2</a> တွင် type tags နှင့် generic operations များကို အသုံးပြုခြင်းဖြင့် ကိုယ်စားပြုပုံ နှစ်မျိုးလုံးကို စနစ်တစ်ခုတည်းတွင် မည်သို့ အတူယှဉ်တွဲ တည်ရှိစေနိုင်ကြောင်း ဖော်ပြပါမည်။
+</p>
+<p>ရာရှင်နယ်ကိန်းများ (rational numbers) ကဲ့သို့ပင်၊ ကိန်းရှုပ်များကို သဘာဝအတိုင်း အစဉ်လိုက်စုံများအဖြစ် ကိုယ်စားပြုကြသည်။ ကိန်းရှုပ်များ၏ အစုကို “ကိန်းစစ်” ဝင်ရိုးနှင့် “စိတ်ကူးယဉ်” ဝင်ရိုးဟူ၍ ထောင့်မတ်ကျသော ဝင်ရိုးနှစ်ခုရှိသည့် နှစ်ဘက်မြင် ဟင်းလင်းပြင် (two-dimensional space) တစ်ခုအဖြစ် ယူဆနိုင်သည်။ (<a href="#Figure-2_002e20">ပုံ ၂.၂၀</a> ကို ကြည့်ပါ။) ဤရှုထောင့်မှကြည့်လျှင် ကိန်းရှုပ် 
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>z</mi>
+    <mo>=</mo>
+    <mi>x</mi>
+    <mo>+</mo>
+    <mi>i</mi>
+    <mi>y</mi>
+  </mrow>
+</math> (ဤနေရာတွင် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <msup>
+      <mi>i</mi>
+      <mrow class="MJX-TeXAtom-ORD">
+        <mspace width="0.1em"/>
+        <mn>2</mn>
+      </mrow>
+    </msup>
+    <mo>=</mo>
+    <mtext>−1</mtext>
+  </mrow>
+</math> ဖြစ်သည်) ကို ကိန်းစစ် တည်နေရာ (real coordinate) သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> ဖြစ်ပြီး စိတ်ကူးယဉ် တည်နေရာ (imaginary coordinate) သည် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>y</mi>
+</math> ဖြစ်သော ပြင်ညီပေါ်မှ အမှတ်တစ်ခုအဖြစ် ယူဆနိုင်သည်။
+ဤကိုယ်စားပြုပုံတွင် ကိန်းရှုပ်များကို ပေါင်းခြင်းသည် တည်နေရာများကို ပေါင်းခြင်းသို့ လျှော့ချနိုင်သည် -
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mtable columnalign="right center left" rowspacing="3pt" columnspacing="thickmathspace">
+    <mtr>
+      <mtd>
+        <mtext>ကိန်းစစ်အပိုင်း</mtext>
+        <mo stretchy="false">(</mo>
+        <msub>
+          <mi>z</mi>
+          <mn>1</mn>
+        </msub>
+        <mo>+</mo>
+        <msub>
+          <mi>z</mi>
+          <mn>2</mn>
+        </msub>
+        <mo stretchy="false">)</mo>
+      </mtd>
+      <mtd>
+        <mo>=</mo>
+      </mtd>
+      <mtd>
+        <mtext>ကိန်းစစ်အပိုင်း</mtext>
+        <mo stretchy="false">(</mo>
+        <msub>
+          <mi>z</mi>
+          <mn>1</mn>
+        </msub>
+        <mo stretchy="false">)</mo>
+        <mo>+</mo>
+      </mtd>
+    </mtr>
+    <mtr>
+      <mtd/>
+      <mtd/>
+      <mtd>
+        <mtext>ကိန်းစစ်အပိုင်း</mtext>
+        <mo stretchy="false">(</mo>
+        <msub>
+          <mi>z</mi>
+          <mn>2</mn>
+        </msub>
+        <mo stretchy="false">)</mo>
+        <mo>,</mo>
+      </mtd>
+    </mtr>
+    <mtr>
+      <mtd>
+        <mtext>စိတ်ကူးယဉ်အပိုင်း</mtext>
+        <mo stretchy="false">(</mo>
+        <msub>
+          <mi>z</mi>
+          <mn>1</mn>
+        </msub>
+        <mo>+</mo>
+        <msub>
+<h4 class="subsection"><span class="secnum">2.4.2</span><span class="sectitle">Tag လုပ်ထားသော အချက်အလက်များ</span></h4>
+
+<p>Data abstraction ကို ရှုမြင်နိုင်သည့် နည်းလမ်းတစ်ခုမှာ “principle of least commitment” (အနည်းဆုံး ကတိကဝတ်ပြုခြင်း နိယာမ) ကို အသုံးချခြင်းပင် ဖြစ်သည်။ <a href="#g_t2_002e4_002e1">2.4.1</a> ရှိ complex-number စနစ်ကို အကောင်အထည်ဖော်ရာတွင် Ben ၏ rectangular representation သို့မဟုတ် Alyssa ၏ polar representation နှစ်သက်ရာကို အသုံးပြုနိုင်သည်။ selectors နှင့် constructors များဖြင့် ဖွဲ့စည်းထားသော abstraction barrier သည် ကျွန်ုပ်တို့၏ data object များအတွက် ခိုင်မာသော ကိုယ်စားပြုမှုပုံစံ (concrete representation) ကို ရွေးချယ်ခြင်းအား နောက်ဆုံး ဖြစ်နိုင်သမျှ အချိန်အထိ ဆိုင်းငံ့ထားနိုင်ရန် ခွင့်ပြုပေးသဖြင့် စနစ် ဒီဇိုင်းတွင် အမြင့်ဆုံး ပြောင်းလွယ်ပြင်လွယ်ရှိမှုကို ထိန်းသိမ်းထားနိုင်သည်။
+</p>
+<p>principle of least commitment ကို ပိုမိုပြင်းထန်သော အခြေအနေများအထိ ဆက်လက် အသုံးပြုနိုင်သည်။ ကျွန်ုပ်တို့ ဆန္ဒရှိပါက selectors နှင့် constructors များကို ဒီဇိုင်းဆွဲပြီးသည့် <em>နောက်တွင်ပင်</em> ကိုယ်စားပြုမှုပုံစံ၏ မရေရာမှုကို ဆက်လက်ထားရှိနိုင်ပြီး Ben ၏ ကိုယ်စားပြုမှုပုံစံ <em>ရော</em> Alyssa ၏ ကိုယ်စားပြုမှုပုံစံကိုပါ အသုံးပြုရန် ရွေးချယ်နိုင်သည်။ သို့သော် ကိုယ်စားပြုမှုပုံစံ နှစ်မျိုးလုံးကို စနစ်တစ်ခုတည်းတွင် ထည့်သွင်းထားပါက polar ပုံစံရှိ ဒေတာနှင့် rectangular ပုံစံရှိ ဒေတာများကို ခွဲခြားရန် နည်းလမ်းတစ်ခု လိုအပ်မည်ဖြစ်သည်။ သို့မဟုတ်ပါက ဥပမာအားဖြင့် (3, 4) အတွဲ၏ <code>magnitude</code> ကို ရှာခိုင်းလျှင် အဖြေမှာ 5 (rectangular ပုံစံဟု ယူဆလျှင်) လား သို့မဟုတ် 3 (polar ပုံစံဟု ယူဆလျှင်) လား ဆိုသည်ကို ကျွန်ုပ်တို့ သိနိုင်မည် မဟုတ်ပေ။ ဤခွဲခြားမှုကို ပြုလုပ်နိုင်ရန် ရိုးရှင်းသော နည်းလမ်းတစ်ခုမှာ complex number တစ်ခုစီ၏ အစိတ်အပိုင်းတစ်ခုအဖြစ် <a id="index-type-tag"></a>
+<em>type tag</em> (အမျိုးအစား တံဆိပ်) — <code>rectangular</code> သို့မဟုတ် <code>polar</code> ဆိုသည့် သင်္ကေတ — ကို ထည့်သွင်းခြင်း ဖြစ်သည်။ ထိုအခါ complex number တစ်ခုကို ကိုင်တွယ်ဖြေရှင်းရန် လိုအပ်သည့်အခါ မည်သည့် selector ကို အသုံးပြုရမည်ကို ဆုံးဖြတ်ရန် ထို tag ကို အသုံးပြုနိုင်သည်။
+</p>
+<p>tag လုပ်ထားသော အချက်အလက်များကို ကိုင်တွယ်ရန်အတွက်၊ data object တစ်ခုမှ tag နှင့် အမှန်တကယ် ပါဝင်သော အချက်အလက် (complex number တစ်ခုတွင်ဆိုလျှင် polar သို့မဟုတ် rectangular ကိုဩဒိနိတ်များ) ကို ထုတ်ယူပေးသည့် <code>type-tag</code> နှင့် <code>contents</code> ဆိုသည့် procedures များ ရှိသည်ဟု ယူဆပါမည်။ tag တစ်ခုနှင့် ပါဝင်သော အချက်အလက်များကို ယူပြီး tag လုပ်ထားသော data object တစ်ခုကို ထုတ်ပေးသည့် <code>attach-tag</code> ဆိုသည့် procedure တစ်ခု ရှိသည်ဟုလည်း ယူဆပါမည်။ ၎င်းကို အကောင်အထည်ဖော်ရန် ရိုးရှင်းသော နည်းလမ်းမှာ သာမန် list တည်ဆောက်ပုံကို အသုံးပြုခြင်း ဖြစ်သည်:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">attach-tag type-tag contents</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> type-tag contents</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">type-tag datum</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">pair? datum</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> datum</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Bad tagged datum: 
+              TYPE-TAG"</span><span class="pln"> datum</span><span class="clo">)))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">contents datum</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">pair? datum</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> datum</span><span class="clo">)</span><span class="pln">
+      </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Bad tagged datum: 
+              CONTENTS"</span><span class="pln"> datum</span><span class="clo">)))</span></pre></div>
+
+<p>ဤ procedures များကို အသုံးပြုပြီး rectangular နှင့် polar ကိန်းများကို အသီးသီး ခွဲခြားသိရှိနိုင်သော predicates များဖြစ်သည့် <code>rectangular?</code> နှင့် <code>polar?</code> တို့ကို သတ်မှတ်နိုင်သည်:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">rectangular? z</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> </span><span class="opn">(</span><span class="pln">type-tag z</span><span class="clo">)</span><span class="pln"> </span><span class="lit">'rectangular</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">polar? z</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> </span><span class="opn">(</span><span class="pln">type-tag z</span><span class="clo">)</span><span class="pln"> </span><span class="lit">'polar</span><span class="clo">))</span></pre></div>
+
+<p>type tags များကို အသုံးပြုခြင်းဖြင့် Ben နှင့် Alyssa တို့သည် ၎င်းတို့၏ မတူညီသော ကိုယ်စားပြုမှုပုံစံ နှစ်မျိုးစလုံး စနစ်တစ်ခုတည်းတွင် အတူတကွ တည်ရှိနိုင်စေရန် ၎င်းတို့၏ ကုဒ်များကို ပြင်ဆင်နိုင်သည်။ Ben က complex number တစ်ခုကို တည်ဆောက်သည့်အခါတိုင်း ၎င်းကို rectangular အဖြစ် tag လုပ်သည်။ Alyssa က complex number တစ်ခုကို တည်ဆောက်သည့်အခါတိုင်း ၎င်းကို polar အဖြစ် tag လုပ်သည်။ ထို့အပြင် Ben နှင့် Alyssa တို့သည် ၎င်းတို့၏ procedures အမည်များ တစ်ခုနှင့်တစ်ခု ထပ်မနေစေရန် (conflict မဖြစ်စေရန်) သေချာအောင် ပြုလုပ်ရမည်။ ဤသို့ ပြုလုပ်နိုင်သည့် နည်းလမ်းတစ်ခုမှာ Ben က သူ၏ ကိုယ်စားပြုမှု procedure တစ်ခုစီ၏ အမည်တွင် <code>rectangular</code> နောက်ဆက်တွဲကို ထည့်သွင်းရန်နှင့် Alyssa က သူမ၏ procedures အမည်များတွင် <code>polar</code> ကို ထည့်သွင်းရန် ဖြစ်သည်။ <a href="#g_t2_002e4_002e1">2.4.1</a> မှ ပြန်လည်ပြင်ဆင်ထားသော Ben ၏ rectangular ကိုယ်စားပြုမှုပုံစံမှာ အောက်ပါအတိုင်း ဖြစ်သည်:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">real-part-rectangular z</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> z</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">imag-part-rectangular z</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> z</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">magnitude-rectangular z</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">sqrt </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square </span><span class="opn">(</span><span class="pln">real-part-rectangular z</span><span class="clo">))</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">square </span><span class="opn">(</span><span class="pln">imag-part-rectangular z</span><span class="clo">)))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">angle-rectangular z</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">atan </span><span class="opn">(</span><span class="pln">imag-part-rectangular z</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">(</span><span class="pln">real-part-rectangular z</span><span class="clo">)))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-from-real-imag-rectangular x y</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">attach-tag </span><span class="lit">'rectangular</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> x y</span><span class="clo">)))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-from-mag-ang-rectangular r a</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">attach-tag 
+   </span><span class="lit">'rectangular</span><span class="pln">
+   </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> r </span><span class="opn">(</span><span class="pln">cos a</span><span class="clo">))</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> r </span><span class="opn">(</span><span class="pln">sin a</span><span class="clo">)))))</span></pre></div>
+
+<p>Alyssa ၏ ပြန်လည်ပြင်ဆင်ထားသော polar ကိုယ်စားပြုမှုပုံစံမှာ ဤတွင်ဖြစ်သည်:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">real-part-polar z</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">magnitude-polar z</span><span class="clo">)</span><span class="pln"> 
+     </span><span class="opn">(</span><span class="pln">cos </span><span class="opn">(</span><span class="pln">angle-polar z</span><span class="clo">))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">imag-part-polar z</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">magnitude-polar z</span><span class="clo">)</span><span class="pln"> 
+     </span><span class="opn">(</span><span class="pln">sin </span><span class="opn">(</span><span class="pln">angle-polar z</span><span class="clo">))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">magnitude-polar z</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> z</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">angle-polar z</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> z</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-from-real-imag-polar x y</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">attach-tag 
+   </span><span class="lit">'polar</span><span class="pln">
+   </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sqrt </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square y</span><span class="clo">)))</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">atan y x</span><span class="clo">))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-from-mag-ang-polar r a</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">attach-tag </span><span class="lit">'polar</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> r a</span><span class="clo">)))</span></pre></div>
+
+<p>generic selector တစ်ခုစီကို ၎င်း၏ argument ပါ tag ကို စစ်ဆေးပြီး ထိုအမျိုးအစား ဒေတာကို ကိုင်တွယ်ရန် သင့်လျော်သော procedure ကို ခေါ်ယူပေးသည့် procedure တစ်ခုအဖြစ် အကောင်အထည်ဖော်ထားသည်။ ဥပမာအားဖြင့် complex number တစ်ခု၏ real part ကို ရယူရန်အတွက် <code>real-part</code> သည် Ben ၏ <code>real-part-rectangular</code> ကို သုံးရမည်လား သို့မဟုတ် Alyssa ၏ <code>real-part-polar</code> ကို သုံးရမည်လား ဆိုသည်ကို ဆုံးဖြတ်ရန် tag ကို စစ်ဆေးသည်။ အခြေအနေ နှစ်ရပ်လုံးတွင် ကျွန်ုပ်တို့သည် tag မပါသော ဒေတာသက်သက်ကို ထုတ်ယူရန် <code>contents</code> ကို အသုံးပြုပြီး လိုအပ်သလို rectangular သို့မဟုတ် polar procedure သို့ ပေးပို့သည်:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">real-part z</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pln">rectangular? z</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">real-part-rectangular </span><span class="opn">(</span><span class="pln">contents z</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">((</span><span class="pln">polar? z</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">real-part-polar </span><span class="opn">(</span><span class="pln">contents z</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Unknown type: 
+               REAL-PART"</span><span class="pln"> z</span><span class="clo">))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">imag-part z</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pln">rectangular? z</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">imag-part-rectangular </span><span class="opn">(</span><span class="pln">contents z</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">((</span><span class="pln">polar? z</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">imag-part-polar </span><span class="opn">(</span><span class="pln">contents z</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Unknown type: 
+               IMAG-PART"</span><span class="pln"> z</span><span class="clo">))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">magnitude z</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pln">rectangular? z</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">magnitude-rectangular </span><span class="opn">(</span><span class="pln">contents z</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">((</span><span class="pln">polar? z</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">magnitude-polar </span><span class="opn">(</span><span class="pln">contents z</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Unknown type: 
+               MAGNITUDE"</span><span class="pln"> z</span><span class="clo">))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">angle z</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pln">rectangular? z</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">angle-rectangular </span><span class="opn">(</span><span class="pln">contents z</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">((</span><span class="pln">polar? z</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">angle-polar </span><span class="opn">(</span><span class="pln">contents z</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Unknown type: 
+               ANGLE"</span><span class="pln"> z</span><span class="clo">))))</span></pre></div>
+
+<p>complex-number သင်္ချာဆိုင်ရာ လုပ်ဆောင်ချက်များကို အကောင်အထည်ဖော်ရန်အတွက် <a href="#g_t2_002e4_002e1">2.4.1</a> မှ <code>add-complex</code>, <code>sub-complex</code>, <code>mul-complex</code>, နှင့် <code>div-complex</code> procedures များကိုပင် အသုံးပြုနိုင်သည်။ အကြောင်းမှာ ၎င်းတို့ခေါ်ယူသော selectors များသည် generic ဖြစ်သောကြောင့် ကိုယ်စားပြုမှုပုံစံ နှစ်မျိုးလုံးနှင့် အလုပ်လုပ်မည် ဖြစ်သည်။ ဥပမာအားဖြင့် <code>add-complex</code> procedure မှာ ယခင်အတိုင်းပင် ဖြစ်သည်:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">add-complex z1 z2</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">make-from-real-imag 
+   </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">real-part z1</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">real-part z2</span><span class="clo">))</span><span class="pln">
+   </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">imag-part z1</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">imag-part z2</span><span class="clo">))))</span></pre></div>
+
+<p>နောက်ဆုံးအနေနှင့် ကျွန်ုပ်တို့သည် complex numbers များကို Ben ၏ ကိုယ်စားပြုမှုပုံစံကို သုံး၍ တည်ဆောက်မည်လား သို့မဟုတ် Alyssa ၏ ကိုယ်စားပြုမှုပုံစံကို သုံးမည်လား ဆိုသည်ကို ရွေးချယ်ရမည်။ သင့်လျော်သော ရွေးချယ်မှုတစ်ခုမှာ ကျွန်ုပ်တို့တွင် real part နှင့် imaginary part များ ရှိသည့်အခါ rectangular ကိန်းများကို တည်ဆောက်ရန်နှင့် magnitude နှင့် angle များ ရှိသည့်အခါ polar ကိန်းများကို တည်ဆောက်ရန် ဖြစ်သည်:
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-from-real-imag x y</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">make-from-real-imag-rectangular x y</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-from-mag-ang r a</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">make-from-mag-ang-polar r a</span><span class="clo">))</span></pre></div>
+
+<p>ထွက်ပေါ်လာသော complex-number စနစ်တွင် <a href="#Figure-2_002e21">Figure 2.21</a> တွင် ပြထားသော တည်ဆောက်ပုံ ရှိသည်။ ဤစနစ်ကို အပြန်အလှန် မှီခိုမှု နည်းပါးသော အစိတ်အပိုင်း သုံးခုအဖြစ် ခွဲထုတ်ထားသည်: complex-number သင်္ချာဆိုင်ရာ လုပ်ဆောင်ချက်များ၊ Alyssa ၏ polar အကောင်အထည်ဖော်မှုနှင့် Ben ၏ rectangular အကောင်အထည်ဖော်မှုတို့ ဖြစ်သည်။ polar နှင့် rectangular အကောင်အထည်ဖော်မှုများကို Ben နှင့် Alyssa တို့က သီးခြားစီ ရေးသားနိုင်ပြီး၊ တတိယမြောက် ပရိုဂရမ်မာ တစ်ဦးက abstract constructor/selector interface ကို အသုံးပြု၍ complex-arithmetic procedures များကို အကောင်အထည်ဖော်ရာတွင် ယင်းတို့ နှစ်ခုလုံးကို အခြေခံ ကိုယ်စားပြုမှုပုံစံများအဖြစ် အသုံးပြုနိုင်သည်။
+</p>
+<figure class="float">
+<a id="Figure-2_002e21"></a>
+<object style="width: 65.01ex; height: 33.59ex;" data="fig/chap2/Fig2.21a.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>Figure 2.21:</strong> Generic complex-arithmetic စနစ်၏ တည်ဆောက်ပုံ။</p>
+</figcaption>
+</figure>
+
+<p>data object တစ်ခုစီကို ၎င်း၏ အမျိုးအစားဖြင့် tag လုပ်ထားသောကြောင့် selectors များသည် ဒေတာများအပေါ် ယေဘုယျကျသော နည်းလမ်း (generic manner) ဖြင့် လုပ်ဆောင်သည်။ ဆိုလိုသည်မှာ selector တစ်ခုစီသည် ၎င်းကို အသုံးပြုသည့် ဒေတာ အမျိုးအစားအပေါ် မူတည်၍ ကွဲပြားသော လုပ်ဆောင်ချက်များ ရှိရန် သတ်မှတ်ထားသည်။ သီးခြား ကိုယ်စားပြုမှုပုံစံများကို ချိတ်ဆက်ပေးသည့် ယေဘုယျ ယန္တရားကို သတိပြုပါ- ပေးထားသော ကိုယ်စားပြုမှု အကောင်အထည်ဖော်မှုတစ်ခုအတွင်း (ဥပမာ Alyssa ၏ polar package) တွင် complex number တစ်ခုသည် type မပါသော pair (magnitude, angle) တစ်ခု ဖြစ်သည်။ generic selector တစ်ခုသည် <code>polar</code> အမျိုးအစား ကိန်းတစ်ခုအပေါ် လုပ်ဆောင်သည့်အခါ ၎င်းသည် tag ကို ဖယ်ရှားပြီး ပါဝင်သော အချက်အလက် (contents) ကို Alyssa ၏ ကုဒ်သို့ လွှဲပြောင်းပေးသည်။ ဆန့်ကျင်ဘက်အားဖြင့် Alyssa သည် အများသုံးရန်အတွက် ကိန်းတစ်ခုကို တည်ဆောက်သောအခါ၊ ၎င်းကို အဆင့်မြင့် procedures များက သင့်လျော်သလို ခွဲခြားသိရှိနိုင်ရန် အမျိုးအစား tag တစ်ခု ကပ်ပေးသည်။ data object များသည် အဆင့်တစ်ခုမှ တစ်ခုသို့ ဖြတ်သန်းသွားသည့်အခါ tag များကို ဖယ်ရှားခြင်းနှင့် တွဲကပ်ခြင်းဆိုင်ရာ ဤစည်းကမ်းသည် အရေးကြီးသော ဖွဲ့စည်းပုံဆိုင်ရာ မဟာဗျူဟာ တစ်ခု ဖြစ်နိုင်ကြောင်း <a href="2_002e5.html#g_t2_002e5">2.5</a> တွင် ကျွန်ုပ်တို့ မြင်တွေ့ရမည်ဖြစ်သည်။
+</p>
+<a id="g_t2_002e4_002e3"></a>
+<a id="Data_002dDirected-Programming-and-Additivity"></a>
+<h4 class="subsection"><span class="secnum">2.4.3</span><span class="sectitle">Data-Directed Programming နှင့် ပေါင်းစပ်နိုင်စွမ်း (Additivity)</span></h4>
+
+<p>ဒေတာတစ်ခု၏ အမျိုးအစားကို စစ်ဆေးပြီး သင့်လျော်သော လုပ်ထုံးလုပ်နည်း (procedure) ကို ခေါ်ယူခြင်းဟူသည့် ယေဘုယျဗျူဟာကို <a id="index-dispatching-on-type"></a>
+<em>အမျိုးအစားအပေါ်မူတည်၍ ခွဲဝေလုပ်ဆောင်ခြင်း (dispatching on type)</em> ဟု ခေါ်သည်။ ၎င်းသည် စနစ်ဒီဇိုင်းတွင် မော်ဂျူးပုံစံ (modularity) ရရှိရန်အတွက် အစွမ်းထက်သော ဗျူဟာတစ်ခု ဖြစ်သည်။ အခြားတစ်ဖက်တွင်မူ၊ <a href="#g_t2_002e4_002e2">2.4.2</a> တွင်ကဲ့သို့ ခွဲဝေလုပ်ဆောင်မှုကို အကောင်အထည်ဖော်ခြင်းတွင် သိသာထင်ရှားသော အားနည်းချက်နှစ်ခု ရှိသည်။ အားနည်းချက်တစ်ခုမှာ ယေဘုယျ အင်တာဖေ့စ် လုပ်ထုံးလုပ်နည်းများ (<code>real-part</code>၊ <code>imag-part</code>၊ <code>magnitude</code> နှင့် <code>angle</code>) သည် ကွဲပြားသော ကိုယ်စားပြုပုံဖော်မှု (representation) အားလုံးအကြောင်းကို သိရှိထားရခြင်း ဖြစ်သည်။ ဥပမာအားဖြင့်၊ ကျွန်ုပ်တို့၏ ကိန်းရှုပ်စနစ် (complex-number system) ထဲသို့ ကိန်းရှုပ်များအတွက် ကိုယ်စားပြုပုံဖော်မှုအသစ်တစ်ခု ထည့်သွင်းလိုသည်ဟု ဆိုပါစို့။ ကျွန်ုပ်တို့သည် ဤကိုယ်စားပြုပုံဖော်မှုအသစ်ကို အမျိုးအစား (type) တစ်ခုအဖြစ် သတ်မှတ်ပေးရန် လိုအပ်မည်ဖြစ်ပြီး၊ ထို့နောက် ယေဘုယျ အင်တာဖေ့စ် လုပ်ထုံးလုပ်နည်း တစ်ခုချင်းစီတွင် အမျိုးအစားအသစ်ကို စစ်ဆေးရန်နှင့် ထိုကိုယ်စားပြုပုံဖော်မှုအတွက် သင့်လျော်သော ရွေးချယ်ကိရိယာ (selector) ကို အသုံးပြုရန် clause တစ်ခု ထပ်ပေါင်းထည့်ရန် လိုအပ်မည်ဖြစ်သည်။
+</p>
+<p>ဤနည်းပညာ၏ နောက်ထပ်အားနည်းချက်တစ်ခုမှာ တစ်ခုချင်းစီစီ၏ ကိုယ်စားပြုပုံဖော်မှုများကို သီးခြားစီ ဒီဇိုင်းဆွဲနိုင်သော်လည်း၊ စနစ်တစ်ခုလုံးတွင် မည်သည့်လုပ်ထုံးလုပ်နည်းနှစ်ခုမျှ အမည်တူမရှိစေရန် ကျွန်ုပ်တို့ အာမခံရမည် ဖြစ်သည်။ ထို့ကြောင့် Ben နှင့် Alyssa တို့သည် သူတို့၏ မူလလုပ်ထုံးလုပ်နည်းများ၏ အမည်များကို <a href="#g_t2_002e4_002e1">2.4.1</a> မှ ပြောင်းလဲခဲ့ကြရခြင်း ဖြစ်သည်။
+</p>
+<p>ဤအားနည်းချက်နှစ်ခုလုံး၏ နောက်ကွယ်မှ ပြဿနာမှာ ယေဘုယျ အင်တာဖေ့စ်များကို အကောင်အထည်ဖော်သည့် နည်းပညာသည် <a id="index-additive"></a>
+<em>ပေါင်းစပ်နိုင်စွမ်း (additive)</em> မရှိခြင်း ဖြစ်သည်။ ယေဘုယျ ရွေးချယ်ကိရိယာ လုပ်ထုံးလုပ်နည်းများကို အကောင်အထည်ဖော်သူသည် ကိုယ်စားပြုပုံဖော်မှုအသစ်တစ်ခုကို ထည့်သွင်းတိုင်း ထိုလုပ်ထုံးလုပ်နည်းများကို ပြင်ဆင်ရမည်ဖြစ်ပြီး၊ တစ်ခုချင်းစီစီ၏ ကိုယ်စားပြုပုံဖော်မှုများကို ချိတ်ဆက်ပေးသူများသည်လည်း အမည်တူပဋိပက္ခ (name conflict) များမဖြစ်စေရန် သူတို့၏ ကုဒ်များကို ပြင်ဆင်ရမည် ဖြစ်သည်။ ဤအခြေအနေတစ်ခုချင်းစီတွင်၊ ကုဒ်၌ ပြုလုပ်ရမည့် ပြောင်းလဲမှုများသည် ရိုးရှင်းသော်လည်း မလွဲမသွေ ပြုလုပ်ရမည်ဖြစ်ပြီး၊ ၎င်းသည် အဆင်မပြေမှုနှင့် အမှားအယွင်းများ ဖြစ်ပေါ်စေသည့် အရင်းအမြစ်တစ်ခု ဖြစ်သည်။ ဤအချက်သည် လက်ရှိရှိနေသည့် ကိန်းရှုပ်စနစ်အတွက် သိပ်ပြဿနာမဟုတ်သော်လည်း၊ ကိန်းရှုပ်များအတွက် ကိုယ်စားပြုပုံဖော်မှုပေါင်း နှစ်ခုမကဘဲ ရာနှင့်ချီရှိနေသည်ဟု ဆိုပါစို့။ ထို့ပြင် abstract-data interface တွင် ထိန်းသိမ်းရမည့် ယေဘုယျ ရွေးချယ်ကိရိယာများစွာ ရှိနေသည်ဟု ဆိုပါစို့။ အမှန်စင်စစ်၊ မည်သည့် ပရိုဂရမ်မာတစ်ဦးမျှ အင်တာဖေ့စ် လုပ်ထုံးလုပ်နည်းအားလုံး သို့မဟုတ် ကိုယ်စားပြုပုံဖော်မှုအားလုံးကို မသိရှိဟု ဆိုပါစို့။ ဤပြဿနာသည် အမှန်တကယ်ရှိနေပြီး အကြီးစား ဒေတာဘေ့စ်စီမံခန့်ခွဲမှုစနစ်များ (data-base-management systems) ကဲ့သို့သော ပရိုဂရမ်မျိုးတွင် ဖြေရှင်းရန် လိုအပ်ပါသည်။
+</p>
+<p>ကျွန်ုပ်တို့လိုအပ်သည်မှာ စနစ်ဒီဇိုင်းကို ပိုမို၍ မော်ဂျူးပုံစံ ဖွဲ့စည်းနိုင်မည့် နည်းလမ်းတစ်ခု ဖြစ်သည်။ ၎င်းကို <a id="index-data_002ddirected-programming-1"></a>
+<em>data-directed programming</em> ဟုခေါ်သော ပရိုဂရမ်ရေးသားခြင်း နည်းပညာဖြင့် ရရှိနိုင်ပါသည်။ Data-directed programming မည်သို့အလုပ်လုပ်သည်ကို နားလည်ရန်၊ ကွဲပြားသော အမျိုးအစားအစုအဝေးတစ်ခုအတွက် တူညီသော ယေဘုယျ လုပ်ဆောင်ချက်များ (generic operations) အစုအဝေးတစ်ခုကို ကိုင်တွယ်သည့်အခါတိုင်း၊ အမှန်တကယ်တွင် ကျွန်ုပ်တို့သည် ဝင်ရိုးတစ်ခုပေါ်တွင် ဖြစ်နိုင်သော လုပ်ဆောင်ချက်များနှင့် အခြားဝင်ရိုးတစ်ခုပေါ်တွင် ဖြစ်နိုင်သော အမျိုးအစားများ ပါဝင်သည့် နှစ်ဘက်မြင်ဇယား (two-dimensional table) တစ်ခုကို ကိုင်တွယ်နေခြင်းဖြစ်သည်ဟူသော အချက်မှ စတင်ကြည့်ကြပါစို့။ ဇယားရှိ အချက်အလက်များသည် ပေးထားသော အမျိုးအစားတစ်ခုချင်းစီ၏ argument အတွက် လုပ်ဆောင်ချက်တစ်ခုချင်းစီကို အကောင်အထည်ဖော်သည့် လုပ်ထုံးလုပ်နည်းများ ဖြစ်သည်။ ယခင်ကဏ္ဍတွင် ဖော်ထုတ်ခဲ့သော ကိန်းရှုပ်စနစ်၌ လုပ်ဆောင်ချက်အမည်၊ ဒေတာအမျိုးအစားနှင့် အမှန်တကယ် လုပ်ဆောင်မည့် လုပ်ထုံးလုပ်နည်းတို့အကြား ဆက်သွယ်ချက်သည် ယေဘုယျ အင်တာဖေ့စ် လုပ်ထုံးလုပ်နည်းများရှိ အမျိုးမျိုးသော conditional clause များတွင် ပြန့်ကျဲနေခဲ့သည်။ သို့သော် အလားတူ အချက်အလက်များကို <a href="#Figure-2_002e22">Figure 2.22</a> တွင် ပြထားသည့်အတိုင်း ဇယားတစ်ခုဖြင့် ဖွဲ့စည်းနိုင်သည်။
+</p>
+<figure class="float">
+<a id="Figure-2_002e22"></a>
+<object style="width: 63.29ex; height: 20.98ex;" data="fig/chap2/Fig2.22.std.svg" type="image/svg+xml">SVG</object>
+
+<figcaption class="float-caption">
+<p><strong>ပုံ ၂.၂၂:</strong> ကိန်းရှုပ်စနစ်အတွက် လုပ်ဆောင်ချက်များ ဇယား။</p>
+</figcaption>
+</figure>
+
+<p>Data-directed programming ဆိုသည်မှာ ထိုကဲ့သို့သော ဇယားတစ်ခုနှင့် တိုက်ရိုက်အလုပ်လုပ်ရန် ပရိုဂရမ်များကို ဒီဇိုင်းဆွဲသည့် နည်းပညာ ဖြစ်သည်။ ယခင်က၊ ကျွန်ုပ်တို့သည် complex-arithmetic ကုဒ်ကို ကိုယ်စားပြုပုံဖော်မှု ပက်ကေ့ချ်နှစ်ခုနှင့် ချိတ်ဆက်ပေးသည့် ယန္တရားကို အမျိုးအစားအပေါ် တိုက်ရိုက်ခွဲဝေလုပ်ဆောင်ပေးသော လုပ်ထုံးလုပ်နည်း အစုအဝေးတစ်ခုအဖြစ် အကောင်အထည်ဖော်ခဲ့သည်။ ဤနေရာတွင် ကျွန်ုပ်တို့သည် အင်တာဖေ့စ်ကို လုပ်ဆောင်ချက်အမည်နှင့် argument အမျိုးအစား ပေါင်းစပ်မှုကို ဇယားတွင် ရှာဖွေပြီး အသုံးပြုရန် မှန်ကန်သော လုပ်ထုံးလုပ်နည်းကို ရှာဖွေကာ၊ ၎င်းကို argument ၏ အကြောင်းအရာများပေါ်တွင် အသုံးချပေးသည့် လုပ်ထုံးလုပ်နည်း တစ်ခုတည်းအဖြစ် အကောင်အထည်ဖော်မည် ဖြစ်သည်။ အကယ်၍ ကျွန်ုပ်တို့ ဤသို့ပြုလုပ်ပါက၊ စနစ်ထဲသို့ ကိုယ်စားပြုပုံဖော်မှု ပက်ကေ့ချ်အသစ်တစ်ခု ထည့်သွင်းရန်အတွက် လက်ရှိရှိပြီးသား လုပ်ထုံးလုပ်နည်းများကို ပြောင်းလဲရန် မလိုအပ်တော့ဘဲ၊ ဇယားထဲသို့ အချက်အလက်အသစ်များ ဖြည့်စွက်ရုံသာ လိုအပ်မည်ဖြစ်သည်။
+</p>
+<p>ဤအစီအစဉ်ကို အကောင်အထည်ဖော်ရန်အတွက်၊ လုပ်ဆောင်ချက်နှင့် အမျိုးအစားဇယားကို စီမံခန့်ခွဲရန် <code>put</code> နှင့် <code>get</code> ဟူသော လုပ်ထုံးလုပ်နည်းနှစ်ခုရှိသည်ဟု ယူဆပါ-
+</p>
+<ul>
+<li> <code>(put ⟨<var>op</var>⟩ ⟨<var>type</var>⟩ ⟨<var>item</var>⟩)</code> သည် 
+<code>⟨</code><var>item</var><code>⟩</code> ကို <code>⟨</code><var>op</var><code>⟩</code> နှင့် <code>⟨</code><var>type</var><code>⟩</code> တို့ဖြင့် အညွှန်းပြု၍ ဇယားထဲတွင် ထည့်သွင်းပေးသည်။
+
+</li><li> <code>(get ⟨<var>op</var>⟩ ⟨<var>type</var>⟩)</code> သည် ဇယားထဲရှိ <code>⟨</code><var>op</var><code>⟩</code>၊ 
+<code>⟨</code><var>type</var><code>⟩</code> အချက်အလက်ကို ရှာဖွေပြီး တွေ့ရှိသည့် item ကို ပြန်ပေးသည်။  
+အကယ်၍ မတွေ့ရှိပါက <code>get</code> သည် false ကို ပြန်ပေးသည်။
+
+</li></ul>
+
+<p>လောလောဆယ်တွင် <code>put</code> နှင့် <code>get</code> တို့ကို ကျွန်ုပ်တို့၏ ဘာသာစကားတွင် ထည့်သွင်းထားသည်ဟု ယူဆနိုင်သည်။ <a href="Chapter-3.html#Chapter-3">Chapter 3</a> (<a href="3_002e3.html#g_t3_002e3_002e3">3.3.3</a>) တွင် ဤလုပ်ဆောင်ချက်များနှင့် ဇယားများကို စီမံခန့်ခွဲရန် အခြားသော လုပ်ဆောင်ချက်များကို မည်သို့အကောင်အထည်ဖော်ရမည်ကို တွေ့ရပါမည်။
+</p>
+<p>ကိန်းရှုပ်စနစ်တွင် data-directed programming ကို မည်သို့အသုံးပြုနိုင်ပုံမှာ အောက်ပါအတိုင်း ဖြစ်သည်။ ထောင့်မှန်စတုဂံပုံစံ ကိုယ်စားပြုပုံဖော်မှု (rectangular representation) ကို ဖော်ထုတ်ခဲ့သူ Ben သည် သူ၏ကုဒ်ကို မူလအတိုင်းပင် အကောင်အထည်ဖော်သည်။ သူသည် လုပ်ထုံးလုပ်နည်း အစုအဝေးတစ်ခု သို့မဟုတ် 
+<a id="index-package"></a>
+<em>ပက်ကေ့ချ် (package)</em> တစ်ခုကို သတ်မှတ်ပြီး၊ ထောင့်မှန်စတုဂံပုံစံ ကိန်းများပေါ်တွင် စနစ်က မည်သို့လုပ်ဆောင်ရမည်ကို ပြောပြပေးသည့် အချက်အလက်များကို ဇယားတွင် ဖြည့်စွက်ခြင်းဖြင့် စနစ်၏ ကျန်အစိတ်အပိုင်းများနှင့် ချိတ်ဆက်ပေးသည်။ ၎င်းကို အောက်ပါလုပ်ထုံးလုပ်နည်းကို ခေါ်ဆိုခြင်းဖြင့် လုပ်ဆောင်နိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">install-rectangular-package</span><span class="clo">)</span><span class="pln">
+  </span><span class="roman"><span class="com">;; internal procedures</span></span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">real-part z</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> z</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">imag-part z</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> z</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-from-real-imag x y</span><span class="clo">)</span><span class="pln"> 
+    </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> x y</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">magnitude z</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">sqrt </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square </span><span class="opn">(</span><span class="pln">real-part z</span><span class="clo">))</span><span class="pln">
+             </span><span class="opn">(</span><span class="pln">square </span><span class="opn">(</span><span class="pln">imag-part z</span><span class="clo">)))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">angle z</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pln">atan </span><span class="opn">(</span><span class="pln">imag-part z</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">real-part z</span><span class="clo">)))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-from-mag-ang r a</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> r </span><span class="opn">(</span><span class="pln">cos a</span><span class="clo">))</span><span class="pln"> </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> r </span><span class="opn">(</span><span class="pln">sin a</span><span class="clo">))))</span><span class="pln">
+  </span><span class="roman"><span class="com">;; interface to the rest of the system</span></span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">tag x</span><span class="clo">)</span><span class="pln"> 
+    </span><span class="opn">(</span><span class="pln">attach-tag </span><span class="lit">'rectangular</span><span class="pln"> x</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">put </span><span class="lit">'real-part</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">rectangular</span><span class="clo">)</span><span class="pln"> real-part</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">put </span><span class="lit">'imag-part</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">rectangular</span><span class="clo">)</span><span class="pln"> imag-part</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">put </span><span class="lit">'magnitude</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">rectangular</span><span class="clo">)</span><span class="pln"> magnitude</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">put </span><span class="lit">'angle</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">rectangular</span><span class="clo">)</span><span class="pln"> angle</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">put </span><span class="lit">'make-from-real-imag</span><span class="pln"> </span><span class="lit">'rectangular</span><span class="pln">
+       </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">x y</span><span class="clo">)</span><span class="pln"> 
+         </span><span class="opn">(</span><span class="pln">tag </span><span class="opn">(</span><span class="pln">make-from-real-imag x y</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">put </span><span class="lit">'make-from-mag-ang</span><span class="pln"> </span><span class="lit">'rectangular</span><span class="pln">
+       </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">r a</span><span class="clo">)</span><span class="pln"> 
+         </span><span class="opn">(</span><span class="pln">tag </span><span class="opn">(</span><span class="pln">make-from-mag-ang r a</span><span class="clo">))))</span><span class="pln">
+  </span><span class="lit">'done</span><span class="clo">)</span></pre></div>
+
+<p>ဤနေရာတွင် ပါဝင်သော အတွင်းပိုင်း လုပ်ထုံးလုပ်နည်းများသည် Ben တစ်ဦးတည်း လုပ်ဆောင်နေစဉ်က ရေးသားခဲ့သည့် <a href="#g_t2_002e4_002e1">2.4.1</a> မှ လုပ်ထုံးလုပ်နည်းများပင် ဖြစ်သည်ကို သတိပြုပါ။ ၎င်းတို့ကို စနစ်၏ ကျန်အစိတ်အပိုင်းများနှင့် ချိတ်ဆက်ရန်အတွက် မည်သည့်ပြောင်းလဲမှုမျှ ပြုလုပ်ရန် မလိုအပ်ပါ။ ထို့ပြင်၊ ဤလုပ်ထုံးလုပ်နည်း သတ်မှတ်ချက်များသည် installation လုပ်ထုံးလုပ်နည်း၏ အတွင်းပိုင်း၌သာ ရှိသောကြောင့် Ben အနေဖြင့် rectangular package အပြင်ဘက်ရှိ အခြားလုပ်ထုံးလုပ်နည်းများနှင့် အမည်တူပဋိပက္ခဖြစ်မည်ကို စိုးရိမ်စရာ မလိုပါ။ ၎င်းတို့ကို စနစ်၏ ကျန်အစိတ်အပိုင်းများနှင့် ချိတ်ဆက်ရန်အတွက် Ben သည် သူ၏ <code>real-part</code> လုပ်ထုံးလုပ်နည်းကို <code>real-part</code> ဟူသော လုပ်ဆောင်ချက်အမည်နှင့် <code>(rectangular)</code> ဟူသော အမျိုးအစားအောက်တွင် ထည့်သွင်းပြီး၊ အခြားသော ရွေးချယ်ကိရိယာများအတွက်လည်း ထိုနည်းတူပင် ပြုလုပ်သည်။<a class="footnote_link" id="DOCF111" href="#FOOT111"><sup>111</sup></a> အင်တာဖေ့စ်သည် ပြင်ပစနစ်မှ အသုံးပြုရန် တည်ဆောက်ကိရိယာများကိုလည်း သတ်မှတ်ပေးသည်။<a class="footnote_link" id="DOCF112" href="#FOOT112"><sup>112</sup></a> ၎င်းတို့သည် တဂ်ထည့်သွင်းပေးခြင်းမှလွဲ၍ Ben ၏ အတွင်းပိုင်းတွင် သတ်မှတ်ထားသော တည်ဆောက်ကိရိယာများနှင့် ထပ်တူပင် ဖြစ်သည်။
+</p>
+<p>Alyssa ၏ ပိုလာပက်ကေ့ချ် (polar package) သည်လည်း အလားတူပင် ဖြစ်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">install-polar-package</span><span class="clo">)</span><span class="pln">
+  </span><span class="roman"><span class="com">;; internal procedures</span></span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">magnitude z</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> z</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">angle z</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> z</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-from-mag-ang r a</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> r a</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">real-part z</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">magnitude z</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">cos </span><span class="opn">(</span><span class="pln">angle z</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">imag-part z</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="pun">*</span><span class="pln"> </span><span class="opn">(</span><span class="pln">magnitude z</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sin </span><span class="opn">(</span><span class="pln">angle z</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-from-real-imag x y</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">cons</span><span class="pln"> </span><span class="opn">(</span><span class="pln">sqrt </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square y</span><span class="clo">)))</span><span class="pln">
+          </span><span class="opn">(</span><span class="pln">atan y x</span><span class="clo">)))</span><span class="pln">
+  </span><span class="roman"><span class="com">;; interface to the rest of the system</span></span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">tag x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">attach-tag </span><span class="lit">'polar</span><span class="pln"> x</span><span class="clo">))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">put </span><span class="lit">'real-part</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">polar</span><span class="clo">)</span><span class="pln"> real-part</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">put </span><span class="lit">'imag-part</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">polar</span><span class="clo">)</span><span class="pln"> imag-part</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">put </span><span class="lit">'magnitude</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">polar</span><span class="clo">)</span><span class="pln"> magnitude</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">put </span><span class="lit">'angle</span><span class="pln"> </span><span class="lit">'</span><span class="opn">(</span><span class="pln">polar</span><span class="clo">)</span><span class="pln"> angle</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">put </span><span class="lit">'make-from-real-imag</span><span class="pln"> </span><span class="lit">'polar</span><span class="pln">
+       </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">x y</span><span class="clo">)</span><span class="pln"> 
+         </span><span class="opn">(</span><span class="pln">tag </span><span class="opn">(</span><span class="pln">make-from-real-imag x y</span><span class="clo">))))</span><span class="pln">
+  </span><span class="opn">(</span><span class="pln">put </span><span class="lit">'make-from-mag-ang</span><span class="pln"> </span><span class="lit">'polar</span><span class="pln">
+       </span><span class="opn">(</span><span class="kwd">lambda</span><span class="pln"> </span><span class="opn">(</span><span class="pln">r a</span><span class="clo">)</span><span class="pln"> 
+         </span><span class="opn">(</span><span class="pln">tag </span><span class="opn">(</span><span class="pln">make-from-mag-ang r a</span><span class="clo">))))</span><span class="pln">
+  </span><span class="lit">'done</span><span class="clo">)</span></pre></div>
+
+<p>Ben နှင့် Alyssa နှစ်ဦးစလုံးသည် (ဥပမာ- <code>real-part</code> ကဲ့သို့သော) အမည်တူ မူလလုပ်ထုံးလုပ်နည်းများကို အသုံးပြုနေကြဆဲ ဖြစ်သော်လည်း၊ ယခုအခါ ဤသတ်မှတ်ချက်များသည် မတူညီသော လုပ်ထုံးလုပ်နည်းများ၏ အတွင်းပိုင်း၌သာ ဖြစ်သောကြောင့် (<a href="1_002e1.html#g_t1_002e1_002e8">1.1.8</a> ကိုကြည့်ပါ) အမည်တူပဋိပက္ခ ဖြစ်စရာမရှိတော့ပါ။
+</p>
+<p>complex-arithmetic selector များသည် ဇယားကို generic operation တစ်ခုကို argument အချို့အပေါ် သက်ရောက်စေသော <code>apply-generic</code> ဟုခေါ်သည့် ယေဘုယျ “operation” ပရိုစီဂျာမှတစ်ဆင့် အသုံးပြုကြသည်။ <code>Apply-generic</code> သည် ဇယားထဲတွင် operation အမည်နှင့် argument များ၏ type များအောက်တွင် ရှာဖွေပြီး၊ အကယ်၍ ရှိခဲ့ပါက ရရှိလာသော ပရိုစီဂျာကို သက်ရောက်စေသည် (apply လုပ်သည်)။<a class="footnote_link" id="DOCF113" href="#FOOT113"><sup>113</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">apply-generic op </span><span class="pun">.</span><span class="pln"> args</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">type-tags </span><span class="opn">(</span><span class="pln">map type-tag args</span><span class="clo">)))</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">let</span><span class="pln"> </span><span class="opn">((</span><span class="pln">proc </span><span class="opn">(</span><span class="pln">get op type-tags</span><span class="clo">)))</span><span class="pln">
+      </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> proc
+          </span><span class="opn">(</span><span class="pln">apply proc </span><span class="opn">(</span><span class="pln">map contents args</span><span class="clo">))</span><span class="pln">
+          </span><span class="opn">(</span><span class="err">error</span><span class="pln">
+            </span><span class="str">"No method for these types: 
+             APPLY-GENERIC"</span><span class="pln">
+            </span><span class="opn">(</span><span class="pln">list op type-tags</span><span class="clo">))))))</span></pre></div>
+
+<p><code>apply-generic</code> ကို အသုံးပြု၍ ကျွန်ုပ်တို့၏ generic selector များကို အောက်ပါအတိုင်း သတ်မှတ်နိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">real-part z</span><span class="clo">)</span><span class="pln"> 
+  </span><span class="opn">(</span><span class="pln">apply-generic </span><span class="lit">'real-part</span><span class="pln"> z</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">imag-part z</span><span class="clo">)</span><span class="pln"> 
+  </span><span class="opn">(</span><span class="pln">apply-generic </span><span class="lit">'imag-part</span><span class="pln"> z</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">magnitude z</span><span class="clo">)</span><span class="pln"> 
+  </span><span class="opn">(</span><span class="pln">apply-generic </span><span class="lit">'magnitude</span><span class="pln"> z</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">angle z</span><span class="clo">)</span><span class="pln"> 
+  </span><span class="opn">(</span><span class="pln">apply-generic </span><span class="lit">'angle</span><span class="pln"> z</span><span class="clo">))</span></pre></div>
+
+<p>စနစ်ထဲသို့ representation အသစ်တစ်ခု ထပ်ထည့်သော်လည်း ဤအရာများသည် လုံးဝပြောင်းလဲခြင်းမရှိသည်ကို သတိပြုပါ။
+</p>
+<p>real နှင့် imaginary အစိတ်အပိုင်းများမှလည်းကောင်း၊ magnitude နှင့် angle များမှလည်းကောင်း complex number များ ပြုလုပ်ရာတွင် package များ၏ အပြင်ဘက်ရှိ ပရိုဂရမ်များမှ အသုံးပြုမည့် constructor များကိုလည်း ဇယားမှ ထုတ်ယူနိုင်သည်။ <a href="#g_t2_002e4_002e2">2.4.2</a> တွင်ကဲ့သို့ပင်၊ ကျွန်ုပ်တို့တွင် real နှင့် imaginary အစိတ်အပိုင်းများ ရှိသည့်အခါ rectangular number များကို တည်ဆောက်ပြီး၊ magnitude နှင့် angle များ ရှိသည့်အခါ polar number များကို တည်ဆောက်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-from-real-imag x y</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">((</span><span class="pln">get </span><span class="lit">'make-from-real-imag</span><span class="pln"> 
+        </span><span class="lit">'rectangular</span><span class="clo">)</span><span class="pln"> 
+   x y</span><span class="clo">))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-from-mag-ang r a</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">((</span><span class="pln">get </span><span class="lit">'make-from-mag-ang</span><span class="pln"> 
+        </span><span class="lit">'polar</span><span class="clo">)</span><span class="pln"> 
+   r a</span><span class="clo">))</span></pre></div>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e73"></a>လေ့ကျင့်ခန်း ၂.၇၃:</strong> <a href="2_002e3.html#g_t2_002e3_002e2">2.3.2</a> တွင် symbolic differentiation ကို လုပ်ဆောင်သော ပရိုဂရမ်တစ်ခုအကြောင်း ဖော်ပြခဲ့သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">deriv exp var</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pln">number? exp</span><span class="clo">)</span><span class="pln"> </span><span class="lit">0</span><span class="clo">)</span><span class="pln">
+        </span><span class="opn">((</span><span class="pln">variable? exp</span><span class="clo">)</span><span class="pln"> 
+         </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">same-variable? exp var</span><span class="clo">)</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> </span><span class="lit">0</span><span class="clo">))</span><span class="pln">
+        </span><span class="opn">((</span><span class="pln">sum? exp</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">make-sum </span><span class="opn">(</span><span class="pln">deriv </span><span class="opn">(</span><span class="pln">addend exp</span><span class="clo">)</span><span class="pln"> var</span><span class="clo">)</span><span class="pln">
+                   </span><span class="opn">(</span><span class="pln">deriv </span><span class="opn">(</span><span class="pln">augend exp</span><span class="clo">)</span><span class="pln"> var</span><span class="clo">)))</span><span class="pln">
+        </span><span class="opn">((</span><span class="pln">product? exp</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">(</span><span class="pln">make-sum
+           </span><span class="opn">(</span><span class="pln">make-product 
+            </span><span class="opn">(</span><span class="pln">multiplier exp</span><span class="clo">)</span><span class="pln">
+            </span><span class="opn">(</span><span class="pln">deriv </span><span class="opn">(</span><span class="pln">multiplicand exp</span><span class="clo">)</span><span class="pln"> var</span><span class="clo">))</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">make-product 
+            </span><span class="opn">(</span><span class="pln">deriv </span><span class="opn">(</span><span class="pln">multiplier exp</span><span class="clo">)</span><span class="pln"> var</span><span class="clo">)</span><span class="pln">
+            </span><span class="opn">(</span><span class="pln">multiplicand exp</span><span class="clo">))))</span><span class="pln">
+        ⟨</span><var><span class="pln">more rules can be added here</span></var><span class="pln">⟩
+        </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"unknown expression type:
+                      DERIV"</span><span class="pln"> exp</span><span class="clo">))))</span></pre></div>
+
+<p>ဤပရိုဂရမ်ကို differentiate လုပ်မည့် expression ၏ အမျိုးအစား (type) ပေါ်မူတည်၍ dispatch လုပ်ဆောင်ခြင်းအဖြစ် မှတ်ယူနိုင်သည်။ ဤအခြေအနေတွင် datum ၏ “type tag” မှာ algebraic operator symbol (ဥပမာ <code>+</code> ကဲ့သို့) ဖြစ်ပြီး၊ လုပ်ဆောင်နေသော operation မှာ <code>deriv</code> ဖြစ်သည်။ အခြေခံ derivative ပရိုစီဂျာကို အောက်ပါအတိုင်း ပြန်လည်ရေးသားခြင်းဖြင့် ဤပရိုဂရမ်ကို data-directed ပုံစံသို့ ပြောင်းလဲနိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">deriv exp var</span><span class="clo">)</span><span class="pln">
+   </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="pln">number? exp</span><span class="clo">)</span><span class="pln"> </span><span class="lit">0</span><span class="clo">)</span><span class="pln">
+         </span><span class="opn">((</span><span class="pln">variable? exp</span><span class="clo">)</span><span class="pln"> 
+           </span><span class="opn">(</span><span class="kwd">if</span><span class="pln"> </span><span class="opn">(</span><span class="pln">same-variable? exp var</span><span class="clo">)</span><span class="pln"> 
+               </span><span class="lit">1</span><span class="pln"> 
+               </span><span class="lit">0</span><span class="clo">))</span><span class="pln">
+         </span><span class="opn">(</span><span class="kwd">else</span><span class="pln"> </span><span class="opn">((</span><span class="pln">get </span><span class="lit">'deriv</span><span class="pln"> </span><span class="opn">(</span><span class="pln">operator exp</span><span class="clo">))</span><span class="pln"> 
+                </span><span class="opn">(</span><span class="pln">operands exp</span><span class="clo">)</span><span class="pln"> 
+                var</span><span class="clo">))))</span><span class="pln">
+
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">operator exp</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">car</span><span class="pln"> exp</span><span class="clo">))</span><span class="pln">
+</span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">operands exp</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="kwd">cdr</span><span class="pln"> exp</span><span class="clo">))</span></pre></div>
+
+<ol>
+<li> အထက်တွင် လုပ်ဆောင်ခဲ့သည်များကို ရှင်းပြပါ။ <code>number?</code> နှင့် <code>variable?</code> predicate များကို အဘယ်ကြောင့် data-directed dispatch ထဲသို့ ပေါင်းစပ်ထည့်သွင်း၍ မရသနည်း။
+
+</li><li> ပေါင်းလဒ် (sum) နှင့် မြှောက်လဒ် (product) များ၏ derivative များအတွက် ပရိုစီဂျာများကို ရေးသားပါ၊ ထို့ပြင် ၎င်းတို့ကို အထက်ပါ ပရိုဂရမ်မှ အသုံးပြုသော ဇယားထဲတွင် ထည့်သွင်းရန် လိုအပ်သော အထောက်အကူပြု ကုဒ် (auxiliary code) ကိုလည်း ရေးသားပါ။
+
+</li><li> ထပ်ကိန်း (exponents) များအတွက် နည်းဥပဒေ (<a href="2_002e3.html#Exercise-2_002e56">လေ့ကျင့်ခန်း ၂.၅၆</a>) ကဲ့သို့ သင်နှစ်သက်ရာ နောက်ထပ် differentiation rule တစ်ခုကို ရွေးချယ်ပြီး ဤ data-directed စနစ်တွင် ထည့်သွင်းပါ။
+
+</li><li> ဤရိုးရှင်းသော အက္ခရာသင်္ချာ ကိုင်တွယ်သူ (algebraic manipulator) တွင် expression တစ်ခု၏ type သည် ၎င်းကို ပေါင်းစည်းထားသော algebraic operator ဖြစ်သည်။ သို့သော်၊ ကျွန်ုပ်တို့သည် ပရိုစီဂျာများကို ဆန့်ကျင်ဘက်နည်းလမ်းဖြင့် အညွှန်းတပ် (index) ခဲ့သည်ဆိုပါစို့၊ သို့မှသာ <code>deriv</code> ထဲရှိ dispatch line သည် အောက်ပါအတိုင်း ဖြစ်နေပါမည်-
+
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">((</span><span class="pln">get </span><span class="opn">(</span><span class="pln">operator exp</span><span class="clo">)</span><span class="pln"> </span><span class="lit">'deriv</span><span class="clo">)</span><span class="pln"> 
+ </span><span class="opn">(</span><span class="pln">operands exp</span><span class="clo">)</span><span class="pln"> var</span><span class="clo">)</span></pre></div>
+
+<p>derivative စနစ်အတွက် မည်သည့် သက်ဆိုင်ရာ ပြောင်းလဲမှုများ လိုအပ်သနည်း။
+</p>
+</li></ol>
+</blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e74"></a>လေ့ကျင့်ခန်း ၂.၇၄:</strong> Insatiable Enterprises, Inc. သည် ကမ္ဘာတစ်ဝှမ်းတွင် တည်ရှိသော လွတ်လပ်သည့် division အမြောက်အမြားဖြင့် ဖွဲ့စည်းထားသည့် အလွန်ဗဟိုချုပ်ကိုင်မှုလျှော့ချထားသော conglomerate ကုမ္ပဏီကြီးတစ်ခုဖြစ်သည်။ ကုမ္ပဏီ၏ ကွန်ပျူတာ အထောက်အကူပြု ပစ္စည်းများကို အသုံးပြုသူတိုင်းအတွက် ကွန်ရက်တစ်ခုလုံးကို ကွန်ပျူတာတစ်လုံးတည်းကဲ့သို့ မြင်တွေ့ရစေသော လိမ္မာပါးနပ်သည့် network-interfacing scheme တစ်ခုဖြင့် အပြန်အလှန် ချိတ်ဆက်ထားပြီးဖြစ်သည်။ Insatiable ၏ ဥက္ကဋ္ဌသည် division ဖိုင်များမှ စီမံခန့်ခွဲရေးဆိုင်ရာ အချက်အလက်များကို ထုတ်ယူရန် ကွန်ရက်၏ စွမ်းဆောင်ရည်ကို အသုံးချရန် ပထမဆုံး ကြိုးပမ်းမှုတွင်၊ division ဖိုင်အားလုံးကို Scheme ၌ data structure များအဖြစ် ဖော်ဆောင်ထားသော်လည်း အသုံးပြုထားသော သီးခြား data structure မှာမူ division တစ်ခုနှင့်တစ်ခု မတူညီဘဲ ကွဲပြားနေသည်ကို တွေ့ရှိရသဖြင့် စိတ်ပျက်သွားသည်။ division များ၏ လက်ရှိ ကိုယ်ပိုင်အုပ်ချုပ်ခွင့်ကို ထိန်းသိမ်းရင်း ဌာနချုပ်၏ လိုအပ်ချက်များကို ဖြည့်ဆည်းပေးနိုင်မည့် ဖိုင်ပေါင်းစည်းရေး နည်းဗျူဟာတစ်ခုကို ရှာဖွေရန် division မန်နေဂျာများ၏ အစည်းအဝေးတစ်ခုကို အရေးပေါ် ခေါ်ယူခဲ့သည်။
+</p>
+<p>ထိုကဲ့သို့သော နည်းဗျူဟာကို data-directed programming ဖြင့် မည်သို့ဖော်ဆောင်နိုင်သည်ကို ဖော်ပြပါ။ ဥပမာအားဖြင့်၊ division တစ်ခုချင်းစီ၏ ဝန်ထမ်းမှတ်တမ်း (personnel records) များသည် ဖိုင်တစ်ခုတည်းအဖြစ် ရှိနေပြီး ၎င်းတွင် ဝန်ထမ်းအမည်များဖြင့် key ပေးထားသော မှတ်တမ်းအစုအဝေး (set of records) များ ပါဝင်သည်ဟု ဆိုကြပါစို့။ ထိုအစုအဝေး၏ တည်ဆောက်ပုံမှာ division တစ်ခုနှင့်တစ်ခု မတူညီပါ။ ထို့ပြင် ဝန်ထမ်းတစ်ဦးချင်းစီ၏ မှတ်တမ်းသည်လည်း (division တစ်ခုနှင့်တစ်ခု တည်ဆောက်ပုံမတူသော) အစုအဝေးတစ်ခုဖြစ်ပြီး ၎င်းတွင် <code>address</code> နှင့် <code>salary</code> ကဲ့သို့သော identifier များအောက်တွင် key ပေးထားသည့် အချက်အလက်များ ပါဝင်သည်။ အထူးသဖြင့်-
+</p>
+<ol>
+<li> သတ်မှတ်ထားသော personnel ဖိုင်တစ်ခုမှ သတ်မှတ်ထားသော ဝန်ထမ်းတစ်ဦး၏ မှတ်တမ်းကို ထုတ်ယူပေးသည့် <code>get-record</code> ပရိုစီဂျာတစ်ခုကို ဌာနချုပ်အတွက် ဖော်ဆောင်ပေးပါ။ ထိုပရိုစီဂျာသည် မည်သည့် division ၏ ဖိုင်ကိုမဆို အသုံးပြုနိုင်ရမည်။ တစ်ခုချင်းစီသော division ဖိုင်များကို မည်သို့တည်ဆောက်ထားသင့်သည်ကို ရှင်းပြပါ။ အထူးသဖြင့် မည်သည့် အမျိုးအစားဆိုင်ရာ အချက်အလက် (type information) ကို ပေးဆောင်ရမည်နည်း။
+
+</li><li> မည်သည့် division ၏ personnel ဖိုင်မှမဆို ပေးထားသော ဝန်ထမ်းမှတ်တမ်းတစ်ခုမှ လစာအချက်အလက်ကို ပြန်ပေးမည့် <code>get-salary</code> ပရိုစီဂျာတစ်ခုကို ဌာနချုပ်အတွက် ဖော်ဆောင်ပေးပါ။ ဤလုပ်ဆောင်ချက် အလုပ်လုပ်နိုင်ရန် မှတ်တမ်းကို မည်သို့တည်ဆောက်ထားသင့်သနည်း။
+
+</li><li> ဌာနချုပ်အတွက် <code>find-employee-record</code> ပရိုစီဂျာတစ်ခုကို ဖော်ဆောင်ပေးပါ။ ဤပရိုစီဂျာသည် ပေးထားသော ဝန်ထမ်းတစ်ဦး၏ မှတ်တမ်းအတွက် division အားလုံး၏ ဖိုင်များကို ရှာဖွေပြီး မှတ်တမ်းကို ပြန်ပေးရမည်။ ဤပရိုစီဂျာသည် argument များအဖြစ် ဝန်ထမ်းအမည်နှင့် division ဖိုင်အားလုံး၏ စာရင်း (list) ကို ယူသည်ဟု ယူဆပါ။
+
+</li><li> Insatiable သည် ကုမ္ပဏီအသစ်တစ်ခုကို လက်ဝယ်ရရှိသည့်အခါ၊ အသစ်ရရှိလာသော ဝန်ထမ်းအချက်အလက်များကို ဗဟိုစနစ်ထဲသို့ ထည့်သွင်းရန် မည်သည့်ပြောင်းလဲမှုများ ပြုလုပ်ရမည်နည်း။
+
+</li></ol>
+</blockquote>
+
+<a id="Message-passing"></a>
+<h5 class="subsubheading">Message passing</h5>
+
+<p>Data-directed programming ၏ အဓိက စိတ်ကူးမှာ <a href="#Figure-2_002e22">ပုံ ၂.၂၂</a> ရှိ ဇယားကဲ့သို့သော operation-and-type table များကို တိုက်ရိုက်ကိုင်တွယ်ခြင်းဖြင့် ပရိုဂရမ်များရှိ generic operation များကို ဖြေရှင်းရန်ဖြစ်သည်။ <a href="#g_t2_002e4_002e2">၂.၄.၂</a> တွင် ကျွန်ုပ်တို့ အသုံးပြုခဲ့သော programming ပုံစံသည် operation တစ်ခုချင်းစီကို ၎င်း၏ ကိုယ်ပိုင် dispatching အတွက် တာဝန်ယူစေခြင်းဖြင့် လိုအပ်သော type ပေါ်မူတည်၍ dispatch လုပ်ခြင်းကို စီစဉ်ခဲ့သည်။ လက်တွေ့တွင်၊ ဤအရာသည် operation-and-type table ကို အတန်း (rows) များအဖြစ် ခွဲထုတ်လိုက်ခြင်းဖြစ်ပြီး generic operation ပရိုစီဂျာတစ်ခုစီသည် ဇယား၏ အတန်းတစ်ခုကို ကိုယ်စားပြုသည်။
+</p>
+<p>အခြားရွေးချယ်စရာ ဖော်ဆောင်မှု နည်းဗျူဟာတစ်ခုမှာ ဇယားကို ကော်လံ (columns) များအဖြစ် ခွဲထုတ်ရန်ဖြစ်ပြီး၊ data type များပေါ်မူတည်၍ dispatch လုပ်သော “intelligent operations” များကို အသုံးပြုမည့်အစား operation အမည်များပေါ်မူတည်၍ dispatch လုပ်သော “intelligent data objects” များနှင့် အလုပ်လုပ်ရန်ဖြစ်သည်။ rectangular number ကဲ့သို့သော data object တစ်ခုကို လိုအပ်သော operation အမည်ကို input အဖြစ်ယူ၍ သတ်မှတ်ထားသော operation ကို လုပ်ဆောင်ပေးသည့် ပရိုစီဂျာတစ်ခုအဖြစ် ကိုယ်စားပြုစေခြင်းဖြင့် ဤအရာကို ပြုလုပ်နိုင်သည်။ ထိုကဲ့သို့သော နည်းလမ်းတွင် <code>make-from-real-imag</code> ကို အောက်ပါအတိုင်း ရေးသားနိုင်သည်-
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">make-from-real-imag x y</span><span class="clo">)</span><span class="pln">
+  </span><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">dispatch op</span><span class="clo">)</span><span class="pln">
+    </span><span class="opn">(</span><span class="kwd">cond</span><span class="pln"> </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> op </span><span class="lit">'real-part</span><span class="clo">)</span><span class="pln"> x</span><span class="clo">)</span><span class="pln">
+          </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> op </span><span class="lit">'imag-part</span><span class="clo">)</span><span class="pln"> y</span><span class="clo">)</span><span class="pln">
+          </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> op </span><span class="lit">'magnitude</span><span class="clo">)</span><span class="pln">
+           </span><span class="opn">(</span><span class="pln">sqrt </span><span class="opn">(</span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square x</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">square y</span><span class="clo">))))</span><span class="pln">
+          </span><span class="opn">((</span><span class="kwd">eq</span><span class="pun">?</span><span class="pln"> op </span><span class="lit">'angle</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">atan y x</span><span class="clo">))</span><span class="pln">
+          </span><span class="opn">(</span><span class="kwd">else</span><span class="pln">
+           </span><span class="opn">(</span><span class="err">error</span><span class="pln"> </span><span class="str">"Unknown op: 
+            MAKE-FROM-REAL-IMAG"</span><span class="pln"> op</span><span class="clo">))))</span><span class="pln">
+  dispatch</span><span class="clo">)</span></pre></div>
+
+<p>argument တစ်ခုအပေါ် generic operation တစ်ခုကို သက်ရောက်စေသော သက်ဆိုင်ရာ <code>apply-generic</code> ပရိုစီဂျာသည် ယခုအခါ operation ၏ အမည်ကို data object ထံသို့ ပေးပို့ (feed) လိုက်ရုံသာဖြစ်ပြီး object ကိုသာ အလုပ်လုပ်စေသည်- <a class="footnote_link" id="DOCF114" href="#FOOT114"><sup>114</sup></a>
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="kwd">define</span><span class="pln"> </span><span class="opn">(</span><span class="pln">apply-generic op arg</span><span class="clo">)</span><span class="pln"> </span><span class="opn">(</span><span class="pln">arg op</span><span class="clo">))</span></pre></div>
+
+<p><code>make-from-real-imag</code> မှ ပြန်ပေးလိုက်သော တန်ဖိုးမှာ ပရိုစီဂျာတစ်ခု (အတွင်းပိုင်းရှိ <code>dispatch</code> ပရိုစီဂျာ) ဖြစ်သည်ကို သတိပြုပါ။ ဤသည်မှာ <code>apply-generic</code> က operation တစ်ခု လုပ်ဆောင်ရန် တောင်းဆိုသောအခါ ခေါ်ယူ (invoke) ခံရသော ပရိုစီဂျာဖြစ်သည်။
+</p>
+<p>ဤကဲ့သို့ ပရိုဂရမ်ရေးသားခြင်း ပုံစံကို <a id="index-message-passing-1"></a>
+<em>message passing</em> ဟု ခေါ်ဆိုပါသည်။ ဤအမည်သည် ဒေတာ အရာဝတ္ထု (data object) တစ်ခုကို တောင်းဆိုထားသော လုပ်ဆောင်ချက် အမည်အား “သတင်းစကား” (message) တစ်ခုအဖြစ် လက်ခံရရှိသည့် အရာတစ်ခု (entity) အဖြစ် မြင်ယောင်ခြင်းမှ ဆင်းသက်လာခြင်း ဖြစ်သည်။ ကျွန်ုပ်တို့သည် <a href="2_002e1.html#g_t2_002e1_002e3">2.1.3</a> တွင် message passing ၏ ဥပမာတစ်ခုကို တွေ့မြင်ခဲ့ပြီး ဖြစ်သည်။ ထိုနေရာတွင် <code>cons</code>၊ <code>car</code>၊ နှင့် <code>cdr</code> တို့ကို ဒေတာ အရာဝတ္ထုများ မပါဘဲ လုပ်ထုံးလုပ်နည်းများ (procedures) သက်သက်ဖြင့် မည်သို့ အဓိပ္ပာယ်ဖွင့်ဆိုနိုင်သည်ကို တွေ့ရှိခဲ့ရသည်။ ယခုအခါတွင် message passing သည် သင်္ချာဆိုင်ရာ လှည့်ကွက်တစ်ခု မဟုတ်ဘဲ ယေဘုယျ လုပ်ဆောင်ချက်များ (generic operations) ပါဝင်သော စနစ်များကို စနစ်တကျ ဖွဲ့စည်းရန်အတွက် အသုံးဝင်သော နည်းစနစ်တစ်ခု ဖြစ်ကြောင်း တွေ့မြင်ရပါသည်။ ဤအခန်း၏ ကျန်ရှိသော အပိုင်းများတွင် ယေဘုယျ ဂဏန်းသင်္ချာ လုပ်ဆောင်ချက်များ (generic arithmetic operations) အကြောင်း ဆွေးနွေးရန်အတွက် message passing အစား data-directed programming ကိုသာ ဆက်လက် အသုံးပြုသွားမည် ဖြစ်သည်။ <a href="Chapter-3.html#Chapter-3">Chapter 3</a> တွင် ကျွန်ုပ်တို့သည် message passing သို့ ပြန်လည် ရောက်ရှိလာမည်ဖြစ်ပြီး၊ ၎င်းသည် simulation ပရိုဂရမ်များကို ဖွဲ့စည်းတည်ဆောက်ရန်အတွက် အားကောင်းသော ကိရိယာတစ်ခု ဖြစ်နိုင်ကြောင်း တွေ့မြင်ရမည် ဖြစ်သည်။
+</p>
+<blockquote>
+<p><strong><a id="Exercise-2_002e75"></a>Exercise 2.75:</strong> <code>make-from-mag-ang</code> constructor ကို message-passing ပုံစံဖြင့် အကောင်အထည်ဖော်ပါ။ ဤလုပ်ထုံးလုပ်နည်းသည် အထက်တွင် ဖော်ပြခဲ့သော <code>make-from-real-imag</code> လုပ်ထုံးလုပ်နည်းနှင့် ဆင်တူသင့်ပါသည်။
+</p></blockquote>
+
+<blockquote>
+<p><strong><a id="Exercise-2_002e76"></a>Exercise 2.76:</strong> ယေဘုယျ လုပ်ဆောင်ချက်များ ပါဝင်သော ကြီးမားသော စနစ်တစ်ခု တိုးတက်ပြောင်းလဲလာသည်နှင့်အမျှ ဒေတာ အရာဝတ္ထု အမျိုးအစားသစ်များ သို့မဟုတ် လုပ်ဆောင်ချက် အသစ်များ လိုအပ်လာနိုင်ပါသည်။ မဟာဗျူဟာ သုံးမျိုးဖြစ်သည့်—generic operations with explicit dispatch၊ data-directed style နှင့် message-passing-style—တစ်ခုချင်းစီအတွက်၊ အမျိုးအစားသစ်များ သို့မဟုတ် လုပ်ဆောင်ချက်အသစ်များ ပေါင်းထည့်ရန် စနစ်တစ်ခုတွင် ပြုလုပ်ရမည့် အပြောင်းအလဲများကို ဖော်ပြပါ။ အမျိုးအစားသစ်များကို မကြာခဏ ပေါင်းထည့်ရန် လိုအပ်သော စနစ်တစ်ခုအတွက် မည်သည့် ဖွဲ့စည်းပုံက အသင့်တော်ဆုံး ဖြစ်မည်နည်း။ လုပ်ဆောင်ချက်အသစ်များကို မကြာခဏ ပေါင်းထည့်ရန် လိုအပ်သော စနစ်တစ်ခုအတွက် မည်သည့်အရာက အသင့်တော်ဆုံး ဖြစ်မည်နည်း။
+</p></blockquote>
+
+<div class="footnote">
+<h4 class="footnotes-heading">အောက်ခြေမှတ်စုများ</h4>
+
+<div id="FOOT109"><p><a class="footnote_backlink" href="#DOCF109"><sup>109</sup></a>
+လက်တွေ့တွက်ချက်မှုစနစ်များတွင် rectangular ပုံစံသည် polar ပုံစံထက် ပိုမိုနှစ်သက်ဖွယ်ကောင်းလေ့ရှိသည်၊ အကြောင်းမှာ rectangular နှင့် polar ပုံစံများအကြား ပြောင်းလဲရာတွင် roundoff အမှားများ (roundoff errors) ရှိတတ်သောကြောင့်ဖြစ်သည်။ ထို့ကြောင့်ပင် complex-number ဥပမာသည် လက်တွေ့မကျခြင်းဖြစ်သည်။ သို့သော်လည်း၊ ၎င်းသည် generic operations များကို အသုံးပြု၍ စနစ်တစ်ခုအား ဒီဇိုင်းထုတ်ပုံကို ရှင်းလင်းစွာ သရုပ်ဖော်ပြထားပြီး ဤအခန်း၏ နောက်ပိုင်းတွင် ဖော်ထုတ်မည့် ပိုမိုအရေးပါသော စနစ်များအတွက် ကောင်းမွန်သော မိတ်ဆက်တစ်ခု ဖြစ်ပါသည်။</p>
+</div>
+<div id="FOOT110"><p><a class="footnote_backlink" href="#DOCF110"><sup>110</sup></a>
+ဤနေရာတွင် ရည်ညွှန်းထားသော arctangent ဖန်ရှင်သည် Scheme ၏ <code>atan</code> ပရိုစီဂျာဖြင့် တွက်ချက်ထားပြီး၊ arguments နှစ်ခု ဖြစ်သော <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>y</mi>
+</math> နှင့် <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>x</mi>
+</math> ကို လက်ခံကာ tangent တန်ဖိုး <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mrow class="MJX-TeXAtom-ORD">
+    <mi>y</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mo>/</mo>
+    </mrow>
+    <mi>x</mi>
+  </mrow>
+</math> ရှိသည့် ထောင့် (angle) ကို ပြန်ပေးရန် သတ်မှတ်ထားသည်။
+arguments များ၏ လက္ခဏာများ (signs) သည် ထောင့်၏ quadrant ကို ဆုံးဖြတ်သည်။</p>
+</div>
+<div id="FOOT111"><p><a class="footnote_backlink" href="#DOCF111"><sup>111</sup></a>
+ကျွန်ုပ်တို့သည် symbol <code>rectangular</code> ထက် list <code>(rectangular)</code> ကို အသုံးပြုခြင်းမှာ အမျိုးအစားတူမဟုတ်သော arguments အများအပြားပါဝင်နိုင်သည့် operations များ ဖြစ်နိုင်ခြေအတွက် ခွင့်ပြုရန်ဖြစ်သည်။</p>
+</div>
+<div id="FOOT112"><p><a class="footnote_backlink" href="#DOCF112"><sup>112</sup></a>
+constructor များကို ထည့်သွင်းထားသော type သည် list ဖြစ်ရန် မလိုအပ်ပါ၊ အကြောင်းမှာ constructor ကို သီးခြား type တစ်ခု၏ object ကို ပြုလုပ်ရန် အမြဲတမ်း အသုံးပြုသောကြောင့် ဖြစ်သည်။</p>
+</div>
+<div id="FOOT113"><p><a class="footnote_backlink" href="#DOCF113"><sup>113</sup></a>
+<code>Apply-generic</code> သည် <a href="2_002e2.html#Exercise-2_002e20">Exercise 2.20</a> တွင် ဖော်ပြထားသော dotted-tail notation ကို အသုံးပြုထားသည်၊ အကြောင်းမှာ မတူညီသော generic operations များသည် arguments အရေအတွက် မတူညီဘဲ ယူဆောင်နိုင်သောကြောင့် ဖြစ်သည်။ <code>apply-generic</code> တွင် <code>op</code> သည် <code>apply-generic</code> သို့ ပေးလိုက်သော ပထမဆုံး argument တန်ဖိုးကို ယူထားပြီး <code>args</code> သည် ကျန်ရှိသော arguments များ၏ list ကို တန်ဖိုးအဖြစ် ယူထားသည်။
+</p>
+<p><code>Apply-generic</code> သည် arguments နှစ်ခု (procedure တစ်ခုနှင့် list တစ်ခု) ကို လက်ခံသည့် primitive procedure <code>apply</code> ကိုလည်း အသုံးပြုထားသည်။ <code>Apply</code> သည် list ထဲရှိ elements များကို arguments များအဖြစ် အသုံးပြု၍ procedure ကို လုပ်ဆောင်ပေးသည်။ ဥပမာအားဖြင့်၊
+</p>
+<div class="lisp">
+<pre class="lisp prettyprinted" style=""><span class="opn">(</span><span class="pln">apply </span><span class="pun">+</span><span class="pln"> </span><span class="opn">(</span><span class="pln">list </span><span class="lit">1</span><span class="pln"> </span><span class="lit">2</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="lit">4</span><span class="clo">))</span></pre></div>
+
+<p>10 ကို ပြန်ပေးသည်။</p>
+</div>
+<div id="FOOT114"><p><a class="footnote_backlink" href="#DOCF114"><sup>114</sup></a>
+ဤဖွဲ့စည်းပုံ၏ ကန့်သတ်ချက်တစ်ခုမှာ ၎င်းသည် argument တစ်ခုသာပါသော generic procedures များကိုသာ ခွင့်ပြုခြင်းဖြစ်သည်။</p>
+</div>
+</div>
+<nav class="header">
+<p>
+Next: <a href="2_002e5.html#g_t2_002e5" accesskey="n" rel="next">2.5</a>, Prev: <a href="2_002e3.html#g_t2_002e3" accesskey="p" rel="prev">2.3</a>, Up: <a href="#g_t2_002e4" accesskey="u" rel="prev">2.4</a>   [<a href="index.html#SEC_Contents" title="Table of contents" accesskey="c" rel="contents">Contents</a>]</p>
+</nav>
+
+
+</section><span class="bottom jump" title="Jump to bottom"><a href="#pagebottom" accesskey="b">⇣</a></span><a id="pagebottom"></a>
+</body>
+</html>
